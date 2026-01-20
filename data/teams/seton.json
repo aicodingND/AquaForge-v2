@@ -1,0 +1,16 @@
+{
+  "id": "seton",
+  "name": "Seton School Conquistadors",
+  "abbreviation": "SET",
+  "colors": {
+    "primary": "#0C2340",
+    "secondary": "#D4AF37",
+    "accent": "#FFFFFF"
+  },
+  "rosterSource": "hytek",
+  "division": "VISAA_DII",
+  "conference": "VCAC",
+  "location": "Manassas, VA",
+  "headCoach": "Jim Koehr",
+  "isUserTeam": true
+}

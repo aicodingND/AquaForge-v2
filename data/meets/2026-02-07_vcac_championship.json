@@ -1,0 +1,28 @@
+{
+  "id": "vcac_championship_2026",
+  "name": "VCAC Championship",
+  "date": "2026-02-07",
+  "type": "championship",
+  "meetMode": "championship",
+  "scoringRules": "vcac_championship",
+  "scoringTable": {
+    "individual": [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2],
+    "relay": [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
+  },
+  "maxScorers": 4,
+  "teams": [
+    "seton",
+    "trinity_christian",
+    "oakcrest",
+    "fredericksburg_christian",
+    "immanuel_christian",
+    "st_john_paul",
+    "paul_vi"
+  ],
+  "venue": "Sport & Health - Fredericksburg",
+  "constraints": {
+    "maxIndividualEvents": 2,
+    "divingCountsAsIndividual": true,
+    "relay3CountsAsIndividual": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "oakcrest",
+  "name": "Oakcrest School",
+  "abbreviation": "OAK",
+  "colors": {
+    "primary": "#003366",
+    "secondary": "#FFD700",
+    "accent": "#FFFFFF"
+  },
+  "rosterSource": "swimcloud",
+  "division": "VISAA_DII",
+  "conference": "VCAC",
+  "location": "McLean, VA",
+  "isUserTeam": false
+}

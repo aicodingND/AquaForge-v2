@@ -1,0 +1,53 @@
+# Default pre-commit hooks for AquaForge
+# Install: pre-commit install
+# Run: pre-commit run --all-files
+
+repos:
+  # Python linting and formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        types_or: [python, pyi]
+      - id: ruff-format
+        types_or: [python, pyi]
+
+  # General file hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: \.md$
+      - id: end-of-file-fixer
+        exclude: \.md$
+      - id: check-yaml
+        args: [--unsafe]
+      - id: check-json
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  # Python type checking (optional - can be slow)
+  # - repo: https://github.com/RobertCraiworthy/pyright-python
+  #   rev: v1.1.362
+  #   hooks:
+  #     - id: pyright
+  #       additional_dependencies: [pyright]
+
+# Skip these paths
+exclude: |
+  (?x)^(
+    \.venv/|
+    node_modules/|
+    frontend/\.next/|
+    __pycache__/|
+    \.git/|
+    data/
+  )
+
+# CI configuration
+ci:
+  autofix_commit_msg: "style: auto-fix from pre-commit hooks"
+  autoupdate_commit_msg: "chore: update pre-commit hooks"

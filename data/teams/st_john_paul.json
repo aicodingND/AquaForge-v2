@@ -1,0 +1,15 @@
+{
+  "id": "st_john_paul",
+  "name": "St. John Paul the Great",
+  "abbreviation": "DJP",
+  "colors": {
+    "primary": "#1E3A5F",
+    "secondary": "#B8860B",
+    "accent": "#FFFFFF"
+  },
+  "rosterSource": "swimcloud",
+  "division": "VISAA_DII",
+  "conference": "VCAC",
+  "location": "Dumfries, VA",
+  "isUserTeam": false
+}

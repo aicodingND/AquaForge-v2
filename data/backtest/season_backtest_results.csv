@@ -1,0 +1,57 @@
+meet_id,meet_name,gender,predicted_seton,predicted_opponent,actual_seton,actual_opponent,accuracy,error
+464,National Catholic H.S. Championship 2024,M,0.0,0.0,0.0,0.0,0.0,Missing team data
+464,National Catholic H.S. Championship 2024,F,76.0,77.0,280.0,460.0,0.5555555555555571,
+465,2024 VISAA Swimming & Diving Championship,M,23.0,70.0,15.0,1030.0,4.6305418719211815,
+465,2024 VISAA Swimming & Diving Championship,F,31.0,66.0,270.0,1360.0,3.2110091743119256,
+470,Seton Winter Invitational,M,121.0,20.0,0.0,0.0,0.0,
+470,Seton Winter Invitational,F,140.0,22.0,0.0,0.0,0.0,
+471,2024 NoVa Catholic Invitational Championship,M,152.0,20.0,2080.0,0.0,6.34615384615384,
+471,2024 NoVa Catholic Invitational Championship,F,130.0,92.0,1170.0,940.0,16.52173913043478,
+476,18th Annual VISAA Division II Invitational,M,140.0,84.0,1400.0,2145.0,0.0,
+476,18th Annual VISAA Division II Invitational,F,130.0,87.0,1730.0,1125.0,7.107438016528917,
+478,VCAC Regular Season Championship,M,142.0,82.0,3040.0,0.0,1.973684210526315,
+478,VCAC Regular Season Championship,F,139.0,85.0,2240.0,0.0,2.410714285714292,
+479,2024 VCAC Championship Meet,M,133.0,91.0,2820.0,3950.0,0.0,
+479,2024 VCAC Championship Meet,F,112.0,112.0,1910.0,4710.0,0.0,
+482,17th Annual VISAA Junior Varsity Invitational,M,0.0,0.0,0.0,2430.0,0.0,'50 Breast'
+482,17th Annual VISAA Junior Varsity Invitational,F,0.0,0.0,0.0,3430.0,0.0,'50 Breast'
+483,1st Day of Practice,M,0.0,0.0,0.0,0.0,0.0,Missing team data
+483,1st Day of Practice,F,0.0,0.0,0.0,0.0,0.0,Missing team data
+484,Seton Time Trials 2024,M,0.0,0.0,0.0,0.0,0.0,Missing team data
+484,Seton Time Trials 2024,F,0.0,0.0,0.0,0.0,0.0,Missing team data
+485,Seton Icebreaker Invitational,M,145.0,75.0,2640.0,0.0,2.651515151515156,
+485,Seton Icebreaker Invitational,F,137.0,73.0,2290.0,0.0,2.7947598253275032,
+486,Seton Homecoming,M,0.0,0.0,2910.0,0.0,0.0,'50 Fly'
+486,Seton Homecoming,F,0.0,0.0,2340.0,0.0,0.0,'50 Fly'
+487,Seton December Invite,M,126.0,91.0,2980.0,0.0,1.1744966442953029,
+487,Seton December Invite,F,127.0,97.0,1890.0,0.0,1.5873015873015959,
+488,VCAC Invitational,M,127.0,97.0,2570.0,0.0,1.1673151750972721,
+488,VCAC Invitational,F,125.0,99.0,2420.0,0.0,1.0743801652892557,
+489,Seton Winter Invitational,M,98.0,117.0,0.0,0.0,0.0,
+489,Seton Winter Invitational,F,96.0,103.0,0.0,0.0,0.0,
+493,2025 NoVa Catholic Invitational Championship,M,103.0,121.0,2050.0,5360.0,0.543806646525681,
+493,2025 NoVa Catholic Invitational Championship,F,134.0,90.0,1280.0,6160.0,0.0,
+494,VISAA Junior Varsity Invitational,M,0.0,0.0,0.0,2880.0,0.0,'50 Breast'
+494,VISAA Junior Varsity Invitational,F,0.0,0.0,0.0,2190.0,0.0,'50 Breast'
+495,2025 Annual VISAA Division II Invitational,M,136.0,86.0,1280.0,1410.0,0.0,
+495,2025 Annual VISAA Division II Invitational,F,122.0,102.0,1040.0,2530.0,0.0,
+496,2025 VCAC Championship Meet,M,136.0,88.0,3190.0,4050.0,0.0,
+496,2025 VCAC Championship Meet,F,119.0,105.0,2180.0,5260.0,0.0,
+497,National Catholic H.S. Championship 2025,M,66.0,93.0,150.0,460.0,8.709677419354833,
+497,National Catholic H.S. Championship 2025,F,88.0,101.0,300.0,1655.0,0.9594095940959448,
+498,2025 VISAA Swimming & Diving Championship,M,52.0,102.0,160.0,2620.0,2.032520325203251,
+498,2025 VISAA Swimming & Diving Championship,F,53.0,118.0,370.0,2220.0,3.513513513513516,
+505,Seton Time Trials 2025,M,0.0,0.0,0.0,0.0,0.0,'50 Fly'
+505,Seton Time Trials 2025,F,0.0,0.0,0.0,0.0,0.0,'50 Fly'
+506,Seton Icebreaker Invitational,M,130.0,94.0,0.0,0.0,0.0,
+506,Seton Icebreaker Invitational,F,132.0,92.0,0.0,0.0,0.0,
+509,Seton December Invitational,M,105.0,119.0,0.0,0.0,0.0,
+509,Seton December Invitational,F,110.0,114.0,0.0,0.0,0.0,
+510,Seton Homecoming Invitational,M,0.0,0.0,0.0,0.0,0.0,'50 Fly'
+510,Seton Homecoming Invitational,F,0.0,0.0,0.0,0.0,0.0,'50 Fly'
+511,1st Day of Practice 2025,M,0.0,0.0,0.0,0.0,0.0,Missing team data
+511,1st Day of Practice 2025,F,0.0,0.0,0.0,0.0,0.0,Missing team data
+512,VCAC Regular Season Championship,M,123.0,101.0,0.0,0.0,0.0,
+512,VCAC Regular Season Championship,F,125.0,99.0,0.0,0.0,0.0,
+513,2026 NoVa Catholic Invitational Championship,M,108.0,116.0,1380.0,6060.0,0.17094017094017033,
+513,2026 NoVa Catholic Invitational Championship,F,121.0,103.0,1130.0,6310.0,0.0,

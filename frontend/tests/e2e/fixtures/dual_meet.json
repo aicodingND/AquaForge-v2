@@ -1,0 +1,36 @@
+{
+  "id": "dual_seton_vs_trinity",
+  "name": "Dual Meet: Seton vs Trinity Christian",
+  "type": "dual",
+  "setonTeam": {
+    "name": "Seton Conquistadors",
+    "swimmerCount": 18,
+    "entries": [
+      {"swimmer": "John Smith", "event": "50 Free", "time": "23.45"},
+      {"swimmer": "John Smith", "event": "100 Free", "time": "52.30"},
+      {"swimmer": "Mike Johnson", "event": "100 Fly", "time": "58.90"},
+      {"swimmer": "Mike Johnson", "event": "200 IM", "time": "2:12.50"},
+      {"swimmer": "David Wilson", "event": "100 Back", "time": "1:02.45"},
+      {"swimmer": "David Wilson", "event": "200 Free", "time": "1:58.00"},
+      {"swimmer": "Chris Brown", "event": "100 Breast", "time": "1:08.90"},
+      {"swimmer": "Chris Brown", "event": "200 IM", "time": "2:15.30"}
+    ]
+  },
+  "opponentTeam": {
+    "name": "Trinity Christian Eagles",
+    "swimmerCount": 16,
+    "entries": [
+      {"swimmer": "Jake Thomas", "event": "50 Free", "time": "24.10"},
+      {"swimmer": "Jake Thomas", "event": "100 Free", "time": "53.20"},
+      {"swimmer": "Ryan Davis", "event": "100 Fly", "time": "59.80"},
+      {"swimmer": "Ryan Davis", "event": "100 Back", "time": "1:03.50"},
+      {"swimmer": "Tom Martinez", "event": "100 Breast", "time": "1:09.50"},
+      {"swimmer": "Tom Martinez", "event": "200 IM", "time": "2:18.00"}
+    ]
+  },
+  "expectedOutcome": {
+    "setonWins": true,
+    "setonScore": 85,
+    "opponentScore": 72
+  }
+}

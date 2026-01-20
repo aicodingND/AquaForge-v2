@@ -1,0 +1,23 @@
+# Local development overrides
+# This file is automatically loaded by docker-compose
+# Customize for your local machine (not committed to git)
+
+version: '3.8'
+
+services:
+  swimai-dev:
+    # Use your local timezone
+    environment:
+      - TZ=America/New_York
+    
+    # Mount your IDE configuration for debugging
+    volumes:
+      - ./.vscode:/app/.vscode:ro
+    
+    # Enable interactive terminal
+    stdin_open: true
+    tty: true
+
+  swimai:
+    environment:
+      - TZ=America/New_York

@@ -1,0 +1,5 @@
+provider: antigravity
+mode: filesystem        # or http
+root: "/path/to/antigravity/workspace"  # used when mode is filesystem
+base_url: "https://antigravity.googleapis.com"  # used when mode is http
+token: ""  # OAuth2 Bearer token if needed for HTTP mode

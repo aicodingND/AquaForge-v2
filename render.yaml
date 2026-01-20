@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: aquaforge
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: REFLEX_ENV
+        value: prod
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PORT
+        value: "3000"
+      # Gurobi WLS credentials - set these in Render dashboard
+      - key: WLSACCESSID
+        sync: false
+      - key: WLSSECRET
+        sync: false
+      - key: LICENSEID
+        sync: false
+    healthCheckPath: /
+    autoDeploy: true

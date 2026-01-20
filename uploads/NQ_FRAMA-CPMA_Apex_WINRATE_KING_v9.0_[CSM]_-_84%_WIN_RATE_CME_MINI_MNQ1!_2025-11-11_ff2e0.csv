@@ -1,0 +1,5 @@
+﻿Trade #,Type,Date/Time,Signal,Price USD,Position size (qty),Position size (value),Net P&L USD,Net P&L %,Run-up USD,Run-up %,Drawdown USD,Drawdown %,Cumulative P&L USD,Cumulative P&L %
+1,Exit short,2025-08-13 10:10,SX,23978.25,1,23991.5,7.31,0.02,17.9,0.04,-55.6,-0.12,7.31,0.01
+1,Entry short,2025-08-13 10:00,Short,23991.5,1,23991.5,7.31,0.02,17.9,0.04,-55.6,-0.12,7.31,0.01
+2,Exit long,2025-09-12 10:20,LX,24062.75,1,24049.5,7.26,0.02,17.88,0.04,-55.62,-0.12,14.57,0.03
+2,Entry long,2025-09-12 10:00,Long,24049.5,1,24049.5,7.26,0.02,17.88,0.04,-55.62,-0.12,14.57,0.03

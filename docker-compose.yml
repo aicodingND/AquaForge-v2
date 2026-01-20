@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # Development service with hot reload
+  swimai-dev:
+    build:
+      context: .
+      target: builder
+    container_name: swimai-dev
+    profiles: ["dev"]
+    ports:
+      - "3000:3000"  # Frontend
+      - "8000:8000"  # Backend API
+    volumes:
+      # Windows-optimized volume mounts
+      - type: bind
+        source: ./swim_ai_reflex
+        target: /app/swim_ai_reflex
+      - type: bind
+        source: ./uploads
+        target: /app/uploads
+      - type: bind
+        source: ./assets
+        target: /app/assets
+      # Named volumes for better performance on Windows
+      - node_modules:/app/.web/node_modules
+      - pycache:/app/__pycache__
+    environment:
+      - PYTHONUNBUFFERED=1
+      - REFLEX_ENV=dev
+      - WATCHFILES_FORCE_POLLING=true  # For Windows file watching
+    command: reflex run --loglevel debug
+    restart: unless-stopped
+
+  # Production service (optimized image)
+  swimai:
+    build:
+      context: .
+      target: production
+    container_name: swimai-app
+    profiles: ["prod"]
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+    volumes:
+      # Production: only mount data directories
+      - ./uploads:/app/uploads:rw
+      - ./assets:/app/assets:ro
+      - swimai_web:/app/.web
+    environment:
+      - PYTHONUNBUFFERED=1
+      - REFLEX_ENV=prod
+    command: reflex run --env prod --loglevel info
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: PostgreSQL database
+  postgres:
+    image: postgres:15-alpine
+    container_name: swimai-db
+    profiles: ["db"]
+    environment:
+      POSTGRES_DB: swimai
+      POSTGRES_USER: swimai
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-swimai_dev_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U swimai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+  swimai_web:
+    driver: local
+  node_modules:
+    driver: local
+  pycache:
+    driver: local

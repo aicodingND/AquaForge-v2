@@ -1,0 +1,80 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "version": "1.0",
+  "description": "Claude Code lifecycle hooks for AquaForge - auto-formatting, logging, validation",
+
+  "hooks": {
+    "post_file_edit": [
+      {
+        "name": "Auto-format Python",
+        "pattern": "*.py",
+        "command": "ruff format {file} --quiet 2>/dev/null || true",
+        "description": "Automatically format Python files after editing"
+      },
+      {
+        "name": "Auto-lint Python",
+        "pattern": "*.py",
+        "command": "ruff check {file} --fix --quiet 2>/dev/null || true",
+        "description": "Automatically fix linting issues in Python files"
+      }
+    ],
+
+    "post_tool": [
+      {
+        "name": "Log tool usage",
+        "trigger": "*",
+        "command": "echo '{\"timestamp\": \"{timestamp}\", \"tool\": \"{tool_name}\", \"file\": \"{file}\"}' >> .claude/usage.log",
+        "description": "Track all tool usage for metrics and audit"
+      }
+    ],
+
+    "pre_command": [
+      {
+        "name": "Validate dangerous commands",
+        "pattern": "rm -rf *|git push --force|DROP TABLE",
+        "action": "require_confirmation",
+        "description": "Require explicit confirmation for potentially dangerous commands"
+      }
+    ],
+
+    "on_session_start": [
+      {
+        "name": "Load context",
+        "command": "echo 'Session started at {timestamp}' >> .claude/sessions.log",
+        "description": "Log session starts"
+      }
+    ],
+
+    "on_session_end": [
+      {
+        "name": "Session summary",
+        "command": "echo 'Session ended at {timestamp}' >> .claude/sessions.log",
+        "description": "Log session ends"
+      }
+    ]
+  },
+
+  "project_conventions": {
+    "python": {
+      "formatter": "ruff",
+      "linter": "ruff",
+      "test_runner": "pytest",
+      "type_checker": "pyright"
+    },
+    "typescript": {
+      "formatter": "prettier",
+      "linter": "eslint",
+      "test_runner": "jest"
+    }
+  },
+
+  "security": {
+    "require_confirmation_for": [
+      "file deletion outside project",
+      "git force push",
+      "database drop operations",
+      "credential file access"
+    ],
+    "blocked_patterns": ["**/.env.production", "**/secrets/**", "**/*_key*"]
+  }
+}

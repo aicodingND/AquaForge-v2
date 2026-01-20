@@ -1,0 +1,101 @@
+swimmer,grade,gender,event,time,team,opponent,meet_date
+John Smith,11,M,Boys 200 Medley Relay,112.50,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 200 Medley Relay,112.50,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 200 Medley Relay,112.50,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 200 Medley Relay,112.50,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 200 Medley Relay,125.30,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 200 Medley Relay,125.30,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 200 Medley Relay,125.30,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 200 Medley Relay,125.30,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 200 Free,118.45,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 200 Free,122.30,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 200 Free,125.80,Seton,Opponent,2024-12-15
+David Kim,9,M,Boys 200 Free,130.20,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 200 Free,135.50,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 200 Free,140.20,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 200 Free,142.80,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 200 Free,148.30,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 200 IM,132.45,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 200 IM,138.20,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 200 IM,140.80,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 200 IM,145.30,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 200 IM,148.50,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 200 IM,155.20,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 200 IM,160.40,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 200 IM,165.80,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 50 Free,23.45,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 50 Free,24.20,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 50 Free,25.10,Seton,Opponent,2024-12-15
+David Kim,9,M,Boys 50 Free,26.80,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 50 Free,27.10,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 50 Free,27.80,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 50 Free,28.50,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 50 Free,29.90,Seton,Opponent,2024-12-15
+Mark Taylor,11,M,Boys Diving,285.50,Seton,Opponent,2024-12-15
+James Brown,10,M,Boys Diving,265.30,Seton,Opponent,2024-12-15
+Kevin White,12,M,Boys Diving,245.80,Seton,Opponent,2024-12-15
+Ryan Green,9,M,Boys Diving,225.40,Seton,Opponent,2024-12-15
+Jessica Lee,12,F,Girls Diving,275.20,Seton,Opponent,2024-12-15
+Nicole Adams,11,F,Girls Diving,258.40,Seton,Opponent,2024-12-15
+Rachel Kim,10,F,Girls Diving,242.60,Seton,Opponent,2024-12-15
+Megan Clark,9,F,Girls Diving,228.80,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 100 Fly,58.45,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 100 Fly,62.30,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 100 Fly,65.80,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 100 Fly,68.20,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 100 Fly,68.50,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 100 Fly,72.40,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 100 Fly,76.80,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 100 Fly,80.20,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 100 Free,52.18,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 100 Free,54.30,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 100 Free,56.80,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 100 Free,58.40,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 100 Free,60.50,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 100 Free,62.30,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 100 Free,64.80,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 100 Free,68.20,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 500 Free,305.45,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 500 Free,320.30,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 500 Free,335.80,Seton,Opponent,2024-12-15
+David Kim,9,M,Boys 500 Free,350.20,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 500 Free,345.50,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 500 Free,365.20,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 500 Free,380.40,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 500 Free,395.80,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 200 Free Relay,98.50,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 200 Free Relay,98.50,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 200 Free Relay,98.50,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 200 Free Relay,98.50,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 200 Free Relay,110.30,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 200 Free Relay,110.30,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 200 Free Relay,110.30,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 200 Free Relay,110.30,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 100 Back,62.45,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 100 Back,65.30,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 100 Back,68.80,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 100 Back,72.20,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 100 Back,68.50,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 100 Back,70.40,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 100 Back,74.80,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 100 Back,78.20,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 100 Breast,68.45,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 100 Breast,72.30,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 100 Breast,76.80,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 100 Breast,80.20,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 100 Breast,75.50,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 100 Breast,78.40,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 100 Breast,82.80,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 100 Breast,86.20,Seton,Opponent,2024-12-15
+John Smith,11,M,Boys 400 Free Relay,205.50,Seton,Opponent,2024-12-15
+Mike Johnson,10,M,Boys 400 Free Relay,205.50,Seton,Opponent,2024-12-15
+Tom Wilson,12,M,Boys 400 Free Relay,205.50,Seton,Opponent,2024-12-15
+Chris Lee,11,M,Boys 400 Free Relay,205.50,Seton,Opponent,2024-12-15
+Sarah Davis,12,F,Girls 400 Free Relay,230.30,Seton,Opponent,2024-12-15
+Emily Brown,10,F,Girls 400 Free Relay,230.30,Seton,Opponent,2024-12-15
+Amy Chen,11,F,Girls 400 Free Relay,230.30,Seton,Opponent,2024-12-15
+Lisa Park,9,F,Girls 400 Free Relay,230.30,Seton,Opponent,2024-12-15
+Peter Young,7,M,Boys 50 Free,32.50,Seton,Opponent,2024-12-15
+Alex Martin,6,M,Boys 100 Free,78.30,Seton,Opponent,2024-12-15
+Sophia Hall,7,F,Girls 50 Free,35.80,Seton,Opponent,2024-12-15
+Emma Lewis,6,F,Girls 100 Free,82.40,Seton,Opponent,2024-12-15

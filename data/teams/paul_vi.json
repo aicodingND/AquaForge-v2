@@ -1,0 +1,15 @@
+{
+  "id": "paul_vi",
+  "name": "Paul VI Catholic High School",
+  "abbreviation": "PVI",
+  "colors": {
+    "primary": "#003087",
+    "secondary": "#FFD700",
+    "accent": "#FFFFFF"
+  },
+  "rosterSource": "manual",
+  "division": "VISAA_DII",
+  "conference": "VCAC",
+  "location": "Fairfax, VA",
+  "isUserTeam": false
+}

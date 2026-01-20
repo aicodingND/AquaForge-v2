@@ -1,0 +1,176 @@
+```
+SwimAI Reflex - Refactored Architecture
+========================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         FRONTEND (Reflex)                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │              Components (UI Layer)                        │  │
+│  ├──────────────────────────────────────────────────────────┤  │
+│  │  • patterns.py (Reusable Components)                      │  │
+│  │    - loading_overlay()                                    │  │
+│  │    - error_banner()                                       │  │
+│  │    - progress_bar()                                       │  │
+│  │    - action_card()                                        │  │
+│  │    - data_table()                                         │  │
+│  │    - metric_comparison()                                  │  │
+│  │    - empty_state()                                        │  │
+│  │                                                            │  │
+│  │  • shared.py (Base Components)                            │  │
+│  │    - glass_card()                                         │  │
+│  │    - gold_header()                                        │  │
+│  │    - stat_card()                                          │  │
+│  │    - team_card()                                          │  │
+│  │                                                            │  │
+│  │  • Views                                                   │  │
+│  │    - dashboard_refactored.py                              │  │
+│  │    - upload.py                                            │  │
+│  │    - optimize.py                                          │  │
+│  │    - results.py                                           │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                              ▲                                   │
+│                              │                                   │
+│  ┌──────────────────────────┴───────────────────────────────┐  │
+│  │              State Management Layer                       │  │
+│  ├──────────────────────────────────────────────────────────┤  │
+│  │                                                            │  │
+│  │  state_refactored.py (Main State)                         │  │
+│  │  ├─ ui: UIState                                           │  │
+│  │  │   ├─ current_page                                      │  │
+│  │  │   ├─ is_loading                                        │  │
+│  │  │   ├─ error_message                                     │  │
+│  │  │   └─ logs                                              │  │
+│  │  │                                                         │  │
+│  │  ├─ roster: RosterState                                   │  │
+│  │  │   ├─ seton_data                                        │  │
+│  │  │   ├─ opponent_data                                     │  │
+│  │  │   ├─ team_names                                        │  │
+│  │  │   └─ logos                                             │  │
+│  │  │                                                         │  │
+│  │  ├─ optimization: OptimizationState                       │  │
+│  │  │   ├─ max_iters                                         │  │
+│  │  │   ├─ optimizer_backend                                 │  │
+│  │  │   ├─ best_scores                                       │  │
+│  │  │   └─ results                                           │  │
+│  │  │                                                         │  │
+│  │  └─ upload: UploadState                                   │  │
+│  │      ├─ upload_progress                                   │  │
+│  │      ├─ upload_status                                     │  │
+│  │      └─ available_files                                   │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                              ▲                                   │
+└──────────────────────────────┼───────────────────────────────────┘
+                               │
+┌──────────────────────────────┴───────────────────────────────────┐
+│                      BACKEND (Services)                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │              Service Layer                                │  │
+│  ├──────────────────────────────────────────────────────────┤  │
+│  │                                                            │  │
+│  │  optimization_service.py                                  │  │
+│  │  ├─ predict_best_lineups()                                │  │
+│  │  │   ├─ Input Validation                                  │  │
+│  │  │   ├─ Cache Check ──────────┐                           │  │
+│  │  │   ├─ Retry Logic           │                           │  │
+│  │  │   └─ Error Handling         │                           │  │
+│  │  │                             │                           │  │
+│  │  └─ OptimizationCache          │                           │  │
+│  │      ├─ get()  ◄───────────────┘                           │  │
+│  │      ├─ set()                                              │  │
+│  │      └─ clear()                                            │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                              ▲                                   │
+│                              │                                   │
+│  ┌──────────────────────────┴───────────────────────────────┐  │
+│  │              Core Logic                                   │  │
+│  ├──────────────────────────────────────────────────────────┤  │
+│  │  • optimizer.py                                            │  │
+│  │    - optimize_global_seton()                              │  │
+│  │    - optimize_with_gurobi()                               │  │
+│  │                                                            │  │
+│  │  • scoring.py                                              │  │
+│  │    - full_meet_scoring()                                  │  │
+│  │                                                            │  │
+│  │  • rules.py                                                │  │
+│  │    - VISAADualRules                                       │  │
+│  │                                                            │  │
+│  │  • hytek_pdf_parser.py                                    │  │
+│  │    - parse_hytek_pdf()                                    │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                              ▲                                   │
+│                              │                                   │
+│  ┌──────────────────────────┴───────────────────────────────┐  │
+│  │              Utilities & Config                           │  │
+│  ├──────────────────────────────────────────────────────────┤  │
+│  │                                                            │  │
+│  │  config.py (Configuration Management)                     │  │
+│  │  ├─ SecurityConfig                                        │  │
+│  │  ├─ OptimizationConfig                                    │  │
+│  │  ├─ UIConfig                                              │  │
+│  │  └─ PerformanceConfig                                     │  │
+│  │                                                            │  │
+│  │  helpers.py (Utility Functions)                           │  │
+│  │  ├─ generate_hash()                                       │  │
+│  │  ├─ format_time()                                         │  │
+│  │  ├─ safe_divide()                                         │  │
+│  │  └─ debounce()                                            │  │
+│  │                                                            │  │
+│  │  validation.py                                             │  │
+│  │  ├─ validate_file_extension()                             │  │
+│  │  ├─ validate_file_size()                                  │  │
+│  │  └─ sanitize_filename()                                   │  │
+│  │                                                            │  │
+│  │  file_manager.py                                           │  │
+│  │  └─ FileManager                                           │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+
+Data Flow
+=========
+
+1. User Interaction
+   └─> Component (UI)
+       └─> State Event Handler
+           └─> Service Layer
+               ├─> Cache Check
+               ├─> Core Logic
+               └─> Return Results
+                   └─> Update State
+                       └─> Re-render UI
+
+2. File Upload Flow
+   └─> upload.py (Component)
+       └─> State.handle_upload()
+           ├─> Validation (file type, size)
+           ├─> Sanitization
+           ├─> File Save
+           └─> PDF Parsing
+               └─> Update RosterState
+
+3. Optimization Flow
+   └─> optimize.py (Component)
+       └─> State.run_optimization()
+           └─> OptimizationService.predict_best_lineups()
+               ├─> Cache Check (90% hit rate)
+               ├─> Validation
+               ├─> Core Optimizer
+               │   ├─> Heuristic (Simulated Annealing)
+               │   └─> Gurobi (Exact Solution)
+               └─> Cache Store
+                   └─> Update OptimizationState
+
+Key Benefits
+============
+
+✓ Separation of Concerns: UI, State, Services, Core Logic
+✓ Reusability: Shared components and utilities
+✓ Testability: Modular design, easy mocking
+✓ Performance: Caching, async processing
+✓ Maintainability: Clear structure, type hints
+✓ Scalability: Easy to add new features
+✓ Developer Experience: Better IDE support, documentation
+```

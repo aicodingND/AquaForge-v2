@@ -1,0 +1,19 @@
+{
+  "id": "dual_template",
+  "name": "Dual Meet Template",
+  "date": null,
+  "type": "dual",
+  "meetMode": "dual",
+  "scoringRules": "visaa_top7",
+  "scoringTable": {
+    "individual": [8, 6, 5, 4, 3, 2, 1],
+    "relay": [10, 5, 3]
+  },
+  "maxScorers": 4,
+  "teams": ["seton"],
+  "venue": null,
+  "constraints": {
+    "maxIndividualEvents": 4,
+    "exhibitionGrades": [7, 8]
+  }
+}

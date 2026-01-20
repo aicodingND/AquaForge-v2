@@ -1,0 +1,4076 @@
+{
+  "meet_name": "2026 NoVa Catholic Invitational Championship",
+  "meet_date": "2026-01-10",
+  "season": "2025-2026",
+  "venue": "Freedom Aquatic and Fitness Center",
+  "course": "Y",
+  "meet_type": "championship",
+  "teams": [
+    {
+      "code": "BCP",
+      "name": "Benedictine High School (VA)",
+      "short_name": "Benedictine"
+    },
+    {
+      "code": "BI",
+      "name": "Bishop Ireton High School",
+      "short_name": "Bishop Ireton"
+    },
+    {
+      "code": "DJO",
+      "name": "Bishop O'Connell High School",
+      "short_name": "Bishop O'Connel"
+    },
+    {
+      "code": "OAK",
+      "name": "Oakcrest School (VA)",
+      "short_name": "Oakcrest"
+    },
+    {
+      "code": "SGHS",
+      "name": "Saint Gertrude High School",
+      "short_name": "Saint Gertrude"
+    },
+    {
+      "code": "JP",
+      "name": "Saint John Paul the Great Cat",
+      "short_name": "hSaint John Paul"
+    },
+    {
+      "code": "PVI",
+      "name": "Saint Paul VI High School (VA",
+      "short_name": ")Paul VI"
+    },
+    {
+      "code": "SST",
+      "name": "Seton High School (VA)",
+      "short_name": "Seton"
+    }
+  ],
+  "team_standings": [
+    {
+      "team": "DJO",
+      "individual_points": 413.0,
+      "relay_points": 0.0,
+      "total_points": 413.0
+    },
+    {
+      "team": "SST",
+      "individual_points": 371.0,
+      "relay_points": 0.0,
+      "total_points": 371.0
+    },
+    {
+      "team": "PVI",
+      "individual_points": 333.0,
+      "relay_points": 0.0,
+      "total_points": 333.0
+    },
+    {
+      "team": "BI",
+      "individual_points": 319.0,
+      "relay_points": 0.0,
+      "total_points": 319.0
+    },
+    {
+      "team": "JP",
+      "individual_points": 225.0,
+      "relay_points": 0.0,
+      "total_points": 225.0
+    },
+    {
+      "team": "OAK",
+      "individual_points": 201.0,
+      "relay_points": 0.0,
+      "total_points": 201.0
+    },
+    {
+      "team": "SGHS",
+      "individual_points": 124.0,
+      "relay_points": 0.0,
+      "total_points": 124.0
+    },
+    {
+      "team": "BCP",
+      "individual_points": 53.0,
+      "relay_points": 0.0,
+      "total_points": 53.0
+    }
+  ],
+  "events": {
+    "50 Free": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Graham Rowan",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 22.73,
+          "place": 9,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "James Kinsella",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 22.86,
+          "place": 9,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Jermaine Worthen",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 22.96,
+          "place": 9,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "AJ Sexton",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 23.25,
+          "place": 9,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Jack Lentini",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 23.4,
+          "place": 9,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Daniel Sokban",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 23.59,
+          "place": 9,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Phillip Cru Molter",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 23.94,
+          "place": 9,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Dominic Judge",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 24.09,
+          "place": 8,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Henry Caputo",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 24.17,
+          "place": 9,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "William Rommelmeyer",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 24.36,
+          "place": 9,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "James Holmes",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 24.74,
+          "place": 8,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Gregory Bauer",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 24.77,
+          "place": 8,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Michael Zahorchak",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 24.79,
+          "place": 8,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Howard Heinrichs",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 24.89,
+          "place": 7,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Luke Kennedy",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 25.02,
+          "place": 8,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Ellie Wertzler",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 25.04,
+          "place": 14,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Daniel Belzile",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 25.25,
+          "place": 7,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Luca Palmisano",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 25.25,
+          "place": 8,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Connor Corley",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 25.37,
+          "place": 8,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Lainey Hooff",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 25.45,
+          "place": 14,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Maggie Schroer",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 26.29,
+          "place": 14,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Berkleigh Beggan",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 26.43,
+          "place": 14,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Avery Owens",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 26.55,
+          "place": 14,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Kate Foley",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 26.62,
+          "place": 14,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Katelyn Erickson",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 27.33,
+          "place": 14,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Charlotte Heinrichs",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 27.43,
+          "place": 13,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Marisa Corsino",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 27.57,
+          "place": 13,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Katherine Ouimet",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 27.67,
+          "place": 13,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Caroline Smullen",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 27.82,
+          "place": 13,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Abigail Dart",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 27.88,
+          "place": 14,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Sophia Rozycki",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 27.99,
+          "place": 14,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Eric Wang",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 28.01,
+          "place": 6,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Fiona Ryan",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 28.04,
+          "place": 13,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Kathryn Easton",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 28.39,
+          "place": 13,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Grace Ouimet",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 28.42,
+          "place": 12,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Leia Penetrante",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 28.43,
+          "place": 13,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Sophia Halisky",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 28.64,
+          "place": 13,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Sophia Krushinski",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 28.73,
+          "place": 12,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Natalie McDermott",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 28.99,
+          "place": 11,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Lily Waldron",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 28.99,
+          "place": 11,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Matthew Such",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 29.27,
+          "place": 5,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Patrick Kurrus",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 29.29,
+          "place": 5,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Isabel Frederick",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 29.67,
+          "place": 12,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Tori Griffin",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 29.89,
+          "place": 11,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Gabriella Russo",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 29.93,
+          "place": 12,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Julian Ayala",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 31.18,
+          "place": 5,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Gloria Gallagher",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 33.25,
+          "place": 6,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Madison Gilley",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 34.39,
+          "place": 7,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Cadence Everson",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 44.5,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Annalise Baldwin",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 14,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Eric Koler",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 9,
+          "points": 4.0
+        }
+      ]
+    },
+    "100 Breast": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Colton Masterson",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 60.8,
+          "place": 4,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Jermaine Worthen",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 62.27,
+          "place": 4,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Zach Choi",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 62.78,
+          "place": 4,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Benjamin Fletcher",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 66.54,
+          "place": 4,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Rai Detten",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 67.73,
+          "place": 4,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Daniel Belzile",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 68.63,
+          "place": 4,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Edward Holsten",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 68.98,
+          "place": 4,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Connor Corley",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 69.01,
+          "place": 4,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Anna Sullivan",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 69.19,
+          "place": 4,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Reid Nagtzaam",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 70.04,
+          "place": 4,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Kendall Kryszon",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 70.75,
+          "place": 4,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Therese Paradise",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 72.87,
+          "place": 4,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Courtney Carter",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 74.3,
+          "place": 4,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Kimberly Murphy",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 74.33,
+          "place": 4,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Ryan Scharpf",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 74.38,
+          "place": 3,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Isabella Koler",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 74.6,
+          "place": 4,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Bennett Ellis",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 74.63,
+          "place": 3,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Sophie Bliss",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 75.27,
+          "place": 4,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Tyler Turner",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 76.24,
+          "place": 3,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Anastasia Garvey",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 77.15,
+          "place": 3,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Mackenzie Muller",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 77.44,
+          "place": 3,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Helen Grace Thompson",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 77.47,
+          "place": 3,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Reagan Cervenak",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 77.67,
+          "place": 4,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Annabelle Bailey",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 78.46,
+          "place": 3,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Brigita Eschmann",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 78.53,
+          "place": 3,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Lucas Schmidt",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 78.98,
+          "place": 3,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Sophia Halisky",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 79.05,
+          "place": 4,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Paul Partridge",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 79.23,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Claire Schlereth",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 79.32,
+          "place": 3,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Caroline Smullen",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 79.7,
+          "place": 1,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Carolina Schemm",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 79.78,
+          "place": 3,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Samantha Estabrooks",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 80.51,
+          "place": 3,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Zoe Patterson",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 80.79,
+          "place": 3,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Joel Bookwalter",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 81.14,
+          "place": 3,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Colston Farmer",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 84.03,
+          "place": 3,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Aidan McCardell",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 84.29,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Gabriel Bernal",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 87.0,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Adele Schneider",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 87.42,
+          "place": 3,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Aoife Haggerty",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 87.47,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Fiona Ryan",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 88.02,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Elle Burgess",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 91.17,
+          "place": 2,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Sofia Mansueto",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 102.74,
+          "place": 1,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Kenton Nyugen",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 106.72,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Payton Masten",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 4,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Charles Shepherd",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 2,
+          "points": 7.0
+        }
+      ]
+    },
+    "100 Back": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Graham Rowan",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 54.09,
+          "place": 3,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Jack Fuqua",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 54.86,
+          "place": 3,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Melissa Paradise",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 56.68,
+          "place": 6,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Preston LaForme",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 56.82,
+          "place": 3,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Elliott Rowan",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 58.51,
+          "place": 6,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Victor Martinez",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 60.5,
+          "place": 3,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Marcella Forrer",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 62.19,
+          "place": 6,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Jack Herwick",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 62.22,
+          "place": 3,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Peter Sheehey",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 62.44,
+          "place": 3,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Meaghan Krepinevich",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 62.54,
+          "place": 6,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Logan Noyes",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 63.62,
+          "place": 6,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Ella Richards",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 63.69,
+          "place": 6,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Haley Baker",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 63.7,
+          "place": 6,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Patrick Kay",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 63.79,
+          "place": 3,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Abigail Dart",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 66.26,
+          "place": 6,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "James Holmes",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 67.57,
+          "place": 3,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Avery Owens",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 67.63,
+          "place": 6,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Adeesh Putchala",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 68.51,
+          "place": 3,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Maggie Schroer",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 68.82,
+          "place": 5,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Peter Johnson",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 69.15,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Leia Penetrante",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 69.96,
+          "place": 6,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Grace Ouimet",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 70.59,
+          "place": 5,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Amy Voith",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 71.37,
+          "place": 5,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Joey Lynch",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 71.58,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Nico Cepeda",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 72.56,
+          "place": 2,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Maggie Levi",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 73.12,
+          "place": 5,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "JJ Garvey",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 73.22,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Henry Wegner",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 74.15,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Dean Feindt",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 74.17,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Dana Frink",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 74.9,
+          "place": 5,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Madeline McDonnell",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 75.55,
+          "place": 4,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Sadie Prow",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 75.88,
+          "place": 5,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Sophia Krushinski",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 75.89,
+          "place": 5,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Jane Judge",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 75.9,
+          "place": 4,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Betsy Arnold",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 77.11,
+          "place": 5,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Emily Capistran",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 77.58,
+          "place": 5,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Isabel Frederick",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 78.17,
+          "place": 4,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Quinn Dwyer",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 79.2,
+          "place": 4,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Elizabeth Vitkovitsky",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 81.66,
+          "place": 4,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Alice Angarag",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 82.29,
+          "place": 3,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Madison Moritz",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 85.0,
+          "place": 3,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Luke Dion",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 87.03,
+          "place": 1,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Colman Forrer",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 2,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Annalise Baldwin",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 4,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Michaela Teh",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 4,
+          "points": 9.0
+        }
+      ]
+    },
+    "100 Free": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Lionel Martinez",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 49.05,
+          "place": 6,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "James Kinsella",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 50.58,
+          "place": 6,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Colton Masterson",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 51.65,
+          "place": 6,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Michael Zahorchak",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 53.15,
+          "place": 5,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Stella Mastroianni",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 53.9,
+          "place": 8,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Charlie Morse",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 54.07,
+          "place": 6,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Ariana Aldeguer",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 54.21,
+          "place": 8,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Edward Holsten",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 54.74,
+          "place": 6,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "AJ Sexton",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 55.15,
+          "place": 6,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Maxwell Hambey",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 55.26,
+          "place": 6,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Ellie Wertzler",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 55.48,
+          "place": 8,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Henry Caputo",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 55.69,
+          "place": 6,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "William Rommelmeyer",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 56.15,
+          "place": 4,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Jeffrey Frederick",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 56.16,
+          "place": 6,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Leah Eubanks",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 56.92,
+          "place": 8,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Luca Palmisano",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 57.48,
+          "place": 5,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Ryan Scharpf",
+          "team": "BCP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 57.65,
+          "place": 5,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Luke Kennedy",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 58.05,
+          "place": 5,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Howard Heinrichs",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 58.17,
+          "place": 5,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Joey Lynch",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 58.95,
+          "place": 5,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Juliet Van Meter",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 59.43,
+          "place": 8,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Victoria Wijas",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 59.69,
+          "place": 8,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Kate Foley",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 59.86,
+          "place": 8,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Sophie Bliss",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 60.11,
+          "place": 8,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Philomena Kay",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 60.49,
+          "place": 8,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Joel Bookwalter",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 60.58,
+          "place": 4,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Reilly Lewis",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 60.74,
+          "place": 6,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Charlotte Heinrichs",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 61.22,
+          "place": 8,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Caleb Danysh",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 61.28,
+          "place": 5,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Marisa Corsino",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 62.45,
+          "place": 7,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Adeesh Putchala",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 62.57,
+          "place": 4,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Emerson Feeley",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 62.62,
+          "place": 7,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Isabella Kyle",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 63.03,
+          "place": 7,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Delina Melles",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 63.26,
+          "place": 7,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Amelia Magee",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 63.45,
+          "place": 7,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Sophia Rozycki",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 63.6,
+          "place": 7,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Natalie McDermott",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 64.08,
+          "place": 7,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Dana Frink",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 64.85,
+          "place": 7,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Madeline McDonnell",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 66.54,
+          "place": 6,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Lily Waldron",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 67.13,
+          "place": 5,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Tori Griffin",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 67.79,
+          "place": 6,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Jane Judge",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 68.09,
+          "place": 6,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Savannah Hufner",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 70.55,
+          "place": 6,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Kenton Nguyen",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 75.65,
+          "place": 3,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Candler Law",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 88.97,
+          "place": 4,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Sarah Sims",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 123.38,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Kai Molter",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 5,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Eric Koler",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 6,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Karsten Nguyen",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 3,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Gabrielle Pascua",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 3,
+          "points": 2.0
+        }
+      ]
+    },
+    "6 Free": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Robert Wilson",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 93.75,
+          "place": 1,
+          "points": 14.0
+        },
+        {
+          "swimmer_name": "Hayden Hill",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 116.95,
+          "place": 1,
+          "points": 18.0
+        },
+        {
+          "swimmer_name": "Maeve McGuire",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 117.35,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Kenneth Nguyen",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 122.05,
+          "place": 1,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Derek Amberg",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 122.45,
+          "place": 1,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Bella Gorman",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 123.9,
+          "place": 1,
+          "points": 11.0
+        },
+        {
+          "swimmer_name": "Thomas Waldron",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 134.0,
+          "place": 1,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Maximilian Ashton",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 137.25,
+          "place": 1,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Scarlett Mcdade",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 140.9,
+          "place": 1,
+          "points": 19.0
+        },
+        {
+          "swimmer_name": "Emily Mills",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 143.75,
+          "place": 1,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "John Witter",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 146.8,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Clare Kay",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 150.35,
+          "place": 1,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Maria Miller",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 166.05,
+          "place": 1,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Teagen Rauschelbach",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 168.45,
+          "place": 1,
+          "points": 13.0
+        },
+        {
+          "swimmer_name": "Lili Lepore",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 171.55,
+          "place": 1,
+          "points": 20.0
+        },
+        {
+          "swimmer_name": "Maggie Levi",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 172.8,
+          "place": 1,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Catherine Ayers",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 180.8,
+          "place": 1,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Meghan Condon",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 189.2,
+          "place": 1,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Kellen Colevas",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 240.9,
+          "place": 1,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Rai Detten",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 275.5,
+          "place": 1,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Andrew Dick",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 1,
+          "points": 3.0
+        }
+      ]
+    },
+    "200 Free": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Paul Mullen",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 103.45,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Keaghan Fahle",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 110.27,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Jack Fuqua",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 111.49,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Claire Dobrydney",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 112.03,
+          "place": 3,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Jack Lentini",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 113.01,
+          "place": 2,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Keagan Murdock",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 115.1,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Elizabeth Bryan",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 116.88,
+          "place": 3,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Elliott Rowan",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 117.12,
+          "place": 3,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Lainey Hooff",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 118.66,
+          "place": 3,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Connor Duffy",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 121.42,
+          "place": 2,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Therese Paradise",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 123.83,
+          "place": 3,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Nicholas Heisler",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 125.51,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Logan Noyes",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 126.16,
+          "place": 3,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Haley Baker",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 126.2,
+          "place": 3,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Kylie Kryszon",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 126.44,
+          "place": 3,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Ella Richards",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 127.07,
+          "place": 3,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Isabel McEvoy",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 128.93,
+          "place": 3,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Daniel Sokban",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 128.96,
+          "place": 2,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Caeli McIntosh",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 129.48,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Michael Mahar",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 131.2,
+          "place": 2,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Reagan Cervenak",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 133.46,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Reilly Lewis",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 135.94,
+          "place": 2,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Juliet Van Meter",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 136.01,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Robert Wilson",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 136.52,
+          "place": 1,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Amy Voith",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 137.36,
+          "place": 2,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Maggie Luff",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 137.52,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Philomena Kay",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 139.54,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Amelia Magee",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 142.91,
+          "place": 2,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Julia Yi",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 145.27,
+          "place": 1,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Katie Bauer",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 148.18,
+          "place": 1,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Gabriel Bernal",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 148.99,
+          "place": 2,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Emily Capistran",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 151.27,
+          "place": 2,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Matthew Lau",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 158.67,
+          "place": 1,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Elizabeth Hurley",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 159.2,
+          "place": 1,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Bennett Ellis",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 159.35,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Alice Angarag",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 161.53,
+          "place": 2,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Charlie Dusek",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 169.86,
+          "place": 1,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Ian Hixson",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 172.81,
+          "place": 1,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Lacey Turner",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 173.18,
+          "place": 1,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Adhyan Girigowda",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 1,
+          "points": 4.0
+        }
+      ]
+    },
+    "100 Fly": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Keaghan Fahle",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 54.73,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Preston LaForme",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 56.06,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Stella Mastroianni",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 57.39,
+          "place": 3,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Peter Sheehey",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 59.36,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Kellen Colevas",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 59.47,
+          "place": 2,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Jeffrey Frederick",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 59.64,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Elizabeth Bryan",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 59.95,
+          "place": 3,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Phillip Cru Molter",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 60.56,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Peter Johnson",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 61.58,
+          "place": 2,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Jack Herwick",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 61.83,
+          "place": 2,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Melissa Paradise",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 62.08,
+          "place": 3,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Leah Eubanks",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 63.26,
+          "place": 3,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Michael Mahar",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 65.58,
+          "place": 1,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Nico Cepeda",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 66.44,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Anna LeNard",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 66.62,
+          "place": 3,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Anastasia Garvey",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 66.99,
+          "place": 3,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Kimberly Murphy",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 67.93,
+          "place": 3,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Victoria Wijas",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 68.08,
+          "place": 3,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Betsy Arnold",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 68.28,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Christopher Thomson",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 68.5,
+          "place": 1,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Annabelle Bailey",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 68.55,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Dylan Crombe",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 69.19,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Isabel McEvoy",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 69.79,
+          "place": 3,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Thomas Mulhern",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 71.0,
+          "place": 2,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Reilly Owens",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 71.19,
+          "place": 2,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Avila Mantooth",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 71.42,
+          "place": 2,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Naya Madan",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 71.83,
+          "place": 3,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Maura Mahon",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 72.32,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Jonas Wilson",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 72.88,
+          "place": 1,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Brigita Eschmann",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 73.45,
+          "place": 2,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Virginia Voorhees",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 76.91,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "JJ Garvey",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 78.97,
+          "place": 1,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Helen Grace Thompson",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 82.7,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Julian Ayala",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 87.09,
+          "place": 1,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Caroline Schroer",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 99.09,
+          "place": 1,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Patrick Kurrus",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 101.97,
+          "place": 1,
+          "points": 8.0
+        }
+      ]
+    },
+    "200 IM": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Lionel Martinez",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 119.86,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Thiago Martinez",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 125.96,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Zach Choi",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 127.58,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Kalyn O'Hara",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 128.25,
+          "place": 3,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Ariana Aldeguer",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 128.35,
+          "place": 3,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Dominic Judge",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 133.15,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Kendall Kryszon",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 134.71,
+          "place": 3,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Benjamin Fletcher",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 135.05,
+          "place": 2,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Lillian Wahl",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 137.66,
+          "place": 3,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Victor Martinez",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 137.74,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Patrick Kay",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 137.9,
+          "place": 2,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Avery Vanlandingham",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 139.42,
+          "place": 3,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Meaghan Krepinevich",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 143.77,
+          "place": 3,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Marcella Forrer",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 143.79,
+          "place": 1,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Charlie Morse",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 144.43,
+          "place": 2,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Courtney Carter",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 146.2,
+          "place": 3,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Lindley Hazelwood",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 147.85,
+          "place": 3,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Reid Nagtzaam",
+          "team": "BI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 149.07,
+          "place": 1,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Mathilda Nguyen",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 151.25,
+          "place": 3,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Ryan Pedone",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 152.94,
+          "place": 2,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Terrance Seibel",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 157.6,
+          "place": 1,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Emaline Cinotti",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 158.56,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Mackenzie Muller",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 159.27,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Samantha Estabrooks",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 160.37,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Avila Mantooth",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 164.17,
+          "place": 1,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Kyleigh Fifield",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 165.99,
+          "place": 2,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Charlotte Meadows",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 168.69,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Maura Mahon",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 170.13,
+          "place": 2,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Aiden Clements",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 172.96,
+          "place": 1,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Julia Yi",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 173.16,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Madelyn McManus",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 175.03,
+          "place": 2,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Elizabeth Vitkovitsky",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 187.35,
+          "place": 2,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Matthew Such",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 190.9,
+          "place": 1,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Karsten Nguyen",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 191.27,
+          "place": 1,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Gloria Gallagher",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 201.4,
+          "place": 1,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Cadence Everson",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 247.62,
+          "place": 1,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Gavin Bredenkamp",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Elisabeth Larson",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 2,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Adhyan Girigowda",
+          "team": "JP",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 1,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Sandra Kay",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 1,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Payton Masten",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 3,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Charles Shepherd",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 0.0,
+          "place": 2,
+          "points": 1.0
+        }
+      ]
+    },
+    "500 Free": {
+      "gender": "M",
+      "entries": [
+        {
+          "swimmer_name": "Paul Mullen",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 273.71,
+          "place": 1,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Claire Dobrydney",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 304.67,
+          "place": 3,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Keagan Murdock",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 308.23,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Kalyn O'Hara",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 308.52,
+          "place": 3,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Thiago Martinez",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 312.07,
+          "place": 1,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Anna Sullivan",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 321.91,
+          "place": 3,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Kylie Kryszon",
+          "team": "SGHS",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 325.19,
+          "place": 3,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Lillian Wahl",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 328.64,
+          "place": 3,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Avery Vanlandingham",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 337.62,
+          "place": 1,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Lindley Hazelwood",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 341.24,
+          "place": 3,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Connor Duffy",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 341.34,
+          "place": 1,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Berkleigh Beggan",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 344.12,
+          "place": 3,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Nicholas Heisler",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 344.46,
+          "place": 1,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "John Galanes",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 345.11,
+          "place": 1,
+          "points": 9.0
+        },
+        {
+          "swimmer_name": "Maxwell Hambey",
+          "team": "DJO",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 348.78,
+          "place": 1,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Caeli McIntosh",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 350.78,
+          "place": 3,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Mathilda Nguyen",
+          "team": "PVI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 358.96,
+          "place": 3,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Dean Feindt",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 367.23,
+          "place": 2,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Isabella Willis",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 368.54,
+          "place": 2,
+          "points": 6.0
+        },
+        {
+          "swimmer_name": "Terrance Seibel",
+          "team": "PVI",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 369.36,
+          "place": 1,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Gregory Bauer",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 370.02,
+          "place": 1,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Emaline Cinotti",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 370.97,
+          "place": 3,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Maggie Luff",
+          "team": "BI",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 371.13,
+          "place": 2,
+          "points": 5.0
+        },
+        {
+          "swimmer_name": "Jonas Wilson",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 376.17,
+          "place": 1,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Paul Partridge",
+          "team": "SST",
+          "gender": "M",
+          "seed_time": 0.0,
+          "final_time": 387.6,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Delina Melles",
+          "team": "DJO",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 405.3,
+          "place": 2,
+          "points": 4.0
+        },
+        {
+          "swimmer_name": "Kyleigh Fifield",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 405.53,
+          "place": 2,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Annie Dusek",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 411.87,
+          "place": 2,
+          "points": 2.0
+        },
+        {
+          "swimmer_name": "Katie Bauer",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 415.83,
+          "place": 2,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Sandra Kay",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 418.93,
+          "place": 2,
+          "points": 3.0
+        },
+        {
+          "swimmer_name": "Gabriella Russo",
+          "team": "SST",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 427.33,
+          "place": 2,
+          "points": 8.0
+        },
+        {
+          "swimmer_name": "Adele Schneider",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 439.63,
+          "place": 1,
+          "points": 7.0
+        },
+        {
+          "swimmer_name": "Isabella Cinotti",
+          "team": "OAK",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 466.74,
+          "place": 1,
+          "points": 10.0
+        },
+        {
+          "swimmer_name": "Laurel Heath",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 490.81,
+          "place": 2,
+          "points": 1.0
+        },
+        {
+          "swimmer_name": "Madison Gilley",
+          "team": "JP",
+          "gender": "F",
+          "seed_time": 0.0,
+          "final_time": 512.06,
+          "place": 2,
+          "points": 9.0
+        }
+      ]
+    }
+  },
+  "seton_roster": [
+    {
+      "id": "6054",
+      "name": "Ariana Aldeguer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6093",
+      "name": "Bethany Allen",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6061",
+      "name": "Angela Andreu",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6022",
+      "name": "Betsy Arnold",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6053",
+      "name": "Maximilian Ashton",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6099",
+      "name": "Clara Bauer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6095",
+      "name": "Gregory Bauer",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6046",
+      "name": "Katie Bauer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6084",
+      "name": "James Beltran",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6065",
+      "name": "Joel Bookwalter",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6109",
+      "name": "David Brand",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6066",
+      "name": "Michael Brand",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6062",
+      "name": "Grace Catabui",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6110",
+      "name": "Anselm Clune",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6013",
+      "name": "Meghan Condon",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6040",
+      "name": "John Cooley",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6055",
+      "name": "Katie Cooley",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6085",
+      "name": "Rafael De Micoli",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6047",
+      "name": "Annie Dusek",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6041",
+      "name": "Charlie Dusek",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6033",
+      "name": "Bennett Ellis",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6025",
+      "name": "Rose Ellis",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6026",
+      "name": "Kyleigh Fifield",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6100",
+      "name": "Leah Fifield",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6067",
+      "name": "Luke Fifield",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6038",
+      "name": "Anastasia Garvey",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6068",
+      "name": "JJ Garvey",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6056",
+      "name": "Gigi Gibaldi",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6086",
+      "name": "Thomas Goodman",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6077",
+      "name": "Bella Gorman",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6078",
+      "name": "Addi Hadro",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6027",
+      "name": "Aoife Haggerty",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6071",
+      "name": "Eamon Haggerty",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6111",
+      "name": "Oisin Haggerty",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6039",
+      "name": "Gus Halisky",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6018",
+      "name": "Sophia Halisky",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6117",
+      "name": "Blaise Hallada",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6101",
+      "name": "Camille Hallada",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6118",
+      "name": "John Paul Hartung",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6119",
+      "name": "Mark Hartung",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6112",
+      "name": "Charlie Hawley",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6102",
+      "name": "Maddie Henderson",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6042",
+      "name": "Dominic Henry",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6108",
+      "name": "Natalia Hercules",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6015",
+      "name": "Jack Herwick",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6014",
+      "name": "Lucy Herwick",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6023",
+      "name": "Elizabeth Hurley",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6024",
+      "name": "Monica Irving",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6034",
+      "name": "Dominic Judge",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6048",
+      "name": "Jane Judge",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6020",
+      "name": "William Judge",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6057",
+      "name": "Clare Kay",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6113",
+      "name": "Connor Kay",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6103",
+      "name": "Marian Kay",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6043",
+      "name": "Patrick Kay",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6076",
+      "name": "Philomena Kay",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6017",
+      "name": "Colette Kramer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6028",
+      "name": "Cora Kramer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6079",
+      "name": "Rebecca Kramer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6032",
+      "name": "Joey Lynch",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6104",
+      "name": "Emma Magness",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6080",
+      "name": "Siobhan Maher",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6049",
+      "name": "Avila Mantooth",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6063",
+      "name": "Julia Maranian",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6114",
+      "name": "Gabriel Marm",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6075",
+      "name": "Lionel Martinez",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6097",
+      "name": "Thiago Martinez",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6064",
+      "name": "Evie Mayer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6105",
+      "name": "Heidi Mayer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6019",
+      "name": "Aidan McCardell",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6021",
+      "name": "Charlotte Meadows",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6058",
+      "name": "Annabelle Mikkelson",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6060",
+      "name": "Maggie Mikkelson",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6029",
+      "name": "Maria Miller",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6106",
+      "name": "Maeve Mooney",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6120",
+      "name": "Caleb Neuhaus",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6050",
+      "name": "Bella Nguyen",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6069",
+      "name": "James Nguyen",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6044",
+      "name": "Kenneth Nguyen",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6087",
+      "name": "Philip Nguyen",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6115",
+      "name": "Peter O'Malley",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6073",
+      "name": "Brian Orellana",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6098",
+      "name": "Melissa Paradise",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6016",
+      "name": "Therese Paradise",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6070",
+      "name": "Paul Partridge",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6088",
+      "name": "Charbel Pennefather",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6081",
+      "name": "Gianna Pillion",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6094",
+      "name": "Charlotte Poullath",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6030",
+      "name": "Allison Quispe",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6051",
+      "name": "Camila Quispe",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6072",
+      "name": "James Reynolds",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6031",
+      "name": "Gabriella Russo",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6059",
+      "name": "Caroline Schroer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6052",
+      "name": "Maggie Schroer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6089",
+      "name": "Dominic Sciscilo",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6035",
+      "name": "Daniel Sokban",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6082",
+      "name": "Bella Vaughan",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6083",
+      "name": "Jane Vaughan",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6045",
+      "name": "Noah Vaughan",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6096",
+      "name": "Lily Waldron",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6037",
+      "name": "Thomas Waldron",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6107",
+      "name": "Jocelynn Wilson",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6074",
+      "name": "Jonas Wilson",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6116",
+      "name": "Patrick Wise",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6091",
+      "name": "Joe Witter",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6092",
+      "name": "John Witter",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6036",
+      "name": "Michael Zahorchak",
+      "sex": "M",
+      "grade": ""
+    }
+  ]
+}

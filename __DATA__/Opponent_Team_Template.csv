@@ -1,0 +1,97 @@
+swimmer,grade,gender,event,time,team,opponent,meet_date
+Alex Rodriguez,12,M,Boys 200 Medley Relay,115.80,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 200 Medley Relay,115.80,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 200 Medley Relay,115.80,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 200 Medley Relay,115.80,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 200 Medley Relay,128.50,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 200 Medley Relay,128.50,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 200 Medley Relay,128.50,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 200 Medley Relay,128.50,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 200 Free,120.30,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 200 Free,125.80,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 200 Free,128.40,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 200 Free,132.90,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 200 Free,138.80,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 200 Free,143.50,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 200 Free,146.20,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 200 Free,152.80,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 200 IM,135.80,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 200 IM,140.50,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 200 IM,145.20,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 200 IM,150.80,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 200 IM,152.40,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 200 IM,158.80,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 200 IM,165.20,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 200 IM,172.50,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 50 Free,24.80,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 50 Free,25.50,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 50 Free,26.20,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 50 Free,27.40,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 50 Free,28.20,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 50 Free,28.90,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 50 Free,29.80,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 50 Free,31.20,Trinity,Seton,2024-12-15
+Tyler Brown,12,M,Boys Diving,278.40,Trinity,Seton,2024-12-15
+Nathan Davis,11,M,Boys Diving,255.80,Trinity,Seton,2024-12-15
+Oscar Martinez,10,M,Boys Diving,238.20,Trinity,Seton,2024-12-15
+Paul Wilson,9,M,Boys Diving,218.60,Trinity,Seton,2024-12-15
+Grace Lee,11,F,Girls Diving,268.80,Trinity,Seton,2024-12-15
+Hannah Clark,12,F,Girls Diving,252.40,Trinity,Seton,2024-12-15
+Isabel Moore,10,F,Girls Diving,235.80,Trinity,Seton,2024-12-15
+Julia Adams,9,F,Girls Diving,220.20,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 100 Fly,60.80,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 100 Fly,64.50,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 100 Fly,68.20,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 100 Fly,72.80,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 100 Fly,70.80,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 100 Fly,75.20,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 100 Fly,80.40,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 100 Fly,85.80,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 100 Free,54.80,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 100 Free,56.50,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 100 Free,58.90,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 100 Free,62.40,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 100 Free,62.80,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 100 Free,64.50,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 100 Free,68.20,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 100 Free,72.80,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 500 Free,315.80,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 500 Free,330.50,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 500 Free,345.20,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 500 Free,360.80,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 500 Free,355.80,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 500 Free,375.40,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 500 Free,395.20,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 500 Free,415.80,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 200 Free Relay,102.80,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 200 Free Relay,102.80,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 200 Free Relay,102.80,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 200 Free Relay,102.80,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 200 Free Relay,115.40,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 200 Free Relay,115.40,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 200 Free Relay,115.40,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 200 Free Relay,115.40,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 100 Back,65.80,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 100 Back,68.40,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 100 Back,72.20,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 100 Back,76.80,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 100 Back,72.40,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 100 Back,75.80,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 100 Back,80.20,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 100 Back,85.40,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 100 Breast,70.80,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 100 Breast,74.50,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 100 Breast,78.20,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 100 Breast,82.80,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 100 Breast,78.80,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 100 Breast,82.40,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 100 Breast,86.20,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 100 Breast,92.80,Trinity,Seton,2024-12-15
+Alex Rodriguez,12,M,Boys 400 Free Relay,215.80,Trinity,Seton,2024-12-15
+Brandon Lee,11,M,Boys 400 Free Relay,215.80,Trinity,Seton,2024-12-15
+Carlos Diaz,10,M,Boys 400 Free Relay,215.80,Trinity,Seton,2024-12-15
+Derek Wang,11,M,Boys 400 Free Relay,215.80,Trinity,Seton,2024-12-15
+Amanda White,11,F,Girls 400 Free Relay,242.50,Trinity,Seton,2024-12-15
+Beth Miller,10,F,Girls 400 Free Relay,242.50,Trinity,Seton,2024-12-15
+Cathy Jones,12,F,Girls 400 Free Relay,242.50,Trinity,Seton,2024-12-15
+Diana Scott,9,F,Girls 400 Free Relay,242.50,Trinity,Seton,2024-12-15

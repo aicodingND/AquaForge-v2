@@ -1,0 +1,15 @@
+{
+  "id": "immanuel_christian",
+  "name": "Immanuel Christian School",
+  "abbreviation": "ICS",
+  "colors": {
+    "primary": "#002D62",
+    "secondary": "#FFFFFF",
+    "accent": "#B8860B"
+  },
+  "rosterSource": "swimcloud",
+  "division": "VISAA_DII",
+  "conference": "VCAC",
+  "location": "Springfield, VA",
+  "isUserTeam": false
+}

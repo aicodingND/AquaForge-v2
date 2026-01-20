@@ -1,0 +1,13 @@
+# Ruff Ignore File
+# Exclude archived legacy code from linting
+
+# Legacy Reflex application (deprecated, not in use)
+__ARCHIVE_REFLEX_APP__/
+
+# Node modules (already excluded by default)
+node_modules/
+
+# Build artifacts
+.next/
+dist/
+build/

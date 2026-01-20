@@ -1,0 +1,2752 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AquaForge API",
+    "description": "Swim Meet Optimization API - Backend services for AquaForge.ai",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Health Check",
+        "description": "Check the health status of the API and its dependencies.\n\nReturns:\n    Health status with service availability information",
+        "operationId": "health_check_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ready": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Readiness Check",
+        "description": "Kubernetes-style readiness probe.\n\nReturns:\n    Simple ready status",
+        "operationId": "readiness_check_api_v1_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/live": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Liveness Check",
+        "description": "Kubernetes-style liveness probe.\n\nReturns:\n    Simple alive status",
+        "operationId": "liveness_check_api_v1_live_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/optimize": {
+      "post": {
+        "tags": [
+          "Optimization (Legacy)"
+        ],
+        "summary": "Optimize Lineup",
+        "description": "Run lineup optimization for a swim meet.\n\nThis endpoint accepts team data and optimization parameters,\nthen returns the optimal lineup assignments.\n\nArgs:\n    request: Optimization request with team data and parameters\n\nReturns:\n    Optimization results with scores and lineup assignments",
+        "operationId": "optimize_lineup_api_v1_optimize_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptimizationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptimizationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/optimize/preview": {
+      "post": {
+        "tags": [
+          "Optimization (Legacy)"
+        ],
+        "summary": "Preview Optimization",
+        "description": "Get a quick preview of optimization without full computation.\n\nUseful for validating data before running full optimization.",
+        "operationId": "preview_optimization_api_v1_optimize_preview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptimizationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/optimize/backends": {
+      "get": {
+        "tags": [
+          "Optimization (Legacy)"
+        ],
+        "summary": "List Backends",
+        "description": "List available optimization backends and their status.",
+        "operationId": "list_backends_api_v1_optimize_backends_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/data/upload": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Upload Team File",
+        "description": "Upload and process a team roster file.\n\nSupports Excel (.xlsx, .xls), CSV, and JSON files.\n\nArgs:\n    file: The roster file to upload\n    team_type: Either 'seton' or 'opponent'\n    team_name: Optional team name override\n\nReturns:\n    Processing results with swimmer and entry counts",
+        "operationId": "upload_team_file_api_v1_data_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_team_file_api_v1_data_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamDataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/data/team": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Submit Team Data",
+        "description": "Submit team data directly as JSON.\n\nAlternative to file upload for programmatic access.",
+        "operationId": "submit_team_data_api_v1_data_team_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamDataRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamDataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/data/events": {
+      "get": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "List Standard Events",
+        "description": "Get the list of standard swim meet events.",
+        "operationId": "list_standard_events_api_v1_data_events_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/data/templates/{template_type}": {
+      "get": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Get Data Template",
+        "description": "Get a data template for file uploads.\n\nArgs:\n    template_type: Either 'csv' or 'json'",
+        "operationId": "get_data_template_api_v1_data_templates__template_type__get",
+        "parameters": [
+          {
+            "name": "template_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Template Type"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/data/clear": {
+      "delete": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Clear All Data",
+        "description": "Clear all uploaded data (for session reset).",
+        "operationId": "clear_all_data_api_v1_data_clear_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/export": {
+      "post": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Export Results",
+        "description": "Export optimization results to the specified format.\n\nArgs:\n    request: Export request with format and results data\n\nReturns:\n    Export response with content or download URL",
+        "operationId": "export_results_api_v1_export_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/export/download/{filename}": {
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Download Export",
+        "description": "Download a previously generated export file.\n\nNote: This requires server-side file storage to be implemented.",
+        "operationId": "download_export_api_v1_export_download__filename__get",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Filename"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/export/formats": {
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "List Export Formats",
+        "description": "List available export formats and their descriptions.",
+        "operationId": "list_export_formats_api_v1_export_formats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analytics/compare": {
+      "post": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Compare Teams",
+        "description": "Compare two teams across all events.\n\nReturns head-to-head analysis and event-by-event breakdown.",
+        "operationId": "compare_teams_api_v1_analytics_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_compare_teams_api_v1_analytics_compare_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analytics/swimmer/{swimmer_name}": {
+      "post": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Analyze Swimmer",
+        "description": "Get detailed analytics for a specific swimmer.",
+        "operationId": "analyze_swimmer_api_v1_analytics_swimmer__swimmer_name__post",
+        "parameters": [
+          {
+            "name": "swimmer_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Swimmer Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "title": "Team Data"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analytics/event/{event_name}": {
+      "post": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Analyze Event",
+        "description": "Get detailed analytics for a specific event.",
+        "operationId": "analyze_event_api_v1_analytics_event__event_name__post",
+        "parameters": [
+          {
+            "name": "event_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Event Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_analyze_event_api_v1_analytics_event__event_name__post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analytics/depth": {
+      "post": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Analyze Depth",
+        "description": "Analyze team depth across all events.",
+        "operationId": "analyze_depth_api_v1_analytics_depth_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array",
+                "title": "Team Data"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analytics/scoring": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get Scoring Rules",
+        "description": "Get the scoring rules used for meet calculations.",
+        "operationId": "get_scoring_rules_api_v1_analytics_scoring_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/dual-meet/optimize": {
+      "post": {
+        "tags": [
+          "Dual Meet",
+          "Dual Meet"
+        ],
+        "summary": "Optimize dual meet lineup",
+        "description": "Optimize lineup for a head-to-head dual meet.\n    \n    Takes rosters for both teams and returns the optimal lineup\n    with scoring predictions and recommendations.\n    \n    **Optimization Methods:**\n    - `gurobi`: Integer programming (most accurate, requires Gurobi license)\n    - `nash`: Nash equilibrium game theory\n    - `heuristic`: Fast greedy algorithm\n    \n    **Scoring:**\n    - Individual: Top 7 score [8, 6, 5, 4, 3, 2, 1]\n    - Relays: Top 3 score [10, 5, 3]\n    - Total: 232 points",
+        "operationId": "optimize_dual_meet_api_v2_dual_meet_optimize_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DualMeetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DualMeetResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/dual-meet/validate": {
+      "post": {
+        "tags": [
+          "Dual Meet",
+          "Dual Meet"
+        ],
+        "summary": "Validate dual meet data",
+        "description": "Validate team rosters without running full optimization.",
+        "operationId": "validate_dual_meet_api_v2_dual_meet_validate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DualMeetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Validate Dual Meet Api V2 Dual Meet Validate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/dual-meet/scoring-info": {
+      "get": {
+        "tags": [
+          "Dual Meet",
+          "Dual Meet"
+        ],
+        "summary": "Get dual meet scoring information",
+        "description": "Returns the scoring rules for dual meets.",
+        "operationId": "get_scoring_info_api_v2_dual_meet_scoring_info_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Scoring Info Api V2 Dual Meet Scoring Info Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/championship/project": {
+      "post": {
+        "tags": [
+          "Championship",
+          "Championship"
+        ],
+        "summary": "Project championship standings",
+        "description": "Project meet standings from psych sheet data.\n    \n    Uses seed times to predict placements and calculate expected points\n    for each team. Also identifies swing events where small improvements\n    would yield significant point gains.\n    \n    **Supported Meet Profiles:**\n    - `vcac_championship`: VCAC Conference Championship rules\n    - `visaa_state`: VISAA State Championship rules",
+        "operationId": "project_standings_api_v2_championship_project_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChampionshipProjectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChampionshipProjectResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/championship/optimize": {
+      "post": {
+        "tags": [
+          "Championship",
+          "Championship"
+        ],
+        "summary": "Optimize championship entries",
+        "description": "Optimize swimmer event assignments for maximum team points.\n    \n    Takes into account:\n    - Max 2 individual events per swimmer\n    - Diving counts as 1 individual event\n    - 400 Free Relay (Relay 3) counts as 1 individual event at VCAC\n    - Back-to-back event restrictions",
+        "operationId": "optimize_entries_api_v2_championship_optimize_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChampionshipOptimizeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChampionshipOptimizeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/championship/upload-psych-sheet": {
+      "post": {
+        "tags": [
+          "Championship",
+          "Championship"
+        ],
+        "summary": "Upload psych sheet file",
+        "description": "Upload a CSV psych sheet and parse it.",
+        "operationId": "upload_psych_sheet_api_v2_championship_upload_psych_sheet_post",
+        "parameters": [
+          {
+            "name": "target_team",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Seton",
+              "title": "Target Team"
+            }
+          },
+          {
+            "name": "meet_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Championship",
+              "title": "Meet Name"
+            }
+          },
+          {
+            "name": "meet_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "vcac_championship",
+              "title": "Meet Profile"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_psych_sheet_api_v2_championship_upload_psych_sheet_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Upload Psych Sheet Api V2 Championship Upload Psych Sheet Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/championship/meet-profiles": {
+      "get": {
+        "tags": [
+          "Championship",
+          "Championship"
+        ],
+        "summary": "List available meet profiles",
+        "description": "Returns available meet profiles and their rules.",
+        "operationId": "list_meet_profiles_api_v2_championship_meet_profiles_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response List Meet Profiles Api V2 Championship Meet Profiles Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/championship/scoring-info/{profile}": {
+      "get": {
+        "tags": [
+          "Championship",
+          "Championship"
+        ],
+        "summary": "Get scoring information for a meet profile",
+        "description": "Get scoring information for a specific meet profile.",
+        "operationId": "get_scoring_info_api_v2_championship_scoring_info__profile__get",
+        "parameters": [
+          {
+            "name": "profile",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Profile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Scoring Info Api V2 Championship Scoring Info  Profile  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/championship/strategies": {
+      "get": {
+        "tags": [
+          "Championship",
+          "Championship"
+        ],
+        "summary": "Get championship optimization strategies",
+        "description": "Returns comprehensive information about available championship optimization strategies.\n    \n    Each strategy includes:\n    - Detailed description\n    - When to use it\n    - Example scenarios\n    - Pros and cons\n    - Recommended use cases\n    - Implementation status",
+        "operationId": "get_strategies_api_v2_championship_strategies_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Strategies Api V2 Championship Strategies Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_analyze_event_api_v1_analytics_event__event_name__post": {
+        "properties": {
+          "seton_data": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Seton Data"
+          },
+          "opponent_data": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Opponent Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seton_data",
+          "opponent_data"
+        ],
+        "title": "Body_analyze_event_api_v1_analytics_event__event_name__post"
+      },
+      "Body_compare_teams_api_v1_analytics_compare_post": {
+        "properties": {
+          "seton_data": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Seton Data"
+          },
+          "opponent_data": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Opponent Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seton_data",
+          "opponent_data"
+        ],
+        "title": "Body_compare_teams_api_v1_analytics_compare_post"
+      },
+      "Body_upload_psych_sheet_api_v2_championship_upload_psych_sheet_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_psych_sheet_api_v2_championship_upload_psych_sheet_post"
+      },
+      "Body_upload_team_file_api_v1_data_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          },
+          "team_type": {
+            "type": "string",
+            "title": "Team Type"
+          },
+          "team_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Team Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file",
+          "team_type"
+        ],
+        "title": "Body_upload_team_file_api_v1_data_upload_post"
+      },
+      "ChampionshipOptimizeRequest": {
+        "properties": {
+          "entries": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Entries",
+            "description": "All psych sheet entries"
+          },
+          "target_team": {
+            "type": "string",
+            "title": "Target Team",
+            "description": "Team to optimize",
+            "default": "Seton"
+          },
+          "meet_name": {
+            "type": "string",
+            "title": "Meet Name",
+            "description": "Meet name",
+            "default": "Championship"
+          },
+          "meet_profile": {
+            "type": "string",
+            "title": "Meet Profile",
+            "description": "Rules profile",
+            "default": "vcac_championship"
+          },
+          "divers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Divers",
+            "description": "Swimmers who are diving"
+          },
+          "relay_3_swimmers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Relay 3 Swimmers",
+            "description": "Swimmers swimming the 400 Free Relay"
+          },
+          "optimize_entries": {
+            "type": "boolean",
+            "title": "Optimize Entries",
+            "description": "Run entry optimization",
+            "default": true
+          },
+          "optimize_relays": {
+            "type": "boolean",
+            "title": "Optimize Relays",
+            "description": "Run relay optimization",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "entries"
+        ],
+        "title": "ChampionshipOptimizeRequest",
+        "description": "Request for championship entry optimization."
+      },
+      "ChampionshipOptimizeResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "projection": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Projection",
+            "description": "Projected standings"
+          },
+          "entry_assignments": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entry Assignments",
+            "description": "Optimized swimmer-event assignments"
+          },
+          "relay_configurations": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relay Configurations",
+            "description": "Optimized relay configurations"
+          },
+          "optimization_improvement": {
+            "type": "number",
+            "title": "Optimization Improvement",
+            "description": "Point improvement",
+            "default": 0
+          },
+          "recommendations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Recommendations"
+          },
+          "meet_type": {
+            "type": "string",
+            "title": "Meet Type",
+            "default": "championship"
+          },
+          "metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metrics"
+          },
+          "warnings": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warnings"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "projection"
+        ],
+        "title": "ChampionshipOptimizeResponse",
+        "description": "Response from championship entry optimization."
+      },
+      "ChampionshipProjectRequest": {
+        "properties": {
+          "entries": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Entries",
+            "description": "All psych sheet entries"
+          },
+          "target_team": {
+            "type": "string",
+            "title": "Target Team",
+            "description": "Team to focus analysis on",
+            "default": "Seton"
+          },
+          "meet_name": {
+            "type": "string",
+            "title": "Meet Name",
+            "description": "Meet name",
+            "default": "Championship"
+          },
+          "meet_profile": {
+            "type": "string",
+            "title": "Meet Profile",
+            "description": "Rules profile",
+            "default": "vcac_championship"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entries"
+        ],
+        "title": "ChampionshipProjectRequest",
+        "description": "Request for championship point projection.",
+        "example": {
+          "entries": [
+            {
+              "event": "100 Free",
+              "grade": 11,
+              "seed_time": 52.34,
+              "swimmer_name": "John Smith",
+              "team": "Seton"
+            }
+          ],
+          "meet_name": "VCAC Championship 2026",
+          "target_team": "Seton"
+        }
+      },
+      "ChampionshipProjectResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "description": "Whether projection succeeded"
+          },
+          "meet_name": {
+            "type": "string",
+            "title": "Meet Name",
+            "description": "Meet name"
+          },
+          "target_team": {
+            "type": "string",
+            "title": "Target Team",
+            "description": "Target team"
+          },
+          "target_team_total": {
+            "type": "number",
+            "title": "Target Team Total",
+            "description": "Target team projected points"
+          },
+          "target_team_rank": {
+            "type": "integer",
+            "title": "Target Team Rank",
+            "description": "Target team projected rank"
+          },
+          "standings": {
+            "items": {
+              "$ref": "#/components/schemas/StandingModel"
+            },
+            "type": "array",
+            "title": "Standings",
+            "description": "Projected standings"
+          },
+          "team_totals": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Team Totals",
+            "description": "Points per team"
+          },
+          "swing_events": {
+            "items": {
+              "$ref": "#/components/schemas/SwingEventModel"
+            },
+            "type": "array",
+            "title": "Swing Events",
+            "description": "Swing event opportunities"
+          },
+          "event_projections": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/EventProjectionModel"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Projections",
+            "description": "Per-event projections"
+          },
+          "recommendations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Recommendations",
+            "description": "Coaching recommendations"
+          },
+          "meet_type": {
+            "type": "string",
+            "title": "Meet Type",
+            "description": "Meet type",
+            "default": "championship"
+          },
+          "metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metrics",
+            "description": "Performance metrics"
+          },
+          "warnings": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warnings",
+            "description": "Validation warnings"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error",
+            "description": "Error message if failed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "meet_name",
+          "target_team",
+          "target_team_total",
+          "target_team_rank",
+          "standings",
+          "team_totals"
+        ],
+        "title": "ChampionshipProjectResponse",
+        "description": "Response from championship point projection."
+      },
+      "DualMeetOptions": {
+        "properties": {
+          "method": {
+            "type": "string",
+            "title": "Method",
+            "description": "Optimization method: gurobi, nash, heuristic",
+            "default": "gurobi"
+          },
+          "max_iters": {
+            "type": "integer",
+            "title": "Max Iters",
+            "description": "Maximum iterations",
+            "default": 1000
+          },
+          "enforce_fatigue": {
+            "type": "boolean",
+            "title": "Enforce Fatigue",
+            "description": "Apply fatigue penalties",
+            "default": false
+          },
+          "scoring_type": {
+            "type": "string",
+            "title": "Scoring Type",
+            "description": "Scoring type",
+            "default": "visaa_top7"
+          }
+        },
+        "type": "object",
+        "title": "DualMeetOptions",
+        "description": "Options for dual meet optimization."
+      },
+      "DualMeetRequest": {
+        "properties": {
+          "our_team": {
+            "$ref": "#/components/schemas/TeamRosterModel",
+            "description": "Our team roster"
+          },
+          "opponent": {
+            "$ref": "#/components/schemas/TeamRosterModel",
+            "description": "Opponent team roster"
+          },
+          "options": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DualMeetOptions"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optimization options"
+          }
+        },
+        "type": "object",
+        "required": [
+          "our_team",
+          "opponent"
+        ],
+        "title": "DualMeetRequest",
+        "description": "Request for dual meet optimization.",
+        "example": {
+          "opponent": {
+            "entries": [
+              {
+                "event": "100 Free",
+                "grade": 12,
+                "swimmer": "Bob Jones",
+                "time": 53.01
+              }
+            ],
+            "team_name": "Trinity"
+          },
+          "options": {
+            "enforce_fatigue": false,
+            "method": "gurobi"
+          },
+          "our_team": {
+            "entries": [
+              {
+                "event": "100 Free",
+                "grade": 11,
+                "swimmer": "John Smith",
+                "time": 52.34
+              },
+              {
+                "event": "50 Free",
+                "grade": 10,
+                "swimmer": "Jane Doe",
+                "time": 26.12
+              }
+            ],
+            "team_name": "Seton"
+          }
+        }
+      },
+      "DualMeetResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "description": "Whether optimization succeeded"
+          },
+          "our_score": {
+            "type": "number",
+            "title": "Our Score",
+            "description": "Our team's score"
+          },
+          "opponent_score": {
+            "type": "number",
+            "title": "Opponent Score",
+            "description": "Opponent's score"
+          },
+          "total_points": {
+            "type": "number",
+            "title": "Total Points",
+            "description": "Total points (should be 232)"
+          },
+          "winner": {
+            "type": "string",
+            "title": "Winner",
+            "description": "Winning team name"
+          },
+          "is_valid": {
+            "type": "boolean",
+            "title": "Is Valid",
+            "description": "Whether total is valid (232)"
+          },
+          "baseline_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Score",
+            "description": "Score before optimization"
+          },
+          "optimized_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Optimized Score",
+            "description": "Score after optimization"
+          },
+          "improvement": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Improvement",
+            "description": "Point improvement"
+          },
+          "method_used": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Method Used",
+            "description": "Optimization method used"
+          },
+          "event_breakdown": {
+            "items": {
+              "$ref": "#/components/schemas/EventBreakdownModel"
+            },
+            "type": "array",
+            "title": "Event Breakdown",
+            "description": "Per-event scoring breakdown"
+          },
+          "recommendations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Recommendations",
+            "description": "Coaching recommendations"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Details",
+            "description": "Detailed lineup entries"
+          },
+          "meet_type": {
+            "type": "string",
+            "title": "Meet Type",
+            "description": "Meet type",
+            "default": "dual"
+          },
+          "metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metrics",
+            "description": "Performance metrics"
+          },
+          "warnings": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warnings",
+            "description": "Validation warnings"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error",
+            "description": "Error message if failed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "our_score",
+          "opponent_score",
+          "total_points",
+          "winner",
+          "is_valid"
+        ],
+        "title": "DualMeetResponse",
+        "description": "Response from dual meet optimization.",
+        "example": {
+          "improvement": 5,
+          "is_valid": true,
+          "opponent_score": 97,
+          "our_score": 135,
+          "recommendations": [
+            "Consider moving Smith to 50 Free"
+          ],
+          "success": true,
+          "total_points": 232,
+          "winner": "Seton"
+        }
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "type": "string",
+            "title": "Error"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail"
+          },
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse",
+        "description": "Standard error response."
+      },
+      "EventBreakdownModel": {
+        "properties": {
+          "event": {
+            "type": "string",
+            "title": "Event"
+          },
+          "our_points": {
+            "type": "number",
+            "title": "Our Points"
+          },
+          "opponent_points": {
+            "type": "number",
+            "title": "Opponent Points"
+          },
+          "entries": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Entries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "event",
+          "our_points",
+          "opponent_points",
+          "entries"
+        ],
+        "title": "EventBreakdownModel",
+        "description": "Breakdown for a single event."
+      },
+      "EventProjectionModel": {
+        "properties": {
+          "event": {
+            "type": "string",
+            "title": "Event"
+          },
+          "team_points": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Team Points"
+          },
+          "entries": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Entries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "event",
+          "team_points",
+          "entries"
+        ],
+        "title": "EventProjectionModel",
+        "description": "Projection for a single event."
+      },
+      "ExportFormat": {
+        "type": "string",
+        "enum": [
+          "csv",
+          "pdf",
+          "html",
+          "json"
+        ],
+        "title": "ExportFormat",
+        "description": "Supported export formats."
+      },
+      "ExportRequest": {
+        "properties": {
+          "format": {
+            "$ref": "#/components/schemas/ExportFormat",
+            "description": "Export format"
+          },
+          "optimization_results": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Optimization Results",
+            "description": "Optimization results to export"
+          },
+          "seton_score": {
+            "type": "number",
+            "title": "Seton Score",
+            "default": 0.0
+          },
+          "opponent_score": {
+            "type": "number",
+            "title": "Opponent Score",
+            "default": 0.0
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "format",
+          "optimization_results"
+        ],
+        "title": "ExportRequest",
+        "description": "Request model for exporting results."
+      },
+      "ExportResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "format": {
+            "$ref": "#/components/schemas/ExportFormat"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content",
+            "description": "Base64 encoded content for binary formats"
+          },
+          "download_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Download Url",
+            "description": "URL for file download if stored"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "format",
+          "filename"
+        ],
+        "title": "ExportResponse",
+        "description": "Response from export request."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Service status"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version",
+            "default": "1.0.0"
+          },
+          "services": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Services"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "HealthResponse",
+        "description": "Health check response."
+      },
+      "OptimizationRequest": {
+        "properties": {
+          "seton_data": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Seton Data",
+            "description": "Seton team data"
+          },
+          "opponent_data": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Opponent Data",
+            "description": "Opponent team data"
+          },
+          "optimizer_backend": {
+            "$ref": "#/components/schemas/OptimizerBackend",
+            "description": "Optimization engine to use (GUROBI = accurate MILP, HEURISTIC = fast fallback)",
+            "default": "gurobi"
+          },
+          "max_individual_events": {
+            "type": "integer",
+            "maximum": 6.0,
+            "minimum": 1.0,
+            "title": "Max Individual Events",
+            "default": 4
+          },
+          "enforce_fatigue": {
+            "type": "boolean",
+            "title": "Enforce Fatigue",
+            "default": true
+          },
+          "use_relay_optimization": {
+            "type": "boolean",
+            "title": "Use Relay Optimization",
+            "default": true
+          },
+          "robust_mode": {
+            "type": "boolean",
+            "title": "Robust Mode",
+            "description": "Run multi-scenario evaluation",
+            "default": false
+          },
+          "scoring_type": {
+            "type": "string",
+            "title": "Scoring Type",
+            "description": "Scoring rules (visaa_top7 or standard_top5)",
+            "default": "visaa_top7"
+          },
+          "seton_team_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seton Team Name",
+            "default": "Seton"
+          },
+          "opponent_team_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opponent Team Name",
+            "default": "Opponent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seton_data",
+          "opponent_data"
+        ],
+        "title": "OptimizationRequest",
+        "description": "Request model for optimization."
+      },
+      "OptimizationResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "seton_score": {
+            "type": "number",
+            "title": "Seton Score"
+          },
+          "opponent_score": {
+            "type": "number",
+            "title": "Opponent Score"
+          },
+          "score_margin": {
+            "type": "number",
+            "title": "Score Margin"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/OptimizationResult"
+            },
+            "type": "array",
+            "title": "Results"
+          },
+          "statistics": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Statistics"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "optimization_time_ms": {
+            "type": "number",
+            "title": "Optimization Time Ms"
+          },
+          "championship_standings": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Championship Standings",
+            "description": "Full team standings for championship mode: [{rank, team, points}, ...]"
+          },
+          "event_breakdowns": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Breakdowns",
+            "description": "Per-event point breakdown for all teams"
+          },
+          "swing_events": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Swing Events",
+            "description": "Events where small improvements yield significant gains"
+          },
+          "analytics": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analytics",
+            "description": "Advanced analytics: monte_carlo, fatigue_warnings, nash_insights, relay_tradeoffs"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "seton_score",
+          "opponent_score",
+          "score_margin",
+          "results",
+          "optimization_time_ms"
+        ],
+        "title": "OptimizationResponse",
+        "description": "Response from optimization request."
+      },
+      "OptimizationResult": {
+        "properties": {
+          "event": {
+            "type": "string",
+            "title": "Event"
+          },
+          "event_number": {
+            "type": "integer",
+            "title": "Event Number"
+          },
+          "seton_swimmers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Seton Swimmers"
+          },
+          "opponent_swimmers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Opponent Swimmers"
+          },
+          "seton_times": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Seton Times"
+          },
+          "opponent_times": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Opponent Times"
+          },
+          "seton_points": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Seton Points"
+          },
+          "opponent_points": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Opponent Points"
+          },
+          "projected_score": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Projected Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "event",
+          "event_number",
+          "seton_swimmers",
+          "opponent_swimmers",
+          "seton_times",
+          "opponent_times",
+          "projected_score"
+        ],
+        "title": "OptimizationResult",
+        "description": "Single event optimization result."
+      },
+      "OptimizerBackend": {
+        "type": "string",
+        "enum": [
+          "heuristic",
+          "gurobi"
+        ],
+        "title": "OptimizerBackend",
+        "description": "Available optimization backends."
+      },
+      "StandingModel": {
+        "properties": {
+          "rank": {
+            "type": "integer",
+            "title": "Rank",
+            "description": "Team rank"
+          },
+          "team": {
+            "type": "string",
+            "title": "Team",
+            "description": "Team name"
+          },
+          "points": {
+            "type": "number",
+            "title": "Points",
+            "description": "Projected points"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rank",
+          "team",
+          "points"
+        ],
+        "title": "StandingModel",
+        "description": "Team standing in projected results."
+      },
+      "SwimmerEntry": {
+        "properties": {
+          "swimmer": {
+            "type": "string",
+            "title": "Swimmer",
+            "description": "Swimmer name"
+          },
+          "event": {
+            "type": "string",
+            "title": "Event",
+            "description": "Event name"
+          },
+          "time": {
+            "type": "string",
+            "title": "Time",
+            "description": "Best time for this event"
+          },
+          "seed_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed Time",
+            "description": "Seed time if different"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age",
+            "description": "Swimmer age"
+          },
+          "grade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grade",
+            "description": "Swimmer grade"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": [
+          "swimmer",
+          "event",
+          "time"
+        ],
+        "title": "SwimmerEntry",
+        "description": "Single swimmer entry data."
+      },
+      "SwimmerEntryModel": {
+        "properties": {
+          "swimmer": {
+            "type": "string",
+            "title": "Swimmer",
+            "description": "Swimmer's name"
+          },
+          "event": {
+            "type": "string",
+            "title": "Event",
+            "description": "Event name"
+          },
+          "time": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Time",
+            "description": "Time in seconds or string format"
+          },
+          "grade": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grade",
+            "description": "Grade level (7-12)"
+          },
+          "is_exhibition": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Exhibition",
+            "description": "Exhibition swimmer",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "swimmer",
+          "event",
+          "time"
+        ],
+        "title": "SwimmerEntryModel",
+        "description": "A single swimmer entry."
+      },
+      "SwingEventModel": {
+        "properties": {
+          "event": {
+            "type": "string",
+            "title": "Event"
+          },
+          "swimmer": {
+            "type": "string",
+            "title": "Swimmer"
+          },
+          "team": {
+            "type": "string",
+            "title": "Team"
+          },
+          "current_place": {
+            "type": "integer",
+            "title": "Current Place"
+          },
+          "target_place": {
+            "type": "integer",
+            "title": "Target Place"
+          },
+          "current_points": {
+            "type": "number",
+            "title": "Current Points"
+          },
+          "potential_points": {
+            "type": "number",
+            "title": "Potential Points"
+          },
+          "point_gain": {
+            "type": "number",
+            "title": "Point Gain"
+          },
+          "time_gap": {
+            "type": "number",
+            "title": "Time Gap"
+          }
+        },
+        "type": "object",
+        "required": [
+          "event",
+          "swimmer",
+          "team",
+          "current_place",
+          "target_place",
+          "current_points",
+          "potential_points",
+          "point_gain",
+          "time_gap"
+        ],
+        "title": "SwingEventModel",
+        "description": "A swing event opportunity."
+      },
+      "TeamDataRequest": {
+        "properties": {
+          "team_name": {
+            "type": "string",
+            "title": "Team Name",
+            "description": "Team name"
+          },
+          "team_type": {
+            "$ref": "#/components/schemas/TeamType",
+            "description": "Team classification (seton/opponent)"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/SwimmerEntry"
+            },
+            "type": "array",
+            "title": "Entries",
+            "description": "List of swimmer entries"
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "team_name",
+          "team_type",
+          "entries"
+        ],
+        "title": "TeamDataRequest",
+        "description": "Request model for team data upload."
+      },
+      "TeamDataResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "team_name": {
+            "type": "string",
+            "title": "Team Name"
+          },
+          "team_type": {
+            "$ref": "#/components/schemas/TeamType"
+          },
+          "swimmer_count": {
+            "type": "integer",
+            "title": "Swimmer Count"
+          },
+          "entry_count": {
+            "type": "integer",
+            "title": "Entry Count"
+          },
+          "events": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Events",
+            "description": "Unique events"
+          },
+          "data": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Data",
+            "description": "Parsed entry data"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "file_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Hash"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "teams": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Teams",
+            "description": "Team codes for championship meets"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "team_name",
+          "team_type",
+          "swimmer_count",
+          "entry_count"
+        ],
+        "title": "TeamDataResponse",
+        "description": "Response after processing team data."
+      },
+      "TeamRosterModel": {
+        "properties": {
+          "team_name": {
+            "type": "string",
+            "title": "Team Name",
+            "description": "Team name"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/SwimmerEntryModel"
+            },
+            "type": "array",
+            "title": "Entries",
+            "description": "List of swimmer entries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "team_name",
+          "entries"
+        ],
+        "title": "TeamRosterModel",
+        "description": "Team roster with entries."
+      },
+      "TeamType": {
+        "type": "string",
+        "enum": [
+          "seton",
+          "opponent"
+        ],
+        "title": "TeamType",
+        "description": "Team type classification."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

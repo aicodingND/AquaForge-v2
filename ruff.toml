@@ -1,0 +1,11 @@
+# Exclude archived legacy code
+exclude = ["__ARCHIVE_REFLEX_APP__", ".venv", "node_modules", ".next", ".cache"]
+
+[lint]
+# Enable fixes for safe auto-corrections
+fixable = ["ALL"]
+
+# Ignore rules that aren't blocking
+ignore = [
+    "E501", # Line too long (we use black for formatting)
+]

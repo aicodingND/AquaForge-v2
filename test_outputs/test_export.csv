@@ -1,0 +1,70 @@
+# AquaForge Optimization Results
+# Generated: 2026-01-08 04:24:13
+# Seton Score: 124.0
+# Opponent Score: 108.0
+
+swimmer,event,time,grade,team,opponent,gender,original_event,scoring_eligible,place,points
+Lionel Martinez,100 Yard Freestyle,47.16,11,seton,Immanuel,M,100 Free,True,1,8.0
+Caleb Fiala,100 Yard Freestyle,50.14,11,opponent,Seton,M,100 Free,True,2,6.0
+Brenton Anderson,100 Yard Freestyle,53.75,11,opponent,Seton,M,100 Free,True,3,5.0
+Michael Salter,100 Yard Freestyle,55.28,9,opponent,Seton,M,100 Free,True,4,4.0
+Jonathan Salter,100 Yard Freestyle,57.73,12,opponent,Seton,M,100 Free,True,5,3.0
+Bennett Ellis,100 Yard Freestyle,66.1,11,seton,Immanuel,M,100 Free,True,6,2.0
+Peter O'Malley,100 Yard Freestyle,73.65,8,seton,Immanuel,M,100 Free,True,7,1.0
+Noah Vaughan,100 Yard Freestyle,73.71,11,seton,Immanuel,M,100 Free,True,8,0.0
+Lionel Martinez,50 Yard Freestyle,21.43,11,seton,Immanuel,M,50 Free,True,1,8.0
+Caleb Fiala,50 Yard Freestyle,22.65,11,opponent,Seton,M,50 Free,True,2,6.0
+Moses Wolf,50 Yard Freestyle,23.04,11,opponent,Seton,M,50 Free,True,3,5.0
+Daniel Sokban,50 Yard Freestyle,23.43,11,seton,Immanuel,M,50 Free,True,4,4.0
+Jonathan Salter,50 Yard Freestyle,24.07,12,opponent,Seton,M,50 Free,True,5,3.0
+Caleb Morillo,50 Yard Freestyle,24.13,12,opponent,Seton,M,50 Free,True,6,2.0
+Joel Bookwalter,50 Yard Freestyle,27.75,9,seton,Immanuel,M,50 Free,True,7,1.0
+James Nguyen,50 Yard Freestyle,29.77,8,seton,Immanuel,M,50 Free,True,8,0.0
+Thiago Martinez,100 Yard Backstroke,55.68,10,seton,Immanuel,M,100 Back,True,1,8.0
+Patrick Kay,100 Yard Backstroke,62.14,10,seton,Immanuel,M,100 Back,True,2,6.0
+Luke Bluey,100 Yard Backstroke,64.83,8,opponent,Seton,M,100 Back,True,3,5.0
+Jack Herwick,100 Yard Backstroke,65.44,10,seton,Immanuel,M,100 Back,True,4,4.0
+Reed Lansing,100 Yard Backstroke,65.46,10,opponent,Seton,M,100 Back,True,5,3.0
+Brenton Anderson,100 Yard Backstroke,66.68,11,opponent,Seton,M,100 Back,True,6,2.0
+a,100 Yard Backstroke,70.02,12,opponent,Seton,M,100 Back,True,7,1.0
+Michael Brand,100 Yard Backstroke,87.22,12,seton,Immanuel,M,100 Back,True,8,0.0
+Thiago Martinez,100 Yard Butterfly,53.55,10,seton,Immanuel,M,100 Fly,True,1,8.0
+Caleb Morillo,100 Yard Butterfly,59.4,12,opponent,Seton,M,100 Fly,True,2,6.0
+Jack Herwick,100 Yard Butterfly,62.09,10,seton,Immanuel,M,100 Fly,True,3,5.0
+Dominic Judge,100 Yard Butterfly,62.81,11,seton,Immanuel,M,100 Fly,True,4,4.0
+Daniel Sokban,100 Yard Butterfly,68.44,11,seton,Immanuel,M,100 Fly,True,5,3.0
+Micah Lam,100 Yard Butterfly,69.36,11,opponent,Seton,M,100 Fly,True,6,2.0
+Luke Bluey,100 Yard Butterfly,69.39,8,opponent,Seton,M,100 Fly,True,7,1.0
+Jonathan Vincent,100 Yard Butterfly,71.4,10,opponent,Seton,M,100 Fly,True,8,0.0
+Reed Lansing,500 Yard Freestyle,348.11,10,opponent,Seton,M,500 Free,True,1,8.0
+Patrick Kay,500 Yard Freestyle,349.3,10,seton,Immanuel,M,500 Free,True,2,6.0
+Dominic Judge,500 Yard Freestyle,351.19,11,seton,Immanuel,M,500 Free,True,3,5.0
+Gregory Bauer,500 Yard Freestyle,357.01,12,seton,Immanuel,M,500 Free,True,4,4.0
+Benjamin Bluey,500 Yard Freestyle,357.3,11,opponent,Seton,M,500 Free,True,5,3.0
+Jonas Wilson,500 Yard Freestyle,370.24,10,seton,Immanuel,M,500 Free,True,6,2.0
+Tyler Gade,500 Yard Freestyle,379.79,12,opponent,Seton,M,500 Free,True,7,1.0
+William Gade,500 Yard Freestyle,386.37,12,opponent,Seton,M,500 Free,True,8,0.0
+Moses Wolf,100 Yard Breaststroke,57.96,11,opponent,Seton,M,100 Breast,True,1,8.0
+Gregory Bauer,100 Yard Breaststroke,69.23,12,seton,Immanuel,M,100 Breast,True,2,6.0
+Luke Partridge,100 Yard Breaststroke,74.89,11,seton,Immanuel,M,100 Breast,True,3,5.0
+Bennett Ellis,100 Yard Breaststroke,77.14,11,seton,Immanuel,M,100 Breast,True,4,4.0
+Wade Winslow,100 Yard Breaststroke,77.97,11,opponent,Seton,M,100 Breast,True,5,3.0
+Gray Wollmershauser,100 Yard Breaststroke,79.24,10,opponent,Seton,M,100 Breast,True,6,2.0
+Joey Lynch,100 Yard Breaststroke,81.24,10,seton,Immanuel,M,100 Breast,True,7,1.0
+Grey Burgess,100 Yard Breaststroke,83.76,12,opponent,Seton,M,100 Breast,True,8,0.0
+Jonas Wilson,200 Yard IM,152.58,10,seton,Immanuel,M,200 IM,True,1,8.0
+Luke Partridge,200 Yard IM,156.27,11,seton,Immanuel,M,200 IM,True,2,6.0
+Joey Lynch,200 Yard IM,158.28,10,seton,Immanuel,M,200 IM,True,3,5.0
+Paul Partridge,200 Yard IM,158.66,8,seton,Immanuel,M,200 IM,True,4,4.0
+Wade Winslow,200 Yard IM,163.18,11,opponent,Seton,M,200 IM,True,5,3.0
+Jonathan Vincent,200 Yard IM,166.17,10,opponent,Seton,M,200 IM,True,6,2.0
+Cole Connally,200 Yard IM,175.29,9,opponent,Seton,M,200 IM,True,7,1.0
+Evan Yim,200 Yard IM,198.68,10,opponent,Seton,M,200 IM,True,8,0.0
+William Gade,200 Yard Freestyle,58.65,12,opponent,Seton,M,200 Free,True,1,8.0
+Grey Burgess,200 Yard Freestyle,59.23,12,opponent,Seton,M,200 Free,True,2,6.0
+Tyler Gade,200 Yard Freestyle,59.37,12,opponent,Seton,M,200 Free,True,3,5.0
+Benjamin Bluey,200 Yard Freestyle,129.42,11,opponent,Seton,M,200 Free,True,4,4.0
+Charlie Dusek,200 Yard Freestyle,168.36,12,seton,Immanuel,M,200 Free,True,5,3.0
+Luke Fifield,200 Yard Freestyle,169.04,9,seton,Immanuel,M,200 Free,True,6,2.0
+Michael Brand,200 Yard Freestyle,178.54,12,seton,Immanuel,M,200 Free,True,7,1.0
+Rafael De Micoli,200 Yard Freestyle,179.75,10,seton,Immanuel,M,200 Free,True,8,0.0

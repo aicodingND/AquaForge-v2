@@ -1,0 +1,61 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  claude-review:
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Claude Code Review
+        uses: anthropic-ai/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: claude-sonnet-4-20250514
+          
+          # Trigger phrases
+          trigger_phrase: "@claude"
+          auto_review: true
+          
+          # Use our CLAUDE.md for project context
+          claude_md_path: "CLAUDE.md"
+          
+          # Additional context from our knowledge base
+          additional_context: |
+            This is AquaForge, a swim meet optimization platform.
+            Key constraints:
+            - Max 2 individual events per swimmer
+            - Backend on port 8001, frontend on 3000
+            - Use team code "SST" for Seton, not full name
+            
+            Review for:
+            - Scoring calculation accuracy
+            - Constraint violations
+            - Type safety
+            - Test coverage
+          
+          # Review focus areas
+          review_focus: |
+            - Code correctness and logic
+            - Type annotations
+            - Error handling
+            - Test coverage
+            - Performance considerations
+            - Security (no exposed credentials)

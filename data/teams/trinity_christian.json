@@ -1,0 +1,15 @@
+{
+  "id": "trinity_christian",
+  "name": "Trinity Christian School",
+  "abbreviation": "TCS",
+  "colors": {
+    "primary": "#00205B",
+    "secondary": "#C8102E",
+    "accent": "#FFFFFF"
+  },
+  "rosterSource": "swimcloud",
+  "division": "VISAA_DII",
+  "conference": "VCAC",
+  "location": "Fairfax, VA",
+  "isUserTeam": false
+}

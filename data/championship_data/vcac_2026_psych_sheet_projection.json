@@ -1,0 +1,3959 @@
+{
+  "meet_name": "2026 VCAC Championship Projection",
+  "meet_date": "2026-02-07",
+  "meet_profile": "vcac_championship",
+  "teams": [
+    "BCP",
+    "BI",
+    "DJO",
+    "OAK",
+    "SGHS",
+    "JP",
+    "PVI",
+    "SST"
+  ],
+  "entries": [
+    {
+      "swimmer_name": "Daniel Belzile",
+      "team": "BCP",
+      "event": "Boys 50 Free",
+      "seed_time": 25.25,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Daniel Belzile",
+      "team": "BCP",
+      "event": "Boys 100 Breast",
+      "seed_time": 68.63,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "James Holmes",
+      "team": "BCP",
+      "event": "Boys 100 Back",
+      "seed_time": 67.57,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "James Holmes",
+      "team": "BCP",
+      "event": "Boys 50 Free",
+      "seed_time": 24.74,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Edward Holsten",
+      "team": "BCP",
+      "event": "Boys 100 Free",
+      "seed_time": 54.74,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Edward Holsten",
+      "team": "BCP",
+      "event": "Boys 100 Breast",
+      "seed_time": 68.98,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Luca Palmisano",
+      "team": "BCP",
+      "event": "Boys 50 Free",
+      "seed_time": 25.25,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Luca Palmisano",
+      "team": "BCP",
+      "event": "Boys 100 Free",
+      "seed_time": 57.48,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ryan Scharpf",
+      "team": "BCP",
+      "event": "Boys 100 Free",
+      "seed_time": 57.65,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ryan Scharpf",
+      "team": "BCP",
+      "event": "Boys 100 Breast",
+      "seed_time": 74.38,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Derek Amberg",
+      "team": "BI",
+      "event": "Boys 6 Free",
+      "seed_time": 122.45,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophie Bliss",
+      "team": "BI",
+      "event": "Girls 100 Free",
+      "seed_time": 60.11,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophie Bliss",
+      "team": "BI",
+      "event": "Girls 100 Breast",
+      "seed_time": 75.27,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Emily Capistran",
+      "team": "BI",
+      "event": "Girls 200 Free",
+      "seed_time": 151.27,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Emily Capistran",
+      "team": "BI",
+      "event": "Girls 100 Back",
+      "seed_time": 77.58,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Connor Corley",
+      "team": "BI",
+      "event": "Boys 100 Breast",
+      "seed_time": 69.01,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Connor Corley",
+      "team": "BI",
+      "event": "Boys 50 Free",
+      "seed_time": 25.37,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Caleb Danysh",
+      "team": "BI",
+      "event": "Boys 100 Free",
+      "seed_time": 61.28,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Andrew Dick",
+      "team": "BI",
+      "event": "Boys 6 Free",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Quinn Dwyer",
+      "team": "BI",
+      "event": "Girls 100 Back",
+      "seed_time": 79.2,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kathryn Easton",
+      "team": "BI",
+      "event": "Girls 50 Free",
+      "seed_time": 28.39,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Leah Eubanks",
+      "team": "BI",
+      "event": "Girls 100 Fly",
+      "seed_time": 63.26,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Leah Eubanks",
+      "team": "BI",
+      "event": "Girls 100 Free",
+      "seed_time": 56.92,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Colman Forrer",
+      "team": "BI",
+      "event": "Boys 100 Back",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Marcella Forrer",
+      "team": "BI",
+      "event": "Girls 200 IM",
+      "seed_time": 143.79,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Marcella Forrer",
+      "team": "BI",
+      "event": "Girls 100 Back",
+      "seed_time": 62.19,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jack Fuqua",
+      "team": "BI",
+      "event": "Boys 200 Free",
+      "seed_time": 111.49,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jack Fuqua",
+      "team": "BI",
+      "event": "Boys 100 Back",
+      "seed_time": 54.86,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Howard Heinrichs",
+      "team": "BI",
+      "event": "Boys 50 Free",
+      "seed_time": 24.89,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Howard Heinrichs",
+      "team": "BI",
+      "event": "Boys 100 Free",
+      "seed_time": 58.17,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ian Hixson",
+      "team": "BI",
+      "event": "Boys 200 Free",
+      "seed_time": 172.81,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lainey Hooff",
+      "team": "BI",
+      "event": "Girls 200 Free",
+      "seed_time": 118.66,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lainey Hooff",
+      "team": "BI",
+      "event": "Girls 50 Free",
+      "seed_time": 25.45,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Peter Johnson",
+      "team": "BI",
+      "event": "Boys 100 Fly",
+      "seed_time": 61.58,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Peter Johnson",
+      "team": "BI",
+      "event": "Boys 100 Back",
+      "seed_time": 69.15,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Luke Kennedy",
+      "team": "BI",
+      "event": "Boys 100 Free",
+      "seed_time": 58.05,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Luke Kennedy",
+      "team": "BI",
+      "event": "Boys 50 Free",
+      "seed_time": 25.02,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Isabella Kyle",
+      "team": "BI",
+      "event": "Girls 100 Free",
+      "seed_time": 63.03,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jack Lentini",
+      "team": "BI",
+      "event": "Boys 200 Free",
+      "seed_time": 113.01,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jack Lentini",
+      "team": "BI",
+      "event": "Boys 50 Free",
+      "seed_time": 23.4,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maggie Luff",
+      "team": "BI",
+      "event": "Girls 200 Free",
+      "seed_time": 137.52,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maggie Luff",
+      "team": "BI",
+      "event": "Girls 500 Free",
+      "seed_time": 371.13,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Michael Mahar",
+      "team": "BI",
+      "event": "Boys 200 Free",
+      "seed_time": 131.2,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Michael Mahar",
+      "team": "BI",
+      "event": "Boys 100 Fly",
+      "seed_time": 65.58,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maura Mahon",
+      "team": "BI",
+      "event": "Girls 200 IM",
+      "seed_time": 170.13,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maura Mahon",
+      "team": "BI",
+      "event": "Girls 100 Fly",
+      "seed_time": 72.32,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maeve McGuire",
+      "team": "BI",
+      "event": "Girls 6 Free",
+      "seed_time": 117.35,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charlie Morse",
+      "team": "BI",
+      "event": "Boys 200 IM",
+      "seed_time": 144.43,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charlie Morse",
+      "team": "BI",
+      "event": "Boys 100 Free",
+      "seed_time": 54.07,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Thomas Mulhern",
+      "team": "BI",
+      "event": "Boys 100 Fly",
+      "seed_time": 71.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Reid Nagtzaam",
+      "team": "BI",
+      "event": "Boys 200 IM",
+      "seed_time": 149.07,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Reid Nagtzaam",
+      "team": "BI",
+      "event": "Boys 100 Breast",
+      "seed_time": 70.04,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Zoe Patterson",
+      "team": "BI",
+      "event": "Girls 100 Breast",
+      "seed_time": 80.79,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sadie Prow",
+      "team": "BI",
+      "event": "Girls 100 Back",
+      "seed_time": 75.88,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophia Rozycki",
+      "team": "BI",
+      "event": "Girls 50 Free",
+      "seed_time": 27.99,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophia Rozycki",
+      "team": "BI",
+      "event": "Girls 100 Free",
+      "seed_time": 63.6,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Claire Schlereth",
+      "team": "BI",
+      "event": "Girls 100 Breast",
+      "seed_time": 79.32,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lucas Schmidt",
+      "team": "BI",
+      "event": "Boys 100 Breast",
+      "seed_time": 78.98,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Caroline Smullen",
+      "team": "BI",
+      "event": "Girls 50 Free",
+      "seed_time": 27.82,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Caroline Smullen",
+      "team": "BI",
+      "event": "Girls 100 Breast",
+      "seed_time": 79.7,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Tyler Turner",
+      "team": "BI",
+      "event": "Boys 100 Breast",
+      "seed_time": 76.24,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Avery Vanlandingham",
+      "team": "BI",
+      "event": "Girls 200 IM",
+      "seed_time": 139.42,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Avery Vanlandingham",
+      "team": "BI",
+      "event": "Girls 500 Free",
+      "seed_time": 337.62,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Virginia Voorhees",
+      "team": "BI",
+      "event": "Girls 100 Fly",
+      "seed_time": 76.91,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Henry Wegner",
+      "team": "BI",
+      "event": "Boys 100 Back",
+      "seed_time": 74.15,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Julia Yi",
+      "team": "BI",
+      "event": "Girls 200 Free",
+      "seed_time": 145.27,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Julia Yi",
+      "team": "BI",
+      "event": "Girls 200 IM",
+      "seed_time": 173.16,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Catherine Ayers",
+      "team": "DJO",
+      "event": "Girls 6 Free",
+      "seed_time": 180.8,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Annalise Baldwin",
+      "team": "DJO",
+      "event": "Girls 50 Free",
+      "seed_time": 0.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Annalise Baldwin",
+      "team": "DJO",
+      "event": "Girls 100 Back",
+      "seed_time": 0.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gavin Bredenkamp",
+      "team": "DJO",
+      "event": "Boys 200 IM",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Reagan Cervenak",
+      "team": "DJO",
+      "event": "Girls 100 Breast",
+      "seed_time": 77.67,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Reagan Cervenak",
+      "team": "DJO",
+      "event": "Girls 200 Free",
+      "seed_time": 133.46,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kellen Colevas",
+      "team": "DJO",
+      "event": "Boys 100 Fly",
+      "seed_time": 59.47,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kellen Colevas",
+      "team": "DJO",
+      "event": "Boys 6 Free",
+      "seed_time": 240.9,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dylan Crombe",
+      "team": "DJO",
+      "event": "Girls 100 Fly",
+      "seed_time": 69.19,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Phillip Cru Molter",
+      "team": "DJO",
+      "event": "Boys 100 Fly",
+      "seed_time": 60.56,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Phillip Cru Molter",
+      "team": "DJO",
+      "event": "Boys 50 Free",
+      "seed_time": 23.94,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Rai Detten",
+      "team": "DJO",
+      "event": "Boys 100 Breast",
+      "seed_time": 67.73,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Rai Detten",
+      "team": "DJO",
+      "event": "Boys 6 Free",
+      "seed_time": 275.5,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Luke Dion",
+      "team": "DJO",
+      "event": "Boys 100 Back",
+      "seed_time": 87.03,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Samantha Estabrooks",
+      "team": "DJO",
+      "event": "Girls 100 Breast",
+      "seed_time": 80.51,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Samantha Estabrooks",
+      "team": "DJO",
+      "event": "Girls 200 IM",
+      "seed_time": 160.37,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Keaghan Fahle",
+      "team": "DJO",
+      "event": "Boys 200 Free",
+      "seed_time": 110.27,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Keaghan Fahle",
+      "team": "DJO",
+      "event": "Boys 100 Fly",
+      "seed_time": 54.73,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Emerson Feeley",
+      "team": "DJO",
+      "event": "Girls 100 Free",
+      "seed_time": 62.62,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Benjamin Fletcher",
+      "team": "DJO",
+      "event": "Boys 200 IM",
+      "seed_time": 135.05,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Benjamin Fletcher",
+      "team": "DJO",
+      "event": "Boys 100 Breast",
+      "seed_time": 66.54,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "John Galanes",
+      "team": "DJO",
+      "event": "Boys 500 Free",
+      "seed_time": 345.11,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maxwell Hambey",
+      "team": "DJO",
+      "event": "Boys 100 Free",
+      "seed_time": 55.26,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maxwell Hambey",
+      "team": "DJO",
+      "event": "Boys 500 Free",
+      "seed_time": 348.78,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "James Kinsella",
+      "team": "DJO",
+      "event": "Boys 50 Free",
+      "seed_time": 22.86,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "James Kinsella",
+      "team": "DJO",
+      "event": "Boys 100 Free",
+      "seed_time": 50.58,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Anna LeNard",
+      "team": "DJO",
+      "event": "Girls 100 Fly",
+      "seed_time": 66.62,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lili Lepore",
+      "team": "DJO",
+      "event": "Girls 6 Free",
+      "seed_time": 171.55,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maggie Levi",
+      "team": "DJO",
+      "event": "Girls 100 Back",
+      "seed_time": 73.12,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maggie Levi",
+      "team": "DJO",
+      "event": "Girls 6 Free",
+      "seed_time": 172.8,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Victor Martinez",
+      "team": "DJO",
+      "event": "Boys 200 IM",
+      "seed_time": 137.74,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Victor Martinez",
+      "team": "DJO",
+      "event": "Boys 100 Back",
+      "seed_time": 60.5,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Colton Masterson",
+      "team": "DJO",
+      "event": "Boys 100 Breast",
+      "seed_time": 60.8,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Colton Masterson",
+      "team": "DJO",
+      "event": "Boys 100 Free",
+      "seed_time": 51.65,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Stella Mastroianni",
+      "team": "DJO",
+      "event": "Girls 100 Fly",
+      "seed_time": 57.39,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Stella Mastroianni",
+      "team": "DJO",
+      "event": "Girls 100 Free",
+      "seed_time": 53.9,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Scarlett Mcdade",
+      "team": "DJO",
+      "event": "Girls 6 Free",
+      "seed_time": 140.9,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Isabel McEvoy",
+      "team": "DJO",
+      "event": "Girls 100 Fly",
+      "seed_time": 69.79,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Isabel McEvoy",
+      "team": "DJO",
+      "event": "Girls 200 Free",
+      "seed_time": 128.93,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Caeli McIntosh",
+      "team": "DJO",
+      "event": "Girls 500 Free",
+      "seed_time": 350.78,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Caeli McIntosh",
+      "team": "DJO",
+      "event": "Girls 200 Free",
+      "seed_time": 129.48,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Madelyn McManus",
+      "team": "DJO",
+      "event": "Girls 200 IM",
+      "seed_time": 175.03,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Delina Melles",
+      "team": "DJO",
+      "event": "Girls 100 Free",
+      "seed_time": 63.26,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Delina Melles",
+      "team": "DJO",
+      "event": "Girls 500 Free",
+      "seed_time": 405.3,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kai Molter",
+      "team": "DJO",
+      "event": "Boys 100 Free",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Paul Mullen",
+      "team": "DJO",
+      "event": "Boys 200 Free",
+      "seed_time": 103.45,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Paul Mullen",
+      "team": "DJO",
+      "event": "Boys 500 Free",
+      "seed_time": 273.71,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Mackenzie Muller",
+      "team": "DJO",
+      "event": "Girls 100 Breast",
+      "seed_time": 77.44,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Mackenzie Muller",
+      "team": "DJO",
+      "event": "Girls 200 IM",
+      "seed_time": 159.27,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Keagan Murdock",
+      "team": "DJO",
+      "event": "Boys 200 Free",
+      "seed_time": 115.1,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Keagan Murdock",
+      "team": "DJO",
+      "event": "Boys 500 Free",
+      "seed_time": 308.23,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kalyn O'Hara",
+      "team": "DJO",
+      "event": "Girls 500 Free",
+      "seed_time": 308.52,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kalyn O'Hara",
+      "team": "DJO",
+      "event": "Girls 200 IM",
+      "seed_time": 128.25,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Grace Ouimet",
+      "team": "DJO",
+      "event": "Girls 100 Back",
+      "seed_time": 70.59,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Grace Ouimet",
+      "team": "DJO",
+      "event": "Girls 50 Free",
+      "seed_time": 28.42,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Katherine Ouimet",
+      "team": "DJO",
+      "event": "Girls 50 Free",
+      "seed_time": 27.67,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ryan Pedone",
+      "team": "DJO",
+      "event": "Boys 200 IM",
+      "seed_time": 152.94,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elliott Rowan",
+      "team": "DJO",
+      "event": "Girls 100 Back",
+      "seed_time": 58.51,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elliott Rowan",
+      "team": "DJO",
+      "event": "Girls 200 Free",
+      "seed_time": 117.12,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Graham Rowan",
+      "team": "DJO",
+      "event": "Boys 50 Free",
+      "seed_time": 22.73,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Graham Rowan",
+      "team": "DJO",
+      "event": "Boys 100 Back",
+      "seed_time": 54.09,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Peter Sheehey",
+      "team": "DJO",
+      "event": "Boys 100 Back",
+      "seed_time": 62.44,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Peter Sheehey",
+      "team": "DJO",
+      "event": "Boys 100 Fly",
+      "seed_time": 59.36,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Anna Sullivan",
+      "team": "DJO",
+      "event": "Girls 100 Breast",
+      "seed_time": 69.19,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Anna Sullivan",
+      "team": "DJO",
+      "event": "Girls 500 Free",
+      "seed_time": 321.91,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ellie Wertzler",
+      "team": "DJO",
+      "event": "Girls 50 Free",
+      "seed_time": 25.04,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ellie Wertzler",
+      "team": "DJO",
+      "event": "Girls 100 Free",
+      "seed_time": 55.48,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Robert Wilson",
+      "team": "DJO",
+      "event": "Boys 200 Free",
+      "seed_time": 136.52,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Robert Wilson",
+      "team": "DJO",
+      "event": "Boys 6 Free",
+      "seed_time": 93.75,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jermaine Worthen",
+      "team": "DJO",
+      "event": "Boys 50 Free",
+      "seed_time": 22.96,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jermaine Worthen",
+      "team": "DJO",
+      "event": "Boys 100 Breast",
+      "seed_time": 62.27,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elizabeth Bryan",
+      "team": "OAK",
+      "event": "Girls 200 Free",
+      "seed_time": 116.88,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elizabeth Bryan",
+      "team": "OAK",
+      "event": "Girls 100 Fly",
+      "seed_time": 59.95,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Emaline Cinotti",
+      "team": "OAK",
+      "event": "Girls 500 Free",
+      "seed_time": 370.97,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Emaline Cinotti",
+      "team": "OAK",
+      "event": "Girls 200 IM",
+      "seed_time": 158.56,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Isabella Cinotti",
+      "team": "OAK",
+      "event": "Girls 500 Free",
+      "seed_time": 466.74,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Katelyn Erickson",
+      "team": "OAK",
+      "event": "Girls 50 Free",
+      "seed_time": 27.33,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Brigita Eschmann",
+      "team": "OAK",
+      "event": "Girls 100 Breast",
+      "seed_time": 78.53,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Brigita Eschmann",
+      "team": "OAK",
+      "event": "Girls 100 Fly",
+      "seed_time": 73.45,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lindley Hazelwood",
+      "team": "OAK",
+      "event": "Girls 500 Free",
+      "seed_time": 341.24,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lindley Hazelwood",
+      "team": "OAK",
+      "event": "Girls 200 IM",
+      "seed_time": 147.85,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charlotte Heinrichs",
+      "team": "OAK",
+      "event": "Girls 100 Free",
+      "seed_time": 61.22,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charlotte Heinrichs",
+      "team": "OAK",
+      "event": "Girls 50 Free",
+      "seed_time": 27.43,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophia Krushinski",
+      "team": "OAK",
+      "event": "Girls 50 Free",
+      "seed_time": 28.73,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophia Krushinski",
+      "team": "OAK",
+      "event": "Girls 100 Back",
+      "seed_time": 75.89,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elisabeth Larson",
+      "team": "OAK",
+      "event": "Girls 200 IM",
+      "seed_time": 0.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Amelia Magee",
+      "team": "OAK",
+      "event": "Girls 100 Free",
+      "seed_time": 63.45,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Amelia Magee",
+      "team": "OAK",
+      "event": "Girls 200 Free",
+      "seed_time": 142.91,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Madeline McDonnell",
+      "team": "OAK",
+      "event": "Girls 100 Back",
+      "seed_time": 75.55,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Madeline McDonnell",
+      "team": "OAK",
+      "event": "Girls 100 Free",
+      "seed_time": 66.54,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Madison Moritz",
+      "team": "OAK",
+      "event": "Girls 100 Back",
+      "seed_time": 85.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Fiona Ryan",
+      "team": "OAK",
+      "event": "Girls 50 Free",
+      "seed_time": 28.04,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Fiona Ryan",
+      "team": "OAK",
+      "event": "Girls 100 Breast",
+      "seed_time": 88.02,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Adele Schneider",
+      "team": "OAK",
+      "event": "Girls 500 Free",
+      "seed_time": 439.63,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Adele Schneider",
+      "team": "OAK",
+      "event": "Girls 100 Breast",
+      "seed_time": 87.42,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Michaela Teh",
+      "team": "OAK",
+      "event": "Girls 100 Back",
+      "seed_time": 0.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Helen Grace Thompson",
+      "team": "OAK",
+      "event": "Girls 100 Fly",
+      "seed_time": 82.7,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Helen Grace Thompson",
+      "team": "OAK",
+      "event": "Girls 100 Breast",
+      "seed_time": 77.47,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lacey Turner",
+      "team": "OAK",
+      "event": "Girls 200 Free",
+      "seed_time": 173.18,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Juliet Van Meter",
+      "team": "OAK",
+      "event": "Girls 200 Free",
+      "seed_time": 136.01,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Juliet Van Meter",
+      "team": "OAK",
+      "event": "Girls 100 Free",
+      "seed_time": 59.43,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Haley Baker",
+      "team": "SGHS",
+      "event": "Girls 100 Back",
+      "seed_time": 63.7,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Haley Baker",
+      "team": "SGHS",
+      "event": "Girls 200 Free",
+      "seed_time": 126.2,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elle Burgess",
+      "team": "SGHS",
+      "event": "Girls 100 Breast",
+      "seed_time": 91.17,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Courtney Carter",
+      "team": "SGHS",
+      "event": "Girls 100 Breast",
+      "seed_time": 74.3,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Courtney Carter",
+      "team": "SGHS",
+      "event": "Girls 200 IM",
+      "seed_time": 146.2,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Abigail Dart",
+      "team": "SGHS",
+      "event": "Girls 100 Back",
+      "seed_time": 66.26,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Abigail Dart",
+      "team": "SGHS",
+      "event": "Girls 50 Free",
+      "seed_time": 27.88,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dana Frink",
+      "team": "SGHS",
+      "event": "Girls 100 Free",
+      "seed_time": 64.85,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dana Frink",
+      "team": "SGHS",
+      "event": "Girls 100 Back",
+      "seed_time": 74.9,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Tori Griffin",
+      "team": "SGHS",
+      "event": "Girls 50 Free",
+      "seed_time": 29.89,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Tori Griffin",
+      "team": "SGHS",
+      "event": "Girls 100 Free",
+      "seed_time": 67.79,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Savannah Hufner",
+      "team": "SGHS",
+      "event": "Girls 100 Free",
+      "seed_time": 70.55,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kendall Kryszon",
+      "team": "SGHS",
+      "event": "Girls 200 IM",
+      "seed_time": 134.71,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kendall Kryszon",
+      "team": "SGHS",
+      "event": "Girls 100 Breast",
+      "seed_time": 70.75,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kylie Kryszon",
+      "team": "SGHS",
+      "event": "Girls 200 Free",
+      "seed_time": 126.44,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kylie Kryszon",
+      "team": "SGHS",
+      "event": "Girls 500 Free",
+      "seed_time": 325.19,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sofia Mansueto",
+      "team": "SGHS",
+      "event": "Girls 100 Breast",
+      "seed_time": 102.74,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Natalie McDermott",
+      "team": "SGHS",
+      "event": "Girls 100 Free",
+      "seed_time": 64.08,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Natalie McDermott",
+      "team": "SGHS",
+      "event": "Girls 50 Free",
+      "seed_time": 28.99,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Avery Owens",
+      "team": "SGHS",
+      "event": "Girls 100 Back",
+      "seed_time": 67.63,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Avery Owens",
+      "team": "SGHS",
+      "event": "Girls 50 Free",
+      "seed_time": 26.55,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Reilly Owens",
+      "team": "SGHS",
+      "event": "Girls 100 Fly",
+      "seed_time": 71.19,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Alice Angarag",
+      "team": "JP",
+      "event": "Girls 200 Free",
+      "seed_time": 161.53,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Alice Angarag",
+      "team": "JP",
+      "event": "Girls 100 Back",
+      "seed_time": 82.29,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Julian Ayala",
+      "team": "JP",
+      "event": "Boys 100 Fly",
+      "seed_time": 87.09,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Julian Ayala",
+      "team": "JP",
+      "event": "Boys 50 Free",
+      "seed_time": 31.18,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Cadence Everson",
+      "team": "JP",
+      "event": "Girls 200 IM",
+      "seed_time": 247.62,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Cadence Everson",
+      "team": "JP",
+      "event": "Girls 50 Free",
+      "seed_time": 44.5,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Isabel Frederick",
+      "team": "JP",
+      "event": "Girls 50 Free",
+      "seed_time": 29.67,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Isabel Frederick",
+      "team": "JP",
+      "event": "Girls 100 Back",
+      "seed_time": 78.17,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jeffrey Frederick",
+      "team": "JP",
+      "event": "Boys 100 Fly",
+      "seed_time": 59.64,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jeffrey Frederick",
+      "team": "JP",
+      "event": "Boys 100 Free",
+      "seed_time": 56.16,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gloria Gallagher",
+      "team": "JP",
+      "event": "Girls 200 IM",
+      "seed_time": 201.4,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gloria Gallagher",
+      "team": "JP",
+      "event": "Girls 50 Free",
+      "seed_time": 33.25,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Madison Gilley",
+      "team": "JP",
+      "event": "Girls 50 Free",
+      "seed_time": 34.39,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Madison Gilley",
+      "team": "JP",
+      "event": "Girls 500 Free",
+      "seed_time": 512.06,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Adhyan Girigowda",
+      "team": "JP",
+      "event": "Boys 200 IM",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Adhyan Girigowda",
+      "team": "JP",
+      "event": "Boys 200 Free",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Laurel Heath",
+      "team": "JP",
+      "event": "Girls 500 Free",
+      "seed_time": 490.81,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sandra Kay",
+      "team": "JP",
+      "event": "Girls 200 IM",
+      "seed_time": 0.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sandra Kay",
+      "team": "JP",
+      "event": "Girls 500 Free",
+      "seed_time": 418.93,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Eric Koler",
+      "team": "JP",
+      "event": "Boys 50 Free",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Eric Koler",
+      "team": "JP",
+      "event": "Boys 100 Free",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Isabella Koler",
+      "team": "JP",
+      "event": "Girls 100 Breast",
+      "seed_time": 74.6,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Patrick Kurrus",
+      "team": "JP",
+      "event": "Boys 100 Fly",
+      "seed_time": 101.97,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Patrick Kurrus",
+      "team": "JP",
+      "event": "Boys 50 Free",
+      "seed_time": 29.29,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Candler Law",
+      "team": "JP",
+      "event": "Girls 100 Free",
+      "seed_time": 88.97,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Emily Mills",
+      "team": "JP",
+      "event": "Girls 6 Free",
+      "seed_time": 143.75,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Karsten Nguyen",
+      "team": "JP",
+      "event": "Boys 200 IM",
+      "seed_time": 191.27,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Karsten Nguyen",
+      "team": "JP",
+      "event": "Boys 100 Free",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kenton Nguyen",
+      "team": "JP",
+      "event": "Boys 100 Free",
+      "seed_time": 75.65,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kenton Nyugen",
+      "team": "JP",
+      "event": "Boys 100 Breast",
+      "seed_time": 106.72,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gabrielle Pascua",
+      "team": "JP",
+      "event": "Girls 100 Free",
+      "seed_time": 0.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Teagen Rauschelbach",
+      "team": "JP",
+      "event": "Girls 6 Free",
+      "seed_time": 168.45,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sarah Sims",
+      "team": "JP",
+      "event": "Girls 100 Free",
+      "seed_time": 123.38,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Matthew Such",
+      "team": "JP",
+      "event": "Boys 200 IM",
+      "seed_time": 190.9,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Matthew Such",
+      "team": "JP",
+      "event": "Boys 50 Free",
+      "seed_time": 29.27,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elizabeth Vitkovitsky",
+      "team": "JP",
+      "event": "Girls 100 Back",
+      "seed_time": 81.66,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elizabeth Vitkovitsky",
+      "team": "JP",
+      "event": "Girls 200 IM",
+      "seed_time": 187.35,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Amy Voith",
+      "team": "JP",
+      "event": "Girls 100 Back",
+      "seed_time": 71.37,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Amy Voith",
+      "team": "JP",
+      "event": "Girls 200 Free",
+      "seed_time": 137.36,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Isabella Willis",
+      "team": "JP",
+      "event": "Girls 500 Free",
+      "seed_time": 368.54,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Annabelle Bailey",
+      "team": "PVI",
+      "event": "Girls 100 Breast",
+      "seed_time": 78.46,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Annabelle Bailey",
+      "team": "PVI",
+      "event": "Girls 100 Fly",
+      "seed_time": 68.55,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Berkleigh Beggan",
+      "team": "PVI",
+      "event": "Girls 500 Free",
+      "seed_time": 344.12,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Berkleigh Beggan",
+      "team": "PVI",
+      "event": "Girls 50 Free",
+      "seed_time": 26.43,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gabriel Bernal",
+      "team": "PVI",
+      "event": "Boys 200 Free",
+      "seed_time": 148.99,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gabriel Bernal",
+      "team": "PVI",
+      "event": "Boys 100 Breast",
+      "seed_time": 87.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Henry Caputo",
+      "team": "PVI",
+      "event": "Boys 100 Free",
+      "seed_time": 55.69,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Henry Caputo",
+      "team": "PVI",
+      "event": "Boys 50 Free",
+      "seed_time": 24.17,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Nico Cepeda",
+      "team": "PVI",
+      "event": "Boys 100 Fly",
+      "seed_time": 66.44,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Nico Cepeda",
+      "team": "PVI",
+      "event": "Boys 100 Back",
+      "seed_time": 72.56,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Zach Choi",
+      "team": "PVI",
+      "event": "Boys 200 IM",
+      "seed_time": 127.58,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Zach Choi",
+      "team": "PVI",
+      "event": "Boys 100 Breast",
+      "seed_time": 62.78,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Aiden Clements",
+      "team": "PVI",
+      "event": "Boys 200 IM",
+      "seed_time": 172.96,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Marisa Corsino",
+      "team": "PVI",
+      "event": "Girls 50 Free",
+      "seed_time": 27.57,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Marisa Corsino",
+      "team": "PVI",
+      "event": "Girls 100 Free",
+      "seed_time": 62.45,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Claire Dobrydney",
+      "team": "PVI",
+      "event": "Girls 500 Free",
+      "seed_time": 304.67,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Claire Dobrydney",
+      "team": "PVI",
+      "event": "Girls 200 Free",
+      "seed_time": 112.03,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Connor Duffy",
+      "team": "PVI",
+      "event": "Boys 500 Free",
+      "seed_time": 341.34,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Connor Duffy",
+      "team": "PVI",
+      "event": "Boys 200 Free",
+      "seed_time": 121.42,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Colston Farmer",
+      "team": "PVI",
+      "event": "Boys 100 Breast",
+      "seed_time": 84.03,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dean Feindt",
+      "team": "PVI",
+      "event": "Boys 100 Back",
+      "seed_time": 74.17,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dean Feindt",
+      "team": "PVI",
+      "event": "Boys 500 Free",
+      "seed_time": 367.23,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kate Foley",
+      "team": "PVI",
+      "event": "Girls 100 Free",
+      "seed_time": 59.86,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kate Foley",
+      "team": "PVI",
+      "event": "Girls 50 Free",
+      "seed_time": 26.62,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Nicholas Heisler",
+      "team": "PVI",
+      "event": "Boys 500 Free",
+      "seed_time": 344.46,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Nicholas Heisler",
+      "team": "PVI",
+      "event": "Boys 200 Free",
+      "seed_time": 125.51,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Hayden Hill",
+      "team": "PVI",
+      "event": "Girls 6 Free",
+      "seed_time": 116.95,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Meaghan Krepinevich",
+      "team": "PVI",
+      "event": "Girls 100 Back",
+      "seed_time": 62.54,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Meaghan Krepinevich",
+      "team": "PVI",
+      "event": "Girls 200 IM",
+      "seed_time": 143.77,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Preston LaForme",
+      "team": "PVI",
+      "event": "Boys 100 Fly",
+      "seed_time": 56.06,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Preston LaForme",
+      "team": "PVI",
+      "event": "Boys 100 Back",
+      "seed_time": 56.82,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Matthew Lau",
+      "team": "PVI",
+      "event": "Boys 200 Free",
+      "seed_time": 158.67,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Reilly Lewis",
+      "team": "PVI",
+      "event": "Girls 200 Free",
+      "seed_time": 135.94,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Reilly Lewis",
+      "team": "PVI",
+      "event": "Girls 100 Free",
+      "seed_time": 60.74,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Naya Madan",
+      "team": "PVI",
+      "event": "Girls 100 Fly",
+      "seed_time": 71.83,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Payton Masten",
+      "team": "PVI",
+      "event": "Girls 100 Breast",
+      "seed_time": 0.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Payton Masten",
+      "team": "PVI",
+      "event": "Girls 200 IM",
+      "seed_time": 0.0,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kimberly Murphy",
+      "team": "PVI",
+      "event": "Girls 100 Fly",
+      "seed_time": 67.93,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kimberly Murphy",
+      "team": "PVI",
+      "event": "Girls 100 Breast",
+      "seed_time": 74.33,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Mathilda Nguyen",
+      "team": "PVI",
+      "event": "Girls 500 Free",
+      "seed_time": 358.96,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Mathilda Nguyen",
+      "team": "PVI",
+      "event": "Girls 200 IM",
+      "seed_time": 151.25,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Logan Noyes",
+      "team": "PVI",
+      "event": "Girls 200 Free",
+      "seed_time": 126.16,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Logan Noyes",
+      "team": "PVI",
+      "event": "Girls 100 Back",
+      "seed_time": 63.62,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Leia Penetrante",
+      "team": "PVI",
+      "event": "Girls 100 Back",
+      "seed_time": 69.96,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Leia Penetrante",
+      "team": "PVI",
+      "event": "Girls 50 Free",
+      "seed_time": 28.43,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Adeesh Putchala",
+      "team": "PVI",
+      "event": "Boys 100 Free",
+      "seed_time": 62.57,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Adeesh Putchala",
+      "team": "PVI",
+      "event": "Boys 100 Back",
+      "seed_time": 68.51,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ella Richards",
+      "team": "PVI",
+      "event": "Girls 200 Free",
+      "seed_time": 127.07,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ella Richards",
+      "team": "PVI",
+      "event": "Girls 100 Back",
+      "seed_time": 63.69,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "William Rommelmeyer",
+      "team": "PVI",
+      "event": "Boys 50 Free",
+      "seed_time": 24.36,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "William Rommelmeyer",
+      "team": "PVI",
+      "event": "Boys 100 Free",
+      "seed_time": 56.15,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Carolina Schemm",
+      "team": "PVI",
+      "event": "Girls 100 Breast",
+      "seed_time": 79.78,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Terrance Seibel",
+      "team": "PVI",
+      "event": "Boys 500 Free",
+      "seed_time": 369.36,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Terrance Seibel",
+      "team": "PVI",
+      "event": "Boys 200 IM",
+      "seed_time": 157.6,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "AJ Sexton",
+      "team": "PVI",
+      "event": "Boys 100 Free",
+      "seed_time": 55.15,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "AJ Sexton",
+      "team": "PVI",
+      "event": "Boys 50 Free",
+      "seed_time": 23.25,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charles Shepherd",
+      "team": "PVI",
+      "event": "Boys 200 IM",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charles Shepherd",
+      "team": "PVI",
+      "event": "Boys 100 Breast",
+      "seed_time": 0.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Christopher Thomson",
+      "team": "PVI",
+      "event": "Boys 100 Fly",
+      "seed_time": 68.5,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lillian Wahl",
+      "team": "PVI",
+      "event": "Girls 500 Free",
+      "seed_time": 328.64,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lillian Wahl",
+      "team": "PVI",
+      "event": "Girls 200 IM",
+      "seed_time": 137.66,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Eric Wang",
+      "team": "PVI",
+      "event": "Boys 50 Free",
+      "seed_time": 28.01,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Victoria Wijas",
+      "team": "PVI",
+      "event": "Girls 100 Fly",
+      "seed_time": 68.08,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Victoria Wijas",
+      "team": "PVI",
+      "event": "Girls 100 Free",
+      "seed_time": 59.69,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ariana Aldeguer",
+      "team": "SST",
+      "event": "Girls 100 Free",
+      "seed_time": 54.21,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ariana Aldeguer",
+      "team": "SST",
+      "event": "Girls 200 IM",
+      "seed_time": 128.35,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Betsy Arnold",
+      "team": "SST",
+      "event": "Girls 100 Back",
+      "seed_time": 77.11,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Betsy Arnold",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 68.28,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maximilian Ashton",
+      "team": "SST",
+      "event": "Boys 6 Free",
+      "seed_time": 137.25,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gregory Bauer",
+      "team": "SST",
+      "event": "Boys 500 Free",
+      "seed_time": 370.02,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gregory Bauer",
+      "team": "SST",
+      "event": "Boys 50 Free",
+      "seed_time": 24.77,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Katie Bauer",
+      "team": "SST",
+      "event": "Girls 500 Free",
+      "seed_time": 415.83,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Katie Bauer",
+      "team": "SST",
+      "event": "Girls 200 Free",
+      "seed_time": 148.18,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Joel Bookwalter",
+      "team": "SST",
+      "event": "Boys 100 Free",
+      "seed_time": 60.58,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Joel Bookwalter",
+      "team": "SST",
+      "event": "Boys 100 Breast",
+      "seed_time": 81.14,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Meghan Condon",
+      "team": "SST",
+      "event": "Girls 6 Free",
+      "seed_time": 189.2,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Annie Dusek",
+      "team": "SST",
+      "event": "Girls 500 Free",
+      "seed_time": 411.87,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charlie Dusek",
+      "team": "SST",
+      "event": "Boys 200 Free",
+      "seed_time": 169.86,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Bennett Ellis",
+      "team": "SST",
+      "event": "Boys 100 Breast",
+      "seed_time": 74.63,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Bennett Ellis",
+      "team": "SST",
+      "event": "Boys 200 Free",
+      "seed_time": 159.35,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kyleigh Fifield",
+      "team": "SST",
+      "event": "Girls 500 Free",
+      "seed_time": 405.53,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kyleigh Fifield",
+      "team": "SST",
+      "event": "Girls 200 IM",
+      "seed_time": 165.99,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Anastasia Garvey",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 66.99,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Anastasia Garvey",
+      "team": "SST",
+      "event": "Girls 100 Breast",
+      "seed_time": 77.15,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "JJ Garvey",
+      "team": "SST",
+      "event": "Boys 100 Fly",
+      "seed_time": 78.97,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "JJ Garvey",
+      "team": "SST",
+      "event": "Boys 100 Back",
+      "seed_time": 73.22,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Bella Gorman",
+      "team": "SST",
+      "event": "Girls 6 Free",
+      "seed_time": 123.9,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Aoife Haggerty",
+      "team": "SST",
+      "event": "Girls 100 Breast",
+      "seed_time": 87.47,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophia Halisky",
+      "team": "SST",
+      "event": "Girls 50 Free",
+      "seed_time": 28.64,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophia Halisky",
+      "team": "SST",
+      "event": "Girls 100 Breast",
+      "seed_time": 79.05,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jack Herwick",
+      "team": "SST",
+      "event": "Boys 100 Back",
+      "seed_time": 62.22,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jack Herwick",
+      "team": "SST",
+      "event": "Boys 100 Fly",
+      "seed_time": 61.83,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elizabeth Hurley",
+      "team": "SST",
+      "event": "Girls 200 Free",
+      "seed_time": 159.2,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dominic Judge",
+      "team": "SST",
+      "event": "Boys 200 IM",
+      "seed_time": 133.15,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dominic Judge",
+      "team": "SST",
+      "event": "Boys 50 Free",
+      "seed_time": 24.09,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jane Judge",
+      "team": "SST",
+      "event": "Girls 100 Back",
+      "seed_time": 75.9,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jane Judge",
+      "team": "SST",
+      "event": "Girls 100 Free",
+      "seed_time": 68.09,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Clare Kay",
+      "team": "SST",
+      "event": "Girls 6 Free",
+      "seed_time": 150.35,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Patrick Kay",
+      "team": "SST",
+      "event": "Boys 100 Back",
+      "seed_time": 63.79,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Patrick Kay",
+      "team": "SST",
+      "event": "Boys 200 IM",
+      "seed_time": 137.9,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Philomena Kay",
+      "team": "SST",
+      "event": "Girls 100 Free",
+      "seed_time": 60.49,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Philomena Kay",
+      "team": "SST",
+      "event": "Girls 200 Free",
+      "seed_time": 139.54,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Joey Lynch",
+      "team": "SST",
+      "event": "Boys 100 Back",
+      "seed_time": 71.58,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Joey Lynch",
+      "team": "SST",
+      "event": "Boys 100 Free",
+      "seed_time": 58.95,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Avila Mantooth",
+      "team": "SST",
+      "event": "Girls 200 IM",
+      "seed_time": 164.17,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Avila Mantooth",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 71.42,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lionel Martinez",
+      "team": "SST",
+      "event": "Boys 200 IM",
+      "seed_time": 119.86,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lionel Martinez",
+      "team": "SST",
+      "event": "Boys 100 Free",
+      "seed_time": 49.05,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Thiago Martinez",
+      "team": "SST",
+      "event": "Boys 200 IM",
+      "seed_time": 125.96,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Thiago Martinez",
+      "team": "SST",
+      "event": "Boys 500 Free",
+      "seed_time": 312.07,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Aidan McCardell",
+      "team": "SST",
+      "event": "Boys 100 Breast",
+      "seed_time": 84.29,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charlotte Meadows",
+      "team": "SST",
+      "event": "Girls 200 IM",
+      "seed_time": 168.69,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maria Miller",
+      "team": "SST",
+      "event": "Girls 6 Free",
+      "seed_time": 166.05,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kenneth Nguyen",
+      "team": "SST",
+      "event": "Boys 6 Free",
+      "seed_time": 122.05,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Melissa Paradise",
+      "team": "SST",
+      "event": "Girls 100 Back",
+      "seed_time": 56.68,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Melissa Paradise",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 62.08,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Therese Paradise",
+      "team": "SST",
+      "event": "Girls 100 Breast",
+      "seed_time": 72.87,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Therese Paradise",
+      "team": "SST",
+      "event": "Girls 200 Free",
+      "seed_time": 123.83,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Paul Partridge",
+      "team": "SST",
+      "event": "Boys 100 Breast",
+      "seed_time": 79.23,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Paul Partridge",
+      "team": "SST",
+      "event": "Boys 500 Free",
+      "seed_time": 387.6,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gabriella Russo",
+      "team": "SST",
+      "event": "Girls 500 Free",
+      "seed_time": 427.33,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gabriella Russo",
+      "team": "SST",
+      "event": "Girls 50 Free",
+      "seed_time": 29.93,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Caroline Schroer",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 99.09,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maggie Schroer",
+      "team": "SST",
+      "event": "Girls 50 Free",
+      "seed_time": 26.29,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maggie Schroer",
+      "team": "SST",
+      "event": "Girls 100 Back",
+      "seed_time": 68.82,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Daniel Sokban",
+      "team": "SST",
+      "event": "Boys 200 Free",
+      "seed_time": 128.96,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Daniel Sokban",
+      "team": "SST",
+      "event": "Boys 50 Free",
+      "seed_time": 23.59,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lily Waldron",
+      "team": "SST",
+      "event": "Girls 100 Free",
+      "seed_time": 67.13,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lily Waldron",
+      "team": "SST",
+      "event": "Girls 50 Free",
+      "seed_time": 28.99,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Thomas Waldron",
+      "team": "SST",
+      "event": "Boys 6 Free",
+      "seed_time": 134.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jonas Wilson",
+      "team": "SST",
+      "event": "Boys 100 Fly",
+      "seed_time": 72.88,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jonas Wilson",
+      "team": "SST",
+      "event": "Boys 500 Free",
+      "seed_time": 376.17,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "John Witter",
+      "team": "SST",
+      "event": "Boys 6 Free",
+      "seed_time": 146.8,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Michael Zahorchak",
+      "team": "SST",
+      "event": "Boys 100 Free",
+      "seed_time": 53.15,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Michael Zahorchak",
+      "team": "SST",
+      "event": "Boys 50 Free",
+      "seed_time": 24.79,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "BCP ",
+      "team": "BCP",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 102.6,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BCP ",
+      "team": "BCP",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 113.92,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BCP ",
+      "team": "BCP",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 264.84,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 104.62,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 123.31,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 116.27,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 126.15,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 139.27,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 141.7,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 96.33,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 103.32,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 108.26,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 107.62,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 114.2,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 122.53,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 136.86,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 233.28,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 232.47,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "BI ",
+      "team": "BI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 261.82,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 98.67,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 108.27,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 115.1,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 127.21,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 149.52,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 110.19,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 122.32,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 123.13,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 136.23,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 143.92,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 185.63,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 90.75,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 100.04,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 130.18,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 103.63,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 110.9,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 120.05,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 130.96,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 106.21,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 113.33,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 120.0,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 123.07,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 125.64,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 141.79,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 179.16,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 197.8,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 223.77,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 233.4,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 264.63,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 280.21,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 216.77,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 243.81,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 264.23,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "DJO ",
+      "team": "DJO",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 294.36,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 128.82,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 128.8,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 150.04,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 145.68,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 108.59,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 115.87,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 133.36,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 239.22,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "OAK ",
+      "team": "OAK",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 252.81,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 116.57,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 123.9,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 133.06,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 174.88,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 106.88,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 111.7,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 121.45,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 142.57,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SGHS ",
+      "team": "SGHS",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 325.45,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 123.07,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 138.36,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 112.27,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 110.61,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 127.98,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 145.82,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 260.52,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 245.42,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "JP ",
+      "team": "JP",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 327.7,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 103.02,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 122.49,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 126.93,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 117.9,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 121.07,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 125.88,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 96.18,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 104.88,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 115.15,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 102.74,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 111.9,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 114.78,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 135.04,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 126.46,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 214.54,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 250.61,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 273.66,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 224.47,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 238.72,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "PVI ",
+      "team": "PVI",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 253.49,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 102.58,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 117.97,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 160.59,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 155.33,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 163.66,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 173.28,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 154.15,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 170.23,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 165.65,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 109.84,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 123.33,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 152.67,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 168.22,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 162.77,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 183.25,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 172.28,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 167.78,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 169.31,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 160.88,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 183.53,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 92.34,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 101.39,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 123.09,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 155.28,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 123.86,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 123.77,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 143.75,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 136.76,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 147.2,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 154.6,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 111.23,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 116.0,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 120.44,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 138.6,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 146.1,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 145.0,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 139.29,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 149.19,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 146.81,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 147.71,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 160.13,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 222.09,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 249.48,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 221.18,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 261.4,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 273.18,
+      "gender": "F"
+    }
+  ]
+}

@@ -1,0 +1,1542 @@
+{
+  "team": "SST",
+  "team_name": "Seton High School (VA)",
+  "season": "2025-2026",
+  "meet_name": "2026 NoVa Catholic Championship",
+  "athletes": [
+    {
+      "id": "6054",
+      "name": "Ariana Aldeguer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6093",
+      "name": "Bethany Allen",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6061",
+      "name": "Angela Andreu",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6022",
+      "name": "Betsy Arnold",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6053",
+      "name": "Maximilian Ashton",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6099",
+      "name": "Clara Bauer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6095",
+      "name": "Gregory Bauer",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6046",
+      "name": "Katie Bauer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6084",
+      "name": "James Beltran",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6065",
+      "name": "Joel Bookwalter",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6109",
+      "name": "David Brand",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6066",
+      "name": "Michael Brand",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6062",
+      "name": "Grace Catabui",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6110",
+      "name": "Anselm Clune",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6013",
+      "name": "Meghan Condon",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6040",
+      "name": "John Cooley",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6055",
+      "name": "Katie Cooley",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6085",
+      "name": "Rafael De Micoli",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6047",
+      "name": "Annie Dusek",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6041",
+      "name": "Charlie Dusek",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6033",
+      "name": "Bennett Ellis",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6025",
+      "name": "Rose Ellis",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6026",
+      "name": "Kyleigh Fifield",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6100",
+      "name": "Leah Fifield",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6067",
+      "name": "Luke Fifield",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6038",
+      "name": "Anastasia Garvey",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6068",
+      "name": "JJ Garvey",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6056",
+      "name": "Gigi Gibaldi",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6086",
+      "name": "Thomas Goodman",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6077",
+      "name": "Bella Gorman",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6078",
+      "name": "Addi Hadro",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6027",
+      "name": "Aoife Haggerty",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6071",
+      "name": "Eamon Haggerty",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6111",
+      "name": "Oisin Haggerty",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6039",
+      "name": "Gus Halisky",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6018",
+      "name": "Sophia Halisky",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6117",
+      "name": "Blaise Hallada",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6101",
+      "name": "Camille Hallada",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6118",
+      "name": "John Paul Hartung",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6119",
+      "name": "Mark Hartung",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6112",
+      "name": "Charlie Hawley",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6102",
+      "name": "Maddie Henderson",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6042",
+      "name": "Dominic Henry",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6108",
+      "name": "Natalia Hercules",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6015",
+      "name": "Jack Herwick",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6014",
+      "name": "Lucy Herwick",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6023",
+      "name": "Elizabeth Hurley",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6024",
+      "name": "Monica Irving",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6034",
+      "name": "Dominic Judge",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6048",
+      "name": "Jane Judge",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6020",
+      "name": "William Judge",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6057",
+      "name": "Clare Kay",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6113",
+      "name": "Connor Kay",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6103",
+      "name": "Marian Kay",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6043",
+      "name": "Patrick Kay",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6076",
+      "name": "Philomena Kay",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6017",
+      "name": "Colette Kramer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6028",
+      "name": "Cora Kramer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6079",
+      "name": "Rebecca Kramer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6032",
+      "name": "Joey Lynch",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6104",
+      "name": "Emma Magness",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6080",
+      "name": "Siobhan Maher",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6049",
+      "name": "Avila Mantooth",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6063",
+      "name": "Julia Maranian",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6114",
+      "name": "Gabriel Marm",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6075",
+      "name": "Lionel Martinez",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6097",
+      "name": "Thiago Martinez",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6064",
+      "name": "Evie Mayer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6105",
+      "name": "Heidi Mayer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6019",
+      "name": "Aidan McCardell",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6021",
+      "name": "Charlotte Meadows",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6058",
+      "name": "Annabelle Mikkelson",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6060",
+      "name": "Maggie Mikkelson",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6029",
+      "name": "Maria Miller",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6106",
+      "name": "Maeve Mooney",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6120",
+      "name": "Caleb Neuhaus",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6050",
+      "name": "Bella Nguyen",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6069",
+      "name": "James Nguyen",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6044",
+      "name": "Kenneth Nguyen",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6087",
+      "name": "Philip Nguyen",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6115",
+      "name": "Peter O'Malley",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6073",
+      "name": "Brian Orellana",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6098",
+      "name": "Melissa Paradise",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6016",
+      "name": "Therese Paradise",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6070",
+      "name": "Paul Partridge",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6088",
+      "name": "Charbel Pennefather",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6081",
+      "name": "Gianna Pillion",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6094",
+      "name": "Charlotte Poullath",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6030",
+      "name": "Allison Quispe",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6051",
+      "name": "Camila Quispe",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6072",
+      "name": "James Reynolds",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6031",
+      "name": "Gabriella Russo",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6059",
+      "name": "Caroline Schroer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6052",
+      "name": "Maggie Schroer",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6089",
+      "name": "Dominic Sciscilo",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6035",
+      "name": "Daniel Sokban",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6082",
+      "name": "Bella Vaughan",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6083",
+      "name": "Jane Vaughan",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6045",
+      "name": "Noah Vaughan",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6096",
+      "name": "Lily Waldron",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6037",
+      "name": "Thomas Waldron",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6107",
+      "name": "Jocelynn Wilson",
+      "sex": "F",
+      "grade": ""
+    },
+    {
+      "id": "6074",
+      "name": "Jonas Wilson",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6116",
+      "name": "Patrick Wise",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6091",
+      "name": "Joe Witter",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6092",
+      "name": "John Witter",
+      "sex": "M",
+      "grade": ""
+    },
+    {
+      "id": "6036",
+      "name": "Michael Zahorchak",
+      "sex": "M",
+      "grade": ""
+    }
+  ],
+  "entries": [
+    {
+      "swimmer_name": "Ariana Aldeguer",
+      "team": "SST",
+      "event": "Girls 100 Free",
+      "seed_time": 54.21,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Ariana Aldeguer",
+      "team": "SST",
+      "event": "Girls 200 IM",
+      "seed_time": 128.35,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Betsy Arnold",
+      "team": "SST",
+      "event": "Girls 100 Back",
+      "seed_time": 77.11,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Betsy Arnold",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 68.28,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maximilian Ashton",
+      "team": "SST",
+      "event": "Boys 6 Free",
+      "seed_time": 137.25,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gregory Bauer",
+      "team": "SST",
+      "event": "Boys 500 Free",
+      "seed_time": 370.02,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gregory Bauer",
+      "team": "SST",
+      "event": "Boys 50 Free",
+      "seed_time": 24.77,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Katie Bauer",
+      "team": "SST",
+      "event": "Girls 500 Free",
+      "seed_time": 415.83,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Katie Bauer",
+      "team": "SST",
+      "event": "Girls 200 Free",
+      "seed_time": 148.18,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Joel Bookwalter",
+      "team": "SST",
+      "event": "Boys 100 Free",
+      "seed_time": 60.58,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Joel Bookwalter",
+      "team": "SST",
+      "event": "Boys 100 Breast",
+      "seed_time": 81.14,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Meghan Condon",
+      "team": "SST",
+      "event": "Girls 6 Free",
+      "seed_time": 189.2,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Annie Dusek",
+      "team": "SST",
+      "event": "Girls 500 Free",
+      "seed_time": 411.87,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charlie Dusek",
+      "team": "SST",
+      "event": "Boys 200 Free",
+      "seed_time": 169.86,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Bennett Ellis",
+      "team": "SST",
+      "event": "Boys 100 Breast",
+      "seed_time": 74.63,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Bennett Ellis",
+      "team": "SST",
+      "event": "Boys 200 Free",
+      "seed_time": 159.35,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kyleigh Fifield",
+      "team": "SST",
+      "event": "Girls 500 Free",
+      "seed_time": 405.53,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kyleigh Fifield",
+      "team": "SST",
+      "event": "Girls 200 IM",
+      "seed_time": 165.99,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Anastasia Garvey",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 66.99,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Anastasia Garvey",
+      "team": "SST",
+      "event": "Girls 100 Breast",
+      "seed_time": 77.15,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "JJ Garvey",
+      "team": "SST",
+      "event": "Boys 100 Fly",
+      "seed_time": 78.97,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "JJ Garvey",
+      "team": "SST",
+      "event": "Boys 100 Back",
+      "seed_time": 73.22,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Bella Gorman",
+      "team": "SST",
+      "event": "Girls 6 Free",
+      "seed_time": 123.9,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Aoife Haggerty",
+      "team": "SST",
+      "event": "Girls 100 Breast",
+      "seed_time": 87.47,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophia Halisky",
+      "team": "SST",
+      "event": "Girls 50 Free",
+      "seed_time": 28.64,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Sophia Halisky",
+      "team": "SST",
+      "event": "Girls 100 Breast",
+      "seed_time": 79.05,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jack Herwick",
+      "team": "SST",
+      "event": "Boys 100 Back",
+      "seed_time": 62.22,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jack Herwick",
+      "team": "SST",
+      "event": "Boys 100 Fly",
+      "seed_time": 61.83,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Elizabeth Hurley",
+      "team": "SST",
+      "event": "Girls 200 Free",
+      "seed_time": 159.2,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dominic Judge",
+      "team": "SST",
+      "event": "Boys 200 IM",
+      "seed_time": 133.15,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Dominic Judge",
+      "team": "SST",
+      "event": "Boys 50 Free",
+      "seed_time": 24.09,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jane Judge",
+      "team": "SST",
+      "event": "Girls 100 Back",
+      "seed_time": 75.9,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jane Judge",
+      "team": "SST",
+      "event": "Girls 100 Free",
+      "seed_time": 68.09,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Clare Kay",
+      "team": "SST",
+      "event": "Girls 6 Free",
+      "seed_time": 150.35,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Patrick Kay",
+      "team": "SST",
+      "event": "Boys 100 Back",
+      "seed_time": 63.79,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Patrick Kay",
+      "team": "SST",
+      "event": "Boys 200 IM",
+      "seed_time": 137.9,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Philomena Kay",
+      "team": "SST",
+      "event": "Girls 100 Free",
+      "seed_time": 60.49,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Philomena Kay",
+      "team": "SST",
+      "event": "Girls 200 Free",
+      "seed_time": 139.54,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Joey Lynch",
+      "team": "SST",
+      "event": "Boys 100 Back",
+      "seed_time": 71.58,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Joey Lynch",
+      "team": "SST",
+      "event": "Boys 100 Free",
+      "seed_time": 58.95,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Avila Mantooth",
+      "team": "SST",
+      "event": "Girls 200 IM",
+      "seed_time": 164.17,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Avila Mantooth",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 71.42,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lionel Martinez",
+      "team": "SST",
+      "event": "Boys 200 IM",
+      "seed_time": 119.86,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lionel Martinez",
+      "team": "SST",
+      "event": "Boys 100 Free",
+      "seed_time": 49.05,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Thiago Martinez",
+      "team": "SST",
+      "event": "Boys 200 IM",
+      "seed_time": 125.96,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Thiago Martinez",
+      "team": "SST",
+      "event": "Boys 500 Free",
+      "seed_time": 312.07,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Aidan McCardell",
+      "team": "SST",
+      "event": "Boys 100 Breast",
+      "seed_time": 84.29,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Charlotte Meadows",
+      "team": "SST",
+      "event": "Girls 200 IM",
+      "seed_time": 168.69,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maria Miller",
+      "team": "SST",
+      "event": "Girls 6 Free",
+      "seed_time": 166.05,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Kenneth Nguyen",
+      "team": "SST",
+      "event": "Boys 6 Free",
+      "seed_time": 122.05,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Melissa Paradise",
+      "team": "SST",
+      "event": "Girls 100 Back",
+      "seed_time": 56.68,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Melissa Paradise",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 62.08,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Therese Paradise",
+      "team": "SST",
+      "event": "Girls 100 Breast",
+      "seed_time": 72.87,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Therese Paradise",
+      "team": "SST",
+      "event": "Girls 200 Free",
+      "seed_time": 123.83,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Paul Partridge",
+      "team": "SST",
+      "event": "Boys 100 Breast",
+      "seed_time": 79.23,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Paul Partridge",
+      "team": "SST",
+      "event": "Boys 500 Free",
+      "seed_time": 387.6,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gabriella Russo",
+      "team": "SST",
+      "event": "Girls 500 Free",
+      "seed_time": 427.33,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Gabriella Russo",
+      "team": "SST",
+      "event": "Girls 50 Free",
+      "seed_time": 29.93,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Caroline Schroer",
+      "team": "SST",
+      "event": "Girls 100 Fly",
+      "seed_time": 99.09,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maggie Schroer",
+      "team": "SST",
+      "event": "Girls 50 Free",
+      "seed_time": 26.29,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Maggie Schroer",
+      "team": "SST",
+      "event": "Girls 100 Back",
+      "seed_time": 68.82,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Daniel Sokban",
+      "team": "SST",
+      "event": "Boys 200 Free",
+      "seed_time": 128.96,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Daniel Sokban",
+      "team": "SST",
+      "event": "Boys 50 Free",
+      "seed_time": 23.59,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lily Waldron",
+      "team": "SST",
+      "event": "Girls 100 Free",
+      "seed_time": 67.13,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Lily Waldron",
+      "team": "SST",
+      "event": "Girls 50 Free",
+      "seed_time": 28.99,
+      "gender": "F",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Thomas Waldron",
+      "team": "SST",
+      "event": "Boys 6 Free",
+      "seed_time": 134.0,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jonas Wilson",
+      "team": "SST",
+      "event": "Boys 100 Fly",
+      "seed_time": 72.88,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Jonas Wilson",
+      "team": "SST",
+      "event": "Boys 500 Free",
+      "seed_time": 376.17,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "John Witter",
+      "team": "SST",
+      "event": "Boys 6 Free",
+      "seed_time": 146.8,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Michael Zahorchak",
+      "team": "SST",
+      "event": "Boys 100 Free",
+      "seed_time": 53.15,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "Michael Zahorchak",
+      "team": "SST",
+      "event": "Boys 50 Free",
+      "seed_time": 24.79,
+      "gender": "M",
+      "grade": null
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 102.58,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 117.97,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 160.59,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 155.33,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 163.66,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 173.28,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 154.15,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 170.23,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 165.65,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 109.84,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 123.33,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 152.67,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 168.22,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 162.77,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 183.25,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 172.28,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 167.78,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 169.31,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 160.88,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 183.53,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 92.34,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 101.39,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 123.09,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 155.28,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 123.86,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 123.77,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 143.75,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 136.76,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 147.2,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 154.6,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 111.23,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 116.0,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 120.44,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 138.6,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 146.1,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 145.0,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 139.29,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 149.19,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 146.81,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 147.71,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 160.13,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 222.09,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Boys 200 Free Relay",
+      "seed_time": 249.48,
+      "gender": "M"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 221.18,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 261.4,
+      "gender": "F"
+    },
+    {
+      "swimmer_name": "SST ",
+      "team": "SST",
+      "event": "Girls 200 Free Relay",
+      "seed_time": 273.18,
+      "gender": "F"
+    }
+  ]
+}

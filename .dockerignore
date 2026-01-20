@@ -1,0 +1,13 @@
+.git
+.gitignore
+.web
+__pycache__
+*.pyc
+*.pyo
+venv
+.env
+deploy_log.txt
+Dockerfile
+render.yaml
+README.md
+node_modules

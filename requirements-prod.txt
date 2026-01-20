@@ -1,0 +1,90 @@
+# Production/Enterprise Dependencies
+# Use: pip install -r requirements-prod.txt
+# Install after requirements.txt for production deployments
+
+# Include base requirements
+-r requirements.txt
+
+# ======================
+# CONFIGURATION & SETTINGS
+# ======================
+pydantic-settings>=2.0.0  # Centralized config management
+python-dotenv>=1.0.0      # .env file loading
+
+# ======================
+# LOGGING & OBSERVABILITY  
+# ======================
+structlog>=24.0.0           # Structured JSON logging
+python-json-logger>=2.0.0   # JSON log formatter
+sentry-sdk>=1.40.0          # Error tracking & alerting
+
+# ======================
+# ASYNC & BACKGROUND JOBS
+# ======================
+arq>=0.26.0                 # Async Redis-based job queue (lighter than Celery)
+aioredis>=2.0.0             # Async Redis client
+
+# ======================
+# HTTP CLIENT (External APIs)
+# ======================
+httpx>=0.27.0               # Async HTTP client (already in base)
+tenacity>=8.2.0             # Retry with exponential backoff
+aiohttp>=3.9.0              # Alternative async HTTP
+
+# ======================
+# SECURITY & AUTH
+# ======================
+python-jose[cryptography]>=3.3.0  # JWT tokens
+passlib[bcrypt]>=1.7.4            # Password hashing
+authlib>=1.3.0                    # OAuth2/OIDC client
+
+# ======================
+# DATABASE (Async)
+# ======================
+asyncpg>=0.29.0             # Async PostgreSQL driver
+databases>=0.9.0            # Async database interface
+
+# ======================
+# CACHING
+# ======================
+aiocache>=0.12.0            # Async caching framework
+
+# ======================
+# METRICS & TRACING
+# ======================
+prometheus-client>=0.20.0           # Prometheus metrics
+opentelemetry-sdk>=1.24.0           # Distributed tracing
+opentelemetry-instrumentation-fastapi>=0.45b0
+opentelemetry-instrumentation-httpx>=0.45b0
+opentelemetry-instrumentation-redis>=0.45b0
+opentelemetry-exporter-otlp>=1.24.0  # Export to Jaeger/etc.
+
+# ======================  
+# RATE LIMITING & THROTTLING
+# ======================
+slowapi>=0.1.9              # FastAPI rate limiting
+limits>=3.10.0              # Rate limit backends
+
+# ======================
+# API DOCUMENTATION
+# ======================
+# (FastAPI includes Swagger/ReDoc by default)
+
+# ======================
+# FEATURE FLAGS (Optional)
+# ======================
+# flagsmith>=3.0.0          # Feature flag management
+# posthog>=3.0.0            # Product analytics + flags
+
+# ======================
+# EMAIL (Future)
+# ======================
+# emails>=0.6               # Email sending
+# aiosmtplib>=3.0.0         # Async SMTP
+
+# ======================
+# CLOUD SDKs (Uncomment as needed)
+# ======================
+# boto3>=1.34.0             # AWS SDK
+# google-cloud-storage>=2.14.0  # GCP Storage
+# azure-storage-blob>=12.19.0   # Azure Blob

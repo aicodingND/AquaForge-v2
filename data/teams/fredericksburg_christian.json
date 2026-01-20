@@ -1,0 +1,15 @@
+{
+  "id": "fredericksburg_christian",
+  "name": "Fredericksburg Christian School",
+  "abbreviation": "FCS",
+  "colors": {
+    "primary": "#1C4587",
+    "secondary": "#FFFFFF",
+    "accent": "#C41E3A"
+  },
+  "rosterSource": "swimcloud",
+  "division": "VISAA_DII",
+  "conference": "VCAC",
+  "location": "Fredericksburg, VA",
+  "isUserTeam": false
+}

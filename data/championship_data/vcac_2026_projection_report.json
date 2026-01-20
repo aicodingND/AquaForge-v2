@@ -1,0 +1,231 @@
+{
+  "generated_at": ".",
+  "standings": [
+    [
+      "djo",
+      1021.0
+    ],
+    [
+      "sst",
+      482.0
+    ],
+    [
+      "tcs",
+      436.0
+    ],
+    [
+      "pvi",
+      362.0
+    ],
+    [
+      "ics",
+      352.0
+    ],
+    [
+      "bi",
+      288.0
+    ],
+    [
+      "oak",
+      182.0
+    ],
+    [
+      "fcs",
+      136.0
+    ],
+    [
+      "sghs",
+      110.0
+    ],
+    [
+      "jp",
+      64.0
+    ],
+    [
+      "bcp",
+      26.0
+    ]
+  ],
+  "team_totals": {
+    "pvi": 362.0,
+    "bi": 288.0,
+    "sst": 482.0,
+    "djo": 1021.0,
+    "jp": 64.0,
+    "oak": 182.0,
+    "fcs": 136.0,
+    "sghs": 110.0,
+    "tcs": 436.0,
+    "ics": 352.0,
+    "bcp": 26.0
+  },
+  "seton_summary": {
+    "team": "sst",
+    "total_points": 482.0,
+    "standing": 2,
+    "top_scorers": [
+      {
+        "swimmer": "Melissa Paradise",
+        "event": "Girls 100 Back",
+        "place": 1,
+        "points": 32
+      },
+      {
+        "swimmer": "Ariana Aldeguer",
+        "event": "Girls 100 Free",
+        "place": 2,
+        "points": 26
+      },
+      {
+        "swimmer": "Lionel Martinez",
+        "event": "Boys 200 IM",
+        "place": 2,
+        "points": 26
+      },
+      {
+        "swimmer": "Kenneth Nguyen",
+        "event": "Boys 6 Free",
+        "place": 2,
+        "points": 26
+      },
+      {
+        "swimmer": "Bella Gorman",
+        "event": "Girls 6 Free",
+        "place": 3,
+        "points": 24
+      },
+      {
+        "swimmer": "Lionel Martinez",
+        "event": "Boys 100 Free",
+        "place": 3,
+        "points": 24
+      },
+      {
+        "swimmer": "Thiago Martinez",
+        "event": "Boys 200 IM",
+        "place": 3,
+        "points": 24
+      },
+      {
+        "swimmer": "Ariana Aldeguer",
+        "event": "Girls 200 IM",
+        "place": 3,
+        "points": 24
+      },
+      {
+        "swimmer": "Melissa Paradise",
+        "event": "Girls 100 Fly",
+        "place": 4,
+        "points": 22
+      },
+      {
+        "swimmer": "Thomas Waldron",
+        "event": "Boys 6 Free",
+        "place": 4,
+        "points": 22
+      }
+    ],
+    "best_events": [
+      {
+        "event": "Boys 6 Free",
+        "points": 86
+      },
+      {
+        "event": "Boys 200 IM",
+        "points": 72
+      },
+      {
+        "event": "Girls 6 Free",
+        "points": 58
+      },
+      {
+        "event": "Boys 100 Free",
+        "points": 34
+      },
+      {
+        "event": "Girls 100 Back",
+        "points": 32
+      }
+    ],
+    "total_scoring_entries": 30
+  },
+  "swing_events": [
+    {
+      "event": "Girls 100 Free",
+      "swimmer": "Ariana Aldeguer",
+      "current_place": 2,
+      "target_place": 1,
+      "current_points": 26,
+      "potential_points": 32,
+      "point_gain": 6,
+      "current_time": "54.21",
+      "priority": "high"
+    },
+    {
+      "event": "Boys 200 IM",
+      "swimmer": "Lionel Martinez",
+      "current_place": 2,
+      "target_place": 1,
+      "current_points": 26,
+      "potential_points": 32,
+      "point_gain": 6,
+      "current_time": "1:59.86",
+      "priority": "high"
+    },
+    {
+      "event": "Boys 6 Free",
+      "swimmer": "Kenneth Nguyen",
+      "current_place": 2,
+      "target_place": 1,
+      "current_points": 26,
+      "potential_points": 32,
+      "point_gain": 6,
+      "current_time": "2:02.05",
+      "priority": "high"
+    },
+    {
+      "event": "Girls 6 Free",
+      "swimmer": "Maria Miller",
+      "current_place": 7,
+      "target_place": 6,
+      "current_points": 14,
+      "potential_points": 18,
+      "point_gain": 4,
+      "current_time": "2:46.05",
+      "priority": "medium"
+    },
+    {
+      "event": "Girls 100 Breast",
+      "swimmer": "Therese Paradise",
+      "current_place": 7,
+      "target_place": 6,
+      "current_points": 14,
+      "potential_points": 18,
+      "point_gain": 4,
+      "current_time": "1:12.87",
+      "priority": "medium"
+    },
+    {
+      "event": "Boys 100 Free",
+      "swimmer": "Michael Zahorchak",
+      "current_place": 8,
+      "target_place": 7,
+      "current_points": 10,
+      "potential_points": 14,
+      "point_gain": 4,
+      "current_time": "53.15",
+      "priority": "medium"
+    },
+    {
+      "event": "Boys 100 Back",
+      "swimmer": "Jack Herwick",
+      "current_place": 8,
+      "target_place": 7,
+      "current_points": 10,
+      "potential_points": 14,
+      "point_gain": 4,
+      "current_time": "1:02.22",
+      "priority": "medium"
+    }
+  ]
+}

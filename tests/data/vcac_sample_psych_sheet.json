@@ -1,0 +1,54 @@
+{
+  "meet_name": "VCAC Championship 2026",
+  "meet_date": "2026-02-07",
+  "meet_profile": "vcac_championship",
+  "teams": ["Seton", "Trinity", "Oakcrest", "Fredericksburg Christian", "Immanuel Christian", "JPII"],
+  "entries": [
+    {"swimmer_name": "John Smith", "team": "Seton", "event": "Boys 50 Free", "seed_time": 23.45, "gender": "M", "grade": 11},
+    {"swimmer_name": "Mike Johnson", "team": "Seton", "event": "Boys 50 Free", "seed_time": 24.12, "gender": "M", "grade": 12},
+    {"swimmer_name": "Chris Davis", "team": "Seton", "event": "Boys 50 Free", "seed_time": 25.34, "gender": "M", "grade": 10},
+    {"swimmer_name": "Tom Wilson", "team": "Seton", "event": "Boys 50 Free", "seed_time": 26.01, "gender": "M", "grade": 9},
+    {"swimmer_name": "Alex Brown", "team": "Trinity", "event": "Boys 50 Free", "seed_time": 22.89, "gender": "M", "grade": 12},
+    {"swimmer_name": "Sam Miller", "team": "Trinity", "event": "Boys 50 Free", "seed_time": 24.56, "gender": "M", "grade": 11},
+    {"swimmer_name": "Jake Turner", "team": "Trinity", "event": "Boys 50 Free", "seed_time": 25.78, "gender": "M", "grade": 10},
+    {"swimmer_name": "Ryan White", "team": "Oakcrest", "event": "Boys 50 Free", "seed_time": 23.67, "gender": "M", "grade": 12},
+    {"swimmer_name": "Ben Green", "team": "Oakcrest", "event": "Boys 50 Free", "seed_time": 24.89, "gender": "M", "grade": 11},
+    {"swimmer_name": "Dan Lee", "team": "Fredericksburg Christian", "event": "Boys 50 Free", "seed_time": 24.23, "gender": "M", "grade": 12},
+    {"swimmer_name": "Eric Hall", "team": "Immanuel Christian", "event": "Boys 50 Free", "seed_time": 25.01, "gender": "M", "grade": 11},
+    {"swimmer_name": "Frank King", "team": "JPII", "event": "Boys 50 Free", "seed_time": 25.45, "gender": "M", "grade": 10},
+
+    {"swimmer_name": "John Smith", "team": "Seton", "event": "Boys 100 Free", "seed_time": 52.34, "gender": "M", "grade": 11},
+    {"swimmer_name": "Mike Johnson", "team": "Seton", "event": "Boys 100 Free", "seed_time": 54.12, "gender": "M", "grade": 12},
+    {"swimmer_name": "Chris Davis", "team": "Seton", "event": "Boys 100 Free", "seed_time": 55.67, "gender": "M", "grade": 10},
+    {"swimmer_name": "Alex Brown", "team": "Trinity", "event": "Boys 100 Free", "seed_time": 51.23, "gender": "M", "grade": 12},
+    {"swimmer_name": "Sam Miller", "team": "Trinity", "event": "Boys 100 Free", "seed_time": 53.45, "gender": "M", "grade": 11},
+    {"swimmer_name": "Ryan White", "team": "Oakcrest", "event": "Boys 100 Free", "seed_time": 52.89, "gender": "M", "grade": 12},
+    {"swimmer_name": "Dan Lee", "team": "Fredericksburg Christian", "event": "Boys 100 Free", "seed_time": 54.56, "gender": "M", "grade": 12},
+
+    {"swimmer_name": "John Smith", "team": "Seton", "event": "Boys 200 Free", "seed_time": 115.45, "gender": "M", "grade": 11},
+    {"swimmer_name": "Mike Johnson", "team": "Seton", "event": "Boys 200 Free", "seed_time": 118.23, "gender": "M", "grade": 12},
+    {"swimmer_name": "Alex Brown", "team": "Trinity", "event": "Boys 200 Free", "seed_time": 112.56, "gender": "M", "grade": 12},
+    {"swimmer_name": "Sam Miller", "team": "Trinity", "event": "Boys 200 Free", "seed_time": 116.78, "gender": "M", "grade": 11},
+    {"swimmer_name": "Ryan White", "team": "Oakcrest", "event": "Boys 200 Free", "seed_time": 114.34, "gender": "M", "grade": 12},
+    {"swimmer_name": "Eric Hall", "team": "Immanuel Christian", "event": "Boys 200 Free", "seed_time": 119.01, "gender": "M", "grade": 11},
+
+    {"swimmer_name": "Emily Adams", "team": "Seton", "event": "Girls 50 Free", "seed_time": 26.12, "gender": "F", "grade": 11},
+    {"swimmer_name": "Sarah Clark", "team": "Seton", "event": "Girls 50 Free", "seed_time": 27.34, "gender": "F", "grade": 10},
+    {"swimmer_name": "Maria Garcia", "team": "Trinity", "event": "Girls 50 Free", "seed_time": 25.89, "gender": "F", "grade": 12},
+    {"swimmer_name": "Lisa Chen", "team": "Trinity", "event": "Girls 50 Free", "seed_time": 26.78, "gender": "F", "grade": 11},
+    {"swimmer_name": "Anna Scott", "team": "Oakcrest", "event": "Girls 50 Free", "seed_time": 26.45, "gender": "F", "grade": 11},
+    {"swimmer_name": "Kate Brown", "team": "Fredericksburg Christian", "event": "Girls 50 Free", "seed_time": 27.01, "gender": "F", "grade": 10},
+
+    {"swimmer_name": "Emily Adams", "team": "Seton", "event": "Girls 100 Free", "seed_time": 57.34, "gender": "F", "grade": 11},
+    {"swimmer_name": "Sarah Clark", "team": "Seton", "event": "Girls 100 Free", "seed_time": 59.12, "gender": "F", "grade": 10},
+    {"swimmer_name": "Maria Garcia", "team": "Trinity", "event": "Girls 100 Free", "seed_time": 56.78, "gender": "F", "grade": 12},
+    {"swimmer_name": "Lisa Chen", "team": "Trinity", "event": "Girls 100 Free", "seed_time": 58.45, "gender": "F", "grade": 11},
+    {"swimmer_name": "Anna Scott", "team": "Oakcrest", "event": "Girls 100 Free", "seed_time": 57.89, "gender": "F", "grade": 11},
+
+    {"swimmer_name": "Seton A", "team": "Seton", "event": "Boys 200 Medley Relay", "seed_time": 102.45, "gender": "M"},
+    {"swimmer_name": "Seton B", "team": "Seton", "event": "Boys 200 Medley Relay", "seed_time": 108.23, "gender": "M"},
+    {"swimmer_name": "Trinity A", "team": "Trinity", "event": "Boys 200 Medley Relay", "seed_time": 100.12, "gender": "M"},
+    {"swimmer_name": "Trinity B", "team": "Trinity", "event": "Boys 200 Medley Relay", "seed_time": 106.78, "gender": "M"},
+    {"swimmer_name": "Oakcrest A", "team": "Oakcrest", "event": "Boys 200 Medley Relay", "seed_time": 104.56, "gender": "M"}
+  ]
+}

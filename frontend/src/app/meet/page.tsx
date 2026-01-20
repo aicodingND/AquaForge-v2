@@ -130,29 +130,30 @@ export default function MeetSetupPage() {
 
       {/* Tab Navigation */}
       <div className="flex gap-1 bg-[var(--navy-700)] rounded-lg p-1 w-fit">
-        {(["setup", "upload", "roster"] as const)
-          .concat(isDual ? [] : (["teams"] as const))
-          .map((section) => (
-            <button
-              key={section}
-              onClick={() =>
-                setActiveSection(
-                  section as "setup" | "upload" | "roster" | "teams",
-                )
-              }
-              className={`py-2 px-4 rounded-md text-sm font-medium transition-all capitalize ${
-                activeSection === section
-                  ? "bg-gradient-to-r from-[var(--gold-400)] to-[var(--gold-500)] text-[var(--navy-900)]"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
-              {section === "setup" && "⚙️ "}
-              {section === "upload" && "📁 "}
-              {section === "roster" && "👥 "}
-              {section === "teams" && "🏆 "}
-              {section}
-            </button>
-          ))}
+        {(isDual
+          ? (["setup", "upload", "roster"] as const)
+          : (["setup", "upload", "roster", "teams"] as const)
+        ).map((section) => (
+          <button
+            key={section}
+            onClick={() =>
+              setActiveSection(
+                section as "setup" | "upload" | "roster" | "teams",
+              )
+            }
+            className={`py-2 px-4 rounded-md text-sm font-medium transition-all capitalize ${
+              activeSection === section
+                ? "bg-gradient-to-r from-[var(--gold-400)] to-[var(--gold-500)] text-[var(--navy-900)]"
+                : "text-white/60 hover:text-white"
+            }`}
+          >
+            {section === "setup" && "⚙️ "}
+            {section === "upload" && "📁 "}
+            {section === "roster" && "👥 "}
+            {section === "teams" && "🏆 "}
+            {section}
+          </button>
+        ))}
       </div>
 
       {/* Setup Section */}

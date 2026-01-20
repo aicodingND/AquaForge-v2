@@ -257,26 +257,50 @@ export default function ResultsPage() {
                 </h3>
               </div>
               <div className="divide-y divide-(--navy-600)">
-                {swingEvents.slice(0, 5).map((swing, index) => (
-                  <div key={index} className="p-4 hover:bg-white/2">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-white">
-                          {swing.swimmer}
-                        </p>
-                        <p className="text-sm text-white/50">{swing.event}</p>
+                {(
+                  swingEvents as Array<{
+                    swimmer?: string;
+                    event?: string;
+                    point_gain?: number;
+                    current_place?: number;
+                    target_place?: number;
+                  }>
+                )
+                  .slice(0, 5)
+                  .map(
+                    (
+                      swing: {
+                        swimmer?: string;
+                        event?: string;
+                        point_gain?: number;
+                        current_place?: number;
+                        target_place?: number;
+                      },
+                      index,
+                    ) => (
+                      <div key={index} className="p-4 hover:bg-white/2">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-medium text-white">
+                              {swing.swimmer}
+                            </p>
+                            <p className="text-sm text-white/50">
+                              {swing.event}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-(--success) font-bold">
+                              +{swing.point_gain?.toFixed(1) || "?"} pts
+                            </p>
+                            <p className="text-xs text-white/50">
+                              Move #{swing.current_place} → #
+                              {swing.target_place}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-(--success) font-bold">
-                          +{swing.point_gain?.toFixed(1) || "?"} pts
-                        </p>
-                        <p className="text-xs text-white/50">
-                          Move #{swing.current_place} → #{swing.target_place}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                    ),
+                  )}
               </div>
             </div>
           )}

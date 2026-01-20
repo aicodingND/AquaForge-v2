@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: 'general',
-    message: ''
+    name: "",
+    email: "",
+    subject: "general",
+    message: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real app, this would send to an API
-    console.log('Contact form submitted:', formData);
+    console.log("Contact form submitted:", formData);
     setSubmitted(true);
   };
 
@@ -22,9 +22,12 @@ export default function ContactPage() {
     <div className="p-6 lg:p-8 space-y-6">
       {/* Page Header */}
       <div className="text-center max-w-2xl mx-auto">
-        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">Contact Us</h1>
+        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
+          Contact Us
+        </h1>
         <p className="text-white/50">
-          Have questions, feedback, or need support? We'd love to hear from you.
+          Have questions, feedback, or need support? We&apos;d love to hear from
+          you.
         </p>
       </div>
 
@@ -38,10 +41,15 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-medium text-white">Email</h3>
-                <p className="text-sm text-white/50">Get a response within 24 hours</p>
+                <p className="text-sm text-white/50">
+                  Get a response within 24 hours
+                </p>
               </div>
             </div>
-            <a href="mailto:support@aquaforge.ai" className="text-[var(--gold-400)] hover:underline">
+            <a
+              href="mailto:support@aquaforge.ai"
+              className="text-[var(--gold-400)] hover:underline"
+            >
               support@aquaforge.ai
             </a>
           </div>
@@ -66,7 +74,9 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-medium text-white">Community</h3>
-                <p className="text-sm text-white/50">Join swim coaches using AquaForge</p>
+                <p className="text-sm text-white/50">
+                  Join swim coaches using AquaForge
+                </p>
               </div>
             </div>
             <p className="text-white/60 text-sm">Coming soon</p>
@@ -81,14 +91,21 @@ export default function ContactPage() {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[var(--success-muted)] flex items-center justify-center">
                   <span className="text-3xl">✓</span>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">Message Sent!</h3>
+                <h3 className="text-xl font-semibold text-white mb-2">
+                  Message Sent!
+                </h3>
                 <p className="text-white/50 mb-6">
-                  Thank you for reaching out. We'll get back to you soon.
+                  Thank you for reaching out. We&apos;ll get back to you soon.
                 </p>
                 <button
                   onClick={() => {
                     setSubmitted(false);
-                    setFormData({ name: '', email: '', subject: 'general', message: '' });
+                    setFormData({
+                      name: "",
+                      email: "",
+                      subject: "general",
+                      message: "",
+                    });
                   }}
                   className="btn btn-outline"
                 >
@@ -99,22 +116,30 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-white/60 mb-2">Name</label>
+                    <label className="block text-sm text-white/60 mb-2">
+                      Name
+                    </label>
                     <input
                       type="text"
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
                       className="input"
                       placeholder="Your name"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-white/60 mb-2">Email</label>
+                    <label className="block text-sm text-white/60 mb-2">
+                      Email
+                    </label>
                     <input
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                       className="input"
                       placeholder="you@example.com"
                       required
@@ -123,10 +148,14 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm text-white/60 mb-2">Subject</label>
+                  <label className="block text-sm text-white/60 mb-2">
+                    Subject
+                  </label>
                   <select
                     value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, subject: e.target.value })
+                    }
                     className="input"
                   >
                     <option value="general">General Inquiry</option>
@@ -138,10 +167,14 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm text-white/60 mb-2">Message</label>
+                  <label className="block text-sm text-white/60 mb-2">
+                    Message
+                  </label>
                   <textarea
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     className="input min-h-[150px] resize-none"
                     placeholder="How can we help?"
                     required

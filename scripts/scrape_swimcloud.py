@@ -80,7 +80,7 @@ class SwimCloudScraper:
                             input_found = True
                             logger.info(f"Found search input with selector: {selector}")
                             break
-                    except:
+                    except Exception:
                         continue
 
                 if not input_found:
@@ -135,7 +135,7 @@ class SwimCloudScraper:
                 # Scrape Basic Info
                 try:
                     team_name = await page.title()
-                except:
+                except Exception:
                     team_name = "Unknown"
 
                 # Scrape Roster
@@ -264,7 +264,7 @@ class SwimCloudScraper:
                                         ".js-event-item"
                                     )
                                     break
-                            except:
+                            except Exception:
                                 continue
 
                     for el in event_items:
@@ -286,7 +286,7 @@ class SwimCloudScraper:
                             await page.wait_for_selector(
                                 "table.c-table-clean tbody tr", timeout=5000
                             )
-                        except:
+                        except Exception:
                             # Skip if no results table
                             continue
 
@@ -298,7 +298,7 @@ class SwimCloudScraper:
                             )
                             if header:
                                 event_name = await header.inner_text()
-                        except:
+                        except Exception:
                             pass
 
                         # Scrape Rows

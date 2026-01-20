@@ -686,7 +686,9 @@ class BeamSearch:
                 break
 
             # Selection for next beam
-            candidates.sort(key=lambda l: l.score - l.opponent_score, reverse=True)
+            candidates.sort(
+                key=lambda lineup: lineup.score - lineup.opponent_score, reverse=True
+            )
             beam = candidates[: self.beam_width]
 
             # === OPTIMIZATION 5: Early termination ===

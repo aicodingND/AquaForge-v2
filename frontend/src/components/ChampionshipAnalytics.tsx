@@ -260,7 +260,7 @@ export default function ChampionshipAnalytics({
             </div>
             <div>
               <b className="text-white">⚔️ Nash Equilibrium:</b> Game theory
-              analysis of how all teams' strategies interact.
+              analysis of how all teams&apos; strategies interact.
             </div>
             <div>
               <b className="text-white">🏊 Relay Trade-offs:</b> Point analysis

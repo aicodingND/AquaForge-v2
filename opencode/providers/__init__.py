@@ -1,1 +1,1 @@
-from .antigravity import AntigravityProvider
+from .antigravity import AntigravityProvider as AntigravityProvider

@@ -23,7 +23,8 @@ interface EventBreakdown {
   }[];
 }
 
-const DEFAULT_SCORING = [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2];
+// VCAC 12-place individual scoring (relay = 2x these values)
+const DEFAULT_SCORING = [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1];
 
 export default function PsychSheetView({
   data,

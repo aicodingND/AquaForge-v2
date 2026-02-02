@@ -5,12 +5,15 @@ Extends the dual-meet Gurobi optimizer for multi-team championship meets.
 
 Key differences from dual meets:
 - Scoring against ALL teams, not just one opponent
-- VCAC scoring: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2] (places 1-12)
+- VCAC 12-place scoring (relay = 2x individual):
+  Individual: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
+  Relay:      [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
 - Max 4 scorers per team per event
 - Relay 3 (400 Free) counts as individual event
 - Diving counts as 1 individual
 """
 
+import bisect
 import os
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
@@ -184,10 +187,17 @@ class ChampionshipGurobiStrategy:
                 gp.quicksum(x[s, e] for e in events) <= limit, name=f"max_indiv_{s}"
             )
 
-        # 3. No back-to-back events (STANDARD RULE - including relay leg blocking)
+        # 3. Max scorers per team per event (e.g., top 4 at VCAC)
+        for e in events:
+            m.addConstr(
+                gp.quicksum(x[s, e] for s in swimmers) <= self.max_scorers,
+                name=f"max_scorers_{e}",
+            )
+
+        # 4. No back-to-back events (STANDARD RULE - including relay leg blocking)
         # Use normalized event names for comparison
 
-        # 3a. Individual <-> Individual blocking
+        # 4a. Individual <-> Individual blocking
         for s in swimmers:
             swimmer_events = [e for e in events if (s, e) in swimmer_event_lookup]
 
@@ -208,7 +218,7 @@ class ChampionshipGurobiStrategy:
                             name=f"no_b2b_{s}_{event1[:10]}_{event2[:10]}",
                         )
 
-        # 3b. Individual <-> Relay blocking
+        # 4b. Individual <-> Relay blocking
         # Map relays to their event names
         relay_map = {
             "200 Medley Relay": relay_1_swimmers,
@@ -263,24 +273,22 @@ class ChampionshipGurobiStrategy:
         solve_time_ms = (time.time() - start_time) * 1000
 
         if m.Status == GRB.OPTIMAL or m.Status == GRB.TIME_LIMIT:
-            # Extract solution
+            # Extract assignment from solution
             assignments: dict[str, list[str]] = {}
-            event_breakdown: dict[str, float] = {}
 
             for s in swimmers:
                 assigned_events = []
                 for e in events:
                     if x[s, e].X > 0.5:
                         assigned_events.append(e)
-                        event_breakdown[e] = event_breakdown.get(
-                            e, 0
-                        ) + point_matrix.get((s, e), 0)
 
                 if assigned_events:
                     assignments[s] = assigned_events
 
-            total_points = -m.ObjVal if m.ObjVal else 0
-            total_points = abs(total_points) if total_points < 0 else m.ObjVal
+            # Re-score using accurate placement (accounts for teammates)
+            total_points, event_breakdown = self._rescore_solution(
+                assignments, all_entries, target_team
+            )
 
             # Calculate baseline (what we'd get with default top-2 by seed)
             baseline = self._calculate_baseline_points(
@@ -334,51 +342,114 @@ class ChampionshipGurobiStrategy:
         """
         Build expected points matrix for each (swimmer, event) pair.
 
-        Points depend on predicted placement against ALL competitors.
+        Uses opponent-only ranking (rank among non-target-team entries)
+        as the optimization objective.  This is slightly optimistic
+        (ignores teammate rank depression) but ensures the optimizer
+        fills all available event slots rather than leaving them empty.
+
+        The per-team scorer limit (max 4 per event) is enforced as a
+        Gurobi constraint.  After solving, the result is re-scored
+        using accurate placement in _rescore_solution().
         """
         point_matrix: dict[tuple, float] = {}
 
         for event in events:
-            # Get all entries for this event, sorted by seed time
-            event_entries = sorted(
-                [e for e in all_entries if e.event == event and e.seed_time > 0],
-                key=lambda x: x.seed_time,
+            # Sort opponent entries for binary-search ranking
+            opponent_times = sorted(
+                e.seed_time
+                for e in all_entries
+                if e.event == event
+                and e.seed_time > 0
+                and e.team.upper() != target_team.upper()
             )
 
-            # Calculate expected points for each target team swimmer
+            # Target team entries for this event
+            team_event_times = {
+                e.swimmer_name: e.seed_time
+                for e in all_entries
+                if e.event == event
+                and e.seed_time > 0
+                and e.team.upper() == target_team.upper()
+            }
+
             for swimmer in swimmers:
-                # Find this swimmer's entry
-                swimmer_entry = None
-                swimmer_rank = 0
-                team_scorers_ahead = 0
-
-                for i, entry in enumerate(event_entries):
-                    if (
-                        entry.swimmer_name == swimmer
-                        and entry.team.upper() == target_team.upper()
-                    ):
-                        swimmer_entry = entry
-                        swimmer_rank = i + 1  # 1-indexed
-                        break
-                    elif entry.team.upper() == target_team.upper():
-                        team_scorers_ahead += 1
-
-                if swimmer_entry is None:
+                seed_time = team_event_times.get(swimmer)
+                if seed_time is None:
                     continue
 
-                # Check if this swimmer would score (max 4 per team)
-                if team_scorers_ahead >= self.max_scorers:
-                    point_matrix[(swimmer, event)] = 0.0
+                # Rank among opponents (best-case: only target-team swimmer)
+                opponents_faster = bisect.bisect_left(opponent_times, seed_time)
+                placement = opponents_faster + 1
+
+                if placement <= len(self.points_table):
+                    point_matrix[(swimmer, event)] = float(
+                        self.points_table[placement - 1]
+                    )
                 else:
-                    # Get points for this placement
-                    if swimmer_rank <= len(self.points_table):
-                        point_matrix[(swimmer, event)] = float(
-                            self.points_table[swimmer_rank - 1]
-                        )
-                    else:
-                        point_matrix[(swimmer, event)] = 0.0
+                    point_matrix[(swimmer, event)] = 0.0
 
         return point_matrix
+
+    def _rescore_solution(
+        self,
+        assignments: dict[str, list[str]],
+        all_entries: list[ChampionshipEntry],
+        target_team: str,
+    ) -> tuple[float, dict[str, float]]:
+        """
+        Re-score an assignment using accurate placement (all entries
+        considered, including assigned teammates).
+
+        Returns (total_points, event_breakdown).
+        """
+        # Build set of assigned (swimmer, event) pairs
+        assigned = set()
+        for swimmer, evts in assignments.items():
+            for evt in evts:
+                assigned.add((swimmer, evt))
+
+        total_points = 0.0
+        event_breakdown: dict[str, float] = {}
+
+        events = sorted(set(evt for _, evts in assignments.items() for evt in evts))
+
+        for event in events:
+            # Opponent entries
+            opp = [
+                e
+                for e in all_entries
+                if e.event == event
+                and e.seed_time > 0
+                and e.team.upper() != target_team.upper()
+            ]
+            # Assigned target-team entries
+            team = [
+                e
+                for e in all_entries
+                if e.event == event
+                and e.seed_time > 0
+                and e.team.upper() == target_team.upper()
+                and (e.swimmer_name, event) in assigned
+            ]
+
+            # Combine and sort by seed time
+            combined = sorted(opp + team, key=lambda e: e.seed_time)
+
+            # Assign points (12-place scoring, max 4 scorers per team)
+            team_scorers = 0
+            event_pts = 0.0
+            for i, entry in enumerate(combined):
+                if i >= len(self.points_table):
+                    break  # No more scoring places
+                if entry.team.upper() == target_team.upper():
+                    if team_scorers < self.max_scorers:
+                        event_pts += self.points_table[i]
+                        team_scorers += 1
+
+            event_breakdown[event] = event_pts
+            total_points += event_pts
+
+        return total_points, event_breakdown
 
     def _calculate_baseline_points(
         self,
@@ -386,49 +457,46 @@ class ChampionshipGurobiStrategy:
         all_entries: list[ChampionshipEntry],
         target_team: str,
     ) -> float:
-        """Calculate points with greedy best-2-per-swimmer approach."""
+        """Calculate points with greedy best-2-per-swimmer approach.
+
+        Assigns each swimmer their 2 highest-value events (by opponent-only
+        rank), then re-scores the resulting lineup accurately.
+        """
+        # Pre-compute opponent times for fast ranking
+        opp_times_by_event: dict[str, list[float]] = {}
+        for e in all_entries:
+            if e.seed_time > 0 and e.team.upper() != target_team.upper():
+                opp_times_by_event.setdefault(e.event, []).append(e.seed_time)
+        for evt in opp_times_by_event:
+            opp_times_by_event[evt].sort()
+
         # Group by swimmer
         swimmer_entries: dict[str, list[ChampionshipEntry]] = {}
         for e in team_entries:
-            if e.swimmer_name not in swimmer_entries:
-                swimmer_entries[e.swimmer_name] = []
-            swimmer_entries[e.swimmer_name].append(e)
+            swimmer_entries.setdefault(e.swimmer_name, []).append(e)
 
-        # For each swimmer, take their best 2 entries by expected points
-        baseline = 0.0
+        # For each swimmer, pick their best 2 events by opponent-only rank
+        baseline_assignments: dict[str, list[str]] = {}
 
         for swimmer, entries in swimmer_entries.items():
-            # Calculate expected points for each entry
-            entry_points = []
+            entry_scores = []
             for entry in entries:
-                # Simple rank-based points (ignoring team scorer limits for baseline)
-                event_entries = sorted(
-                    [
-                        e
-                        for e in all_entries
-                        if e.event == entry.event and e.seed_time > 0
-                    ],
-                    key=lambda x: x.seed_time,
+                opp_times = opp_times_by_event.get(entry.event, [])
+                rank = bisect.bisect_left(opp_times, entry.seed_time) + 1
+                pts = (
+                    self.points_table[rank - 1] if rank <= len(self.points_table) else 0
                 )
-                rank = next(
-                    (
-                        i + 1
-                        for i, e in enumerate(event_entries)
-                        if e.swimmer_name == swimmer
-                        and e.team.upper() == target_team.upper()
-                    ),
-                    999,
-                )
-                if rank <= len(self.points_table):
-                    entry_points.append((entry, self.points_table[rank - 1]))
-                else:
-                    entry_points.append((entry, 0))
+                entry_scores.append((entry.event, pts))
 
-            # Take top 2
-            entry_points.sort(key=lambda x: -x[1])
-            for _, pts in entry_points[:2]:
-                baseline += pts
+            entry_scores.sort(key=lambda x: -x[1])
+            top_events = [evt for evt, pts in entry_scores[:2] if pts > 0]
+            if top_events:
+                baseline_assignments[swimmer] = top_events
 
+        # Re-score the baseline lineup accurately
+        baseline, _ = self._rescore_solution(
+            baseline_assignments, all_entries, target_team
+        )
         return baseline
 
     def _generate_recommendations(

@@ -43,10 +43,11 @@ class TeamSummary:
     weaknesses: list[str] = field(default_factory=list)
 
 
-# VCAC Championship Scoring (Individual events)
-# Places 1-12: 32-26-24-22-20-18-14-10-8-6-4-2
-VCAC_INDIVIDUAL_POINTS = [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
-VCAC_RELAY_POINTS = [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
+# VCAC Championship Scoring (12-place, relay = 2x individual)
+# Individual places 1-12: 16-13-12-11-10-9-7-5-4-3-2-1
+# Relay places 1-12: 32-26-24-22-20-18-14-10-8-6-4-2
+VCAC_INDIVIDUAL_POINTS = [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
+VCAC_RELAY_POINTS = [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
 MAX_SCORERS_PER_TEAM = 4  # Top 4 per team per event score
 
 
@@ -268,7 +269,7 @@ def main():
     print("🏊 VCAC Championship 2026 - Point Projection")
     print("=" * 70)
 
-    project_root = Path(__file__).parent
+    project_root = Path(__file__).parent.parent
     psych_path = project_root / "data" / "vcac" / "VCAC_2026_unified_psych_sheet.json"
 
     if not psych_path.exists():
@@ -332,6 +333,7 @@ def main():
     print("[3] Saving detailed results...")
 
     output_dir = project_root / "data" / "vcac"
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Save standings
     standings_data = {

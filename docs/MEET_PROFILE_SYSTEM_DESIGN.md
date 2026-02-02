@@ -2,7 +2,7 @@
 
 ## Design for Easily Switchable Meet Types
 
-**Created**: 2026-01-15  
+**Created**: 2026-01-15
 **Status**: Design Document
 
 ---
@@ -59,13 +59,12 @@ class SetonDualRules(MeetRules):
 class VCACChampRules(MeetRules):
     """
     VCAC Conference Championship (Feb 7, 2026):
-    - Individual: 32-26-24-22-20-18-14-10-8-6-4-2
-    - Relay: 16-13-12-11-10-9-7-5-4-3-2-1
-    - Individual worth MORE than relay!
+    - Individual: 16-13-12-11-10-9-7-5-4-3-2-1
+    - Relay: 32-26-24-22-20-18-14-10-8-6-4-2  (2× individual)
     """
     name: str = "VCAC Championship"
-    individual_points: List[int] = field(default_factory=lambda: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2])
-    relay_points: List[int] = field(default_factory=lambda: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1])
+    individual_points: List[int] = field(default_factory=lambda: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1])
+    relay_points: List[int] = field(default_factory=lambda: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2])
     max_individual_events_per_swimmer: int = 2
     max_total_events_per_swimmer: int = 5  # 2 indiv + 3 relay, or complex with diving
     max_entries_per_team_per_event: int = 999  # unlimited

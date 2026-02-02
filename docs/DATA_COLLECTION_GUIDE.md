@@ -1,7 +1,7 @@
 # AquaForge Championship Module - Data Collection Guide
 
-**Purpose:** Comprehensive checklist for collecting real swimming data to build accurate parsers and modules  
-**Target:** VCAC Championship (Feb 7, 2026) and VISAA State Championship (Feb 12-14, 2026)  
+**Purpose:** Comprehensive checklist for collecting real swimming data to build accurate parsers and modules
+**Target:** VCAC Championship (Feb 7, 2026) and VISAA State Championship (Feb 12-14, 2026)
 **Created:** January 15, 2026
 
 ---
@@ -102,8 +102,8 @@ Required columns (map these exactly as they appear):
 **VCAC Championship (12 places):**
 
 ```python
-VCAC_INDIVIDUAL_POINTS = [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
-VCAC_RELAY_POINTS = [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]  # or double?
+VCAC_INDIVIDUAL_POINTS = [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
+VCAC_RELAY_POINTS = [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]  # relay = 2× individual
 ```
 
 **VISAA State Championship (16 places):**

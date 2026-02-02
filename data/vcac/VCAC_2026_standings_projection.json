@@ -5,225 +5,200 @@
     {
       "team_code": "SST",
       "team_name": "Seton Swimming",
-      "total_points": 1202.0,
+      "total_points": 601.0,
       "event_breakdown": {
-        "M 200 Free": 60.0,
-        "F 200 Free": 70.0,
-        "M 200 IM": 72.0,
-        "F 200 IM": 86.0,
-        "M 50 Free": 84.0,
-        "F 50 Free": 88.0,
-        "M 100 Fly": 74.0,
-        "F 100 Fly": 78.0,
-        "M 100 Free": 60.0,
-        "F 100 Free": 98.0,
-        "M 500 Free": 74.0,
-        "F 500 Free": 70.0,
-        "M 100 Back": 72.0,
-        "F 100 Back": 74.0,
-        "M 100 Breast": 80.0,
-        "F 100 Breast": 62.0
+        "M 200 Free": 30.0,
+        "F 200 Free": 35.0,
+        "M 200 IM": 36.0,
+        "F 200 IM": 43.0,
+        "M 50 Free": 42.0,
+        "F 50 Free": 44.0,
+        "M 100 Fly": 37.0,
+        "F 100 Fly": 39.0,
+        "M 100 Free": 30.0,
+        "F 100 Free": 49.0,
+        "M 500 Free": 37.0,
+        "F 500 Free": 35.0,
+        "M 100 Back": 36.0,
+        "F 100 Back": 37.0,
+        "M 100 Breast": 40.0,
+        "F 100 Breast": 31.0
       },
       "top_scorers": [
         {
           "name": "Ariana Aldeguer",
-          "points": 236.0
+          "points": 118.0
         },
         {
           "name": "Lionel Martinez",
-          "points": 210.0
+          "points": 105.0
         },
         {
           "name": "Melissa Paradise",
-          "points": 190.0
+          "points": 95.0
         },
         {
           "name": "Thiago Martinez",
-          "points": 166.0
+          "points": 83.0
         },
         {
           "name": "Therese Paradise",
-          "points": 138.0
+          "points": 69.0
         }
       ],
-      "strengths": [
-        "M 200 Free",
-        "F 200 Free",
-        "M 200 IM",
-        "F 200 IM",
-        "M 50 Free",
-        "F 50 Free",
-        "M 100 Fly",
-        "F 100 Fly",
-        "M 100 Free",
-        "F 100 Free",
-        "M 500 Free",
-        "F 500 Free",
-        "M 100 Back",
-        "F 100 Back",
-        "M 100 Breast",
-        "F 100 Breast"
-      ],
+      "strengths": [],
       "weaknesses": []
     },
     {
       "team_code": "TCS",
       "team_name": "Trinity Christian",
-      "total_points": 570.0,
+      "total_points": 285.0,
       "event_breakdown": {
-        "M 200 Free": 46.0,
-        "F 200 Free": 48.0,
-        "M 200 IM": 2.0,
-        "F 200 IM": 38.0,
-        "F 50 Free": 46.0,
-        "M 100 Fly": 34.0,
-        "F 100 Fly": 50.0,
-        "M 100 Free": 50.0,
-        "F 100 Free": 46.0,
-        "M 500 Free": 52.0,
-        "F 500 Free": 36.0,
-        "M 100 Back": 58.0,
-        "F 100 Back": 44.0,
-        "M 100 Breast": 2.0,
-        "F 100 Breast": 18.0
+        "M 200 Free": 23.0,
+        "F 200 Free": 24.0,
+        "M 200 IM": 1.0,
+        "F 200 IM": 19.0,
+        "F 50 Free": 23.0,
+        "M 100 Fly": 17.0,
+        "F 100 Fly": 25.0,
+        "M 100 Free": 25.0,
+        "F 100 Free": 23.0,
+        "M 500 Free": 26.0,
+        "F 500 Free": 18.0,
+        "M 100 Back": 29.0,
+        "F 100 Back": 22.0,
+        "M 100 Breast": 1.0,
+        "F 100 Breast": 9.0
       },
       "top_scorers": [
         {
           "name": "Tyler Phillips",
-          "points": 136.0
+          "points": 68.0
         },
         {
           "name": "Audrey Schlieter",
-          "points": 112.0
+          "points": 56.0
         },
         {
           "name": "Jo Witdoeckt",
-          "points": 100.0
+          "points": 50.0
         },
         {
           "name": "Allie Wiggins",
-          "points": 90.0
+          "points": 45.0
         },
         {
           "name": "Alexa Kriz",
-          "points": 68.0
+          "points": 34.0
         }
       ],
-      "strengths": [
-        "F 100 Fly",
-        "M 100 Free",
-        "M 500 Free",
-        "M 100 Back"
-      ],
+      "strengths": [],
       "weaknesses": [
         "M 200 IM",
-        "M 100 Breast"
+        "M 100 Breast",
+        "F 100 Breast"
       ]
     },
     {
       "team_code": "ICS",
       "team_name": "Immanuel Christian",
-      "total_points": 544.0,
+      "total_points": 272.0,
       "event_breakdown": {
-        "M 200 Free": 50.0,
-        "F 200 Free": 22.0,
-        "M 200 IM": 72.0,
-        "F 200 IM": 6.0,
-        "M 50 Free": 58.0,
+        "M 200 Free": 25.0,
+        "F 200 Free": 11.0,
+        "M 200 IM": 36.0,
+        "F 200 IM": 3.0,
+        "M 50 Free": 29.0,
         "F 50 Free": 0.0,
-        "M 100 Fly": 44.0,
-        "F 100 Fly": 6.0,
-        "M 100 Free": 64.0,
-        "F 100 Free": 20.0,
-        "M 500 Free": 46.0,
+        "M 100 Fly": 22.0,
+        "F 100 Fly": 3.0,
+        "M 100 Free": 32.0,
+        "F 100 Free": 10.0,
+        "M 500 Free": 23.0,
         "F 500 Free": 0.0,
-        "M 100 Back": 50.0,
-        "F 100 Back": 20.0,
-        "M 100 Breast": 86.0,
+        "M 100 Back": 25.0,
+        "F 100 Back": 10.0,
+        "M 100 Breast": 43.0,
         "F 100 Breast": 0.0
       },
       "top_scorers": [
         {
           "name": "Moses Wolf",
-          "points": 166.0
+          "points": 83.0
         },
         {
           "name": "Caleb Fiala",
-          "points": 122.0
+          "points": 61.0
         },
         {
           "name": "Kate Shumate",
-          "points": 72.0
+          "points": 36.0
         },
         {
           "name": "Brenton Anderson",
-          "points": 70.0
+          "points": 35.0
         },
         {
           "name": "Caleb Morillo",
-          "points": 58.0
+          "points": 29.0
         }
       ],
-      "strengths": [
-        "M 200 Free",
-        "M 200 IM",
-        "M 50 Free",
-        "M 100 Free",
-        "M 100 Back",
-        "M 100 Breast"
-      ],
+      "strengths": [],
       "weaknesses": [
         "F 200 IM",
-        "F 100 Fly"
+        "F 100 Fly",
+        "F 100 Free",
+        "F 100 Back"
       ]
     },
     {
       "team_code": "DJO",
       "team_name": "Bishop O'Connell",
-      "total_points": 276.0,
+      "total_points": 138.0,
       "event_breakdown": {
-        "M 200 Free": 30.0,
+        "M 200 Free": 15.0,
         "F 200 Free": 0.0,
-        "M 200 IM": 40.0,
-        "F 200 IM": 22.0,
-        "M 50 Free": 34.0,
-        "F 50 Free": 24.0,
-        "M 100 Fly": 34.0,
-        "M 100 Free": 2.0,
-        "F 100 Free": 10.0,
-        "M 500 Free": 14.0,
-        "F 500 Free": 24.0,
-        "M 100 Back": 6.0,
+        "M 200 IM": 20.0,
+        "F 200 IM": 11.0,
+        "M 50 Free": 17.0,
+        "F 50 Free": 12.0,
+        "M 100 Fly": 17.0,
+        "M 100 Free": 1.0,
+        "F 100 Free": 5.0,
+        "M 500 Free": 7.0,
+        "F 500 Free": 12.0,
+        "M 100 Back": 3.0,
         "F 100 Back": 0.0,
-        "M 100 Breast": 10.0,
-        "F 100 Breast": 26.0
+        "M 100 Breast": 5.0,
+        "F 100 Breast": 13.0
       },
       "top_scorers": [
         {
           "name": "Hudson Rice",
-          "points": 72.0
+          "points": 36.0
         },
         {
           "name": "Ann-Margaret Holt",
-          "points": 48.0
+          "points": 24.0
         },
         {
           "name": "Kaelyn Mahland",
-          "points": 30.0
+          "points": 15.0
         },
         {
           "name": "Ava Shopbell",
-          "points": 28.0
+          "points": 14.0
         },
         {
           "name": "Jackson Blendowski",
-          "points": 18.0
+          "points": 9.0
         }
       ],
       "strengths": [],
       "weaknesses": [
         "M 100 Free",
         "F 100 Free",
+        "M 500 Free",
         "M 100 Back",
         "M 100 Breast"
       ]
@@ -231,37 +206,37 @@
     {
       "team_code": "OAK",
       "team_name": "Oakcrest School",
-      "total_points": 194.0,
+      "total_points": 97.0,
       "event_breakdown": {
-        "F 200 Free": 36.0,
-        "F 200 IM": 34.0,
+        "F 200 Free": 18.0,
+        "F 200 IM": 17.0,
         "F 50 Free": 0.0,
-        "F 100 Fly": 24.0,
-        "F 100 Free": 4.0,
-        "F 500 Free": 36.0,
-        "F 100 Back": 26.0,
-        "F 100 Breast": 34.0
+        "F 100 Fly": 12.0,
+        "F 100 Free": 2.0,
+        "F 500 Free": 18.0,
+        "F 100 Back": 13.0,
+        "F 100 Breast": 17.0
       },
       "top_scorers": [
         {
           "name": "Elizabeth Bryan",
-          "points": 160.0
+          "points": 80.0
         },
         {
           "name": "Lindley Hazelwood",
-          "points": 24.0
+          "points": 12.0
         },
         {
           "name": "Juliet Van Meter",
-          "points": 4.0
+          "points": 2.0
         },
         {
           "name": "Abbie Roth",
-          "points": 2.0
+          "points": 1.0
         },
         {
           "name": "Emaline Cinotti",
-          "points": 2.0
+          "points": 1.0
         }
       ],
       "strengths": [],
@@ -272,42 +247,42 @@
     {
       "team_code": "FCS",
       "team_name": "Fredericksburg Christian",
-      "total_points": 190.0,
+      "total_points": 95.0,
       "event_breakdown": {
         "M 200 Free": 0.0,
-        "F 200 Free": 10.0,
+        "F 200 Free": 5.0,
         "F 200 IM": 0.0,
-        "M 50 Free": 10.0,
-        "F 50 Free": 28.0,
-        "F 100 Fly": 28.0,
-        "M 100 Free": 10.0,
-        "F 100 Free": 8.0,
-        "F 500 Free": 20.0,
+        "M 50 Free": 5.0,
+        "F 50 Free": 14.0,
+        "F 100 Fly": 14.0,
+        "M 100 Free": 5.0,
+        "F 100 Free": 4.0,
+        "F 500 Free": 10.0,
         "M 100 Back": 0.0,
-        "F 100 Back": 22.0,
-        "M 100 Breast": 8.0,
-        "F 100 Breast": 46.0
+        "F 100 Back": 11.0,
+        "M 100 Breast": 4.0,
+        "F 100 Breast": 23.0
       },
       "top_scorers": [
         {
           "name": "Hannah Ellis",
-          "points": 94.0
+          "points": 47.0
         },
         {
           "name": "Evie Miller",
-          "points": 40.0
+          "points": 20.0
         },
         {
           "name": "Nathan Ryan",
-          "points": 28.0
+          "points": 14.0
         },
         {
           "name": "Isabel Baroody",
-          "points": 26.0
+          "points": 13.0
         },
         {
           "name": "Emma Roberson",
-          "points": 2.0
+          "points": 1.0
         }
       ],
       "strengths": [],
@@ -316,6 +291,7 @@
         "M 50 Free",
         "M 100 Free",
         "F 100 Free",
+        "F 500 Free",
         "M 100 Breast"
       ]
     },
@@ -345,7 +321,7 @@
       "target_team": "TCS",
       "target_time": 50.23,
       "time_gap": 0.6300000000000026,
-      "potential_points_gain": 6
+      "potential_points_gain": 3
     },
     {
       "event": "M 100 Back",
@@ -357,7 +333,7 @@
       "target_team": "TCS",
       "target_time": 52.9,
       "time_gap": 1.0399999999999991,
-      "potential_points_gain": 2
+      "potential_points_gain": 1
     }
   ]
 }

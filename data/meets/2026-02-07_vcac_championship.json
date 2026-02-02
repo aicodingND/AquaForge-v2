@@ -6,8 +6,8 @@
   "meetMode": "championship",
   "scoringRules": "vcac_championship",
   "scoringTable": {
-    "individual": [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2],
-    "relay": [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
+    "individual": [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1],
+    "relay": [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
   },
   "maxScorers": 4,
   "teams": [

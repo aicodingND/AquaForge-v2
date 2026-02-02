@@ -8,10 +8,14 @@ import hashlib
 import logging
 import os
 from pathlib import Path
-from typing import Optional
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, UploadFile
 
+from swim_ai_reflex.backend.api.exceptions import (
+    DataProcessingError,
+    FileUploadError,
+    ValidationError,
+)
 from swim_ai_reflex.backend.api.models import (
     ErrorResponse,
     TeamDataRequest,
@@ -35,7 +39,7 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 async def upload_team_file(
     file: UploadFile = File(...),
     team_type: str = Form(...),
-    team_name: Optional[str] = Form(None),
+    team_name: str | None = Form(None),
 ):
     """
     Upload and process a team roster file.
@@ -55,9 +59,9 @@ async def upload_team_file(
         try:
             tt = TeamType(team_type.lower())
         except ValueError:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Invalid team_type: {team_type}. Must be 'seton' or 'opponent'",
+            raise ValidationError(
+                f"Invalid team_type: {team_type}",
+                details={"allowed_values": ["seton", "opponent"]},
             )
 
         # Validate file extension
@@ -66,9 +70,9 @@ async def upload_team_file(
         allowed_extensions = [".xlsx", ".xls", ".csv", ".json"]
 
         if ext not in allowed_extensions:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Unsupported file type: {ext}. Allowed: {allowed_extensions}",
+            raise FileUploadError(
+                f"Unsupported file type: {ext}",
+                details={"allowed_extensions": allowed_extensions},
             )
 
         # Read file content
@@ -90,8 +94,9 @@ async def upload_team_file(
         result = await data_service.load_roster_from_path(str(temp_path))
 
         if not result.get("success"):
-            raise HTTPException(
-                status_code=400, detail=result.get("error", "Failed to parse file")
+            raise FileUploadError(
+                result.get("error", "Failed to parse file"),
+                details={"filename": file.filename},
             )
 
         entries = result.get("data", [])
@@ -140,11 +145,11 @@ async def upload_team_file(
             teams=teams if teams else None,  # Include teams for championship files
         )
 
-    except HTTPException:
+    except (ValidationError, FileUploadError):
         raise
     except Exception as e:
         logger.error(f"File upload failed: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"File processing failed: {str(e)}")
+        raise FileUploadError(f"File processing failed: {str(e)}")
 
 
 @router.post("/data/team", response_model=TeamDataResponse)
@@ -175,7 +180,7 @@ async def submit_team_data(request: TeamDataRequest):
         )
 
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise ValidationError(str(e))
 
 
 @router.get("/data/events")
@@ -231,8 +236,9 @@ async def get_data_template(template_type: str):
             },
         }
     else:
-        raise HTTPException(
-            status_code=400, detail="Template type must be 'csv' or 'json'"
+        raise ValidationError(
+            f"Invalid template_type: {template_type}",
+            details={"allowed_values": ["csv", "json"]},
         )
 
 
@@ -244,3 +250,296 @@ async def clear_all_data():
     # In a stateless API, this would clear any server-side cache
     # For now, just return success
     return {"success": True, "message": "Data cleared"}
+
+
+# Pre-aggregated data source mappings
+# Separated by type: championship (full psych sheets) vs dual/team (single team rosters)
+DATA_SOURCES = {
+    # Championship mode sources (all teams in one file)
+    "vcac_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "VCAC Championship 2026",
+        "description": "Full psych sheet with all 7 VCAC teams",
+        "type": "championship",
+        "teams": 7,
+    },
+    "vcac_2026_projection": {
+        "path": "data/championship_data/vcac_2026_psych_sheet_projection.json",
+        "name": "VCAC 2026 Projection",
+        "description": "Projected championship results",
+        "type": "championship",
+        "teams": 7,
+    },
+    # Dual mode sources - Seton team data
+    "seton_2026": {
+        "path": "data/championship_data/seton_2026_season_data.json",
+        "name": "Seton 2026 Season",
+        "description": "Complete Seton roster with best times",
+        "type": "dual",
+        "for_team": "seton",
+    },
+    # Dual mode sources - Opponent teams (extracted from VCAC psych sheet)
+    # Trinity Christian
+    "tcs_boys_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "TCS - Boys",
+        "description": "Trinity Christian Boys Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "TCS",
+        "filter_gender": "M",
+    },
+    "tcs_girls_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "TCS - Girls",
+        "description": "Trinity Christian Girls Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "TCS",
+        "filter_gender": "F",
+    },
+    # Immanuel Christian
+    "ics_boys_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "ICS - Boys",
+        "description": "Immanuel Christian Boys Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "ICS",
+        "filter_gender": "M",
+    },
+    "ics_girls_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "ICS - Girls",
+        "description": "Immanuel Christian Girls Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "ICS",
+        "filter_gender": "F",
+    },
+    # Fredericksburg Christian
+    "fcs_boys_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "FCS - Boys",
+        "description": "Fredericksburg Christian Boys Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "FCS",
+        "filter_gender": "M",
+    },
+    "fcs_girls_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "FCS - Girls",
+        "description": "Fredericksburg Christian Girls Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "FCS",
+        "filter_gender": "F",
+    },
+    # Oakcrest (Girls only)
+    "oak_girls_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "OAK - Girls",
+        "description": "Oakcrest Girls Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "OAK",
+        "filter_gender": "F",
+    },
+    # Don Juan of Austria
+    "djo_boys_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "DJO - Boys",
+        "description": "Don Juan of Austria Boys Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "DJO",
+        "filter_gender": "M",
+    },
+    "djo_girls_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "DJO - Girls",
+        "description": "Don Juan of Austria Girls Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "DJO",
+        "filter_gender": "F",
+    },
+    # Bishop Ireton
+    "bi_boys_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "BI - Boys",
+        "description": "Bishop Ireton Boys Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "BI",
+        "filter_gender": "M",
+    },
+    "bi_girls_2026": {
+        "path": "data/vcac/VCAC_2026_unified_psych_sheet.json",
+        "name": "BI - Girls",
+        "description": "Bishop Ireton Girls Roster",
+        "type": "team",
+        "for_team": "opponent",
+        "filter_team": "BI",
+        "filter_gender": "F",
+    },
+}
+
+
+@router.get("/data/sources")
+async def list_data_sources(mode: str | None = None, team_type: str | None = None):
+    """
+    List available pre-aggregated data sources.
+
+    Args:
+        mode: Filter by 'championship' or 'dual'
+        team_type: Filter by 'seton' or 'opponent' for dual mode
+    """
+    sources = []
+    for source_id, info in DATA_SOURCES.items():
+        # Filter by mode if specified
+        if mode:
+            if mode == "championship" and info["type"] != "championship":
+                continue
+            if mode == "dual" and info["type"] not in ("dual", "team"):
+                continue
+
+        # Filter by team_type if specified
+        if team_type and info.get("for_team"):
+            if team_type != info["for_team"]:
+                continue
+
+        source_path = Path(info["path"])
+        exists = source_path.exists()
+
+        sources.append(
+            {
+                "id": source_id,
+                "name": info["name"],
+                "description": info.get("description", ""),
+                "type": info["type"],
+                "teams": info.get("teams"),
+                "for_team": info.get("for_team"),
+                "available": exists,
+            }
+        )
+    return {"sources": sources}
+
+
+@router.get("/data/load-source")
+async def load_data_source(source: str):
+    """
+    Load a pre-aggregated data source by ID.
+
+    Args:
+        source: Data source ID (e.g., 'vcac_2026', 'seton_2026')
+
+    Returns:
+        Processed data ready for the frontend
+    """
+    import json
+
+    if source not in DATA_SOURCES:
+        raise ValidationError(
+            f"Unknown source: {source}",
+            details={"available_sources": list(DATA_SOURCES.keys())},
+        )
+
+    source_info = DATA_SOURCES[source]
+    source_path = Path(source_info["path"])
+
+    if not source_path.exists():
+        raise DataProcessingError(
+            f"Data file not found: {source_info['path']}",
+            details={"source": source, "path": str(source_path)},
+        )
+
+    try:
+        with open(source_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        # Handle championship psych sheet format
+        if "entries" in data:
+            entries = data["entries"]
+            teams = data.get("teams", [])
+
+            # Normalize entries
+            normalized = []
+            swimmers = set()
+            events = set()
+
+            for entry in entries:
+                swimmer = entry.get("swimmer_name") or entry.get("swimmer", "Unknown")
+                event = entry.get("event", "Unknown")
+                time = entry.get("seed_time") or entry.get("time", 0)
+                team = entry.get("team_code") or entry.get("team", "Unknown")
+
+                # Filter by team if specified in source config
+                if source_info.get("filter_team"):
+                    if team != source_info["filter_team"]:
+                        continue
+
+                # Filter by gender if specified in source config
+                if source_info.get("filter_gender"):
+                    entry_gender = entry.get("gender", "U")
+                    if entry_gender != source_info["filter_gender"]:
+                        continue
+
+                normalized.append(
+                    {
+                        "swimmer": swimmer,
+                        "event": event,
+                        "time": str(time),
+                        "team": team,
+                        "team_name": entry.get("team_name", ""),
+                        "grade": entry.get("grade"),
+                        "gender": entry.get("gender"),
+                    }
+                )
+                swimmers.add(swimmer)
+                events.add(event)
+
+            return {
+                "success": True,
+                "team_name": source_info.get("name")
+                if source_info.get("filter_team")
+                else (data.get("meet") or source_info["name"]),
+                "data": normalized,
+                "swimmer_count": len(swimmers),
+                "entry_count": len(normalized),
+                "events": list(events),
+                "teams": [source_info["filter_team"]]
+                if source_info.get("filter_team")
+                else teams,
+                "source_type": source_info["type"],
+            }
+        else:
+            # Handle simple roster format
+            entries = data if isinstance(data, list) else []
+            swimmers = set(e.get("swimmer", "Unknown") for e in entries)
+            events = set(e.get("event", "Unknown") for e in entries)
+
+            return {
+                "success": True,
+                "team_name": source_info["name"],
+                "data": entries,
+                "swimmer_count": len(swimmers),
+                "entry_count": len(entries),
+                "events": list(events),
+                "teams": [],
+                "source_type": source_info["type"],
+            }
+
+    except json.JSONDecodeError as e:
+        raise DataProcessingError(
+            f"Invalid JSON in data file: {str(e)}",
+            details={"source": source, "path": str(source_path)},
+        )
+    except (ValidationError, DataProcessingError):
+        raise
+    except Exception as e:
+        logger.error(f"Failed to load source {source}: {str(e)}")
+        raise DataProcessingError(
+            f"Failed to load data source: {str(e)}", details={"source": source}
+        )

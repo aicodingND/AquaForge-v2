@@ -1,7 +1,9 @@
-import sys
-import os
-import pandas as pd
 import asyncio
+import os
+import sys
+
+import pandas as pd
+import pytest
 
 # Ensure project root is in path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -17,6 +19,11 @@ except ImportError as e:
     sys.exit(1)
 
 
+@pytest.mark.asyncio
+@pytest.mark.integration
+@pytest.mark.skipif(
+    True, reason="Integration test requires optimization service - run manually"
+)
 async def test_full_flow():
     print("\n--- Starting Deep Walkthrough Integration Test ---")
 

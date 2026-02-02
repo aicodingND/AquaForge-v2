@@ -1,4 +1,3 @@
-
 class SessionState:
     _instance = None
 
@@ -40,6 +39,7 @@ class SessionState:
 
     def get_candidate(self):
         return self.optimizer_candidate_seton
+
 
 # Global instance
 session = SessionState()

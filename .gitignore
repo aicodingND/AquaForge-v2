@@ -49,7 +49,9 @@ out/
 # Testing
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
+coverage.xml
 .tox/
 .nox/
 
@@ -94,3 +96,4 @@ reports/
 # Playwright
 playwright-report/
 test-results/
+CLAUDE.local.md

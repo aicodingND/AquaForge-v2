@@ -4,15 +4,16 @@ Enhanced optimization service with caching, retry logic, and better error handli
 
 import asyncio
 import hashlib
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import pandas as pd
 
+from swim_ai_reflex.backend.core.dual_meet_scoring import score_dual_meet
 from swim_ai_reflex.backend.core.optimizer_factory import OptimizerFactory
 from swim_ai_reflex.backend.core.rules import VISAADualRules
-from swim_ai_reflex.backend.core.scoring import full_meet_scoring
 from swim_ai_reflex.backend.services.base_service import BaseService
 from swim_ai_reflex.backend.utils.cache import DataCache
+from swim_ai_reflex.backend.utils.helpers import normalize_team_name
 
 
 class OptimizationCache:
@@ -42,12 +43,12 @@ class OptimizationCache:
             f"opt_res_{cache_version}_{seton_hash}_{opponent_hash}_{method}_{max_iters}"
         )
 
-    def get(self, key: str) -> Optional[Dict[str, Any]]:
+    def get(self, key: str) -> dict[str, Any] | None:
         """Retrieve cached result."""
         data, _ = DataCache.load_from_cache(key)
         return data  # returns dict or None
 
-    def set(self, key: str, value: Dict[str, Any]):
+    def set(self, key: str, value: dict[str, Any]):
         """Store result in persistent cache."""
         # Use DataCache to save dictionary as pickle
         DataCache.save_to_cache(value, key, "optimization_result")
@@ -66,7 +67,7 @@ class OptimizationService(BaseService):
         super().__init__()
         self._cache = OptimizationCache()
 
-    def _validate_roster(self, roster: pd.DataFrame, roster_name: str) -> Optional[str]:
+    def _validate_roster(self, roster: pd.DataFrame, roster_name: str) -> str | None:
         """
         Validate roster DataFrame structure.
         """
@@ -92,7 +93,7 @@ class OptimizationService(BaseService):
         use_cache: bool = True,
         retry_on_failure: bool = True,
         max_retries: int = 2,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Run the lineup optimization engine with caching and retry logic.
         """
@@ -215,12 +216,12 @@ class OptimizationService(BaseService):
         enforce_fatigue: bool = False,
         scoring_type: str = "visaa_top7",
         robust_mode: bool = False,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Internal method to run the actual optimization using the Strategy pattern.
         """
         # Capture logs for UI display
-        run_logs: List[str] = []
+        run_logs: list[str] = []
 
         def log_and_capture(msg: str):
             self.log_info(msg)
@@ -239,8 +240,17 @@ class OptimizationService(BaseService):
 
         # Define Scoring Function (CLEAN - no constraints, just scoring)
         def score_lineup(df: pd.DataFrame):
-            """Pure scoring function - no constraint penalties."""
-            return full_meet_scoring(df, rules=rules)
+            """Pure scoring function - uses score_dual_meet to ensure 232 points."""
+            # Ensure teams are normalized for splitting
+            # Use a copy to avoid SettingWithCopy warnings
+            df_scoring = df.copy()
+            if "team_norm" not in df_scoring.columns:
+                df_scoring["team_norm"] = df_scoring["team"].apply(normalize_team_name)
+
+            seton_df = df_scoring[df_scoring["team_norm"] == "seton"]
+            opp_df = df_scoring[df_scoring["team_norm"] == "opponent"]
+
+            return score_dual_meet(seton_df, opp_df, rules=rules)
 
         # Import constraint validator for proper constraint checking
         from swim_ai_reflex.backend.services.constraint_validator import (
@@ -548,9 +558,6 @@ class OptimizationService(BaseService):
 
                 import random
 
-                from swim_ai_reflex.backend.core.dual_meet_scoring import (
-                    score_dual_meet,
-                )
                 from swim_ai_reflex.backend.core.opponent_model import (
                     greedy_opponent_best_lineup,
                 )

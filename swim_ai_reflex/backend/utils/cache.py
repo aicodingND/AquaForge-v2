@@ -1,9 +1,14 @@
-import os
 import hashlib
-import pickle
+import json
+import logging
+import os
+from io import StringIO
+
 import pandas as pd
-from typing import Optional, Tuple
+
 from swim_ai_reflex.backend.config import get_config
+
+logger = logging.getLogger(__name__)
 
 # Get configuration
 config = get_config()
@@ -12,11 +17,12 @@ config = get_config()
 CACHE_DIR = os.path.join(os.getcwd(), ".cache", "datasets")
 os.makedirs(CACHE_DIR, exist_ok=True)
 
+
 class DataCache:
     """
     Manages caching of parsed datasets to prevent re-parsing and ensure persistence.
     """
-    
+
     @staticmethod
     def get_file_hash(filepath: str) -> str:
         """
@@ -32,7 +38,7 @@ class DataCache:
     @staticmethod
     def get_cache_path(file_hash: str) -> str:
         """Get the path where the cached dataset would be stored."""
-        return os.path.join(CACHE_DIR, f"{file_hash}.pkl")
+        return os.path.join(CACHE_DIR, f"{file_hash}.json")
 
     @staticmethod
     def is_cached(file_hash: str) -> bool:
@@ -49,19 +55,23 @@ class DataCache:
             cache_path = DataCache.get_cache_path(file_hash)
             metadata = {
                 "original_filename": original_filename,
-                "parsed_at": pd.Timestamp.now(),
-                "row_count": len(df)
+                "parsed_at": pd.Timestamp.now().isoformat(),
+                "row_count": len(df),
             }
-            
-            with open(cache_path, "wb") as f:
-                pickle.dump({"data": df, "metadata": metadata}, f)
+
+            cache_obj = {"data": df.to_json(orient="split"), "metadata": metadata}
+
+            with open(cache_path, "w") as f:
+                json.dump(cache_obj, f)
             return True
         except Exception as e:
-            print(f"Failed to cache dataset: {e}")
+            logger.error(f"Failed to cache dataset: {e}")
             return False
 
     @staticmethod
-    def load_from_cache(file_hash: str) -> Tuple[Optional[pd.DataFrame], Optional[dict]]:
+    def load_from_cache(
+        file_hash: str,
+    ) -> tuple[pd.DataFrame | None, dict | None]:
         """
         Load a dataset from the cache if it exists.
         Returns (DataFrame, Metadata) or (None, None).
@@ -69,18 +79,21 @@ class DataCache:
         cache_path = DataCache.get_cache_path(file_hash)
         if not os.path.exists(cache_path):
             return None, None
-            
+
         try:
-            with open(cache_path, "rb") as f:
-                cached_obj = pickle.load(f)
-            
+            with open(cache_path) as f:
+                cached_obj = json.load(f)
+
             # Handle potential legacy cache format if any (though this is new)
             if isinstance(cached_obj, dict) and "data" in cached_obj:
-                return cached_obj["data"], cached_obj.get("metadata", {})
-            return cached_obj, {} # Assume raw dataframe if not dict
-            
+                df = pd.read_json(StringIO(cached_obj["data"]), orient="split")
+                return df, cached_obj.get("metadata", {})
+
+            logger.warning("Unexpected cache format, returning None")
+            return None, None
+
         except Exception as e:
-            print(f"Failed to load cached dataset: {e}")
+            logger.error(f"Failed to load cached dataset: {e}")
             return None, None
 
     @staticmethod
@@ -90,4 +103,4 @@ class DataCache:
             for f in os.listdir(CACHE_DIR):
                 os.remove(os.path.join(CACHE_DIR, f))
         except Exception as e:
-            print(f"Error clearing cache: {e}")
+            logger.error(f"Error clearing cache: {e}")

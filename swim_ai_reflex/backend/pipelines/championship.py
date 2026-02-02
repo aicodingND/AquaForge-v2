@@ -8,7 +8,7 @@ Provides projection, entry optimization, and relay configuration.
 import logging
 import time
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Set
+from typing import Any
 
 from swim_ai_reflex.backend.pipelines.base import (
     MeetPipeline,
@@ -31,14 +31,14 @@ logger = logging.getLogger(__name__)
 class ChampionshipInput:
     """Input data for championship pipeline."""
 
-    entries: List[Dict[str, Any]]  # All entries from psych sheet
+    entries: list[dict[str, Any]]  # All entries from psych sheet
     target_team: str = "Seton"
     meet_name: str = "Championship"
     meet_profile: str = "vcac_championship"
 
     # Entry optimization parameters
-    divers: Set[str] = field(default_factory=set)
-    relay_3_swimmers: Set[str] = field(default_factory=set)
+    divers: set[str] = field(default_factory=set)
+    relay_3_swimmers: set[str] = field(default_factory=set)
 
     def __post_init__(self):
         """Convert sets if needed."""
@@ -53,10 +53,11 @@ class ChampionshipResult:
     """Result from championship pipeline."""
 
     projection: StandingsProjection
-    entry_assignments: Optional[Dict[str, List[str]]] = None
-    relay_configurations: Optional[Dict[str, Any]] = None
+    entry_assignments: dict[str, list[str]] | None = None
+    relay_configurations: dict[str, Any] | None = None
+    exhibition_strategy: dict[str, Any] | None = None  # NEW: Exhibition deployment
     optimization_improvement: float = 0.0
-    recommendations: List[str] = field(default_factory=list)
+    recommendations: list[str] = field(default_factory=list)
 
 
 class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
@@ -67,6 +68,7 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
     1. Projection: Calculate expected standings from psych sheet
     2. Entry Optimization: Optimize swimmer-event assignments
     3. Relay Configuration: Optimize relay compositions
+    4. Exhibition Strategy: Deploy exhibition swimmers for displacement
     """
 
     def __init__(self, meet_profile: str = "vcac_championship"):
@@ -114,7 +116,7 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
     def run(
         self,
         data: ChampionshipInput,
-        stage: str = "full",  # "projection", "entries", "relays", "full"
+        stage: str = "full",  # "projection", "entries", "relays", "exhibition", "full"
         **options,
     ) -> ChampionshipResult:
         """
@@ -125,7 +127,8 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
             stage: Which stage(s) to run:
                 - "projection": Only project standings
                 - "entries": Project + optimize entries
-                - "relays": Full pipeline including relays
+                - "relays": Project + entries + relays
+                - "exhibition": Full pipeline including exhibition strategy
                 - "full": All stages (default)
 
         Returns:
@@ -142,11 +145,12 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
 
         entry_assignments = None
         relay_configurations = None
+        exhibition_strategy = None
         optimization_improvement = 0.0
         recommendations = []
 
         # Stage 2: Entry optimization
-        if stage in ("entries", "relays", "full"):
+        if stage in ("entries", "relays", "exhibition", "full"):
             try:
                 entry_assignments, improvement = self._optimize_entries(
                     entries=data.entries,
@@ -160,7 +164,7 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
                 recommendations.append(f"Entry optimization unavailable: {e}")
 
         # Stage 3: Relay configuration
-        if stage in ("relays", "full") and entry_assignments:
+        if stage in ("relays", "exhibition", "full") and entry_assignments:
             try:
                 relay_configurations = self._optimize_relays(
                     entries=data.entries,
@@ -170,6 +174,17 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
             except Exception as e:
                 self.logger.warning(f"Relay optimization failed: {e}")
                 recommendations.append(f"Relay optimization unavailable: {e}")
+
+        # Stage 4: Exhibition strategy (NEW)
+        if stage in ("exhibition", "full"):
+            try:
+                exhibition_strategy = self._optimize_exhibition(
+                    entries=data.entries,
+                    target_team=data.target_team,
+                )
+            except Exception as e:
+                self.logger.warning(f"Exhibition strategy failed: {e}")
+                recommendations.append(f"Exhibition strategy unavailable: {e}")
 
         # Generate recommendations
         recommendations.extend(
@@ -184,11 +199,12 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
             projection=projection,
             entry_assignments=entry_assignments,
             relay_configurations=relay_configurations,
+            exhibition_strategy=exhibition_strategy,
             optimization_improvement=optimization_improvement,
             recommendations=recommendations,
         )
 
-    def format_response(self, result: ChampionshipResult) -> Dict[str, Any]:
+    def format_response(self, result: ChampionshipResult) -> dict[str, Any]:
         """Format result for API response."""
         response = {
             "projection": result.projection.to_dict(),
@@ -210,7 +226,7 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
 
     def project_only(
         self,
-        entries: List[Dict[str, Any]],
+        entries: list[dict[str, Any]],
         target_team: str = "Seton",
         meet_name: str = "Championship",
     ) -> StandingsProjection:
@@ -227,11 +243,11 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
 
     def _optimize_entries(
         self,
-        entries: List[Dict[str, Any]],
+        entries: list[dict[str, Any]],
         target_team: str,
-        divers: Set[str],
-        relay_3_swimmers: Set[str],
-    ) -> tuple[Dict[str, List[str]], float]:
+        divers: set[str],
+        relay_3_swimmers: set[str],
+    ) -> tuple[dict[str, list[str]], float]:
         """
         Optimize entry selections.
 
@@ -277,10 +293,10 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
 
     def _optimize_relays(
         self,
-        entries: List[Dict[str, Any]],
+        entries: list[dict[str, Any]],
         target_team: str,
-        entry_assignments: Dict[str, List[str]],
-    ) -> Dict[str, Any]:
+        entry_assignments: dict[str, list[str]],
+    ) -> dict[str, Any]:
         """
         Optimize relay configurations.
 
@@ -316,12 +332,106 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
             self.logger.warning(f"Relay optimization error: {e}")
             return {"status": "error", "message": str(e)}
 
+    def _optimize_exhibition(
+        self,
+        entries: list[dict[str, Any]],
+        target_team: str,
+    ) -> dict[str, Any]:
+        """
+        Optimize exhibition swimmer deployment.
+
+        Uses ExhibitionDeploymentAnalyzer to find strategic placement
+        of non-scoring swimmers to displace opponents.
+
+        Returns:
+            Dictionary with exhibition strategy recommendations
+        """
+        try:
+            import pandas as pd
+
+            from swim_ai_reflex.backend.core.exhibition_strategy import (
+                ExhibitionDeploymentAnalyzer,
+            )
+
+            # Convert entries to DataFrame format expected by analyzer
+            target_entries = [
+                e
+                for e in entries
+                if normalize_team_name(e.get("team", ""))
+                == normalize_team_name(target_team)
+            ]
+            opponent_entries = [
+                e
+                for e in entries
+                if normalize_team_name(e.get("team", ""))
+                != normalize_team_name(target_team)
+            ]
+
+            if not target_entries:
+                return {"status": "no_target_team_entries"}
+
+            # Build DataFrames
+            target_df = pd.DataFrame(
+                [
+                    {
+                        "name": e.get("swimmer", e.get("swimmer_name", "")),
+                        "event": e.get("event", ""),
+                        "time": e.get("seed_time", e.get("time", float("inf"))),
+                        "grade": e.get("grade", 12),
+                    }
+                    for e in target_entries
+                ]
+            )
+
+            opponent_df = pd.DataFrame(
+                [
+                    {
+                        "name": e.get("swimmer", e.get("swimmer_name", "")),
+                        "team": e.get("team", ""),
+                        "event": e.get("event", ""),
+                        "time": e.get("seed_time", e.get("time", float("inf"))),
+                    }
+                    for e in opponent_entries
+                ]
+            )
+
+            # Run exhibition analysis
+            analyzer = ExhibitionDeploymentAnalyzer()
+            result = analyzer.analyze_deployment(
+                seton_roster=target_df,
+                opponent_roster=opponent_df,
+            )
+
+            return {
+                "status": "success",
+                "recommended_assignments": result.recommended_assignments,
+                "total_points_denied": result.total_points_denied,
+                "opportunities": [
+                    {
+                        "swimmer": opp.swimmer,
+                        "event": opp.event,
+                        "opponent_displaced": opp.opponent_displaced,
+                        "points_denied": opp.points_denied,
+                        "explanation": opp.explanation,
+                    }
+                    for opp in result.opportunities[:5]  # Top 5
+                ],
+                "summary": result.summary,
+            }
+
+        except ImportError as e:
+            self.logger.warning(f"Exhibition strategy dependencies not available: {e}")
+            return {"status": "not_available", "reason": str(e)}
+        except Exception as e:
+            self.logger.warning(f"Exhibition strategy error: {e}")
+            return {"status": "error", "message": str(e)}
+
     def _generate_recommendations(
         self,
         projection: StandingsProjection,
-        entry_assignments: Optional[Dict[str, List[str]]],
+        entry_assignments: dict[str, list[str]] | None,
         target_team: str,
-    ) -> List[str]:
+    ) -> list[str]:
         """Generate coaching recommendations."""
         recommendations = []
 

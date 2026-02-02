@@ -1,0 +1,19 @@
+{
+  "servers": {
+    "cloudrun": {
+      "enabled": true,
+      "defer_loading": true,
+      "description": "Google Cloud Run deployment - lazy loaded to save tokens"
+    },
+    "firebase-mcp-server": {
+      "enabled": true,
+      "defer_loading": true,
+      "description": "Firebase operations - lazy loaded to save tokens"
+    },
+    "sequential-thinking": {
+      "enabled": true,
+      "defer_loading": false,
+      "description": "Problem decomposition - always available for PRISM workflow"
+    }
+  }
+}

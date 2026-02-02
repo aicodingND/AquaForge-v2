@@ -12,8 +12,24 @@ export default function Header() {
   const { meetMode, setMeetMode } = useAppStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Enhanced mode indicator with context
+  const getModeInfo = () => {
+    const mode = meetModes.find(m => m.id === meetMode);
+    return {
+      label: mode?.label || meetMode,
+      description: meetMode === 'dual'
+        ? 'Two-team matchup optimization'
+        : 'Multi-team championship strategy',
+      color: meetMode === 'dual' ? 'blue' : 'purple'
+    };
+  };
+
+  const modeInfo = getModeInfo();
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-[var(--navy-600)] backdrop-blur-md bg-[var(--navy-900)]/80 h-16">
+    <header className={`fixed top-0 left-0 right-0 z-50 glass-card border-b border-[var(--navy-600)] backdrop-blur-md bg-[var(--navy-900)]/80 ${
+          modeInfo.color === 'blue' ? 'border-t-2 border-t-blue-500' : 'border-t-2 border-t-purple-500'
+        }`}>
       <div className="h-full px-4 lg:px-8 flex items-center justify-between">
         {/* Left: Logo & Brand */}
         <div className="flex items-center gap-8">
@@ -23,7 +39,17 @@ export default function Header() {
             </div>
             <div className="hidden md:block">
               <h1 className="text-lg font-bold text-white tracking-tight">{siteConfig.name}</h1>
-              <p className="text-[10px] text-[var(--gold-500)] font-medium tracking-wider uppercase">Optimizer</p>
+              <div className="flex items-center gap-2">
+                <p className="text-[10px] text-[var(--gold-500)] font-medium tracking-wider uppercase">Optimizer</p>
+                <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-medium ${
+                  modeInfo.color === 'blue'
+                    ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
+                    : 'bg-purple-500/20 text-purple-300 border border-purple-400/30'
+                }`}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+                  {modeInfo.label}
+                </div>
+              </div>
             </div>
           </Link>
 
@@ -56,29 +82,46 @@ export default function Header() {
 
         {/* Right: Mode Switcher & Settings */}
         <div className="flex items-center gap-4">
-          {/* Mode Switcher - Visible on desktop/tablet */}
-          <div className="hidden md:flex bg-[var(--navy-800)] rounded-full p-1 border border-[var(--navy-600)]">
-             {meetModes.map((mode) => (
-               <button
-                 key={mode.id}
-                 data-testid={`mode-${mode.id}`}
-                 onClick={() => setMeetMode(mode.id)}
-                 className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${
-                   meetMode === mode.id
-                     ? 'bg-[var(--gold-500)] text-[var(--navy-900)] shadow-sm'
-                     : 'text-white/50 hover:text-white'
-                 }`}
-               >
-                 {mode.label}
-               </button>
-             ))}
+          {/* Enhanced Mode Switcher - Visible on desktop/tablet */}
+          <div className="hidden md:flex items-center gap-3">
+            {/* Current Mode Description */}
+            <div className="hidden lg:block text-right">
+              <p className="text-xs text-white/60 font-medium">{modeInfo.label} Mode</p>
+              <p className="text-[10px] text-white/40">{modeInfo.description}</p>
+            </div>
+
+            <div className="bg-[var(--navy-800)] rounded-full p-1 border border-[var(--navy-600)]">
+              {meetModes.map((mode) => {
+                const isActive = meetMode === mode.id;
+                const isBlue = mode.id === 'dual';
+
+                return (
+                  <button
+                    key={mode.id}
+                    data-testid={`mode-${mode.id}`}
+                    onClick={() => setMeetMode(mode.id)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 relative ${
+                      isActive
+                        ? `${isBlue ? 'bg-blue-500' : 'bg-purple-500'} text-white shadow-sm`
+                        : 'text-white/50 hover:text-white hover:bg-white/10'
+                    }`}
+                    title={mode.id === 'dual' ? 'Optimize two teams against each other' : 'Multi-team championship strategy'}
+                  >
+                    {isActive && (
+                      <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[var(--gold-400)] animate-pulse" />
+                    )}
+                    {mode.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div className="h-6 w-px bg-[var(--navy-600)] hidden lg:block" />
 
           {/* Secondary Actions */}
-          <Link 
-            href="/settings" 
+          <Link
+            href="/settings"
             className={`p-2 rounded-full transition-colors ${
               pathname === '/settings' ? 'bg-white/10 text-white' : 'text-white/60 hover:text-white hover:bg-white/5'
             }`}
@@ -87,7 +130,7 @@ export default function Header() {
           </Link>
 
           {/* Mobile Menu Toggle */}
-          <button 
+          <button
             className="md:hidden p-2 text-white/80"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >

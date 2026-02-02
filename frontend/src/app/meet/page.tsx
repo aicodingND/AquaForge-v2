@@ -5,6 +5,7 @@ import MeetSelector from "@/components/MeetSelector";
 import TeamSelector from "@/components/TeamSelector";
 import RosterTable from "@/components/RosterTable";
 import ChampionshipTeamsGrid from "@/components/ChampionshipTeamsGrid";
+import DataSourceSelector from "@/components/DataSourceSelector";
 import { useAppStore } from "@/lib/store";
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -61,7 +62,7 @@ export default function MeetSetupPage() {
     }
   };
 
-  const handleSwimmerToggle = (swimmer: string, wasExcluded: boolean) => {
+  const handleSwimmerToggle = (swimmer: string) => {
     toggleSwimmerExcluded(swimmer);
   };
 
@@ -217,149 +218,17 @@ export default function MeetSetupPage() {
 
           {/* DEV: Load Sample Data Button */}
           <button
-            onClick={() => {
-              useAppStore.getState().setMeetMode("dual");
-              useAppStore.getState().setSelectedMeet("dual_template");
-              useAppStore.getState().setSetonTeam({
-                name: "Seton School",
-                filename: "sample_seton.csv",
-                data: [
-                  {
-                    swimmer: "Swimmer S1",
-                    event: "50 Free",
-                    time: "24.50",
-                    grade: "11",
-                  },
-                  {
-                    swimmer: "Swimmer S2",
-                    event: "100 Free",
-                    time: "54.00",
-                    grade: "10",
-                  },
-                  {
-                    swimmer: "Swimmer S3",
-                    event: "100 Back",
-                    time: "1:02.00",
-                    grade: "12",
-                  },
-                  {
-                    swimmer: "Swimmer S4",
-                    event: "100 Breast",
-                    time: "1:10.00",
-                    grade: "9",
-                  },
-                  {
-                    swimmer: "Swimmer S5",
-                    event: "100 Fly",
-                    time: "58.00",
-                    grade: "11",
-                  },
-                  {
-                    swimmer: "Swimmer S6",
-                    event: "200 Free",
-                    time: "2:00.00",
-                    grade: "10",
-                  },
-                  {
-                    swimmer: "Swimmer S7",
-                    event: "200 IM",
-                    time: "2:15.00",
-                    grade: "12",
-                  },
-                  {
-                    swimmer: "Swimmer S8",
-                    event: "500 Free",
-                    time: "5:30.00",
-                    grade: "9",
-                  },
-                ],
-                swimmerCount: 8,
-                entryCount: 8,
-                events: [
-                  "50 Free",
-                  "100 Free",
-                  "100 Back",
-                  "100 Breast",
-                  "100 Fly",
-                  "200 Free",
-                  "200 IM",
-                  "500 Free",
-                ],
-              });
-              useAppStore.getState().setOpponentTeam({
-                name: "Opponent School",
-                filename: "sample_opponent.csv",
-                data: [
-                  {
-                    swimmer: "Opponent O1",
-                    event: "50 Free",
-                    time: "25.00",
-                    team: "Opponent",
-                    grade: "11",
-                  },
-                  {
-                    swimmer: "Opponent O2",
-                    event: "100 Free",
-                    time: "55.00",
-                    team: "Opponent",
-                    grade: "10",
-                  },
-                  {
-                    swimmer: "Opponent O3",
-                    event: "100 Back",
-                    time: "1:03.00",
-                    team: "Opponent",
-                    grade: "9",
-                  },
-                  {
-                    swimmer: "Opponent O4",
-                    event: "100 Breast",
-                    time: "1:11.00",
-                    team: "Opponent",
-                    grade: "12",
-                  },
-                  {
-                    swimmer: "Opponent O5",
-                    event: "100 Fly",
-                    time: "59.00",
-                    team: "Opponent",
-                    grade: "11",
-                  },
-                  {
-                    swimmer: "Opponent O6",
-                    event: "200 Free",
-                    time: "2:01.00",
-                    team: "Opponent",
-                    grade: "10",
-                  },
-                  {
-                    swimmer: "Opponent O7",
-                    event: "200 IM",
-                    time: "2:16.00",
-                    team: "Opponent",
-                    grade: "9",
-                  },
-                  {
-                    swimmer: "Opponent O8",
-                    event: "500 Free",
-                    time: "5:31.00",
-                    team: "Opponent",
-                    grade: "12",
-                  },
-                ],
-                swimmerCount: 8,
-                entryCount: 8,
-                events: [
-                  "50 Free",
-                  "100 Free",
-                  "100 Back",
-                  "100 Breast",
-                  "100 Fly",
-                  "200 Free",
-                  "200 IM",
-                  "500 Free",
-                ],
-              });
+            onClick={async () => {
+              try {
+                const res = await fetch("/fixtures/sample-teams.json");
+                const data = await res.json();
+                useAppStore.getState().setMeetMode("dual");
+                useAppStore.getState().setSelectedMeet("dual_template");
+                useAppStore.getState().setSetonTeam(data.seton);
+                useAppStore.getState().setOpponentTeam(data.opponent);
+              } catch (err) {
+                console.error("Failed to load sample data:", err);
+              }
             }}
             className="btn btn-outline w-full py-2 text-sm mt-4 border-dashed opacity-50 hover:opacity-100"
           >
@@ -373,7 +242,16 @@ export default function MeetSetupPage() {
         <div
           className={`grid grid-cols-1 ${isDual ? "lg:grid-cols-2" : ""} gap-6`}
         >
+          {/* Seton / Championship Column */}
           <div className="space-y-4">
+            {/* Quick Load Section */}
+            <div className="glass-card p-4">
+              <DataSourceSelector
+                mode={isDual ? "dual" : "championship"}
+                teamType="seton"
+              />
+            </div>
+
             <FileUpload
               teamType="seton"
               label={isDual ? "Seton Team File" : "Championship Psych Sheet"}
@@ -397,13 +275,29 @@ export default function MeetSetupPage() {
                       {setonTeam.entryCount}
                     </p>
                   </div>
+                  {setonTeam.teams && setonTeam.teams.length > 1 && (
+                    <div className="col-span-2">
+                      <p className="text-white/50">Teams</p>
+                      <p className="text-white font-medium">
+                        {setonTeam.teams.length} teams:{" "}
+                        {setonTeam.teams.slice(0, 4).join(", ")}
+                        {setonTeam.teams.length > 4 && "..."}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
           </div>
 
+          {/* Opponent Column (Dual Mode Only) */}
           {isDual && (
             <div className="space-y-4">
+              {/* Quick Load for Opponents */}
+              <div className="glass-card p-4">
+                <DataSourceSelector mode="dual" teamType="opponent" />
+              </div>
+
               <FileUpload teamType="opponent" label="Opponent Team File" />
               {opponentTeam && (
                 <div className="glass-card p-4 border-l-4 border-l-white/30 animate-fade-in">

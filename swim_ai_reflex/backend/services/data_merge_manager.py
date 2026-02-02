@@ -20,7 +20,7 @@ import logging
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import pandas as pd
 
@@ -115,8 +115,8 @@ class DataMergeManager:
 
     def __init__(self):
         self.CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        self._freshness: Dict[str, FreshnessRecord] = {}
-        self._merged_data: Optional[pd.DataFrame] = None
+        self._freshness: dict[str, FreshnessRecord] = {}
+        self._merged_data: pd.DataFrame | None = None
         self._load_freshness()
 
     # -------------------------------------------------------------------------
@@ -205,7 +205,7 @@ class DataMergeManager:
             else pd.DataFrame()
         )
 
-    def get_all_teams(self) -> List[str]:
+    def get_all_teams(self) -> list[str]:
         """Get list of all available team codes."""
         if self._merged_data is None:
             self.refresh_all()
@@ -215,7 +215,7 @@ class DataMergeManager:
 
         return sorted(self._merged_data["team"].unique().tolist())
 
-    def get_freshness_report(self) -> Dict[str, FreshnessRecord]:
+    def get_freshness_report(self) -> dict[str, FreshnessRecord]:
         """Get freshness status for all teams."""
         return self._freshness.copy()
 
@@ -234,7 +234,7 @@ class DataMergeManager:
             self._merged_data.to_parquet(output_path, index=False)
             logger.info(f"Exported {len(self._merged_data)} entries to {output_path}")
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """Get statistics about merged data."""
         if self._merged_data is None:
             self.refresh_all()
@@ -260,7 +260,7 @@ class DataMergeManager:
     # Private methods
     # -------------------------------------------------------------------------
 
-    def _load_source(self, source: DataSourceConfig) -> List[Dict]:
+    def _load_source(self, source: DataSourceConfig) -> list[dict]:
         """Load entries from a data source."""
         entries = []
 
@@ -331,11 +331,11 @@ class DataMergeManager:
         for team in df["team"].unique():
             if pd.isna(team) or team == "":
                 continue  # Skip empty/null team values
-            
+
             team_data = df[df["team"] == team]
             if team_data.empty:
                 continue  # Skip if no data after filter
-            
+
             source = "merged"
             if "_source" in team_data.columns and len(team_data) > 0:
                 source = team_data["_source"].iloc[0]
@@ -389,7 +389,7 @@ class DataMergeManager:
 # ============================================================================
 
 
-_manager: Optional[DataMergeManager] = None
+_manager: DataMergeManager | None = None
 
 
 def get_merge_manager() -> DataMergeManager:

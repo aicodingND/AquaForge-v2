@@ -1,50 +1,175 @@
-# AquaForge Scoring Rules
+# ==============================================================================
+# AquaForge Scoring Rules - Official Reference
+# ==============================================================================
 # Machine-readable constraints for optimization engine
-# Last Updated: 2026-01-15
-# Location: docs/ to avoid gitignore issues with .agent/ yaml files
+# Last Updated: 2026-02-02
+# Authority: setonswimming.org/so-how-is-a-high-school-meet-scored-anyway/
+#            VISAA.org, NFHS 2024-2025 Rules
+#
+# IMPORTANT: This file is the single source of truth for scoring configurations.
+# Code implementations in ScoringProfile class should match these definitions.
+# ==============================================================================
 
 ---
-# Dual Meet Scoring (current default)
+# ==============================================================================
+# DUAL MEET SCORING
+# ==============================================================================
+# Used for: Regular season head-to-head dual meets between two teams
+# Scoring places: Top 7 individual, Top 3 relay
+# Authority: setonswimming.org - Coach Koehr Official Documentation
+# ==============================================================================
+
 dual_meet:
-  name: "Standard Dual Meet"
-  points_by_place:
-    1: 6
-    2: 4
+  name: "Seton/VISAA Dual Meet (7-Place Individual, 3-Place Relay)"
+  type: "dual"
+  authority: "setonswimming.org - Coach Koehr Official Documentation"
+
+  individual_points: # Top 7 places score (8-6-5-4-3-2-1)
+    1: 8
+    2: 6
+    3: 5
+    4: 4
+    5: 3
+    6: 2
+    7: 1
+
+  diving_points: # Same as individual (diving is an individual event)
+    1: 8
+    2: 6
+    3: 5
+    4: 4
+    5: 3
+    6: 2
+    7: 1
+
+  relay_points: # Top 3 places score (10-5-3 per Coach Koehr)
+    1: 10
+    2: 5
     3: 3
-    4: 2
-    5: 1
-    6: 0
-  max_scorers_per_team: 3
-  max_events_per_swimmer: 2  # individual events
-  relays_separate: true      # relays don't count toward limit
-  relay_multiplier: 2        # relay points worth 2x
+
+  constraints:
+    max_scorers_per_team: 3 # Only top 3 from each team score per event
+    max_entries_per_event: 4 # 4 varsity entries per individual event
+    max_relays_per_event: 2 # A and B relays only
+    max_individual_events_per_swimmer: 2
+    max_relay_events_per_swimmer: 3
+    max_total_events_per_swimmer: 4 # 2 indiv + up to 3 relays, max 4
+    exhibition_entries: true # Additional entries don't score
 
 ---
-# VISAA Championship Scoring
+# ==============================================================================
+# VCAC CONFERENCE CHAMPIONSHIP SCORING (12-PLACE)
+# ==============================================================================
+# Used for: Virginia Christian Athletic Conference Championship Meet
+# Scoring places: Top 12
+# Meet format: Timed finals (no prelims/consolation split)
+# Authority: setonswimming.org, VCAC official rules
+# ==============================================================================
+
+vcac_championship:
+  name: "VCAC Conference Championship (12-Place)"
+  type: "championship"
+  authority: "VCAC Official Rules via setonswimming.org"
+  scoring_places: 12
+  format: "timed_finals"
+
+  individual_points:
+    1: 16
+    2: 13
+    3: 12
+    4: 11
+    5: 10
+    6: 9
+    7: 7
+    8: 5
+    9: 4
+    10: 3
+    11: 2
+    12: 1
+
+  diving_points: # Same as individual swimming
+    1: 16
+    2: 13
+    3: 12
+    4: 11
+    5: 10
+    6: 9
+    7: 7
+    8: 5
+    9: 4
+    10: 3
+    11: 2
+    12: 1
+
+  relay_points: # Exactly 2× individual points at each place
+    1: 32 # 2 × 16
+    2: 26 # 2 × 13
+    3: 24 # 2 × 12
+    4: 22 # 2 × 11
+    5: 20 # 2 × 10
+    6: 18 # 2 × 9
+    7: 14 # 2 × 7
+    8: 10 # 2 × 5
+    9: 8 # 2 × 4
+    10: 6 # 2 × 3
+    11: 4 # 2 × 2
+    12: 2 # 2 × 1
+
+  constraints:
+    max_scorers_per_team: 4 # Only top 4 from each team can score
+    max_entries_per_event: unlimited # But only 4 score
+    max_scoring_relays_per_team: 2 # A and B relays only
+    max_individual_events_per_swimmer: 2
+    max_relay_events_per_swimmer: 3
+    max_total_events_per_swimmer: 4
+    exhibition_relays: true # Non-scoring relays allowed as exhibition
+
+  edge_cases:
+    - "Unlimited entries per event, but only top 4 per team score"
+    - "A and B relays only eligible to score; others are exhibition"
+    - "11-Dive championship format for diving"
+    - "NFHS 2024-2025 rules govern all procedures"
+
+---
+# ==============================================================================
+# VISAA STATE CHAMPIONSHIP SCORING (16-PLACE)
+# ==============================================================================
+# Used for: VISAA Swimming & Diving State Championship
+# Scoring places: Top 16
+# Meet format: Prelims → Championship Finals (1-8) + Consolation Finals (9-16)
+# Authority: visaa.org official rules
+# ==============================================================================
+
 visaa_championship:
-  name: "VISAA State Championship"
-  
-  championship_finals:
-    # Places 1-16 in Championship Final
-    1: 40
-    2: 34
-    3: 32
-    4: 30
-    5: 28
-    6: 26
-    7: 24
-    8: 22
-    9: 18
-    10: 14
-    11: 12
-    12: 10
-    13: 8
-    14: 6
-    15: 4
-    16: 2
-  
-  consolation_finals:
-    # Places 1-16 in Consolation Final
+  name: "VISAA State Championship (16-Place)"
+  type: "championship"
+  authority: "visaa.org Official Rules"
+  scoring_places: 16
+  format: "prelims_finals"
+
+  # NOTE: The 16-place scoring is a SINGLE unified scale.
+  # Championship finals swimmers place 1-8, consolation swimmers place 9-16.
+  # The critical rule: Consolation finalists CANNOT outscore Championship finalists.
+
+  individual_points: # Unified 16-place scale
+    1: 20 # Championship Final
+    2: 17 # Championship Final
+    3: 16 # Championship Final
+    4: 15 # Championship Final
+    5: 14 # Championship Final
+    6: 13 # Championship Final
+    7: 12 # Championship Final
+    8: 11 # Championship Final
+    9: 9 # Consolation Final
+    10: 7 # Consolation Final
+    11: 6 # Consolation Final
+    12: 5 # Consolation Final
+    13: 4 # Consolation Final
+    14: 3 # Consolation Final
+    15: 2 # Consolation Final
+    16: 1 # Consolation Final
+
+  diving_points: # Same as individual swimming
     1: 20
     2: 17
     3: 16
@@ -61,44 +186,139 @@ visaa_championship:
     14: 3
     15: 2
     16: 1
-  
-  bonus_heats_score: false  # Bonus event swimmers cannot score
-  format: "prelims_finals"
-  max_entries_per_event: 3   # per team
-  max_events_per_swimmer: 2  # individual events
-  relay_multiplier: 2
+
+  relay_points: # Exactly 2× individual points at each place
+    1: 40 # 2 × 20
+    2: 34 # 2 × 17
+    3: 32 # 2 × 16
+    4: 30 # 2 × 15
+    5: 28 # 2 × 14
+    6: 26 # 2 × 13
+    7: 24 # 2 × 12
+    8: 22 # 2 × 11
+    9: 18 # 2 × 9
+    10: 14 # 2 × 7
+    11: 12 # 2 × 6
+    12: 10 # 2 × 5
+    13: 8 # 2 × 4
+    14: 6 # 2 × 3
+    15: 4 # 2 × 2
+    16: 2 # 2 × 1
+
+  constraints:
+    max_scorers_per_team: 4 # Only top 4 from each team can score per event
+    max_entries_per_event: unlimited # But only 4 score
+    max_scoring_relays_per_team: 2 # A and B relays; B may be exhibition only
+    max_individual_events_per_swimmer: 2
+    max_relay_events_per_swimmer: 3
+    max_total_events_per_swimmer: 4
+    bonus_swimmers_score: false # Bonus event swimmers CANNOT score
+
+  edge_cases:
+    - "Consolation final swimmers can NEVER outscore Championship final swimmers"
+    - "If 5+ swimmers from one team qualify top 16, coach must designate 4 scorers (15 min before prelims end)"
+    - "Bonus swimmers (e.g., Bonus 50 Free) are NOT eligible to score"
+    - "B Relays may be entered as exhibition (no scoring)"
+    - "Exhibition swims: Swimmer entered in 1 event may swim 1 other as exhibition (no points)"
+    - "Diving qualification: 11-dive score of 200pts, all dives completed without failure"
+    - "Scratches not permitted for preliminary events"
+    - "DQ'd swimmers/relays receive 0 points"
 
 ---
-# Grade-Based Scoring Eligibility
+# ==============================================================================
+# GRADE-BASED ELIGIBILITY RULES
+# ==============================================================================
+
 grade_rules:
-  exhibition_grades: [7, 8]   # Can compete, cannot score
-  scoring_grades: [9, 10, 11, 12]  # Full scoring eligibility
-  
-  exhibition_rules:
+  # DUAL MEETS: Grades 6-7 are exhibition (grade 8+ scores)
+  # Code: min_scoring_grade = 8 in all MeetRules subclasses
+  exhibition_grades: [6, 7] # Can compete, cannot score (dual meets only)
+  scoring_grades: [8, 9, 10, 11, 12] # Grade 8+ scores points
+
+  exhibition_swimmer_rules:
     can_compete: true
-    can_displace: true       # Push opponents to lower places
+    can_displace_opponents: true # Push opponents to lower scoring places
     scores_points: false
-    counts_toward_limit: true  # Still uses 2-event limit
+    counts_toward_event_limit: true
+
+  # CHAMPIONSHIP MEETS (VCAC, VISAA State):
+  # - NO exhibition swims allowed
+  # - Only Varsity swimmers (grade 8+) participate
+  # - ALL entered swimmers score
+  # - 7th graders swim at JV Invitational instead
+  # - Source: Seton Parents' Handbook 2024-25
+  championship_rules:
+    no_exhibition: true
+    all_entered_swimmers_score: true
+    min_eligible_grade: 8
 
 ---
-# Relay Configuration
+# ==============================================================================
+# RELAY CONFIGURATION
+# ==============================================================================
+
 relays:
   swimmers_per_relay: 4
+
   events:
     - name: "200 Medley Relay"
+      order: 1
       legs: ["backstroke", "breaststroke", "butterfly", "freestyle"]
+
     - name: "200 Free Relay"
+      order: 10
       legs: ["freestyle", "freestyle", "freestyle", "freestyle"]
+
     - name: "400 Free Relay"
+      order: 11
       legs: ["freestyle", "freestyle", "freestyle", "freestyle"]
-  
-  # Relay times vs individual times (typical ratio)
-  relay_split_factor: 0.98  # Relay splits ~2% faster than individual
+
+  relay_split_factor: 0.98 # Relay splits typically ~2% faster than individual times
 
 ---
-# Fatigue Model
+# ==============================================================================
+# FATIGUE MODEL
+# ==============================================================================
+
 fatigue:
   enabled: true
-  per_event_penalty: 0.02   # 2% slowdown per additional event
-  relay_penalty: 0.01       # 1% for relay participation
-  max_penalty: 0.05         # Cap at 5% total fatigue
+  per_event_penalty: 0.02 # 2% slowdown per additional event
+  relay_participation_penalty: 0.01
+  back_to_back_penalty: 0.02 # Swimming consecutive events
+  max_total_penalty: 0.05 # Cap at 5%
+
+---
+# ==============================================================================
+# POINT SCALE SUMMARY (Quick Reference)
+# ==============================================================================
+#
+# INDIVIDUAL/DIVING SCORING:
+# | Place | Dual Meet | VCAC Champ | VISAA Champ |
+# |-------|-----------|------------|-------------|
+# | 1     | 8         | 16         | 20          |
+# | 2     | 6         | 13         | 17          |
+# | 3     | 5         | 12         | 16          |
+# | 4     | 4         | 11         | 15          |
+# | 5     | 3         | 10         | 14          |
+# | 6     | 2         | 9          | 13          |
+# | 7     | 1         | 7          | 12          |
+# | 8     | -         | 5          | 11          |
+# | 9     | -         | 4          | 9           |
+# | 10    | -         | 3          | 7           |
+# | 11    | -         | 2          | 6           |
+# | 12    | -         | 1          | 5           |
+# | 13-16 | -         | -          | 4-3-2-1     |
+#
+# RELAY SCORING:
+# | Place | Dual Meet | VCAC Champ | VISAA Champ |
+# |-------|-----------|------------|-------------|
+# | 1     | 10        | 32 (2×16)  | 40 (2×20)   |
+# | 2     | 5         | 26 (2×13)  | 34 (2×17)   |
+# | 3     | 3         | 24 (2×12)  | 32 (2×16)   |
+# | 4+    | -         | continues  | continues   |
+#
+# NOTES:
+# - DIVING uses INDIVIDUAL point scale (not relay)
+# - Championship relays are exactly 2× individual at each placement
+# - Dual meet relays use unique 10-5-3 scale (per Coach Koehr)
+# ==============================================================================

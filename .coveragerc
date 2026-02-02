@@ -1,0 +1,33 @@
+[run]
+source = swim_ai_reflex
+omit =
+    */tests/*
+    */__pycache__/*
+    */migrations/*
+    */database/*
+    */.venv/*
+    */venv/*
+    */site-packages/*
+
+[report]
+show_missing = true
+skip_covered = true
+fail_under = 70
+precision = 2
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    def __str__
+    if __name__ == .__main__
+    raise NotImplementedError
+    raise AssertionError
+    pass
+    if TYPE_CHECKING:
+    @abstractmethod
+    @abc.abstractmethod
+
+[html]
+directory = htmlcov
+
+[xml]
+output = coverage.xml

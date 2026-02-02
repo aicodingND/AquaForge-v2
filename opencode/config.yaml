@@ -1,0 +1,30 @@
+# OpenCode Configuration for AquaForge Development
+# This config enables filesystem-based access to the Antigravity workspace
+
+provider: antigravity
+mode: filesystem
+
+# Root points to the parent directory containing all Antigravity projects
+root: "/Users/mpage1/Desktop/AquaForge"
+
+# Patterns to exclude from file listings and searches
+excludes:
+  - .git
+  - node_modules
+  - __pycache__
+  - .venv
+  - venv
+  - .DS_Store
+  - "*.pyc"
+  - .next
+  - dist
+  - build
+  - .turbo
+  - coverage
+  - .pytest_cache
+  - .mypy_cache
+  - .ruff_cache
+
+# HTTP mode settings (for future cloud-based access)
+# base_url: "https://antigravity.googleapis.com"
+# token: ""  # OAuth2 Bearer token if needed

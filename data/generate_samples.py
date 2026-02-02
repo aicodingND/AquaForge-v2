@@ -1,8 +1,8 @@
-import json
 import csv
+import glob
+import json
 import os
 import random
-import glob
 
 
 def format_time(seconds):
@@ -25,7 +25,7 @@ def clean_event(event_name):
 
 
 def load_json(filepath):
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         return json.load(f)
 
 
@@ -94,9 +94,7 @@ def generate_diving(team_code):
 def process_file(json_data, team_override=None, name_override=None):
     entries = []
     team_code = team_override if team_override else json_data.get("team_code", "UNK")
-    (
-        name_override if name_override else json_data.get("team_name", "Unknown")
-    )
+    (name_override if name_override else json_data.get("team_name", "Unknown"))
 
     # Process Individual Times
     for time_entry in json_data.get("times", []):

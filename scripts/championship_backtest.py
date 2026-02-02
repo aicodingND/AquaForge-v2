@@ -9,7 +9,7 @@ and compare predicted standings against actual recorded results.
 import os
 import sys
 import time
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 import pandas as pd
 
@@ -31,7 +31,8 @@ from swim_ai_reflex.backend.services.constraint_validator import (
 )
 from swim_ai_reflex.backend.utils.mdb_connector import MDBConnector
 
-DB_PATH = "/Volumes/Miguel/swimdatadump/Database Backups/SSTdata.mdb"
+# Use local MDB file (was external drive)
+DB_PATH = "data/real_exports/SSTdata.mdb"
 SETON_TEAM_ID = 1
 
 # Import validation tools
@@ -45,24 +46,46 @@ STROKE_MAP = {
     5: "IM",
 }
 
-# Championship meets to backtest (multi-team)
+# Comprehensive list of championship meets (2024-2026)
 CHAMPIONSHIP_MEETS = [
-    # 2024 Season
+    # =====================
+    # 2024 SEASON (10 meets)
+    # =====================
+    (464, "National Catholic H.S. Championship 2024", "visaa_championship"),
+    (465, "2024 VISAA Swimming & Diving Championship", "visaa_championship"),
+    (470, "Seton Winter Invitational", "vcac_championship"),
     (471, "2024 NoVa Catholic Invitational Championship", "vcac_championship"),
     (476, "18th Annual VISAA Division II Invitational", "visaa_championship"),
+    (478, "VCAC Regular Season Championship", "vcac_championship"),
     (479, "2024 VCAC Championship Meet", "vcac_championship"),
-    # 2025 Season
+    (482, "17th Annual VISAA Junior Varsity Invitational", "visaa_championship"),
+    (485, "Seton Icebreaker Invitational", "vcac_championship"),
+    # =====================
+    # 2025 SEASON (11 meets)
+    # =====================
+    (488, "VCAC Invitational", "vcac_championship"),
+    (489, "Seton Winter Invitational", "vcac_championship"),
     (493, "2025 NoVa Catholic Invitational Championship", "vcac_championship"),
+    (494, "VISAA Junior Varsity Invitational", "visaa_championship"),
+    (495, "2025 Annual VISAA Division II Invitational", "visaa_championship"),
     (496, "2025 VCAC Championship Meet", "vcac_championship"),
+    (497, "National Catholic H.S. Championship 2025", "visaa_championship"),
     (498, "2025 VISAA Swimming & Diving Championship", "visaa_championship"),
-    # 2026 Season
+    (500, "NoVA Catholic High School Times", "vcac_championship"),
+    (506, "Seton Icebreaker Invitational", "vcac_championship"),
+    (509, "Seton December Invitational", "vcac_championship"),
+    (510, "Seton Homecoming Invitational", "vcac_championship"),
+    # =====================
+    # 2026 SEASON (2 meets so far)
+    # =====================
+    (512, "VCAC Regular Season Championship", "vcac_championship"),
     (513, "2026 NoVa Catholic Invitational Championship", "vcac_championship"),
 ]
 
 
 def load_mdb_championship_data(
     connector: MDBConnector, meet_id: int
-) -> Tuple[List[Dict], Dict[int, str]]:
+) -> tuple[list[dict], dict[int, str], dict[str, Any]]:
     """Load championship meet data from MDB as psych sheet entries."""
     # Load tables
     result_df = connector.read_table("RESULT")
@@ -73,6 +96,24 @@ def load_mdb_championship_data(
     # Get meet info
     meet_row = meet_df[meet_df["MEET"] == meet_id]
     meet_row["MNAME"].values[0] if not meet_row.empty else f"Meet {meet_id}"
+
+    meet_meta = {
+        "start_date": str(meet_row["Start"].values[0])
+        if not meet_row.empty and "Start" in meet_row
+        else "Unknown",
+        "end_date": str(meet_row["End"].values[0])
+        if not meet_row.empty and "End" in meet_row
+        else "Unknown",
+        "location": str(meet_row["Location"].values[0])
+        if not meet_row.empty and "Location" in meet_row
+        else "Unknown",
+        "course": str(meet_row["Course"].values[0])
+        if not meet_row.empty and "Course" in meet_row
+        else "Y",
+        "remarks": str(meet_row["Remarks"].values[0])
+        if not meet_row.empty and "Remarks" in meet_row
+        else "",
+    }
 
     # Build team ID -> name map
     team_map = dict(zip(team_df["TEAM"], team_df["TNAME"]))
@@ -148,12 +189,12 @@ def load_mdb_championship_data(
             }
         )
 
-    return entries, team_map
+    return entries, team_map, meet_meta
 
 
 def get_actual_team_standings(
-    connector: MDBConnector, meet_id: int, team_map: Dict[int, str]
-) -> Dict[str, float]:
+    connector: MDBConnector, meet_id: int, team_map: dict[int, str]
+) -> dict[str, float]:
     """Extract actual team standings from MDB POINTS column."""
     result_df = connector.read_table("RESULT")
     meet_results = result_df[result_df["MEET"] == meet_id]
@@ -168,8 +209,8 @@ def get_actual_team_standings(
 
 
 def validate_historical_lineup(
-    entries: List[Dict], team_name: str, profile: str = "vcac_championship"
-) -> Dict[str, Any]:
+    entries: list[dict], team_name: str, profile: str = "vcac_championship"
+) -> dict[str, Any]:
     """
     Validate historical lineup and calculate legal score.
     Returns: {
@@ -306,12 +347,13 @@ def validate_historical_lineup(
         "violations": violations,
         "legal_score": legal_score,
         "illegal_score": illegal_score,
+        "legal_entries": legal_entries,
     }
 
 
 def run_championship_backtest(
     meet_id: int, meet_name: str, profile: str
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Run championship backtest for a single meet."""
     result = {
         "meet_id": meet_id,
@@ -334,11 +376,16 @@ def run_championship_backtest(
         connector = MDBConnector(DB_PATH)
 
         # Load data
-        entries, team_map = load_mdb_championship_data(connector, meet_id)
+        # Load data
+        entries, team_map, meet_meta = load_mdb_championship_data(connector, meet_id)
 
         if not entries:
             result["error"] = "No entries found"
             return result
+
+        # Store entries for later use in report generation
+        result["entries"] = entries
+        result["meet_meta"] = meet_meta
 
         # Get actual standings
         actual_standings = get_actual_team_standings(connector, meet_id, team_map)
@@ -560,35 +607,137 @@ def main():
                         if alt_name in act_map:
                             top_teams[-1]["actual_points"] = act_map[alt_name]
 
+                # Unpack metadata
+                meet_meta = result.get("meet_meta", {})
+
                 context = {
                     "meet_name": meet_name,
                     "profile": profile,
+                    "location": meet_meta.get("location", "Unknown"),
+                    "meet_date": f"{meet_meta.get('start_date')} - {meet_meta.get('end_date')}",
+                    "course": meet_meta.get("course", "Y"),
+                    "remarks": meet_meta.get("remarks", ""),
                     "report_date": datetime.now().strftime("%Y-%m-%d"),
                     "ai_score": ai_score,
                     "ai_delta": ai_score - baseline,
                     "legal_coach_score": baseline,
+                    "illegal_coach_score": coach_analysis.get("illegal_score", 0),
+                    "actual_seton_score": result["actual_standings"].get(
+                        "Seton Swimming", 0
+                    ),
                     "rank_accuracy": result.get("rank_accuracy", 0),
                     "illegal_points_removed": coach_analysis.get("illegal_score", 0)
                     - baseline,
                     "violations": coach_analysis.get("violations", []),
                     "top_teams": top_teams,
-                    "roster": [],  # Placeholder for roster data
+                    "roster": [],
+                    "ai_lineup": [],
+                    "coach_lineup": [],
+                    "anomalies": [],
+                    "reasoning": [],
                 }
 
-                # Build Roster Data from AI Assignments if available
+                # Add illegal_points to each team in top_teams
+                for team in top_teams:
+                    if "seton" in team["name"].lower():
+                        team["illegal_points"] = coach_analysis.get("illegal_score", 0)
+                    else:
+                        team["illegal_points"] = team["ai_points"]  # Same for opponents
+
+                # Build AI Lineup
                 entry_assignments = result.get("entry_assignments")
                 if entry_assignments:
-                    roster_list = []
-                    # assignments is Dict[swimmer, List[event]] (assuming)
-                    # Wait, pipeline_result.entry_assignments is Dict[str, List[str]]?
-                    # Let's check type. It's usually {swimmer: [events]}
-                    for swimmer, events in entry_assignments.items():
-                        roster_list.append(
-                            {"name": swimmer, "events": [{"name": e} for e in events]}
+                    for swimmer, events in sorted(entry_assignments.items()):
+                        # Skip "nan nan" entries - these are relay placeholders
+                        if swimmer.lower() == "nan nan" or not swimmer.strip():
+                            context["anomalies"].append(
+                                "⚠️ Relay placeholder 'nan nan' detected - relay swimmer names missing from database"
+                            )
+                            continue
+                        context["ai_lineup"].append(
+                            {
+                                "name": swimmer,
+                                "events": events,
+                                "is_new": False,  # Will be updated if not in coach lineup
+                            }
                         )
-                    # Sort roster by name
-                    roster_list.sort(key=lambda x: x["name"])
-                    context["roster"] = roster_list
+                    context["roster"] = [
+                        {"name": s, "events": [{"name": e} for e in evts]}
+                        for s, evts in sorted(entry_assignments.items())
+                        if s.lower() != "nan nan" and s.strip()
+                    ]
+
+                # Build Coach Lineup from historical entries (with violations marked)
+                # Get Seton entries from original data
+                violation_swimmers = set()
+                for v in coach_analysis.get("violations", []):
+                    parts = v.split(":")
+                    if parts:
+                        violation_swimmers.add(parts[0].strip())
+
+                # Build coach lineup from entries
+                coach_swimmers = {}
+                historical_entries = result.get("entries", [])
+                for entry in historical_entries:
+                    if "seton" in entry.get("team", "").lower():
+                        name = entry.get("swimmer_name", "")
+                        event = entry.get("event", "")
+                        if name not in coach_swimmers:
+                            coach_swimmers[name] = []
+                        if event and event not in coach_swimmers[name]:
+                            coach_swimmers[name].append(event)
+
+                for swimmer, events in sorted(coach_swimmers.items()):
+                    context["coach_lineup"].append(
+                        {
+                            "name": swimmer,
+                            "events": events,
+                            "has_violation": swimmer in violation_swimmers,
+                        }
+                    )
+
+                # Generate reasoning for AI advantage
+                if ai_score > baseline:
+                    context["reasoning"].append(
+                        f"AI avoids {len(coach_analysis.get('violations', []))} constraint violations that cost coach {coach_analysis.get('illegal_score', 0) - baseline:.0f} pts"
+                    )
+                    context["reasoning"].append(
+                        "AI optimally assigns swimmers to their best events given constraints"
+                    )
+
+                    # Check for back-to-back violations
+                    b2b_count = sum(
+                        1
+                        for v in coach_analysis.get("violations", [])
+                        if "back-to-back" in v.lower()
+                    )
+                    if b2b_count > 0:
+                        context["reasoning"].append(
+                            f"Coach had {b2b_count} back-to-back violations (swimmers in consecutive events)"
+                        )
+
+                    # Check for max events violations
+                    max_ev_count = sum(
+                        1
+                        for v in coach_analysis.get("violations", [])
+                        if "max" in v.lower()
+                        or "effective individual events" in v.lower()
+                    )
+                    if max_ev_count > 0:
+                        context["reasoning"].append(
+                            f"Coach had {max_ev_count} max-events violations (swimmers in too many events)"
+                        )
+
+                # Detect anomalies
+                if result["actual_standings"].get("Seton Swimming", 0) == 0:
+                    context["anomalies"].append(
+                        "📊 Actual meet results may be incomplete (Seton shows 0 points)"
+                    )
+
+                if any("nan" in s.lower() for s in coach_swimmers.keys()):
+                    context["anomalies"].append(
+                        "⚠️ Some swimmer names are missing ('nan nan') - likely relay-only swimmers without individual entries"
+                    )
 
                 reporter = PremiumReporter()
                 reporter.generate_dashboard(context)

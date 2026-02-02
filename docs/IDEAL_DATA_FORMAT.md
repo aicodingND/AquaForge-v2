@@ -194,7 +194,7 @@ John Smith,11,M,Boys 100 Free,52.18,Seton
 **Per VISAA Rules:**
 
 - Max 2 individual events per swimmer
-- Max 3 total events (individuals + relays)
+- Max 4 total events per swimmer (NFHS Rule 3-2-1: 2 indiv + 2 relay, or 1 indiv + 3 relay)
 - No back-to-back events allowed
 
 ---

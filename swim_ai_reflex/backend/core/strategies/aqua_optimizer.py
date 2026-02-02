@@ -20,7 +20,7 @@ import math
 import random
 import time
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any
 
 import pandas as pd
 
@@ -40,13 +40,15 @@ class ScoringProfile:
     """Configurable scoring profile for different meet types."""
 
     name: str = "visaa_dual"
-    individual_points: List[int] = field(default_factory=lambda: [8, 6, 5, 4, 3, 2, 1])
-    relay_points: List[int] = field(default_factory=lambda: [8, 4, 2])
+    individual_points: list[int] = field(default_factory=lambda: [8, 6, 5, 4, 3, 2, 1])
+    relay_points: list[int] = field(
+        default_factory=lambda: [10, 5, 3]
+    )  # Per Coach Koehr
     min_scoring_grade: int = 8
     max_scorers_per_team: int = 3
     max_entries_per_event: int = 4
     max_individual_events: int = 2
-    max_total_events: int = 3  # Including relays
+    max_total_events: int = 4  # 2 individual + up to 3 relays, max 4
 
     @classmethod
     def visaa_dual(cls) -> "ScoringProfile":
@@ -54,8 +56,47 @@ class ScoringProfile:
 
     @classmethod
     def vcac_championship(cls) -> "ScoringProfile":
+        """VCAC Conference scoring: Top 12 (16-13-12-11-10-9, 7-5-4-3-2-1)"""
         return cls(
             name="vcac_championship",
+            individual_points=[
+                16,
+                13,
+                12,
+                11,
+                10,
+                9,
+                7,
+                5,
+                4,
+                3,
+                2,
+                1,
+            ],
+            relay_points=[
+                32,
+                26,
+                24,
+                22,
+                20,
+                18,
+                14,
+                10,
+                8,
+                6,
+                4,
+                2,
+            ],
+            max_scorers_per_team=18,  # No limit
+            max_entries_per_event=4,
+            max_total_events=4,
+        )
+
+    @classmethod
+    def visaa_championship(cls) -> "ScoringProfile":
+        """VISAA State scoring: Top 16 (20-17-16...1)"""
+        return cls(
+            name="visaa_championship",
             individual_points=[
                 20,
                 17,
@@ -65,9 +106,7 @@ class ScoringProfile:
                 13,
                 12,
                 11,
-                10,
                 9,
-                8,
                 7,
                 6,
                 5,
@@ -85,9 +124,7 @@ class ScoringProfile:
                 26,
                 24,
                 22,
-                20,
                 18,
-                16,
                 14,
                 12,
                 10,
@@ -96,8 +133,9 @@ class ScoringProfile:
                 4,
                 2,
             ],
-            max_scorers_per_team=18,  # No limit effectively
-            max_entries_per_event=2,  # Championship: 2 entries per event
+            max_scorers_per_team=18,
+            max_entries_per_event=4,
+            max_total_events=4,
         )
 
 
@@ -208,7 +246,7 @@ class ConfidenceScore:
             explanation=explanation,
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "overall": self.overall,
             "search_quality": self.search_quality,
@@ -223,10 +261,10 @@ class ConfidenceScore:
 class Lineup:
     """Represents a lineup assignment (swimmer → events)."""
 
-    assignments: Dict[str, Set[str]]  # swimmer_name → set of events
+    assignments: dict[str, set[str]]  # swimmer_name → set of events
     score: float = 0.0
     opponent_score: float = 0.0
-    explanations: List[str] = field(default_factory=list)
+    explanations: list[str] = field(default_factory=list)
 
     def copy(self) -> "Lineup":
         return Lineup(
@@ -245,10 +283,10 @@ class Lineup:
         if swimmer in self.assignments:
             self.assignments[swimmer].discard(event)
 
-    def get_swimmer_events(self, swimmer: str) -> Set[str]:
+    def get_swimmer_events(self, swimmer: str) -> set[str]:
         return self.assignments.get(swimmer, set())
 
-    def get_event_swimmers(self, event: str) -> List[str]:
+    def get_event_swimmers(self, event: str) -> list[str]:
         return [s for s, events in self.assignments.items() if event in events]
 
     def to_dataframe(self, roster_df: pd.DataFrame) -> pd.DataFrame:
@@ -272,7 +310,7 @@ class Lineup:
 class ConstraintEngine:
     """Validates lineup constraints."""
 
-    def __init__(self, profile: ScoringProfile, events: List[str]):
+    def __init__(self, profile: ScoringProfile, events: list[str]):
         self.profile = profile
         self.events = events
         self.individual_events = [e for e in events if "Relay" not in e]
@@ -280,7 +318,7 @@ class ConstraintEngine:
 
     def is_valid(
         self, lineup: Lineup, roster_df: pd.DataFrame
-    ) -> Tuple[bool, List[str]]:
+    ) -> tuple[bool, list[str]]:
         """Check all constraints. Returns (valid, list of violations)."""
         violations = []
 
@@ -365,10 +403,10 @@ class ScoringEngine:
 
     def score_event(
         self,
-        seton_entries: List[Dict],
-        opponent_entries: List[Dict],
+        seton_entries: list[dict],
+        opponent_entries: list[dict],
         is_relay: bool = False,
-    ) -> Tuple[float, float, List[Dict]]:
+    ) -> tuple[float, float, list[dict]]:
         """
         Score a single event.
 
@@ -437,13 +475,63 @@ class ScoringEngine:
 
         return seton_points, opponent_points, details
 
+    def score_event_fast(
+        self,
+        seton_entries: list[dict],
+        opponent_times: list[float],
+        is_relay: bool = False,
+    ) -> float:
+        """
+        Fast O(log N) scoring for championships using pre-sorted opponent times.
+        Only calculates Seton points (opponent score irrelevant in optimization loop).
+        """
+        import bisect
+
+        points_table = (
+            self.profile.relay_points if is_relay else self.profile.individual_points
+        )
+        max_place = len(points_table)
+
+        # Sort Seton entries by time (usually small, e.g., 4 entries)
+        seton_times = [e.get("time", 999.0) for e in seton_entries]
+        seton_grades = [int(e.get("grade", 12)) for e in seton_entries]
+
+        # Pair and sort
+        seton_swimmers = sorted(zip(seton_times, seton_grades), key=lambda x: x[0])
+
+        total_points = 0.0
+        seton_scorers = 0
+
+        for i, (swim_time, grade) in enumerate(seton_swimmers):
+            # Check eligibility
+            if grade < self.profile.min_scoring_grade:
+                continue
+
+            if seton_scorers >= self.profile.max_scorers_per_team:
+                continue
+
+            # Find rank: opponents faster + seton teammates faster
+            # bisect_left gives count of opponents strictly faster (or equal, effectively assumes we lose ties to existing times or win?
+            # Standard swimming: ties split points. Here getting strict rank.
+            # bisect_right: we lose to everyone with same time. Conservative.
+            opp_ahead = bisect.bisect_left(opponent_times, swim_time)
+
+            # Rank (1-based) = opponents better + teammates better (i) + 1
+            rank = opp_ahead + i + 1
+
+            if rank <= max_place:
+                total_points += points_table[rank - 1]
+                seton_scorers += 1
+
+        return total_points
+
     def score_lineup(
         self,
         lineup: Lineup,
         seton_roster: pd.DataFrame,
         opponent_roster: pd.DataFrame,
-        events: List[str],
-    ) -> Tuple[float, float, List[str]]:
+        events: list[str],
+    ) -> tuple[float, float, list[str]]:
         """
         Score a complete lineup.
 
@@ -518,7 +606,7 @@ class BeamSearch:
         self,
         seton_roster: pd.DataFrame,
         opponent_roster: pd.DataFrame,
-        events: List[str],
+        events: list[str],
         constraint_engine: ConstraintEngine,
         scoring_engine: ScoringEngine,
     ) -> Lineup:
@@ -527,8 +615,8 @@ class BeamSearch:
 
         # === OPTIMIZATION 1: Pre-compute swimmer-event availability ===
         # Convert DataFrame lookups to O(1) dict lookups
-        swimmer_events: Dict[str, Set[str]] = {}
-        swimmer_data: Dict[Tuple[str, str], Dict] = {}
+        swimmer_events: dict[str, set[str]] = {}
+        swimmer_data: dict[tuple[str, str], dict] = {}
 
         for _, row in seton_roster.iterrows():
             swimmer = row["swimmer"]
@@ -539,13 +627,23 @@ class BeamSearch:
             swimmer_data[(swimmer, event)] = row.to_dict()
 
         # Pre-compute opponent times per event for faster scoring
-        opponent_by_event: Dict[str, List[Dict]] = {}
+        opponent_by_event: dict[str, list[dict]] = {}
+        opponent_times_sorted: dict[str, list[float]] = {}
+
         for event in events:
             opp_rows = opponent_roster[opponent_roster["event"] == event]
-            opponent_by_event[event] = opp_rows.to_dict("records")[:4]
+            opponent_by_event[event] = opp_rows.to_dict("records")[
+                :4
+            ]  # Only keep top 4 for display/heuristics if needed
+
+            # Pre-sort all opponent times for fast bisect scoring
+            # Filter out non-scoring times? No, bisect handles it.
+            # Assuming 'time' column exists and is float
+            times = opp_rows["time"].dropna().sort_values().tolist()
+            opponent_times_sorted[event] = times
 
         # Initial beam: empty lineup
-        beam: List[Lineup] = [Lineup(assignments={})]
+        beam: list[Lineup] = [Lineup(assignments={})]
         best_ever = Lineup(assignments={})
         best_ever.score = float("-inf")
 
@@ -557,11 +655,11 @@ class BeamSearch:
         max_iters = min(self.max_iterations, len(swimmers) * len(events) // 2 + 10)
 
         for iteration in range(max_iters):
-            candidate_moves: List[Tuple[float, str, str, float, float]] = []
+            candidate_moves: list[tuple[float, str, str, float, float]] = []
 
             # === PRE-COMPUTE 3: Baseline event scores for current lineups ===
             # Store (seton_pts, opp_pts) for each event for each lineup in beam
-            lineup_event_scores: Dict[int, Dict[str, Tuple[float, float]]] = {}
+            lineup_event_scores: dict[int, dict[str, tuple[float, float]]] = {}
 
             for i, lineup in enumerate(beam):
                 lineup_event_scores[i] = {}
@@ -573,11 +671,22 @@ class BeamSearch:
                         for s in current_swimmers
                         if swimmer_data.get((s, event))
                     ]
-                    opponent_entries = opponent_by_event.get(event, [])
                     is_relay = "Relay" in event
-                    s_pts, o_pts, _ = scoring_engine.score_event(
-                        seton_entries, opponent_entries, is_relay
-                    )
+
+                    if (
+                        hasattr(scoring_engine, "score_event_fast")
+                        and "championship" in scoring_engine.profile.name
+                    ):
+                        s_pts = scoring_engine.score_event_fast(
+                            seton_entries, opponent_times_sorted[event], is_relay
+                        )
+                        o_pts = 0.0  # Opponent score irrelevant for championship optimization direction
+                    else:
+                        opponent_entries = opponent_by_event.get(event, [])
+                        s_pts, o_pts, _ = scoring_engine.score_event(
+                            seton_entries, opponent_entries, is_relay
+                        )
+
                     lineup_event_scores[i][event] = (s_pts, o_pts)
 
             for i, lineup in enumerate(beam):
@@ -644,8 +753,8 @@ class BeamSearch:
             top_k = self.beam_width * 10
             best_moves = candidate_moves[:top_k]
 
-            candidates: List[Lineup] = []
-            seen_assignments: Set[frozenset] = set()
+            candidates: list[Lineup] = []
+            seen_assignments: set[frozenset] = set()
 
             for (
                 gain,
@@ -668,7 +777,10 @@ class BeamSearch:
                 seen_assignments.add(assignment_key)
 
                 # Update total score incrementally
-                old_s_pts, old_o_pts = lineup_event_scores[lineup_idx][event]
+                # Handle case where event might not be in precomputed scores
+                old_s_pts, old_o_pts = lineup_event_scores[lineup_idx].get(
+                    event, (0.0, 0.0)
+                )
 
                 new_lineup.score = source_lineup.score - old_s_pts + event_s_pts
                 new_lineup.opponent_score = (
@@ -716,11 +828,11 @@ class BeamSearch:
     def _fast_score_lineup(
         self,
         lineup: Lineup,
-        swimmer_data: Dict[Tuple[str, str], Dict],
-        opponent_by_event: Dict[str, List[Dict]],
-        events: List[str],
+        swimmer_data: dict[tuple[str, str], dict],
+        opponent_by_event: dict[str, list[dict]],
+        events: list[str],
         scoring_engine: ScoringEngine,
-    ) -> Tuple[float, float, List[str]]:
+    ) -> tuple[float, float, list[str]]:
         """Fast scoring using pre-computed data."""
         seton_total = 0.0
         opponent_total = 0.0
@@ -783,7 +895,7 @@ class SimulatedAnnealing:
         initial_lineup: Lineup,
         seton_roster: pd.DataFrame,
         opponent_roster: pd.DataFrame,
-        events: List[str],
+        events: list[str],
         constraint_engine: ConstraintEngine,
         scoring_engine: ScoringEngine,
     ) -> Lineup:
@@ -791,8 +903,8 @@ class SimulatedAnnealing:
         swimmers = seton_roster["swimmer"].unique().tolist()
 
         # === OPTIMIZATION: Pre-compute swimmer-event availability ===
-        swimmer_events: Dict[str, Set[str]] = {}
-        swimmer_data: Dict[Tuple[str, str], Dict] = {}
+        swimmer_events: dict[str, set[str]] = {}
+        swimmer_data: dict[tuple[str, str], dict] = {}
 
         for _, row in seton_roster.iterrows():
             swimmer = row["swimmer"]
@@ -803,7 +915,7 @@ class SimulatedAnnealing:
             swimmer_data[(swimmer, event)] = row.to_dict()
 
         # Pre-compute opponent times
-        opponent_by_event: Dict[str, List[Dict]] = {}
+        opponent_by_event: dict[str, list[dict]] = {}
         for event in events:
             opp_rows = opponent_roster[opponent_roster["event"] == event]
             opponent_by_event[event] = opp_rows.to_dict("records")[:4]
@@ -871,12 +983,12 @@ class SimulatedAnnealing:
     def _fast_generate_neighbor(
         self,
         lineup: Lineup,
-        swimmers: List[str],
-        events: List[str],
-        swimmer_events: Dict[str, Set[str]],
+        swimmers: list[str],
+        events: list[str],
+        swimmer_events: dict[str, set[str]],
         constraint_engine: ConstraintEngine,
         roster_df: pd.DataFrame,
-    ) -> Optional[Lineup]:
+    ) -> Lineup | None:
         """Generate neighbor using pre-computed data (no DataFrame lookups)."""
         neighbor = lineup.copy()
 
@@ -933,11 +1045,11 @@ class SimulatedAnnealing:
     def _fast_score(
         self,
         lineup: Lineup,
-        swimmer_data: Dict[Tuple[str, str], Dict],
-        opponent_by_event: Dict[str, List[Dict]],
-        events: List[str],
+        swimmer_data: dict[tuple[str, str], dict],
+        opponent_by_event: dict[str, list[dict]],
+        events: list[str],
         scoring_engine: ScoringEngine,
-    ) -> Tuple[float, float]:
+    ) -> tuple[float, float]:
         """Fast scoring (no explanations needed during annealing)."""
         seton_total = 0.0
         opponent_total = 0.0
@@ -1017,13 +1129,13 @@ class AquaOptimizer(BaseOptimizerStrategy):
 
     def __init__(
         self,
-        profile: Optional[ScoringProfile] = None,
-        fatigue: Optional[FatigueModel] = None,
+        profile: ScoringProfile | None = None,
+        fatigue: FatigueModel | None = None,
         quality_mode: str = "balanced",  # "fast", "balanced", or "thorough"
-        beam_width: Optional[int] = None,
-        annealing_iterations: Optional[int] = None,
-        nash_iterations: Optional[int] = None,
-        use_parallel: Optional[bool] = None,  # NEW: enable parallel seed execution
+        beam_width: int | None = None,
+        annealing_iterations: int | None = None,
+        nash_iterations: int | None = None,
+        use_parallel: bool | None = None,  # NEW: enable parallel seed execution
     ):
         self.profile = profile or ScoringProfile.visaa_dual()
         self.fatigue = fatigue or FatigueModel()
@@ -1058,7 +1170,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         scoring_fn: Any,
         rules: Any,
         **kwargs,
-    ) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, float], List[Dict[str, Any]]]:
+    ) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, float], list[dict[str, Any]]]:
         """
         Run AquaOptimizer with enhanced quality features:
         - Greedy warm start
@@ -1087,14 +1199,14 @@ class AquaOptimizer(BaseOptimizerStrategy):
 
         # === PRE-COMPUTE INVARIANTS (Tier 1 Optimization) ===
         # Cache swimmer-event mappings for O(1) lookup instead of DataFrame filtering
-        swimmer_events: Dict[str, Set[str]] = {}
+        swimmer_events: dict[str, set[str]] = {}
         for _, row in seton_df.iterrows():
             swimmer = row["swimmer"]
             if swimmer not in swimmer_events:
                 swimmer_events[swimmer] = set()
             swimmer_events[swimmer].add(row["event"])
 
-        event_swimmers: Dict[str, Set[str]] = {}
+        event_swimmers: dict[str, set[str]] = {}
         for _, row in seton_df.iterrows():
             event = row["event"]
             if event not in event_swimmers:
@@ -1112,7 +1224,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         )
 
         # Define seed optimization function (can run in parallel)
-        def run_seed(seed_idx: int) -> Tuple[float, Lineup]:
+        def run_seed(seed_idx: int) -> tuple[float, Lineup]:
             """Run optimization for a single seed."""
             random.seed(seed_idx * 42)  # Deterministic but different seeds
 
@@ -1159,7 +1271,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
             return margin, polished_lineup
 
         # Run seeds (parallel or sequential)
-        best_overall: Optional[Lineup] = None
+        best_overall: Lineup | None = None
         best_margin = float("-inf")
 
         if parallel_mode:
@@ -1245,7 +1357,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         initial_lineup: Lineup,
         seton_df: pd.DataFrame,
         opponent_df: pd.DataFrame,
-        events: List[str],
+        events: list[str],
         constraint_engine: ConstraintEngine,
         scoring_engine: ScoringEngine,
     ) -> Lineup:
@@ -1292,7 +1404,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         self,
         seton_df: pd.DataFrame,
         opponent_df: pd.DataFrame,
-        events: List[str],
+        events: list[str],
         constraint_engine: ConstraintEngine,
         scoring_engine: ScoringEngine,
     ) -> Lineup:
@@ -1307,12 +1419,12 @@ class AquaOptimizer(BaseOptimizerStrategy):
         lineup = Lineup(assignments={})
 
         # Pre-compute swimmer-event lookup
-        swimmer_data: Dict[Tuple[str, str], Dict] = {}
+        swimmer_data: dict[tuple[str, str], dict] = {}
         for _, row in seton_df.iterrows():
             swimmer_data[(row["swimmer"], row["event"])] = row.to_dict()
 
         # Pre-compute opponent times for scoring
-        opponent_by_event: Dict[str, List[Dict]] = {}
+        opponent_by_event: dict[str, list[dict]] = {}
         for event in events:
             opp_rows = opponent_df[opponent_df["event"] == event]
             opponent_by_event[event] = opp_rows.to_dict("records")[:4]
@@ -1356,7 +1468,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         lineup: Lineup,
         seton_df: pd.DataFrame,
         opponent_df: pd.DataFrame,
-        events: List[str],
+        events: list[str],
         constraint_engine: ConstraintEngine,
         scoring_engine: ScoringEngine,
         max_iterations: int = 300,
@@ -1371,7 +1483,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         swimmers = seton_df["swimmer"].unique().tolist()
 
         # Pre-compute swimmer-event availability
-        swimmer_events: Dict[str, Set[str]] = {}
+        swimmer_events: dict[str, set[str]] = {}
         for _, row in seton_df.iterrows():
             swimmer = row["swimmer"]
             event = row["event"]

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 import pandas as pd
 
@@ -30,7 +30,7 @@ class GurobiStrategy(BaseOptimizerStrategy):
         scoring_fn: Any,
         rules: Any,
         **kwargs,
-    ) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, float], List[Dict[str, Any]]]:
+    ) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, float], list[dict[str, Any]]]:
         """
         Run Gurobi optimization.
         """
@@ -147,7 +147,7 @@ class GurobiStrategy(BaseOptimizerStrategy):
         INDIVIDUAL_POINTS = [8, 6, 5, 4, 3, 2, 1]  # Places 1-7
         RELAY_POINTS = [8, 4, 2]  # Places 1-3
         MIN_SCORING_GRADE = 8
-        MAX_SCORERS_PER_TEAM = 3
+        MAX_SCORERS_PER_TEAM = 4
 
         def calculate_scoring_position(swimmer_time, swimmer_grade, event_entries):
             """

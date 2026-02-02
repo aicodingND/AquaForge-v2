@@ -104,6 +104,7 @@ def create_app() -> FastAPI:
         dual_meet,
         export,
         health,
+        live_tracker,
         optimization,
     )
 
@@ -118,6 +119,9 @@ def create_app() -> FastAPI:
     # New pipeline-based routers (v2)
     app.include_router(dual_meet.router, prefix="/api/v2", tags=["Dual Meet"])
     app.include_router(championship.router, prefix="/api/v2", tags=["Championship"])
+
+    # Live tracking (v2)
+    app.include_router(live_tracker.router, tags=["Live Tracking"])
 
     return app
 

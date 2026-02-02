@@ -4,7 +4,8 @@ import { api } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
 
 export default function ResultsTable() {
-    const { optimizationResults, setonScore, opponentScore, clearResults, addLog } = useAppStore();
+    const { optimizationResults, setonScore, opponentScore, setResults, addLog } = useAppStore();
+    const clearResults = () => setResults([], 0, 0);
 
     if (!optimizationResults || optimizationResults.length === 0) {
         return (

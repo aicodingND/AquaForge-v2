@@ -25,7 +25,8 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from functools import lru_cache
+from typing import Any
 
 import pandas as pd
 
@@ -74,19 +75,19 @@ class ValidationIssue:
 
     field: str
     message: str
-    entry_index: Optional[int] = None
+    entry_index: int | None = None
     severity: str = "error"  # "error" or "warning"
-    suggestion: Optional[str] = None
+    suggestion: str | None = None
 
 
 @dataclass
 class ValidationResult:
     """Result of validating input data."""
 
-    entries: List[Dict[str, Any]] = field(default_factory=list)
-    errors: List[ValidationIssue] = field(default_factory=list)
-    warnings: List[ValidationIssue] = field(default_factory=list)
-    stats: Dict[str, Any] = field(default_factory=dict)
+    entries: list[dict[str, Any]] = field(default_factory=list)
+    errors: list[ValidationIssue] = field(default_factory=list)
+    warnings: list[ValidationIssue] = field(default_factory=list)
+    stats: dict[str, Any] = field(default_factory=dict)
 
     @property
     def has_errors(self) -> bool:
@@ -100,7 +101,7 @@ class ValidationResult:
     def is_valid(self) -> bool:
         return not self.has_errors
 
-    def error_messages(self) -> List[str]:
+    def error_messages(self) -> list[str]:
         """Get all error messages as strings."""
         return [
             f"[{e.field}] {e.message}"
@@ -108,7 +109,7 @@ class ValidationResult:
             for e in self.errors
         ]
 
-    def warning_messages(self) -> List[str]:
+    def warning_messages(self) -> list[str]:
         """Get all warning messages as strings."""
         return [
             f"[{w.field}] {w.message}"
@@ -116,7 +117,7 @@ class ValidationResult:
             for w in self.warnings
         ]
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for API response."""
         return {
             "valid": self.is_valid,
@@ -129,7 +130,7 @@ class ValidationResult:
 # ==================== Time Conversion ====================
 
 
-def parse_time(value: Any) -> Tuple[Optional[float], Optional[str]]:
+def parse_time(value: Any) -> tuple[float | None, str | None]:
     """
     Parse a time value to seconds.
 
@@ -174,7 +175,7 @@ def parse_time(value: Any) -> Tuple[Optional[float], Optional[str]]:
     return 9999.0, f"Could not parse time '{value}', treated as forfeit"
 
 
-def parse_grade(value: Any) -> Tuple[Optional[int], Optional[str]]:
+def parse_grade(value: Any) -> tuple[int | None, str | None]:
     """
     Parse a grade value.
 
@@ -196,14 +197,16 @@ def parse_grade(value: Any) -> Tuple[Optional[int], Optional[str]]:
 # ==================== Field Normalization ====================
 
 
+@lru_cache(maxsize=128)
 def normalize_field_name(field_name: str) -> str:
-    """Normalize a field name using aliases."""
+    """Normalize a field name using aliases. Cached for repeated lookups."""
     normalized = field_name.lower().strip().replace(" ", "_")
     return FIELD_ALIASES.get(normalized, normalized)
 
 
+@lru_cache(maxsize=256)
 def normalize_event_name(event: str) -> str:
-    """Normalize event name to standard format."""
+    """Normalize event name to standard format. Cached for performance."""
     if not isinstance(event, str):
         return str(event)
 
@@ -229,8 +232,9 @@ def normalize_event_name(event: str) -> str:
     return event
 
 
+@lru_cache(maxsize=512)
 def normalize_swimmer_name(name: str) -> str:
-    """Normalize swimmer name for matching."""
+    """Normalize swimmer name for matching. Cached for deduplication checks."""
     if not isinstance(name, str):
         return str(name)
 
@@ -249,16 +253,16 @@ def normalize_swimmer_name(name: str) -> str:
 
 
 def validate_entry(
-    entry: Dict[str, Any], index: int
-) -> Tuple[Dict[str, Any], List[ValidationIssue]]:
+    entry: dict[str, Any], index: int
+) -> tuple[dict[str, Any], list[ValidationIssue]]:
     """
     Validate and normalize a single entry.
 
     Returns:
         Tuple of (normalized_entry, list_of_issues)
     """
-    issues: List[ValidationIssue] = []
-    normalized: Dict[str, Any] = {}
+    issues: list[ValidationIssue] = []
+    normalized: dict[str, Any] = {}
 
     # Normalize field names
     entry_normalized_keys = {normalize_field_name(k): v for k, v in entry.items()}
@@ -346,7 +350,7 @@ def validate_entry(
 
 
 def validate_team_entries(
-    raw_entries: List[Dict[str, Any]],
+    raw_entries: list[dict[str, Any]],
     team_type: str = "seton",
     remove_duplicates: bool = True,
 ) -> ValidationResult:
@@ -373,9 +377,9 @@ def validate_team_entries(
         )
         return result
 
-    normalized_entries: List[Dict[str, Any]] = []
-    seen_swimmer_events: Dict[
-        str, Tuple[int, float]
+    normalized_entries: list[dict[str, Any]] = []
+    seen_swimmer_events: dict[
+        str, tuple[int, float]
     ] = {}  # (swimmer+event) -> (index, time)
 
     for i, entry in enumerate(raw_entries):
@@ -463,7 +467,7 @@ def validate_team_entries(
 
 
 def normalize_roster(
-    entries: List[Dict[str, Any]], team: str = "seton"
+    entries: list[dict[str, Any]], team: str = "seton"
 ) -> pd.DataFrame:
     """
     Convert validated entries to a DataFrame with guaranteed schema.
@@ -511,7 +515,7 @@ def normalize_roster(
 
 def validate_scoring_result(
     scored_df: pd.DataFrame,
-    totals: Dict[str, float],
+    totals: dict[str, float],
     num_events: int = 8,
     points_per_event: int = 29,
 ) -> ValidationResult:

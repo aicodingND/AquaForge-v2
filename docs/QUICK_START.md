@@ -1,116 +1,132 @@
-# 🎯 QUICK START - Everything You Need to Know
+# AquaForge Quick Start
 
-## ✅ **What's Done**
+Get AquaForge running in minutes with this quick start guide.
 
-1. ✅ 6th grade toggle added to UI
-2. ✅ Gurobi set as default (with automatic fallback to heuristic)
-3. ✅ Docker fully configured for your Windows setup
-4. ✅ Coach Koehr's Excel data analyzed
-5. ✅ Ideal format CSV files created and ready
-6. ✅ Complete documentation
+## Prerequisites
 
-## 🚀 **To Run SwimAI Right Now**
+- Python 3.11+
+- Node.js 20+
+- Gurobi license (optional, AquaOptimizer works without it)
 
-### **Option 1: Docker (Recommended)**
+## Backend Setup
 
 ```bash
-cd c:\Users\Michael\Desktop\SwimAi\swim_ai_reflex
-docker-compose --profile dev up --build
+# Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start backend server
+python run_server.py --mode api
 ```
 
-Go to: <http://localhost:3000>
+Backend will run on: http://localhost:8001
 
-### **Option 2: One-Click**
+## Frontend Setup
 
-Double-click: `docker-quickstart.bat`
+```bash
+# Navigate to frontend directory
+cd frontend
 
-## 📁 **Files Ready to Upload**
+# Install dependencies
+npm install
 
-Located in: `swim_ai_reflex/uploads/`
+# Start development server
+npm run dev
+```
 
-1. `IDEAL_Seton_vs_Trinity_Christian_COMPLETE.csv`
-2. `IDEAL_Trinity_Christian_vs_Seton_COMPLETE.csv`
+Frontend will run on: http://localhost:3000
 
-Both have:
+## Run Tests
 
-- ✅ Grades 6-12 (6-7 exhibition, 8-12 scoring)
-- ✅ Standardized event names
-- ✅ Opponent column
-- ✅ Meet date (2024-11-23)
-- ✅ Perfect format
+```bash
+# Run all tests
+python -m pytest tests/ -v
 
-## 🔧 **Key Features Now Active**
+# Run specific test file
+python -m pytest tests/test_e2e_standard.py -v
 
-### **Grade System:**
+# Run with coverage
+python -m pytest tests/ --cov=swim_ai_reflex --cov-report=html
+```
 
-- Grades 6-7: Exhibition (non-scoring, can place)
-- Grades 8-12: Scoring (earn points)
-- All grades visible and toggleable in UI
+## Access Points
 
-### **Optimization:**
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8001
+- **API Docs**: http://localhost:8001/docs (Swagger UI)
+- **API ReDoc**: http://localhost:8001/redoc
 
-- **Default:** Gurobi (exact optimization)
-- **Fallback:** Heuristic (if Gurobi unavailable)
-- **Automatic:** No manual selection needed
+## Key Features
 
-### **Strategic Flexibility:**
+### Championship Scoring
+- **VCAC Rules**: Max 2 individual events per swimmer
+- **Relay 3 (400 FR)**: Counts as 1 individual slot at VCAC
+- **Diving**: Counts as 1 individual slot
+- **Exhibition**: Grades 7-8 are exhibition only (no points)
+- **Team Code**: Use "SST" for Seton Swimming Team
 
-- Swimmers can do 0, 1, or 2 individual events
-- No minimum event requirement
-- Optimizer decides optimal assignments
+### Optimization Engines
+- **Gurobi**: Exact optimization (requires license)
+- **AquaOptimizer**: Custom heuristic optimizer (no license required)
+- **Automatic Fallback**: System automatically uses AquaOptimizer if Gurobi unavailable
 
-## 📖 **Documentation**
+### Data Format
+See [CSV Template Guide](CSV_TEMPLATE_GUIDE.md) for detailed upload format specifications.
 
-- `COMPLETE_SUMMARY.md` - Everything done
-- `DOCKER_SETUP_COMPLETE.md` - Docker usage
-- `IDEAL_DATA_FORMAT.md` - Data format guide
-- `COACH_EXCEL_ANALYSIS.md` - Coach's data insights
-- `STATUS_UPDATE.md` - Current status
+## Common Commands
 
-## 🐛 **If Something's Wrong**
+```bash
+# Backend linting
+ruff check . --fix && ruff format .
 
-### **Data Loading Glitch:**
+# Type checking
+pyright swim_ai_reflex/backend/
 
-1. Check browser console (F12)
-2. Verify CSV format exactly matches template
-3. Try uploading one file at a time
-4. Check file encoding (should be UTF-8)
+# Frontend linting
+cd frontend && npm run lint
 
-### **Gurobi Not Working:**
+# Build frontend for production
+cd frontend && npm run build
 
-- Check console logs for "falling back to heuristic"
-- This is NORMAL if you don't have Gurobi license
-- Heuristic will work fine, just slightly less optimal
+# Run championship backtest
+python scripts/championship_backtest.py
+```
 
-### **Docker Issues:**
+## Troubleshooting
 
-1. Make sure Docker Desktop is running
-2. Check for whale icon in system tray
-3. Wait for "Docker Desktop is running" message
+### Backend won't start
+- Verify Python 3.11+ is installed: `python --version`
+- Check virtual environment is activated
+- Ensure port 8001 is available
 
-## 💡 **Quick Tips**
+### Frontend won't start
+- Verify Node.js 20+ is installed: `node --version`
+- Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
+- Check port 3000 is available
 
-1. **Upload CSVs** - Use the IDEAL files I created
-2. **Check grades** - 6th grade checkbox should be visible
-3. **Run optimization** - Will try Gurobi first
-4. **Check scores** - Should be 90-110 per team (girls only)
-5. **Verify exhibition** - 6th/7th graders show as non-scoring
+### Gurobi license issues
+- AquaOptimizer will automatically be used as fallback
+- Check Gurobi license with: `gurobi_cl --license`
+- See [Optimizer Deep Dive](OPTIMIZER_DEEP_DIVE.md) for details
 
-## 📞 **Need Help?**
+### Data upload errors
+- Verify CSV format matches [CSV Template Guide](CSV_TEMPLATE_GUIDE.md)
+- Check file encoding is UTF-8
+- Ensure all required columns are present
+- See [Data Pipeline Audit](DATA_PIPELINE_AUDIT_2026-01-16.md) for common issues
 
-Check these files:
+## Next Steps
 
-- `DOCKER_GUIDE.md` - Docker help
-- `QUICK_REFERENCE_DataFormat.md` - Data format help
-- `SETUP_CHECKLIST.md` - Setup status
+1. Review [Championship Strategy Specification](CHAMPIONSHIP_STRATEGY_SPECIFICATION.md) for VCAC/VISAA optimization
+2. Check [API Reference](API_REFERENCE.md) for integration details
+3. See [Optimization Strategies Guide](OPTIMIZATION_STRATEGIES_GUIDE.md) for advanced optimization
+4. Consult [Dev Environment Setup](DEV_ENVIRONMENT_SETUP.md) for detailed development configuration
 
-## 🎉 **You're Ready!**
+## Current Sprint
 
-Everything is configured and ready to go. Just:
+**VCAC Championship Preparation - February 7, 2026**
 
-1. Start Docker
-2. Upload CSVs
-3. Run optimization
-4. Check results!
-
-**Have fun optimizing! 🏊‍♀️**
+See [VCAC Championship Feb 7, 2026](VCAC_CHAMPIONSHIP_FEB7_2026.md) for championship-specific details.

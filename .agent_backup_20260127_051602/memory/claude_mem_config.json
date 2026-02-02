@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "name": "claude-mem",
+  "description": "Persistent semantic memory for Claude sessions via MCP",
+  "version": "1.0.0",
+
+  "config": {
+    "enabled": true,
+    "defer_loading": false,
+
+    "storage": {
+      "type": "sqlite",
+      "path": ".agent/memory/claude_memory.db",
+      "backup_path": ".agent/memory/backups/"
+    },
+
+    "memory_types": {
+      "decisions": {
+        "description": "Key decisions made during development",
+        "retention": "permanent",
+        "auto_index": true
+      },
+      "bugs": {
+        "description": "Bugs found and their fixes",
+        "retention": "permanent",
+        "auto_index": true
+      },
+      "context": {
+        "description": "Session context and notes",
+        "retention": "30_days",
+        "auto_index": true
+      },
+      "preferences": {
+        "description": "User coding preferences and patterns",
+        "retention": "permanent",
+        "auto_index": false
+      }
+    },
+
+    "embeddings": {
+      "enabled": true,
+      "model": "text-embedding-3-small",
+      "dimensions": 256,
+      "similarity_threshold": 0.75
+    },
+
+    "auto_save": {
+      "on_decision": true,
+      "on_bug_fix": true,
+      "on_session_end": true,
+      "keywords": ["remember", "note", "important", "decision", "bug fix"]
+    },
+
+    "retrieval": {
+      "max_results": 5,
+      "search_types": ["semantic", "keyword", "recent"]
+    }
+  },
+
+  "integration": {
+    "session_start": {
+      "load_recent_context": true,
+      "load_active_decisions": true,
+      "max_context_items": 10
+    },
+    "session_end": {
+      "summarize_session": true,
+      "save_key_decisions": true,
+      "update_preferences": true
+    }
+  },
+
+  "notes": "This configuration defines persistent memory for Claude. Install actual claude-mem MCP when available: npm install -g @anthropic/claude-mem-mcp"
+}

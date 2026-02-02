@@ -26,17 +26,17 @@ class TestPointsTableAccuracy:
     """Verify scoring tables are correctly configured."""
 
     def test_vcac_individual_points(self):
-        """VCAC individual points: 32-26-24-22-20-18-14-10-8-6-4-2"""
+        """VCAC individual points: 16-13-12-11-10-9-7-5-4-3-2-1 (12-place scoring)"""
         rules = get_meet_profile("vcac_championship")
-        expected = [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
+        expected = [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
         assert rules.individual_points == expected, (
             f"VCAC individual points mismatch: {rules.individual_points}"
         )
 
     def test_vcac_relay_points(self):
-        """VCAC relay points: 16-13-12-11-10-9-7-5-4-3-2-1"""
+        """VCAC relay points: 32-26-24-22-20-18-14-10-8-6-4-2 (2x individual)"""
         rules = get_meet_profile("vcac_championship")
-        expected = [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
+        expected = [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
         assert rules.relay_points == expected, (
             f"VCAC relay points mismatch: {rules.relay_points}"
         )
@@ -47,9 +47,9 @@ class TestPointsTableAccuracy:
         assert rules.max_scorers_per_team_individual == 4
 
     def test_visaa_state_individual_points(self):
-        """VISAA State: 40-34-32-30-28-26-24-22-18-14-12-10-8-6-4-2"""
+        """VISAA State: 20-17-16-15-14-13-12-11-9-7-6-5-4-3-2-1 (16-place scoring)"""
         rules = get_meet_profile("visaa_state")
-        expected = [40, 34, 32, 30, 28, 26, 24, 22, 18, 14, 12, 10, 8, 6, 4, 2]
+        expected = [20, 17, 16, 15, 14, 13, 12, 11, 9, 7, 6, 5, 4, 3, 2, 1]
         assert rules.individual_points == expected
 
 
@@ -100,8 +100,8 @@ class TestMaxScorersEnforcement:
 
         result = service.project_event("Boys 100 Free", entries)
 
-        # Expected points: 1st=32, 2nd=26, 3rd=24, 4th=22, 5th=0, 6th=0
-        expected_points = [32, 26, 24, 22, 0, 0]
+        # Expected points: 1st=16, 2nd=13, 3rd=12, 4th=11, 5th=0, 6th=0 (VCAC individual)
+        expected_points = [16, 13, 12, 11, 0, 0]
         actual_points = [e.points for e in result.entries]
 
         assert actual_points == expected_points, (
@@ -195,27 +195,27 @@ class TestTeamTotalsCalculation:
                 "team": "SST",
                 "event": "Boys 100 Free",
                 "time": 50.0,
-            },  # 32 pts
+            },  # 16 pts (1st place individual)
             {
                 "swimmer": "SST2",
                 "team": "SST",
                 "event": "Boys 100 Free",
                 "time": 51.0,
-            },  # 26 pts
+            },  # 13 pts (2nd place individual)
             {
                 "swimmer": "OUT1",
                 "team": "OUT",
                 "event": "Boys 100 Free",
                 "time": 52.0,
-            },  # 24 pts
+            },  # 12 pts (3rd place individual)
         ]
 
         result = service.project_event("Boys 100 Free", entries)
 
-        # SST normalized to 'Seton' - should have 32 + 26 = 58 (1st + 2nd)
+        # SST normalized to 'Seton' - should have 16 + 13 = 29 (1st + 2nd)
         sst_points = result.team_points.get("Seton", 0)
-        assert sst_points == 58.0, (
-            f"Seton points should be 58 (32+26), got {sst_points}"
+        assert sst_points == 29.0, (
+            f"Seton points should be 29 (16+13), got {sst_points}"
         )
 
     def test_full_meet_projection(self):
@@ -229,33 +229,33 @@ class TestTeamTotalsCalculation:
                 "team": "SST",
                 "event": "Boys 100 Free",
                 "time": 50.0,
-            },  # 32
+            },  # 16 pts (1st place)
             {
                 "swimmer": "OUT1",
                 "team": "OUT",
                 "event": "Boys 100 Free",
                 "time": 51.0,
-            },  # 26
+            },  # 13 pts (2nd place)
             # Event 2: Boys 200 Free
             {
                 "swimmer": "SST1",
                 "team": "SST",
                 "event": "Boys 200 Free",
                 "time": 110.0,
-            },  # 32
+            },  # 16 pts (1st place)
             {
                 "swimmer": "OUT1",
                 "team": "OUT",
                 "event": "Boys 200 Free",
                 "time": 111.0,
-            },  # 26
+            },  # 13 pts (2nd place)
         ]
 
         result = service.project_standings(entries, "SST", "Test Meet")
 
-        # SST should have 32 + 32 = 64
-        assert result.target_team_total == 64.0, (
-            f"SST total should be 64, got {result.target_team_total}"
+        # SST should have 16 + 16 = 32 (1st in both events)
+        assert result.target_team_total == 32.0, (
+            f"SST total should be 32, got {result.target_team_total}"
         )
 
 

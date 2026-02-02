@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List
+
 import pandas as pd
 
 
@@ -11,8 +11,8 @@ class MeetRules:
     """
 
     name: str
-    individual_points: List[int]
-    relay_points: List[int]
+    individual_points: list[int]
+    relay_points: list[int]
     max_individual_events_per_swimmer: int
     max_total_events_per_swimmer: int
     max_entries_per_team_per_event: int
@@ -54,8 +54,8 @@ class VISAADualRules(MeetRules):
     """
 
     name: str = "VISAA Dual Meet"
-    individual_points: List[int] = field(default_factory=lambda: [8, 6, 5, 4, 3, 2, 1])
-    relay_points: List[int] = field(
+    individual_points: list[int] = field(default_factory=lambda: [8, 6, 5, 4, 3, 2, 1])
+    relay_points: list[int] = field(
         default_factory=lambda: [10, 5, 3]
     )  # Fixed per Coach Koehr
     max_individual_events_per_swimmer: int = 2
@@ -67,10 +67,10 @@ class VISAADualRules(MeetRules):
     max_scorers_per_team_relay: int = 2
 
     # Non-scoring grades (can place but don't earn points) - 7th grade and below
-    non_scoring_grades: List[int] = field(default_factory=lambda: [6, 7])
+    non_scoring_grades: list[int] = field(default_factory=lambda: [6, 7])
 
     # Standard Event Order for Fatigue Checking
-    event_order: List[str] = field(
+    event_order: list[str] = field(
         default_factory=lambda: [
             "200 Medley Relay",
             "200 Free",
@@ -88,7 +88,7 @@ class VISAADualRules(MeetRules):
     )
 
     # Individual events only (for filtering)
-    individual_events: List[str] = field(
+    individual_events: list[str] = field(
         default_factory=lambda: [
             "200 Free",
             "200 IM",
@@ -170,11 +170,11 @@ class VISAAChampRules(MeetRules):
     """
 
     name: str = "VISAA Championship (Consolation)"
-    individual_points: List[int] = field(
+    individual_points: list[int] = field(
         default_factory=lambda: [20, 17, 16, 15, 14, 13, 12, 11, 9, 7, 6, 5, 4, 3, 2, 1]
     )
     # Relays usually double individual in championship
-    relay_points: List[int] = field(
+    relay_points: list[int] = field(
         default_factory=lambda: [
             40,
             34,
@@ -217,8 +217,8 @@ class SetonDualRules(MeetRules):
     """
 
     name: str = "Seton Dual Meet"
-    individual_points: List[int] = field(default_factory=lambda: [8, 6, 5, 4, 3, 2, 1])
-    relay_points: List[int] = field(default_factory=lambda: [10, 5, 3])
+    individual_points: list[int] = field(default_factory=lambda: [8, 6, 5, 4, 3, 2, 1])
+    relay_points: list[int] = field(default_factory=lambda: [10, 5, 3])
     max_individual_events_per_swimmer: int = 2
     max_total_events_per_swimmer: int = 4  # 2 indiv + 2 relay OR 1 indiv + 3 relay
     max_entries_per_team_per_event: int = 4  # varsity entries
@@ -228,10 +228,10 @@ class SetonDualRules(MeetRules):
     max_scorers_per_team_relay: int = 2
 
     # Non-scoring grades
-    non_scoring_grades: List[int] = field(default_factory=lambda: [6, 7])
+    non_scoring_grades: list[int] = field(default_factory=lambda: [6, 7])
 
     # Standard Event Order
-    event_order: List[str] = field(
+    event_order: list[str] = field(
         default_factory=lambda: [
             "200 Medley Relay",
             "200 Free",
@@ -252,40 +252,49 @@ class SetonDualRules(MeetRules):
 @dataclass
 class VCACChampRules(MeetRules):
     """
-    VCAC Conference Championship Rules (Feb 7, 2026).
-    Source: setonswimming.org VCAC Championship announcement
+    VCAC Conference Championship Rules (12-Place Scoring).
+    Authority: setonswimming.org, VCAC official rules, Seton Parents' Handbook 2024-25
+    Last Validated: 2026-02-02
 
-    ⚠️ IMPORTANT: Individual events worth MORE than relays!
-    - Individual: 32-26-24-22-20-18-14-10-8-6-4-2 (places 1-12)
-    - Relay: 16-13-12-11-10-9-7-5-4-3-2-1 (places 1-12)
+    Scoring (12 places):
+    - Individual/Diving: 16-13-12-11-10-9-7-5-4-3-2-1
+    - Relay: 32-26-24-22-20-18-14-10-8-6-4-2 (exactly 2× individual)
 
-    Entry Constraints:
-    - Max 2 individual events (diving counts as 1 individual)
-    - Max 3 relays (200 Medley, 200 Free, 400 Free)
-    - First 2 relays FREE, relay 3 counts as 1 individual
-    - Top 4 scorers per team per event
+    Entry Constraints (NFHS Rule 3-2-1):
+    - Max 2 individual events per swimmer (diving counts as 1)
+    - Max 4 total events per swimmer
+    - Max 3 relays per swimmer (200 Medley, 200 Free, 400 Free)
+    - Only top 4 swimmers per team per event can score
+    - Only A and B relays can score
+    - 11-Dive championship format for diving
+
+    Exhibition Rules:
+    - NO exhibition swims at championship meets
+    - Only Varsity swimmers participate (all entered swimmers score)
+    - 7th graders swim at JV Invitational instead
     """
 
     name: str = "VCAC Championship"
-    # INDIVIDUAL > RELAY at VCAC Championship!
-    individual_points: List[int] = field(
-        default_factory=lambda: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
-    )
-    relay_points: List[int] = field(
+    # 12-place individual scoring (same for diving)
+    individual_points: list[int] = field(
         default_factory=lambda: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
     )
+    # 12-place relay scoring (2× individual at each placement)
+    relay_points: list[int] = field(
+        default_factory=lambda: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
+    )
     max_individual_events_per_swimmer: int = 2
-    max_total_events_per_swimmer: int = 5  # Complex: see is_valid_entry()
+    max_total_events_per_swimmer: int = 4  # 2 individual + up to 3 relays, max 4 total
     max_entries_per_team_per_event: int = 999  # unlimited entries
     max_relays_per_team_per_event: int = 2  # A and B both score
     min_scoring_grade: int = 8  # 7th graders not eligible per VISAA
-    max_scorers_per_team_individual: int = 4
+    max_scorers_per_team_individual: int = 4  # Only top 4 per team score
     max_scorers_per_team_relay: int = 2
 
     # VCAC-specific rules
     diving_counts_as_individual: bool = True
-    relay_free_count: int = 2  # first 2 relays don't count toward individual limit
     max_relays: int = 3  # only 3 relay events exist
+    no_exhibition: bool = True  # Championship: all entered swimmers score
 
     def is_valid_entry(
         self, swim_individual: int, is_diver: bool, relay_count: int
@@ -297,7 +306,7 @@ class VCACChampRules(MeetRules):
         - Max 2 individual swim events
         - Diving counts as 1 individual
         - Max 3 relays
-        - First 2 relays free, relay 3 counts as 1 individual
+        - Max 4 total events
         """
         if swim_individual > 2:
             return False
@@ -305,48 +314,56 @@ class VCACChampRules(MeetRules):
             return False
 
         individual_used = swim_individual + (1 if is_diver else 0)
-        relay_penalty = max(0, relay_count - 2)
-        effective_individual = individual_used + relay_penalty
+        total_events = individual_used + relay_count
 
-        return effective_individual <= 2
+        return individual_used <= 2 and total_events <= 4
 
 
 @dataclass
 class VISAAStateRules(MeetRules):
     """
-    VISAA State Championship Rules (Feb 12-14, 2026).
-    Source: visaa.org, setonswimming.org
+    VISAA State Championship Rules (16-Place Scoring).
+    Authority: visaa.org official rules
+    Last Validated: 2026-01-21
 
-    - Championship Finals (places 1-16): 40-34-32-30-28-26-24-22-18-14-12-10-8-6-4-2
-    - Consolation Finals (places 1-16): 20-17-16-15-14-13-12-11-9-7-6-5-4-3-2-1
-    - Prelims/Finals format
-    - NO exhibition swims
-    - Miss an event = DQ for rest of meet
+    Format: Prelims → Championship Finals (1-8) + Consolation Finals (9-16)
+
+    Unified 16-Place Scoring:
+    - Individual/Diving: 20-17-16-15-14-13-12-11-9-7-6-5-4-3-2-1
+    - Relay: 40-34-32-30-28-26-24-22-18-14-12-10-8-6-4-2 (exactly 2× individual)
+
+    CRITICAL EDGE CASES:
+    - Consolation finals swimmers can NEVER outscore Championship finals swimmers
+    - Bonus event swimmers are NOT eligible to score points
+    - If 5+ swimmers from one team qualify, coach must designate 4 scorers
+    - B Relays may be entered as exhibition (no scoring)
+    - NO exhibition swims allowed otherwise
     """
 
     name: str = "VISAA State Championship"
-    # Championship finals scoring
-    individual_points: List[int] = field(
+    # 16-place individual scoring (same for diving)
+    individual_points: list[int] = field(
         default_factory=lambda: [
-            40,
-            34,
-            32,
-            30,
-            28,
-            26,
-            24,
-            22,
-            18,
+            20,
+            17,
+            16,
+            15,
             14,
+            13,
             12,
-            10,
-            8,
+            11,  # Championship Finals (1-8)
+            9,
+            7,
             6,
+            5,
             4,
+            3,
             2,
+            1,  # Consolation Finals (9-16)
         ]
     )
-    relay_points: List[int] = field(
+    # 16-place relay scoring (2× individual at each placement)
+    relay_points: list[int] = field(
         default_factory=lambda: [
             40,
             34,
@@ -355,7 +372,7 @@ class VISAAStateRules(MeetRules):
             28,
             26,
             24,
-            22,
+            22,  # Championship Finals (1-8)
             18,
             14,
             12,
@@ -363,28 +380,21 @@ class VISAAStateRules(MeetRules):
             8,
             6,
             4,
-            2,
+            2,  # Consolation Finals (9-16)
         ]
     )
     max_individual_events_per_swimmer: int = 2
     max_total_events_per_swimmer: int = 4
-    max_entries_per_team_per_event: int = 3
+    max_entries_per_team_per_event: int = 999  # Unlimited entries, but only 4 score
     max_relays_per_team_per_event: int = 2
     min_scoring_grade: int = 8
-    max_scorers_per_team_individual: int = 16
-    max_scorers_per_team_relay: int = 16
+    max_scorers_per_team_individual: int = 4  # Only top 4 per team score
+    max_scorers_per_team_relay: int = 2
 
-    # State-specific
+    # VISAA State-specific rules
     has_prelims_finals: bool = True
     no_exhibition: bool = True
-
-    # Consolation finals scoring (for places 9-24)
-    consolation_individual_points: List[int] = field(
-        default_factory=lambda: [20, 17, 16, 15, 14, 13, 12, 11, 9, 7, 6, 5, 4, 3, 2, 1]
-    )
-    consolation_relay_points: List[int] = field(
-        default_factory=lambda: [20, 17, 16, 15, 14, 13, 12, 11, 9, 7, 6, 5, 4, 3, 2, 1]
-    )
+    bonus_swimmers_score: bool = False  # Bonus event swimmers cannot score
 
 
 # =============================================================================
@@ -418,7 +428,7 @@ def get_meet_profile(profile_name: str) -> MeetRules:
     return MEET_PROFILES[profile_name]()
 
 
-def list_meet_profiles() -> List[dict]:
+def list_meet_profiles() -> list[dict]:
     """List all available meet profiles with descriptions."""
     profiles = []
     for name, cls in MEET_PROFILES.items():

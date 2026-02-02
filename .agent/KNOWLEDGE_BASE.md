@@ -2,7 +2,7 @@
 
 ## Persistent Context for AI Development Sessions
 
-**Last Updated**: 2026-01-15  
+**Last Updated**: 2026-02-02
 **Purpose**: Single source of truth for domain knowledge, rules, and context that Antigravity should reference during coding sessions.
 
 ---
@@ -42,15 +42,24 @@
 ### Grade-Based Scoring Rules
 
 ```
-Grades 7-8: EXHIBITION ONLY
-  - Can compete in events
-  - Can displace opponents
-  - DO NOT score points
-  - Strategic use: "Event swarmers"
+DUAL MEETS:
+  Grades 6-7: EXHIBITION ONLY
+    - Can compete in events
+    - Can displace opponents from scoring positions
+    - DO NOT score points
+    - Strategic use: "Event swarmers"
 
-Grades 9-12: VARSITY ELIGIBLE
-  - Can compete and score
-  - Full points awarded
+  Grades 8-12: VARSITY / SCORING ELIGIBLE
+    - Can compete and score
+    - Full points awarded
+    - min_scoring_grade = 8 in code
+
+CHAMPIONSHIP MEETS (VCAC, VISAA State):
+  - NO exhibition swims allowed
+  - Only Varsity swimmers (grade 8+) participate
+  - ALL entered swimmers score
+  - 7th graders → JV Invitational (separate meet)
+  - Source: Seton Parents' Handbook 2024-25
 ```
 
 ### Dual Meet Scoring (Coach Koehr Official)
@@ -101,10 +110,11 @@ TEAM CONSTRAINTS:
 - 2 scoring entries per relay event (A and B)
 - Additional swimmers = "exhibition" (x before seed time)
 
-SWIMMER CONSTRAINTS:
-- Max 2 individual events
-- Max 4 events total
+SWIMMER CONSTRAINTS (NFHS Rule 3-2-1):
+- Max 2 individual events (diving counts as 1 individual)
+- Max 4 events total (verified: NOT 3 — some docs had this wrong)
 - Valid combos: 2 indiv + 2 relay, OR 1 indiv + 3 relay
+- Source: NFHS Rule 3-2-1, setonswimming.org, VISAA State Championship Meet Info
 
 RELAY RULES:
 - Coach can swap relay swimmers during meet if someone earns faster time
@@ -122,29 +132,61 @@ CONSOLATION FINALS (places 1-16):
 
 Note: "Bonus events" swimmers do NOT score
 
-CHAMPIONSHIP MEET RULES (from Coach Koehr):
-- NO exhibition swims allowed (everyone scores)
+CHAMPIONSHIP MEET RULES (from Coach Koehr, Seton Handbook 2024-25):
+- NO exhibition swims allowed — ALL entered swimmers score
+- Only Varsity swimmers participate (Coach publishes eligible list)
+- 7th graders do NOT enter championships (swim at JV Invitational)
 - Seeded by time, not by team
 - ⚠️ Miss an event = DISQUALIFIED for rest of meet!
 - Top 12 or 16 places score (varies by meet)
 - Diving scored same as swimming events
+- Source: setonswimming.org Parents' Handbook 2024-25
 ```
 
 ### VCAC Championship Scoring (Feb 7, 2026)
 
 ```text
-⚠️ NOTE: At VCAC Championship, INDIVIDUAL events are worth MORE than relays!
+Standard 12-place championship scoring (NCAA Rule 7 / NFHS):
+Relay = exactly 2x Individual at every placement.
 
-INDIVIDUAL (places 1-12):
-32-26-24-22-20-18-14-10-8-6-4-2
-
-RELAY (places 1-12):
+INDIVIDUAL/DIVING (places 1-12):
 16-13-12-11-10-9-7-5-4-3-2-1
 
-Source: setonswimming.org VCAC Conference Championship announcement
+RELAY (places 1-12, 2x individual):
+32-26-24-22-20-18-14-10-8-6-4-2
+
+NO EXHIBITION at championships. All entered swimmers score.
+Only Varsity (grade 8+) eligible. 7th graders → JV Invitational.
+
+Source: NCAA Rule 7, NFHS, setonswimming.org, Seton Handbook 2024-25
+Corrected: 2026-02-02 — previous version had individual/relay tables swapped
 ```
 
-### VCAC Entry Constraints (CRITICAL)
+### RELAY SCORING: COMPARISON BY MEET TYPE
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ MEET TYPE          │ INDIVIDUAL        │ RELAY             │ RATIO         │
+├────────────────────┼───────────────────┼───────────────────┼───────────────┤
+│ DUAL MEET          │ [8,6,5,4,3,2,1]   │ [10,5,3]          │ SEPARATE      │
+│                    │ Top 7 score       │ Top 3 score       │ NOT 2x!       │
+├────────────────────┼───────────────────┼───────────────────┼───────────────┤
+│ VCAC CHAMPIONSHIP  │ [16,13,12,11...]  │ [32,26,24,22...]  │ RELAY = 2x    │
+│ (Feb 7, 2026)      │ Top 12 score      │ Top 12 score      │ STANDARD      │
+├────────────────────┼───────────────────┼───────────────────┼───────────────┤
+│ VISAA STATE        │ [20,17,16,15...]  │ [40,34,32,30...]  │ RELAY = 2x    │
+│ Championship       │ Top 16 score      │ Top 16 score      │ STANDARD      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+⚠️ BOTH championship formats use relay = 2x individual (NCAA/NFHS standard).
+⚠️ DUAL MEETS: Relays have their own table [10,5,3], NOT a multiplier!
+⚠️ DIVING uses INDIVIDUAL point scale (not relay) in ALL meet types.
+
+SOURCE: NCAA Rule 7, NFHS, setonswimming.org, Coach Koehr
+TESTS: test_scoring_constraints.py (regression protection)
+Corrected: 2026-02-02 — VCAC was previously listed as "inverted" (wrong)
+```
+
 
 ```text
 THE RULES:
@@ -300,11 +342,13 @@ ALGORITHM HINT:
 
 ### Key Constraints
 
-1. **Max 2 individual events per swimmer**
-2. **Max 3 scorers per team per event**
-3. **Exhibition swimmers (grades 7-8) score 0 points**
-4. **Fatigue modeling for multi-event swimmers**
-5. **Relay swimmers have different fatigue profile**
+1. **Max 2 individual events per swimmer** (diving counts as 1 individual)
+2. **Max 4 total events per swimmer** (NFHS Rule 3-2-1)
+3. **Max scorers per team per event**: 3 (dual), 4 (championship)
+4. **Exhibition swimmers (grades 6-7) score 0 points** (dual meets only)
+5. **Championship meets: no exhibition, all entered swimmers score**
+6. **Fatigue modeling for multi-event swimmers**
+7. **Relay swimmers have different fatigue profile**
 
 ### Scoring Types
 
@@ -320,7 +364,7 @@ ALGORITHM HINT:
 
 | Decision                      | Date       | Rationale                     |
 | ----------------------------- | ---------- | ----------------------------- |
-| 7th-8th grade = exhibition    | 2025       | VISAA rules for middle school |
+| 6th-7th grade = exhibition    | 2025       | VISAA rules (grade 8+ scores) |
 | Nash Equilibrium for 1v1      | 2025       | Game theory optimal           |
 | Next.js migration from Reflex | 2026-01-10 | Better maintainability        |
 | Fatigue = 1-3% per event      | 2025       | Coach validated estimate      |
@@ -384,7 +428,7 @@ ALGORITHM HINT:
 
 **Implementation:**
 - `pipelines/dual_meet.py` - DualMeetPipeline class
-- `pipelines/championship.py` - ChampionshipPipeline class  
+- `pipelines/championship.py` - ChampionshipPipeline class
 - `services/shared/` - Validation, normalization, caching
 
 **Reference:** [MEET_TYPE_ARCHITECTURE.md](../docs/MEET_TYPE_ARCHITECTURE.md)
@@ -403,6 +447,11 @@ ALGORITHM HINT:
 
 | Date       | Update                                                      | Author |
 | ---------- | ----------------------------------------------------------- | ------ |
+| 2026-02-02 | **Fixed VCAC scoring tables** - relay=2x individual (was swapped) | AI     |
+| 2026-02-02 | **Grade rules fixed** - exhibition = grades 6-7 (not 7-8)  | AI     |
+| 2026-02-02 | **Championship rules verified** - no exhibition, all score  | AI     |
+| 2026-02-02 | **Diving as individual event** - verified across all layers | AI     |
+| 2026-02-02 | **NFHS Rule 3-2-1** - max 4 events, max 2 individual       | AI     |
 | 2026-01-18 | **Fixed championship target_team bug** - "SST" not "Seton"  | AI     |
 | 2026-01-18 | PRISM analysis: Debugged E2E championship optimization      | AI     |
 | 2026-01-17 | **Pipeline Architecture Implemented** - Phase 1 complete    | AI     |
@@ -484,6 +533,32 @@ Answer that question before submitting.
 
 ---
 
+## 🐛 Bug Fixes & Lessons Learned
+
+### 2026-02-01: Exhibition Swimmer Forfeit Points Bug
+
+**Problem**: Exhibition swimmers (grade < 8) were incorrectly receiving forfeit points in dual meets.
+
+**Root Cause**: When `fill_empty_slots()` added placeholder swimmers, it created a `scoring_eligible` column only for placeholders. After `pd.concat`, original swimmers had `NaN` for this column. The code then used `fillna(True)`, incorrectly marking grade 7 swimmers as scoring-eligible.
+
+**Impact**:
+- Test case showed Seton (all exhibition) receiving 15 points instead of 0
+- Total meet points were correct (29), but distribution was wrong
+
+**Fix**: Modified `dual_meet_scoring.py` to recalculate `scoring_eligible` from grade for any row where it's `NaN`, before applying `fillna`.
+
+**Regression Tests Added**:
+- `test_forfeit_points_go_to_eligible_team` - Verifies exhibition teams get 0 points
+- `test_exhibition_swimmers_do_not_displace_scorers` - Verifies eligible swimmers get full points
+
+**Files Modified**:
+- `swim_ai_reflex/backend/core/dual_meet_scoring.py` (lines 106-130)
+- `tests/test_scoring_constraints.py` (20 tests total)
+
+**Lesson**: When using `pd.concat` with DataFrames that have different columns, always handle the resulting `NaN` values explicitly before using `fillna` with a default.
+
+---
+
 ## 🔗 Quick Reference Links
 
 - **Seton Swimming**: https://setonswimming.org
@@ -494,4 +569,3 @@ Answer that question before submitting.
 ---
 
 _This file is the primary source of truth for AI sessions. Keep it updated!_
-

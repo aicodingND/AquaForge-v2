@@ -20,8 +20,6 @@ export default function Dashboard() {
   const isTied = scoreDelta === 0 && hasResults;
 
   // Calculate quick stats
-  const totalSwimmers =
-    (setonTeam?.swimmerCount || 0) + (opponentTeam?.swimmerCount || 0);
   const totalEvents = setonTeam?.events?.length || 0;
 
   return (

@@ -4,17 +4,9 @@ import { useAppStore } from "@/lib/store";
 import Link from "next/link";
 
 export default function AnalyticsPage() {
-  const {
-    setonTeam,
-    opponentTeam,
-    optimizationResults: _optimizationResults,
-  } = useAppStore();
+  const { setonTeam, opponentTeam } = useAppStore();
 
   const hasTeams = setonTeam && opponentTeam;
-
-  // Calculate some basic analytics (used in depth comparison visualization)
-  const _setonStrength = setonTeam?.events?.length || 0;
-  const _opponentStrength = opponentTeam?.events?.length || 0;
 
   return (
     <div className="p-6 lg:p-8 space-y-6">

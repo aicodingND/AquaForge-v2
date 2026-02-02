@@ -6,15 +6,16 @@ based on psych sheet data and meet-specific scoring rules.
 """
 
 import json
-import pytest
-from pathlib import Path
 from datetime import date
+from pathlib import Path
 
-from swim_ai_reflex.backend.models.championship import PsychSheetEntry, MeetPsychSheet
+import pytest
+
+from swim_ai_reflex.backend.core.rules import VCACChampRules, get_meet_profile
+from swim_ai_reflex.backend.models.championship import MeetPsychSheet, PsychSheetEntry
 from swim_ai_reflex.backend.services.point_projection_service import (
     PointProjectionEngine,
 )
-from swim_ai_reflex.backend.core.rules import get_meet_profile, VCACChampRules
 
 
 class TestPsychSheetEntry:
@@ -159,12 +160,12 @@ class TestPointProjectionEngine:
         rules = engine.rules
         assert isinstance(rules, VCACChampRules)
 
-        # Individual: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
-        assert rules.individual_points[0] == 32  # 1st place
-        assert rules.individual_points[1] == 26  # 2nd place
+        # Individual: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
+        assert rules.individual_points[0] == 16  # 1st place
+        assert rules.individual_points[1] == 13  # 2nd place
 
-        # Relay: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
-        assert rules.relay_points[0] == 16  # 1st place
+        # Relay: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2] (2x individual)
+        assert rules.relay_points[0] == 32  # 1st place
 
     def test_event_projection_basic(self, engine, sample_psych):
         """Test projecting a single event."""
@@ -188,7 +189,7 @@ class TestPointProjectionEngine:
 
         first_place = [s for s in all_swimmers if s["predicted_place"] == 1]
         assert len(first_place) == 1
-        assert first_place[0]["points"] == 32
+        assert first_place[0]["points"] == 16  # VCAC individual 1st place = 16
 
     def test_team_scorer_limit(self, engine):
         """Test that max 4 scorers per team per event is enforced."""
@@ -259,11 +260,12 @@ class TestVCACSpecificRules:
     """Test VCAC-specific scoring behavior."""
 
     def test_individual_more_than_relay(self):
-        """Verify VCAC individual events score more than relays."""
+        """Verify VCAC relay events score 2x more than individual (correct rule)."""
         rules = get_meet_profile("vcac_championship")
 
-        # 1st place individual (32) > 1st place relay (16)
-        assert rules.individual_points[0] > rules.relay_points[0]
+        # 1st place relay (32) > 1st place individual (16) - relays are 2x
+        assert rules.relay_points[0] > rules.individual_points[0]
+        assert rules.relay_points[0] == 2 * rules.individual_points[0]
 
     def test_max_scorers_per_team(self):
         """Verify max 4 scorers per team per event."""

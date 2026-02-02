@@ -25,7 +25,7 @@ export default function StrategySelector({
 
   const {
     selectedStrategy,
-    setSelectedStrategy,
+    setChampionshipStrategy: setSelectedStrategy,
     availableStrategies,
     setAvailableStrategies,
     addLog,

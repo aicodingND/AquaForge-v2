@@ -1,12 +1,15 @@
 # utils/file_loader.py
-import pandas as pd
-import re
 import math
+import re
+from functools import lru_cache
+
+import pandas as pd
 
 _RE_TIME_SIMPLE = re.compile(r"^(?:(\d+):)?(\d+(?:\.\d+)?)$")
 _RE_TIME_HMS = re.compile(r"^(\d+):(\d{2}):(\d+(?:\.\d+)?)$")
 
 
+@lru_cache(maxsize=1024)
 def parse_flexible_time(val):
     if val is None:
         return None

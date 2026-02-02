@@ -22,8 +22,8 @@
 │     └── grade: string ("11", optional)                                 │
 │                                                                         │
 │  2. MEET PROFILE (rules.py)                                            │
-│     ├── individual_points: [32,26,24,22,20,18,14,10,8,6,4,2] (VCAC)   │
-│     ├── relay_points: [16,13,12,11,10,9,7,5,4,3,2,1]                  │
+│     ├── individual_points: [16,13,12,11,10,9,7,5,4,3,2,1] (VCAC)      │
+│     ├── relay_points: [32,26,24,22,20,18,14,10,8,6,4,2] (2x indiv)   │
 │     ├── max_scorers_per_team_individual: 4                            │
 │     └── max_individual_events_per_swimmer: 2                          │
 │                                                                         │
@@ -142,7 +142,7 @@ for seed_rank, entry in enumerate(sorted_entries, 1):
     is_scoring = team_scorer_count[team] < max_scorers
     if is_scoring:
         team_scorer_count[team] += 1
-    
+
     predicted_place = seed_rank
     points = 0.0
     if is_scoring and predicted_place <= len(points_table):
@@ -237,22 +237,22 @@ This means:
 Let me trace an example:
 
 **VCAC SCORING:**
-- Individual: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2] (12 places)
-- Relay: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1] (12 places)
+- Individual: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1] (12 places)
+- Relay: [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2] (12 places, 2x individual)
 
-**Sample Event: Boys 100 Free**
+**Sample Event: Boys 100 Free (Individual)**
 ```
 Rank | Swimmer      | Team | Time  | Points (if scoring)
-1    | John Smith   | SST  | 48.50 | 32 ✅
-2    | Mike Jones   | OUT  | 49.00 | 26
-3    | Tom Brown    | SST  | 49.50 | 24 ✅
-4    | Dave Wilson  | OUT  | 50.00 | 22
-5    | Sam Lee      | SST  | 50.50 | 20 ✅
-6    | Bob Garcia   | SST  | 51.00 | 18 ✅ (4th scorer, max reached)
+1    | John Smith   | SST  | 48.50 | 16 ✅
+2    | Mike Jones   | OUT  | 49.00 | 13
+3    | Tom Brown    | SST  | 49.50 | 12 ✅
+4    | Dave Wilson  | OUT  | 50.00 | 11
+5    | Sam Lee      | SST  | 50.50 | 10 ✅
+6    | Bob Garcia   | SST  | 51.00 | 9 ✅ (4th scorer, max reached)
 7    | Chris Davis  | SST  | 51.50 | 0 ❌ (5th scorer, doesn't count)
 ```
 
-SST scores: 32 + 24 + 20 + 18 = **94 points** in this event
+SST scores: 16 + 12 + 10 + 9 = **47 points** in this event
 
 ---
 
@@ -263,7 +263,7 @@ SST scores: 32 + 24 + 20 + 18 = **94 points** in this event
 **1. Align seton_score with championship_standings**
 
 The frontend shows:
-- Big number: `seton_score` 
+- Big number: `seton_score`
 - Standings: `championship_standings`
 
 If these don't match, it's confusing. Options:
@@ -295,7 +295,7 @@ Create a single `calculate_points(rank, event_type, rules)` function used by bot
 
 Extend ChampionshipGurobiStrategy to include relay event projections in total.
 
-### LOW PRIORITY  
+### LOW PRIORITY
 
 **5. Time Normalization Enforcement**
 
@@ -334,9 +334,9 @@ def test_max_scorers():
 ```python
 def test_vcac_points():
     rules = get_meet_profile("vcac_championship")
-    assert rules.individual_points[0] == 32  # 1st place
-    assert rules.individual_points[11] == 2   # 12th place
-    assert rules.relay_points[0] == 16        # Relay 1st
+    assert rules.individual_points[0] == 16  # 1st place individual
+    assert rules.individual_points[11] == 1   # 12th place individual
+    assert rules.relay_points[0] == 32        # Relay 1st (2x individual)
 ```
 
 ---

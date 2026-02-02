@@ -1,11 +1,12 @@
 """
 Quick validation test for newly added team name normalization utilities.
 """
-import sys
+
 import os
+import sys
 
 # Add parent directory to path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from swim_ai_reflex.backend.utils.helpers import normalize_team_name, sanitize_team_name
 
@@ -26,19 +27,21 @@ def test_sanitize_team_name():
     result = sanitize_team_name("Seton<script>alert('XSS')</script>")
     assert "<" not in result
     assert ">" not in result
-    
+
     # Valid characters preserved
-    assert sanitize_team_name("Trinity-Christian ABC 123") == "Trinity-Christian ABC 123"
-    
+    assert (
+        sanitize_team_name("Trinity-Christian ABC 123") == "Trinity-Christian ABC 123"
+    )
+
     # Length limiting
     long_name = "A" * 100
     result = sanitize_team_name(long_name)
     assert len(result) <= 50
-    
+
     # Empty/None handling
     assert sanitize_team_name("") == ""
     assert sanitize_team_name(None) == ""
-    
+
     print("✅ sanitize_team_name tests passed!")
 
 

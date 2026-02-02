@@ -9,8 +9,6 @@ CRITICAL RULE: In a dual meet, all 232 points MUST be distributed.
 - Seton + Trinity = 232 (always, exactly)
 """
 
-from typing import Dict, Tuple
-
 import pandas as pd
 
 from swim_ai_reflex.backend.core.rules import MeetRules, VISAADualRules
@@ -103,20 +101,31 @@ def score_dual_meet_event(df_event: pd.DataFrame, rules: MeetRules) -> pd.DataFr
     # Assign physical places (1st, 2nd, 3rd, etc.)
     df_sorted["place"] = range(1, len(df_sorted) + 1)
 
-    # Determine scoring eligibility
+    # Determine scoring eligibility - MUST be calculated before fillna
+    # After fill_empty_slots, original swimmers may have NaN for scoring_eligible
+    # We need to calculate from grade for those rows
     if "scoring_eligible" not in df_sorted.columns:
-        if "grade" in df_sorted.columns:
-            df_sorted["scoring_eligible"] = df_sorted["grade"].apply(
-                lambda g: (int(g) >= 8 if pd.notna(g) else True) if not isinstance(g, str) else (int(g) >= 8 if g.isdigit() else True)
-            )
-        else:
-            df_sorted["scoring_eligible"] = True
+        df_sorted["scoring_eligible"] = pd.Series([None] * len(df_sorted), dtype=object)
 
-    # Ensure no NaN values in scoring_eligible (fill with True)
-    scoring_eligible_filled = df_sorted["scoring_eligible"].fillna(True)
-    df_sorted["scoring_eligible"] = scoring_eligible_filled.infer_objects(
-        copy=False
-    ).astype(bool)
+    # Calculate scoring_eligible from grade for any row where it's NaN
+    def calculate_eligible(row):
+        # If already set (e.g., placeholders), keep it
+        if pd.notna(row.get("scoring_eligible")):
+            return row["scoring_eligible"]
+        # Calculate from grade
+        grade = row.get("grade")
+        if pd.isna(grade):
+            return True  # Assume eligible if no grade
+        try:
+            grade_int = int(grade)
+            return grade_int >= 8  # Grade 8+ is eligible
+        except (ValueError, TypeError):
+            return True  # Assume eligible if grade can't be parsed
+
+    df_sorted["scoring_eligible"] = df_sorted.apply(calculate_eligible, axis=1)
+
+    # Ensure boolean type
+    df_sorted["scoring_eligible"] = df_sorted["scoring_eligible"].astype(bool)
 
     # Award points to scoring-eligible swimmers only
     scoring_swimmers = df_sorted[df_sorted["scoring_eligible"]].copy()
@@ -152,9 +161,9 @@ def score_dual_meet_event(df_event: pd.DataFrame, rules: MeetRules) -> pd.DataFr
             # Ensure boolean type before using ~ operator to avoid TypeError
             placeholder_mask = df_sorted["is_placeholder"].fillna(False)
             placeholder_mask = placeholder_mask.infer_objects(copy=False).astype(bool)
-            real_swimmers = df_sorted[~placeholder_mask]
+            real_swimmers = df_sorted[~placeholder_mask & df_sorted["scoring_eligible"]]
         else:
-            real_swimmers = df_sorted.copy()
+            real_swimmers = df_sorted[df_sorted["scoring_eligible"]].copy()
 
         if not real_swimmers.empty:
             team_counts = real_swimmers.groupby("team").size()
@@ -175,7 +184,7 @@ def score_dual_meet_event(df_event: pd.DataFrame, rules: MeetRules) -> pd.DataFr
 
 def score_dual_meet(
     seton_df: pd.DataFrame, opponent_df: pd.DataFrame, rules: MeetRules = None
-) -> Tuple[pd.DataFrame, Dict[str, float]]:
+) -> tuple[pd.DataFrame, dict[str, float]]:
     """
     Score a complete dual meet ensuring exactly 232 points are awarded.
 
@@ -238,7 +247,7 @@ def score_dual_meet(
     return full_scored, totals
 
 
-def validate_dual_meet_total(totals: Dict[str, float], num_events: int = 8) -> bool:
+def validate_dual_meet_total(totals: dict[str, float], num_events: int = 8) -> bool:
     """
     Validate that total points equal expected maximum.
 
@@ -254,7 +263,7 @@ def validate_dual_meet_total(totals: Dict[str, float], num_events: int = 8) -> b
     return abs(actual - expected) < 0.1  # Allow tiny floating point errors
 
 
-def print_dual_meet_summary(totals: Dict[str, float], num_events: int = 8):
+def print_dual_meet_summary(totals: dict[str, float], num_events: int = 8):
     """
     Print a summary of dual meet scoring.
     """

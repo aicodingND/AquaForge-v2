@@ -14,12 +14,16 @@
       "enabled": true,
       "defer_loading": false,
       "description": "Problem decomposition - always available for PRISM workflow"
+    },
+    "playwright": {
+      "enabled": true,
+      "defer_loading": true,
+      "description": "Browser automation and E2E testing - use as needed"
+    },
+    "github": {
+      "enabled": true,
+      "defer_loading": true,
+      "description": "GitHub API operations - use as needed (requires GITHUB_PERSONAL_ACCESS_TOKEN)"
     }
-  },
-  "optimization": {
-    "defer_loading_default": true,
-    "lazy_tool_discovery": true,
-    "token_savings_mode": true,
-    "notes": "MCP servers configured for ~85% token reduction. Tools discovered on-demand."
   }
 }

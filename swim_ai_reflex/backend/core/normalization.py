@@ -1,6 +1,7 @@
 # core/normalization.py
 import os
 import re
+from functools import lru_cache
 
 import pandas as pd
 
@@ -20,7 +21,9 @@ EVENT_ORDER = [
 ]
 
 
+@lru_cache(maxsize=256)
 def canonicalize_event_name(col_name: str) -> str:
+    """Canonicalize event name with LRU caching for repeated lookups."""
     if not isinstance(col_name, str):
         return str(col_name)
     s = col_name.strip()
@@ -35,7 +38,9 @@ def canonicalize_event_name(col_name: str) -> str:
     return s2
 
 
-def extract_grade_from_name(name_str):
+@lru_cache(maxsize=512)
+def extract_grade_from_name(name_str: str):
+    """Extract grade from swimmer name with LRU caching."""
     if not isinstance(name_str, str):
         return None, name_str
     m = re.match(r"(.+?)\s*\(\s*(FR|SO|JR|SR|8)\s*\)$", name_str, re.I)

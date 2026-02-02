@@ -1,0 +1,3 @@
+meet_id,meet_name,profile,actual_seton_score,actual_seton_rank,actual_teams,gurobi_score,gurobi_time_ms,gurobi_vs_coach,aqua_score,aqua_time_ms,aqua_vs_coach,coach_legal_score,coach_fatigue_score,coach_illegal_score,coach_violations,winner,score_difference
+464,National Catholic H.S. Championship 2024,visaa_championship,111.0,1,2,459.0,752.1369457244873,-198.0,545.0,963.1321430206299,-112.0,657.0,476.0,813.0,4,aqua,-86.0
+465,2024 VISAA Swimming & Diving Championship,visaa_championship,160.5,2,5,195.0,2.971172332763672,-214.0,284.0,561.9151592254639,-125.0,409.0,328.0,446.0,1,aqua,-89.0

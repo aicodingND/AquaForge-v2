@@ -72,7 +72,7 @@ Upload **two CSV files** - one for Seton and one for the opponent.
 
 - Max 4 swimmers per team per individual event
 - Max 2 individual events per swimmer
-- Max 3 total events per swimmer (including relays)
+- Max 4 total events per swimmer (NFHS Rule 3-2-1: 2 indiv + 2 relay, or 1 indiv + 3 relay)
 - No back-to-back events
 
 ---
@@ -88,10 +88,10 @@ John Smith,11,M,Boys 50 Free,23.45,Seton,Trinity,2024-12-15
 
 ## Common Mistakes to Avoid
 
-❌ Time format like `0:23.45` → Use `23.45`  
-❌ Gender as "Male" → Use `M`  
-❌ Missing grade column → App can't determine scoring  
-❌ Mixing multiple meets in one file → Create separate files  
+❌ Time format like `0:23.45` → Use `23.45`
+❌ Gender as "Male" → Use `M`
+❌ Missing grade column → App can't determine scoring
+❌ Mixing multiple meets in one file → Create separate files
 ❌ Event names like "50 Freestyle" and "50 Free" in same file → Be consistent
 
 ---

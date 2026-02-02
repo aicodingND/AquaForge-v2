@@ -1,0 +1,142 @@
+{
+  "seton": {
+    "name": "Seton School",
+    "filename": "sample_seton.csv",
+    "data": [
+      {
+        "swimmer": "Swimmer S1",
+        "event": "50 Free",
+        "time": "24.50",
+        "grade": "11"
+      },
+      {
+        "swimmer": "Swimmer S2",
+        "event": "100 Free",
+        "time": "54.00",
+        "grade": "10"
+      },
+      {
+        "swimmer": "Swimmer S3",
+        "event": "100 Back",
+        "time": "1:02.00",
+        "grade": "12"
+      },
+      {
+        "swimmer": "Swimmer S4",
+        "event": "100 Breast",
+        "time": "1:10.00",
+        "grade": "9"
+      },
+      {
+        "swimmer": "Swimmer S5",
+        "event": "100 Fly",
+        "time": "58.00",
+        "grade": "11"
+      },
+      {
+        "swimmer": "Swimmer S6",
+        "event": "200 Free",
+        "time": "2:00.00",
+        "grade": "10"
+      },
+      {
+        "swimmer": "Swimmer S7",
+        "event": "200 IM",
+        "time": "2:15.00",
+        "grade": "12"
+      },
+      {
+        "swimmer": "Swimmer S8",
+        "event": "500 Free",
+        "time": "5:30.00",
+        "grade": "9"
+      }
+    ],
+    "swimmerCount": 8,
+    "entryCount": 8,
+    "events": [
+      "50 Free",
+      "100 Free",
+      "100 Back",
+      "100 Breast",
+      "100 Fly",
+      "200 Free",
+      "200 IM",
+      "500 Free"
+    ]
+  },
+  "opponent": {
+    "name": "Opponent School",
+    "filename": "sample_opponent.csv",
+    "data": [
+      {
+        "swimmer": "Opponent O1",
+        "event": "50 Free",
+        "time": "25.00",
+        "team": "Opponent",
+        "grade": "11"
+      },
+      {
+        "swimmer": "Opponent O2",
+        "event": "100 Free",
+        "time": "55.00",
+        "team": "Opponent",
+        "grade": "10"
+      },
+      {
+        "swimmer": "Opponent O3",
+        "event": "100 Back",
+        "time": "1:03.00",
+        "team": "Opponent",
+        "grade": "9"
+      },
+      {
+        "swimmer": "Opponent O4",
+        "event": "100 Breast",
+        "time": "1:11.00",
+        "team": "Opponent",
+        "grade": "12"
+      },
+      {
+        "swimmer": "Opponent O5",
+        "event": "100 Fly",
+        "time": "59.00",
+        "team": "Opponent",
+        "grade": "11"
+      },
+      {
+        "swimmer": "Opponent O6",
+        "event": "200 Free",
+        "time": "2:01.00",
+        "team": "Opponent",
+        "grade": "10"
+      },
+      {
+        "swimmer": "Opponent O7",
+        "event": "200 IM",
+        "time": "2:16.00",
+        "team": "Opponent",
+        "grade": "9"
+      },
+      {
+        "swimmer": "Opponent O8",
+        "event": "500 Free",
+        "time": "5:31.00",
+        "team": "Opponent",
+        "grade": "12"
+      }
+    ],
+    "swimmerCount": 8,
+    "entryCount": 8,
+    "events": [
+      "50 Free",
+      "100 Free",
+      "100 Back",
+      "100 Breast",
+      "100 Fly",
+      "200 Free",
+      "200 IM",
+      "500 Free"
+    ]
+  }
+}

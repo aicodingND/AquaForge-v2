@@ -1,6 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip as RechartsTooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
 
 // Type definitions
 interface MonteCarloData {
@@ -354,140 +366,181 @@ export default function ChampionshipAnalytics({
                 <InfoTooltip text="Monte Carlo runs thousands of simulated meets with random performance variations based on historical swimmer consistency. The win probability shows how often your team wins in these simulations." />
               </h4>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {/* Win Probability */}
-                <div className="text-center">
-                  <div
-                    className={`text-3xl font-bold ${
-                      monte_carlo.win_probability >= 70
-                        ? "text-green-400"
-                        : monte_carlo.win_probability >= 40
-                          ? "text-yellow-400"
-                          : "text-red-400"
-                    }`}
-                  >
-                    {monte_carlo.win_probability.toFixed(1)}%
-                  </div>
-                  <div className="text-xs text-navy-400">Win Probability</div>
-                  <div className="text-xs text-navy-500 mt-1">
-                    {monte_carlo.win_probability >= 70
-                      ? "Strong favorite"
-                      : monte_carlo.win_probability >= 50
-                        ? "Slight favorite"
-                        : monte_carlo.win_probability >= 30
-                          ? "Competitive"
-                          : "Underdog"}
-                  </div>
-                </div>
-
-                {/* Expected Score */}
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">
-                    {monte_carlo.expected_score.toFixed(1)}
-                  </div>
-                  <div className="text-xs text-navy-400">Expected Points</div>
-                  <div className="text-xs text-navy-500 mt-1">
-                    Average outcome
-                  </div>
-                </div>
-
-                {/* Confidence Interval */}
-                <div className="text-center">
-                  <div className="text-lg font-medium text-navy-200">
-                    {monte_carlo.confidence_interval[0].toFixed(0)} -{" "}
-                    {monte_carlo.confidence_interval[1].toFixed(0)}
-                  </div>
-                  <div className="text-xs text-navy-400">95% Confidence</div>
-                  <div className="text-xs text-navy-500 mt-1">
-                    Point range in 95% of sims
-                  </div>
-                </div>
-
-                {/* Risk Level */}
-                <div className="text-center">
-                  <div
-                    className={`text-lg font-medium capitalize ${
-                      monte_carlo.risk_level === "high"
-                        ? "text-red-400"
-                        : monte_carlo.risk_level === "medium"
-                          ? "text-yellow-400"
-                          : "text-green-400"
-                    }`}
-                  >
-                    {monte_carlo.risk_level}
-                  </div>
-                  <div className="text-xs text-navy-400">Risk Level</div>
-                  <div className="text-xs text-navy-500 mt-1">
-                    {monte_carlo.risk_level === "high"
-                      ? "High variance"
-                      : monte_carlo.risk_level === "medium"
-                        ? "Moderate variance"
-                        : "Consistent"}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                {/* Win Probability Pie Chart */}
+                <div className="h-48 relative">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={[
+                          { name: "Win", value: monte_carlo.win_probability },
+                          {
+                            name: "Loss",
+                            value: 100 - monte_carlo.win_probability,
+                          },
+                        ]}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={80}
+                        paddingAngle={5}
+                        dataKey="value"
+                        stroke="none"
+                      >
+                        <Cell
+                          key="win"
+                          fill={
+                            monte_carlo.win_probability >= 50
+                              ? "#10B981"
+                              : "#FBBF24"
+                          }
+                        />
+                        <Cell key="loss" fill="#1e293b" />
+                      </Pie>
+                      <RechartsTooltip
+                        contentStyle={{
+                          backgroundColor: "#0f172a",
+                          borderColor: "#1e293b",
+                          borderRadius: "8px",
+                          color: "#fff",
+                        }}
+                        itemStyle={{ color: "#fff" }}
+                        formatter={(value) => `${Number(value).toFixed(1)}%`}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  {/* Centered Label */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span className="text-2xl font-bold text-white leading-none">
+                      {monte_carlo.win_probability.toFixed(0)}%
+                    </span>
+                    <span className="text-xs text-navy-400 mt-1">Win Prob</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Example interpretation */}
-              <div className="mt-3 p-2 bg-navy-700/50 rounded text-xs text-navy-300">
-                <b className="text-navy-100">Example:</b> At{" "}
-                {monte_carlo.win_probability.toFixed(0)}% win probability, if
-                this meet were run 100 times, you would expect to win
-                approximately {Math.round(monte_carlo.win_probability)} of them.
-              </div>
-
-              <div className="text-xs text-navy-500 mt-2 text-right">
-                Based on {monte_carlo.simulations.toLocaleString()} simulations
+                {/* Key Metrics Grid */}
+                <div className="grid grid-cols-2 gap-3">
+                  {/* Expected Score */}
+                  <div className="bg-navy-900/50 rounded p-3 border border-navy-700">
+                    <div className="text-xs text-navy-400 mb-1">
+                      Expected Points
+                    </div>
+                    <div className="text-xl font-bold text-white">
+                      {monte_carlo.expected_score.toFixed(1)}
+                    </div>
+                  </div>
+                  {/* Confidence */}
+                  <div className="bg-navy-900/50 rounded p-3 border border-navy-700">
+                    <div className="text-xs text-navy-400 mb-1">95% Range</div>
+                    <div className="text-sm font-medium text-white">
+                      {monte_carlo.confidence_interval[0].toFixed(0)} -{" "}
+                      {monte_carlo.confidence_interval[1].toFixed(0)}
+                    </div>
+                  </div>
+                  {/* Risk Level */}
+                  <div className="bg-navy-900/50 rounded p-3 border border-navy-700">
+                    <div className="text-xs text-navy-400 mb-1">Risk Level</div>
+                    <div
+                      className={`text-sm font-medium capitalize ${
+                        monte_carlo.risk_level === "high"
+                          ? "text-red-400"
+                          : monte_carlo.risk_level === "medium"
+                            ? "text-yellow-400"
+                            : "text-green-400"
+                      }`}
+                    >
+                      {monte_carlo.risk_level}
+                    </div>
+                  </div>
+                  {/* Simulations */}
+                  <div className="bg-navy-900/50 rounded p-3 border border-navy-700">
+                    <div className="text-xs text-navy-400 mb-1">
+                      Simulations
+                    </div>
+                    <div className="text-sm font-medium text-white">
+                      {monte_carlo.simulations.toLocaleString()}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
           {/* Fatigue Warnings */}
           {fatigue_warnings && fatigue_warnings.length > 0 && (
-            <div className="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-4">
+            <div className="bg-navy-800/40 border border-yellow-600/20 rounded-lg p-4">
               <h4 className="text-sm font-medium text-yellow-400 mb-3 flex items-center gap-2">
-                ⚠️ Fatigue Warnings ({fatigue_warnings.length})
-                <InfoTooltip text="Fatigue accumulates when swimmers compete in multiple events, especially back-to-back. A 2% fatigue means the swimmer may be ~2% slower in their later events. Consider rest time and event spacing." />
+                ⚠️ Fatigue Analysis
+                <InfoTooltip text="Swimmers with high accumulated fatigue from multiple events. This backend enforces fatigue penalties." />
               </h4>
 
-              <div className="space-y-2">
-                {fatigue_warnings.map((warning, idx) => (
-                  <div
-                    key={idx}
-                    className="flex justify-between items-center bg-navy-800/50 rounded px-3 py-2"
+              <div className="h-64 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={fatigue_warnings.map((w) => ({
+                      name: w.swimmer.split(",")[0],
+                      full_name: w.swimmer,
+                      fatigue: w.total_fatigue * 100,
+                      risk: w.risk,
+                    }))}
+                    layout="vertical"
+                    margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
                   >
-                    <div>
-                      <span className="font-medium text-white">
-                        {warning.swimmer}
-                      </span>
-                      <span className="text-sm text-navy-400 ml-2">
-                        ({warning.events.join(" → ")})
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`text-sm font-medium ${
-                          warning.risk === "high"
-                            ? "text-red-400"
-                            : "text-yellow-400"
-                        }`}
-                      >
-                        {(warning.total_fatigue * 100).toFixed(1)}% fatigue
-                      </div>
-                      <span
-                        className={`text-xs px-2 py-0.5 rounded ${
-                          warning.risk === "high"
-                            ? "bg-red-900/50 text-red-300"
-                            : "bg-yellow-900/50 text-yellow-300"
-                        }`}
-                      >
-                        {warning.risk.toUpperCase()} RISK
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="#334155"
+                      horizontal={false}
+                      vertical={true}
+                    />
+                    <XAxis
+                      type="number"
+                      domain={[0, "auto"]}
+                      stroke="#475569"
+                    />
+                    <YAxis
+                      dataKey="name"
+                      type="category"
+                      width={100}
+                      tick={{ fill: "#94a3b8", fontSize: 12 }}
+                      stroke="#475569"
+                    />
+                    <RechartsTooltip
+                      contentStyle={{
+                        backgroundColor: "#0f172a",
+                        borderColor: "#1e293b",
+                        borderRadius: "8px",
+                        color: "#fff",
+                      }}
+                      cursor={{ fill: "#1e293b" }}
+                      formatter={(value: number | undefined) => [
+                        `${Number(value || 0).toFixed(1)}%`,
+                        "Fatigue",
+                      ]}
+                      labelFormatter={(label, payload) => {
+                        if (payload && payload.length > 0)
+                          return payload[0].payload.full_name;
+                        return label;
+                      }}
+                    />
+                    <Bar dataKey="fatigue" radius={[0, 4, 4, 0]} barSize={24}>
+                      {fatigue_warnings.map((w, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={
+                            w.risk === "high"
+                              ? "#EF4444"
+                              : w.risk === "medium"
+                                ? "#FBBF24"
+                                : "#10B981"
+                          }
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
 
-              <p className="text-xs text-yellow-400/70 mt-2">
+              <p className="text-xs text-yellow-400/70 mt-4 text-center">
                 💡 <b>Suggestion:</b> Consider spreading events across the meet
                 or providing adequate warm-down time between races.
               </p>

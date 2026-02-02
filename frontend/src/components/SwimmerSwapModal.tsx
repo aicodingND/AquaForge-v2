@@ -1,7 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useAppStore } from '@/lib/store';
+import { useState } from "react";
 
 interface SwimmerSwapModalProps {
   show: boolean;
@@ -21,7 +20,7 @@ export default function SwimmerSwapModal({
   onSwap,
 }: SwimmerSwapModalProps) {
   const [selectedSwimmer, setSelectedSwimmer] = useState<string | null>(null);
-  const [reason, setReason] = useState('');
+  const [reason, setReason] = useState("");
 
   if (!show) return null;
 
@@ -33,13 +32,13 @@ export default function SwimmerSwapModal({
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
     >
-      <div 
+      <div
         className="w-full max-w-md mx-4 glass-card overflow-hidden shadow-2xl animate-scale-in"
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="p-4 border-b border-[var(--navy-500)] flex items-center justify-between">
@@ -57,7 +56,9 @@ export default function SwimmerSwapModal({
 
         {/* Current Assignment */}
         <div className="p-4 bg-[var(--navy-800)]/50 border-b border-[var(--navy-600)]">
-          <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Current</p>
+          <p className="text-xs text-white/40 uppercase tracking-wider mb-2">
+            Current
+          </p>
           <div className="flex items-center gap-3">
             <span className="text-2xl">🏊</span>
             <div>
@@ -69,7 +70,9 @@ export default function SwimmerSwapModal({
 
         {/* Available Swimmers */}
         <div className="p-4 max-h-64 overflow-y-auto">
-          <p className="text-xs text-white/40 uppercase tracking-wider mb-3">Available Swimmers</p>
+          <p className="text-xs text-white/40 uppercase tracking-wider mb-3">
+            Available Swimmers
+          </p>
           <div className="space-y-2">
             {availableSwimmers.map((swimmer) => (
               <button
@@ -77,16 +80,22 @@ export default function SwimmerSwapModal({
                 onClick={() => setSelectedSwimmer(swimmer.name)}
                 className={`w-full flex items-center justify-between p-3 rounded-lg border transition-all ${
                   selectedSwimmer === swimmer.name
-                    ? 'border-[var(--gold-500)] bg-[var(--gold-muted)]'
-                    : 'border-[var(--navy-500)] hover:border-white/30'
+                    ? "border-[var(--gold-500)] bg-[var(--gold-muted)]"
+                    : "border-[var(--navy-500)] hover:border-white/30"
                 }`}
               >
-                <span className={`font-medium ${
-                  selectedSwimmer === swimmer.name ? 'text-[var(--gold-400)]' : 'text-white'
-                }`}>
+                <span
+                  className={`font-medium ${
+                    selectedSwimmer === swimmer.name
+                      ? "text-[var(--gold-400)]"
+                      : "text-white"
+                  }`}
+                >
                   {swimmer.name}
                 </span>
-                <span className="font-mono text-sm text-white/60">{swimmer.time}</span>
+                <span className="font-mono text-sm text-white/60">
+                  {swimmer.time}
+                </span>
               </button>
             ))}
           </div>
@@ -100,7 +109,7 @@ export default function SwimmerSwapModal({
           <input
             type="text"
             value={reason}
-            onChange={e => setReason(e.target.value)}
+            onChange={(e) => setReason(e.target.value)}
             placeholder="e.g., Coach preference, injury recovery..."
             className="input mt-2 text-sm"
           />

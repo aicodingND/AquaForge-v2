@@ -1,0 +1,31 @@
+[project]
+name = "opencode"
+version = "0.2.0"
+description = "OpenCode CLI - Access and explore Antigravity projects"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["typer>=0.9.0", "pyyaml>=6.0", "rich>=13.0", "requests>=2.28"]
+
+[project.scripts]
+oc = "opencode.main:app"
+opencode = "opencode.main:app"
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "black>=23.0", "ruff>=0.1.0"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["opencode", "opencode.providers"]
+package-dir = { "opencode" = ".", "opencode.providers" = "providers" }
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]

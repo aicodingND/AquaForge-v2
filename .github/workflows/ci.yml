@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Run ruff linting
+        run: |
+          ruff check .
+
+      - name: Run ruff format check
+        run: |
+          ruff format --check .
+
+      - name: Verify pytest collection
+        run: |
+          python -m pytest tests/ -v --tb=short --co -q
+
+      - name: Run pytest with coverage
+        run: |
+          python -m pytest tests/ -v --tb=short -x --ignore=tests/e2e --timeout=120 --cov=swim_ai_reflex --cov-report=xml --cov-fail-under=70
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd frontend && npm ci
+
+      - name: Lint
+        run: |
+          cd frontend && npx next lint
+
+      - name: Type check
+        run: |
+          cd frontend && npx tsc --noEmit
+
+      - name: Build
+        run: |
+          cd frontend && npm run build

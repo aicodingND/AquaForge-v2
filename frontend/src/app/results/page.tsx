@@ -84,7 +84,7 @@ export default function ResultsPage() {
       {!hasResults ? (
         /* No Results State */
         <div className="glass-card p-12 text-center">
-          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-(--navy-600) flex items-center justify-center">
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[var(--navy-600)] flex items-center justify-center">
             <span className="text-4xl">📊</span>
           </div>
           <h2 className="text-xl font-semibold text-white mb-2">
@@ -133,7 +133,7 @@ export default function ResultsPage() {
                         Math.abs(setonStanding.points - setonScore) > 0.1
                       ) {
                         return (
-                          <div className="text-center px-4 py-2 bg-(--navy-700) rounded-lg">
+                          <div className="text-center px-4 py-2 bg-[var(--navy-700)] rounded-lg">
                             <p className="text-xs text-white/50 uppercase">
                               Full Projected
                             </p>
@@ -163,7 +163,7 @@ export default function ResultsPage() {
 
                 <div className="flex flex-col items-center">
                   <div
-                    className={`text-4xl font-bold ${isWinning ? "text-(--success)" : isTied ? "text-(--gold-400)" : "text-(--error)"}`}
+                    className={`text-4xl font-bold ${isWinning ? "text-[var(--success)]" : isTied ? "text-[var(--gold-400)]" : "text-[var(--error)]"}`}
                   >
                     {isWinning ? "WIN" : isTied ? "TIE" : "LOSS"}
                   </div>
@@ -196,13 +196,13 @@ export default function ResultsPage() {
             championshipStandings &&
             championshipStandings.length > 0 && (
               <div className="glass-card overflow-hidden">
-                <div className="p-4 border-b border-(--navy-500)">
+                <div className="p-4 border-b border-[var(--navy-500)]">
                   <h3 className="font-semibold text-white flex items-center gap-2">
-                    <span className="text-(--gold-400)">🏆</span> Projected Team
+                    <span className="text-[var(--gold-400)]">🏆</span> Projected Team
                     Standings
                   </h3>
                 </div>
-                <div className="divide-y divide-(--navy-600)">
+                <div className="divide-y divide-[var(--navy-600)]">
                   {championshipStandings.map((team) => {
                     const isSeton =
                       team.team === "SST" ||
@@ -210,31 +210,31 @@ export default function ResultsPage() {
                     return (
                       <div
                         key={team.team}
-                        className={`flex items-center gap-4 p-4 ${isSeton ? "bg-(--gold-muted)" : "hover:bg-white/2"}`}
+                        className={`flex items-center gap-4 p-4 ${isSeton ? "bg-[var(--gold-muted)]" : "hover:bg-white/2"}`}
                       >
                         <div
                           className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
                             team.rank === 1
-                              ? "bg-(--gold-500) text-(--navy-900)"
+                              ? "bg-[var(--gold-500)] text-[var(--navy-900)]"
                               : team.rank === 2
-                                ? "bg-gray-300 text-(--navy-900)"
+                                ? "bg-gray-300 text-[var(--navy-900)]"
                                 : team.rank === 3
                                   ? "bg-amber-600 text-white"
-                                  : "bg-(--navy-600) text-white/70"
+                                  : "bg-[var(--navy-600)] text-white/70"
                           }`}
                         >
                           {team.rank}
                         </div>
                         <div className="flex-1">
                           <p
-                            className={`font-medium ${isSeton ? "text-(--gold-400)" : "text-white"}`}
+                            className={`font-medium ${isSeton ? "text-[var(--gold-400)]" : "text-white"}`}
                           >
                             {team.team}
                           </p>
                         </div>
                         <div className="text-right">
                           <p
-                            className={`font-bold text-lg ${isSeton ? "text-(--gold-400)" : "text-white"}`}
+                            className={`font-bold text-lg ${isSeton ? "text-[var(--gold-400)]" : "text-white"}`}
                           >
                             {team.points.toFixed(1)}
                           </p>
@@ -250,13 +250,13 @@ export default function ResultsPage() {
           {/* Swing Events (Championship mode) */}
           {isChampionship && swingEvents && swingEvents.length > 0 && (
             <div className="glass-card overflow-hidden">
-              <div className="p-4 border-b border-(--navy-500)">
+              <div className="p-4 border-b border-[var(--navy-500)]">
                 <h3 className="font-semibold text-white flex items-center gap-2">
-                  <span className="text-(--gold-400)">💡</span> Swing Events
+                  <span className="text-[var(--gold-400)]">💡</span> Swing Events
                   (Improvement Opportunities)
                 </h3>
               </div>
-              <div className="divide-y divide-(--navy-600)">
+              <div className="divide-y divide-[var(--navy-600)]">
                 {(
                   swingEvents as Array<{
                     swimmer?: string;
@@ -289,7 +289,7 @@ export default function ResultsPage() {
                             </p>
                           </div>
                           <div className="text-right">
-                            <p className="text-(--success) font-bold">
+                            <p className="text-[var(--success)] font-bold">
                               +{swing.point_gain?.toFixed(1) || "?"} pts
                             </p>
                             <p className="text-xs text-white/50">
@@ -307,14 +307,14 @@ export default function ResultsPage() {
 
           {/* Event Results Table */}
           <div className="glass-card overflow-hidden">
-            <div className="p-4 border-b border-(--navy-500)">
+            <div className="p-4 border-b border-[var(--navy-500)]">
               <h3 className="font-semibold text-white flex items-center gap-2">
-                <span className="text-(--gold-400)">🏊</span>
+                <span className="text-[var(--gold-400)]">🏊</span>
                 {isChampionship ? "Event Entries & Points" : "Event Results"}
               </h3>
             </div>
 
-            <div className="divide-y divide-(--navy-600)">
+            <div className="divide-y divide-[var(--navy-600)]">
               {optimizationResults.map((result, index) => (
                 <div key={index} className="hover:bg-white/2 transition-colors">
                   {/* Event Header */}
@@ -325,7 +325,7 @@ export default function ResultsPage() {
                     className="w-full p-4 flex items-center gap-4 text-left"
                     aria-label={`Toggle details for ${result.event}`}
                   >
-                    <div className="w-8 h-8 rounded-full bg-(--navy-600) flex items-center justify-center text-sm font-medium text-white/70">
+                    <div className="w-8 h-8 rounded-full bg-[var(--navy-600)] flex items-center justify-center text-sm font-medium text-white/70">
                       {result.event_number}
                     </div>
 
@@ -363,10 +363,10 @@ export default function ResultsPage() {
                   {expandedEvent === index && (
                     <div className="px-4 pb-4 animate-fade-in">
                       <div
-                        className={`${isChampionship ? "" : "grid grid-cols-2 gap-4"} p-4 bg-(--navy-800) rounded-lg`}
+                        className={`${isChampionship ? "" : "grid grid-cols-2 gap-4"} p-4 bg-[var(--navy-800)] rounded-lg`}
                       >
                         <div>
-                          <p className="text-xs text-(--gold-400) uppercase tracking-wider mb-2">
+                          <p className="text-xs text-[var(--gold-400)] uppercase tracking-wider mb-2">
                             {setonTeam?.name || "Seton"} Entries
                           </p>
                           {result.seton_swimmers.map((swimmer, i) => (

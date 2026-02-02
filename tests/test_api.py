@@ -126,7 +126,7 @@ class TestOptimizationEndpoints:
         data = response.json()
         assert "backends" in data
         assert "heuristic" in data["backends"]
-        assert data["default"] == "heuristic"
+        assert data["default"] == "aqua"
 
     def test_optimization_preview(
         self, client, sample_seton_data, sample_opponent_data

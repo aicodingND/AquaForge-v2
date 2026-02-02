@@ -4,20 +4,6 @@ Models package init.
 Production-ready Pydantic models for AquaForge.
 """
 
-from swim_ai_reflex.backend.models.swimmer import (
-    SwimmerTime,
-    SwimmerProfile,
-    TimeRecord,
-    RosterEntry,
-)
-
-from swim_ai_reflex.backend.models.opponent import (
-    CoachTendency,
-    HistoricalLineup,
-    OpponentProfile,
-    MeetResult,
-)
-
 from swim_ai_reflex.backend.models.meet import (
     MeetImportance,
     ScheduledMeet,
@@ -25,11 +11,23 @@ from swim_ai_reflex.backend.models.meet import (
     SeasonGoals,
     SeasonPlan,
 )
+from swim_ai_reflex.backend.models.opponent import (
+    CoachTendency,
+    HistoricalLineup,
+    MeetResult,
+    OpponentProfile,
+)
+from swim_ai_reflex.backend.models.swimmer import (
+    RosterEntry,
+    SwimmerProfile,
+    SwimmerTime,
+    TimeRecord,
+)
 
 __all__ = [
     # Swimmer models
     "SwimmerTime",
-    "SwimmerProfile", 
+    "SwimmerProfile",
     "TimeRecord",
     "RosterEntry",
     # Opponent models

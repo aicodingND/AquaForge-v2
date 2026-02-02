@@ -33,6 +33,7 @@ services:
     restart: unless-stopped
 
   # Production service (optimized image)
+  # Caddy reverse-proxies both frontend and API on a single port
   swimai:
     build:
       context: .
@@ -40,8 +41,7 @@ services:
     container_name: swimai-app
     profiles: ["prod"]
     ports:
-      - "3000:3000"
-      - "8000:8000"
+      - "${PORT:-8080}:${PORT:-8080}"   # Single entry point via Caddy
     volumes:
       # Production: only mount data directories
       - ./uploads:/app/uploads:rw
@@ -50,10 +50,11 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - REFLEX_ENV=prod
+      - PORT=${PORT:-8080}
     command: reflex run --env prod --loglevel info
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      test: ["CMD", "curl", "-f", "http://localhost:${PORT:-8080}/health"]
       interval: 30s
       timeout: 10s
       retries: 3

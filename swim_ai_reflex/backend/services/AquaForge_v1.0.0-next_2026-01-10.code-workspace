@@ -5,9 +5,7 @@
     },
   ],
   "settings": {
-    "files.readonlyInclude": {
-      "{**/.c4z/.extsrcs/*.PROTSYM.cbl,**/.c4z/.extsrcs/*.PROTSYM.listing}": true,
-    },
     "cSpell.words": ["Oakcrest", "VISAA"],
+    "diffEditor.codeLens": true,
   },
 }

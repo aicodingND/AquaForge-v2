@@ -1,0 +1,127 @@
+# AquaForge Agent Workflow Configuration
+# =======================================
+#
+# This file configures the agent workflows and automation for AquaForge.
+# It defines tasks that can be run iteratively using the Ralph Wiggum technique.
+
+workflows:
+  # Fast development loop - ensures code quality
+  quality_check:
+    name: "Quality Check Loop"
+    description: "Run code quality checks in a loop until all pass"
+    conditions:
+      - build_succeeds
+      - no_lint_errors
+    max_iterations: 10
+    commands:
+      - "python -c 'from swim_ai_reflex.backend.api.main import api_app'"
+      - "ruff check . --fix"
+      - "ruff format ."
+
+  # Test-driven development loop
+  test_loop:
+    name: "Test Loop"
+    description: "Run tests until they all pass"
+    conditions:
+      - tests_pass
+    max_iterations: 20
+    commands:
+      - "pytest tests/test_api.py -v"
+
+  # Full validation before deployment
+  deploy_check:
+    name: "Deployment Readiness"
+    description: "Validate all systems before deployment"
+    conditions:
+      - build_succeeds
+      - tests_pass
+      - api_starts
+    max_iterations: 5
+    commands:
+      - "python -c 'from swim_ai_reflex.backend.api.main import api_app'"
+      - "pytest tests/ -v"
+      - "python run_server.py --mode api --help"
+
+  # API development workflow
+  api_dev:
+    name: "API Development"
+    description: "Develop and test API endpoints"
+    conditions:
+      - api_starts
+      - tests_pass
+    max_iterations: 30
+    auto_fix: true
+    commands:
+      - "python -c 'from swim_ai_reflex.backend.api.main import api_app; print(\"API OK\")'"
+      - "pytest tests/test_api.py -v --tb=short"
+
+  # Full-stack migration workflow
+  migration:
+    name: "Full-Stack Migration"
+    description: "Migrate from Reflex to FastAPI + Next.js"
+    conditions:
+      - build_succeeds
+      - api_starts
+      - tests_pass
+    phases:
+      - name: "API Layer"
+        tasks:
+          - "Create FastAPI routers"
+          - "Define Pydantic models"
+          - "Add endpoint tests"
+      - name: "Service Integration"
+        tasks:
+          - "Wrap existing services"
+          - "Add dependency injection"
+          - "Validate endpoints"
+      - name: "Frontend Preparation"
+        tasks:
+          - "Create Next.js project"
+          - "Set up API client"
+          - "Port components"
+
+# Success criteria definitions
+success_criteria:
+  build_succeeds:
+    command: "python -c 'from swim_ai_reflex.backend.api.main import api_app'"
+    description: "Application imports without errors"
+
+  tests_pass:
+    command: "pytest tests/test_api.py -v"
+    description: "All API tests pass"
+
+  no_lint_errors:
+    command: "ruff check ."
+    description: "No linting errors"
+
+  api_starts:
+    command: "python -c 'from swim_ai_reflex.backend.api.main import api_app; print(api_app.title)'"
+    description: "FastAPI application starts successfully"
+
+# Agent behavior settings
+agent:
+  # Maximum time (seconds) to wait for a single command
+  command_timeout: 300
+
+  # Delay between iterations (seconds)
+  iteration_delay: 2
+
+  # Auto-fix common issues
+  auto_fix:
+    - lint_errors
+    - import_errors
+    - missing_dependencies
+
+  # Stop conditions (any of these stops the loop)
+  stop_conditions:
+    - all_conditions_met
+    - max_iterations_reached
+    - critical_error
+    - manual_stop
+
+# Logging configuration
+logging:
+  directory: ".ralph"
+  format: "json"
+  retain_days: 7
+  verbose: true

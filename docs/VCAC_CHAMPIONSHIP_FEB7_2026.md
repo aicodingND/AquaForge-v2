@@ -1,10 +1,10 @@
 # VCAC Championship Meet - February 7, 2026
 
-**Event**: 5th Annual Virginia Christian Athletic Conference Championship Meet  
-**Date**: Saturday, February 7, 2026  
-**Location**: Freedom Fitness and Aquatic Center, Manassas, VA  
-**Type**: Conference Championship (Timed Finals)  
-**Last Updated**: January 15, 2026  
+**Event**: 5th Annual Virginia Christian Athletic Conference Championship Meet
+**Date**: Saturday, February 7, 2026
+**Location**: Freedom Fitness and Aquatic Center, Manassas, VA
+**Type**: Conference Championship (Timed Finals)
+**Last Updated**: January 15, 2026
 **Source**: setonswimming.org
 
 ---
@@ -21,7 +21,7 @@
 | 2:05 PM  | Senior Parade                                    |
 | 2:20 PM  | Swimming Competition Begins                      |
 
-**Entries Due**: 6:00 PM on Wednesday before meet (Feb 4, 2026)  
+**Entries Due**: 6:00 PM on Wednesday before meet (Feb 4, 2026)
 **Livestream**: Seton Swimming Highlights YouTube Channel
 
 ---
@@ -43,27 +43,9 @@
 
 ## 📊 Scoring System
 
-> ⚠️ **IMPORTANT**: At VCAC Championship, INDIVIDUAL events are worth **MORE** than relays!  
-> This is the OPPOSITE of typical dual meets.
+> **Standard 12-place championship scoring**: Relay = 2x Individual (same as NCAA/NFHS)
 
-### Individual Events (Top 12 Score)
-
-| Place | Points |
-| ----- | ------ |
-| 1st   | **32** |
-| 2nd   | 26     |
-| 3rd   | 24     |
-| 4th   | 22     |
-| 5th   | 20     |
-| 6th   | 18     |
-| 7th   | 14     |
-| 8th   | 10     |
-| 9th   | 8      |
-| 10th  | 6      |
-| 11th  | 4      |
-| 12th  | 2      |
-
-### Relay Events (LESS than individual!)
+### Individual/Diving Events (Top 12 Score)
 
 | Place | Points |
 | ----- | ------ |
@@ -80,7 +62,25 @@
 | 11th  | 2      |
 | 12th  | 1      |
 
-**Source**: setonswimming.org VCAC Conference Championship announcement
+### Relay Events (2x Individual at each placement)
+
+| Place | Points |
+| ----- | ------ |
+| 1st   | **32** |
+| 2nd   | 26     |
+| 3rd   | 24     |
+| 4th   | 22     |
+| 5th   | 20     |
+| 6th   | 18     |
+| 7th   | 14     |
+| 8th   | 10     |
+| 9th   | 8      |
+| 10th  | 6      |
+| 11th  | 4      |
+| 12th  | 2      |
+
+**Source**: NCAA Rule 7 (12-place scoring), NFHS, setonswimming.org
+**Corrected**: 2026-02-02 — previous version had individual/relay tables swapped
 
 ---
 

@@ -9,8 +9,8 @@ This configures:
 """
 
 import socket
-import pandas as pd
 
+import pandas as pd
 import pytest
 
 # ==================== Server Detection ====================
@@ -24,7 +24,7 @@ def is_server_running(host: str = "localhost", port: int = 3000) -> bool:
         sock.connect((host, port))
         sock.close()
         return True
-    except (socket.error, socket.timeout):
+    except (TimeoutError, OSError):
         return False
 
 
@@ -119,6 +119,7 @@ def pytest_configure(config):
     )
     config.addinivalue_line("markers", "slow: mark test as slow running")
     config.addinivalue_line("markers", "integration: mark test as integration test")
+    config.addinivalue_line("markers", "timeout: mark test with timeout")
 
 
 def pytest_collection_modifyitems(config, items):
@@ -131,6 +132,7 @@ def pytest_collection_modifyitems(config, items):
         # Check if this is an E2E browser test (uses Playwright page fixture)
         if "test_e2e" in item.nodeid and not is_server_running("localhost", 3000):
             item.add_marker(skip_no_server)
+
 
 # Suppress pandas downcasting warnings
 pd.set_option("future.no_silent_downcasting", True)

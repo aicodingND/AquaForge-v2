@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { api } from "@/lib/api";
 import { useAppStore } from "@/lib/store";
+import ErrorDisplay, { getErrorContext } from "./ErrorDisplay";
 
 interface FileUploadProps {
   teamType: "seton" | "opponent";
@@ -25,8 +26,12 @@ export default function FileUpload({ teamType, label }: FileUploadProps) {
         teamType,
       );
 
-      if (!file.name.endsWith(".xlsx") && !file.name.endsWith(".csv")) {
-        setError("Please upload an Excel (.xlsx) or CSV file");
+      if (
+        !file.name.endsWith(".xlsx") &&
+        !file.name.endsWith(".csv") &&
+        !file.name.endsWith(".json")
+      ) {
+        setError("Please upload an Excel (.xlsx), CSV, or JSON file");
         return;
       }
 
@@ -137,8 +142,10 @@ export default function FileUpload({ teamType, label }: FileUploadProps) {
       >
         <input
           type="file"
-          accept=".xlsx,.csv"
+          accept=".xlsx,.csv,.json"
           onChange={handleInputChange}
+          aria-label="Upload team roster file"
+          title="Upload Excel, CSV, or JSON file"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           disabled={isUploading}
         />
@@ -169,13 +176,20 @@ export default function FileUpload({ teamType, label }: FileUploadProps) {
               </span>{" "}
               or drag and drop
               <br />
-              <span className="text-sm text-white/40">Excel or CSV files</span>
+              <span className="text-sm text-white/40">
+                Excel, CSV, or JSON files
+              </span>
             </p>
           </>
         )}
       </div>
 
-      {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
+      {error && (
+        <ErrorDisplay
+          error={error}
+          onDismiss={() => setError(null)}
+        />
+      )}
     </div>
   );
 }

@@ -3,7 +3,7 @@ Data Service
 Handles file upload processing, validation, and data loading.
 """
 
-from typing import Any, Dict
+from typing import Any
 
 import pandas as pd
 
@@ -22,8 +22,8 @@ class DataService(BaseService):
         self.file_manager = FileManager(upload_dir)
 
     def process_upload(
-        self, seton_file, opp_file, combined_file, options: Dict[str, Any]
-    ) -> Dict[str, Any]:
+        self, seton_file, opp_file, combined_file, options: dict[str, Any]
+    ) -> dict[str, Any]:
         """
         Orchestrates file saving, loading, validation, and health reporting.
 
@@ -126,7 +126,7 @@ class DataService(BaseService):
 
     async def process_raw_upload(
         self, filename: str, file_data: bytes
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Process a raw file upload: Save -> Validate -> Parse.
         Designed for Reflex UploadFile handling.
@@ -193,7 +193,7 @@ class DataService(BaseService):
                 f"Upload processing failed: {str(e)}", code="UPLOAD_ERROR"
             )
 
-    async def load_roster_from_path(self, filepath: str) -> Dict[str, Any]:
+    async def load_roster_from_path(self, filepath: str) -> dict[str, Any]:
         """
         Load and parse a roster file from a local path.
 
@@ -255,7 +255,7 @@ class DataService(BaseService):
                 # Handle JSON files - championship psych sheets have specific structure
                 import json
 
-                with open(filepath, "r", encoding="utf-8") as f:
+                with open(filepath, encoding="utf-8") as f:
                     json_data = json.load(f)
 
                 # Check if this is a championship psych sheet (has 'entries' array)
@@ -403,10 +403,33 @@ class DataService(BaseService):
                 self.log_info(
                     f"Excel loaded: sheet='{diag.get('chosen_sheet')}', cols={diag.get('cols')}"
                 )
-                return self._success(
-                    data=df,
-                    message=f"Excel loaded successfully ({len(df)} entries from sheet '{diag.get('chosen_sheet')}')",
-                )
+
+                # Extract teams metadata for championship mode (like CSV/JSON parsers do)
+                teams = []
+                if "team" in df.columns and not df.empty:
+                    # Get unique team codes
+                    unique_teams = df["team"].dropna().unique().tolist()
+                    teams = sorted([str(t) for t in unique_teams if str(t).strip()])
+                    self.log_info(
+                        f"Championship Excel: extracted {len(teams)} teams: {teams}"
+                    )
+
+                # Return with metadata if teams found (championship mode)
+                if teams:
+                    return self._success(
+                        data=df,
+                        message=f"Championship Excel loaded ({len(df)} entries from {len(teams)} teams)",
+                        metadata={
+                            "teams": teams,
+                            "meet_name": diag.get("chosen_sheet", "Championship"),
+                            "total_entries": len(df),
+                        },
+                    )
+                else:
+                    return self._success(
+                        data=df,
+                        message=f"Excel loaded successfully ({len(df)} entries from sheet '{diag.get('chosen_sheet')}')",
+                    )
 
             else:
                 return self._error(

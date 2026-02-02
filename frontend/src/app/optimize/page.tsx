@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useAppStore } from "@/lib/store";
+import { API_BASE } from "@/lib/config";
 import Link from "next/link";
-
-const API_BASE = "http://localhost:8000/api/v1";
+import BackendSelector from "@/components/BackendSelector";
+import ChampionshipStrategySelector from "@/components/ChampionshipStrategySelector";
 
 export default function OptimizePage() {
   const store = useAppStore();
@@ -14,13 +15,15 @@ export default function OptimizePage() {
     seton: number;
     opponent: number;
   } | null>(null);
+  const [championshipStrategy, setChampionshipStrategy] =
+    useState<string>("aqua");
 
   const {
     setonTeam,
     opponentTeam,
     meetMode,
     isOptimizing,
-    optimizerEngine,
+    selectedBackend,
     enforceFatigue,
     robustMode,
     scoringType,
@@ -70,10 +73,12 @@ export default function OptimizePage() {
         body: JSON.stringify({
           seton_data: setonTeam.data,
           opponent_data: meetMode === "dual" ? opponentTeam?.data || [] : [],
-          optimizer_backend: optimizerEngine,
+          optimizer_backend: selectedBackend,
           enforce_fatigue: enforceFatigue,
           robust_mode: meetMode === "dual" ? robustMode : false,
           scoring_type: scoringType,
+          championship_strategy:
+            meetMode === "championship" ? championshipStrategy : "aqua",
         }),
       });
 
@@ -133,8 +138,6 @@ export default function OptimizePage() {
     }
   };
 
-  const setEngine = (engine: "heuristic" | "gurobi") =>
-    store.setOptimizerSettings({ engine });
   const setScoring = (
     scoring:
       | "visaa_top7"
@@ -163,36 +166,19 @@ export default function OptimizePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Settings Column */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Engine */}
-          <div className="glass-card p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">
-              ⚡ Optimizer Engine
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => setEngine("heuristic")}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  optimizerEngine === "heuristic"
-                    ? "border-[var(--gold-500)] bg-[var(--gold-muted)]"
-                    : "border-[var(--navy-500)] hover:border-[var(--navy-400)]"
-                }`}
-              >
-                <p className="font-semibold text-white">⚡ Heuristic</p>
-                <p className="text-xs text-white/50 mt-1">Fast (~1s)</p>
-              </button>
-              <button
-                onClick={() => setEngine("gurobi")}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  optimizerEngine === "gurobi"
-                    ? "border-[var(--gold-500)] bg-[var(--gold-muted)]"
-                    : "border-[var(--navy-500)] hover:border-[var(--navy-400)]"
-                }`}
-              >
-                <p className="font-semibold text-white">🎯 Gurobi</p>
-                <p className="text-xs text-white/50 mt-1">Optimal (~30s)</p>
-              </button>
+          {/* Engine - Now using dynamic BackendSelector */}
+          <BackendSelector />
+
+          {/* Championship Strategy Selector - Only in championship mode */}
+          {meetMode === "championship" && (
+            <div className="glass-card p-6">
+              <ChampionshipStrategySelector
+                selectedStrategy={championshipStrategy}
+                onStrategyChange={setChampionshipStrategy}
+                disabled={isOptimizing}
+              />
             </div>
-          </div>
+          )}
 
           {/* Scoring */}
           <div className="glass-card p-6">

@@ -10,8 +10,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -89,6 +89,21 @@ data/scraped/*.json
 data/mdb_data/*.mdb
 !data/scraped/.gitkeep
 !data/mdb_data/.gitkeep
+
+# User uploads (team rosters, PDFs — may contain student data)
+uploads/
+
+# Organized meet data (HyTek databases, large dataset)
+data/organized/
+
+# Championship extracted data (images, scripts)
+data/championship_extracted/
+
+# Parsed data (generated)
+data/parsed/
+
+# HyTek exports (generated CSVs)
+hytek_exports/
 
 # Reports (generated)
 reports/

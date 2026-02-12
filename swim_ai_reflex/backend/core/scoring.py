@@ -368,7 +368,11 @@ def full_meet_scoring(
     # 1. Apply entry limits
     capped = apply_event_entry_limits(long_roster, rules)
 
-    # 2. Score each event
+    # 2. Enforce max events per swimmer (safety net — optimizer should already respect this)
+    if "swimmer" in capped.columns:
+        capped = enforce_max_events_per_swimmer(capped, rules)
+
+    # 3. Score each event
     scored_parts = []
     for ev, grp in capped.groupby("event"):
         scored = score_event_with_rules(grp, rules)
@@ -379,7 +383,7 @@ def full_meet_scoring(
     else:
         full_scored = pd.DataFrame(columns=list(capped.columns) + ["place", "points"])
 
-    # 3. Calculate totals using normalized team names for consistency
+    # 4. Calculate totals using normalized team names for consistency
     # OPTIMIZED: Use centralized normalize_team_name function
     full_scored["team_norm"] = full_scored["team"].apply(normalize_team_name)
 
@@ -399,7 +403,7 @@ def full_meet_scoring(
         "opponent": opponent_score,
     }
 
-    # 4. VALIDATION: Check if scoring follows standard dual meet rules
+    # 5. VALIDATION: Check if scoring follows standard dual meet rules
     if validate:
         try:
             from swim_ai_reflex.backend.core.scoring_validator import (

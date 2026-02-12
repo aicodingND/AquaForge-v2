@@ -24,6 +24,7 @@ from typing import Any
 
 import pandas as pd
 
+from swim_ai_reflex.backend.core.attrition_model import AttritionRates
 from swim_ai_reflex.backend.core.championship_factors import (
     ChampionshipFactors,
     adjust_times_df,
@@ -381,9 +382,15 @@ class ConstraintEngine:
 class ScoringEngine:
     """Calculates meet scores with proper point distribution."""
 
-    def __init__(self, profile: ScoringProfile, fatigue: FatigueModel):
+    def __init__(
+        self,
+        profile: ScoringProfile,
+        fatigue: FatigueModel,
+        attrition: AttritionRates | None = None,
+    ):
         self.profile = profile
         self.fatigue = fatigue
+        self.attrition = attrition or AttritionRates.disabled()
 
     def calculate_adjusted_time(
         self, base_time: float, swim_count: int, is_back_to_back: bool
@@ -410,6 +417,7 @@ class ScoringEngine:
         seton_entries: list[dict],
         opponent_entries: list[dict],
         is_relay: bool = False,
+        event_name: str = "",
     ) -> tuple[float, float, list[dict]]:
         """
         Score a single event.
@@ -477,13 +485,16 @@ class ScoringEngine:
                 }
             )
 
-        return seton_points, opponent_points, details
+        # Risk-adjust by attrition probability (expected-value scoring)
+        discount = self.attrition.completion_factor(event_name) if event_name else 1.0
+        return seton_points * discount, opponent_points * discount, details
 
     def score_event_fast(
         self,
         seton_entries: list[dict],
         opponent_times: list[float],
         is_relay: bool = False,
+        event_name: str = "",
     ) -> float:
         """
         Fast O(log N) scoring for championships using pre-sorted opponent times.
@@ -527,7 +538,9 @@ class ScoringEngine:
                 total_points += points_table[rank - 1]
                 seton_scorers += 1
 
-        return total_points
+        # Risk-adjust by attrition probability
+        discount = self.attrition.completion_factor(event_name) if event_name else 1.0
+        return total_points * discount
 
     def score_lineup(
         self,
@@ -566,7 +579,7 @@ class ScoringEngine:
 
             # Score this event
             seton_pts, opp_pts, _ = self.score_event(
-                seton_entries, opponent_entries, is_relay
+                seton_entries, opponent_entries, is_relay, event_name=event
             )
             seton_total += seton_pts
             opponent_total += opp_pts
@@ -682,13 +695,16 @@ class BeamSearch:
                         and "championship" in scoring_engine.profile.name
                     ):
                         s_pts = scoring_engine.score_event_fast(
-                            seton_entries, opponent_times_sorted[event], is_relay
+                            seton_entries,
+                            opponent_times_sorted[event],
+                            is_relay,
+                            event_name=event,
                         )
                         o_pts = 0.0  # Opponent score irrelevant for championship optimization direction
                     else:
                         opponent_entries = opponent_by_event.get(event, [])
                         s_pts, o_pts, _ = scoring_engine.score_event(
-                            seton_entries, opponent_entries, is_relay
+                            seton_entries, opponent_entries, is_relay, event_name=event
                         )
 
                     lineup_event_scores[i][event] = (s_pts, o_pts)
@@ -731,7 +747,7 @@ class BeamSearch:
                         opponent_entries = opponent_by_event.get(event, [])
                         is_relay = "Relay" in event
                         new_s_pts, new_o_pts, _ = scoring_engine.score_event(
-                            seton_entries, opponent_entries, is_relay
+                            seton_entries, opponent_entries, is_relay, event_name=event
                         )
 
                         # 4. Deltas
@@ -858,7 +874,7 @@ class BeamSearch:
 
             # Score this event
             seton_pts, opp_pts, _ = scoring_engine.score_event(
-                seton_entries, opponent_entries, is_relay
+                seton_entries, opponent_entries, is_relay, event_name=event
             )
             seton_total += seton_pts
             opponent_total += opp_pts
@@ -1070,7 +1086,7 @@ class SimulatedAnnealing:
             opponent_entries = opponent_by_event.get(event, [])
 
             seton_pts, opp_pts, _ = scoring_engine.score_event(
-                seton_entries, opponent_entries, is_relay
+                seton_entries, opponent_entries, is_relay, event_name=event
             )
             seton_total += seton_pts
             opponent_total += opp_pts
@@ -1141,6 +1157,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         nash_iterations: int | None = None,
         use_parallel: bool | None = None,  # NEW: enable parallel seed execution
         championship_factors: ChampionshipFactors | None = None,
+        attrition: AttritionRates | None = None,
     ):
         self.profile = profile or ScoringProfile.visaa_dual()
         self.fatigue = fatigue or FatigueModel()
@@ -1153,6 +1170,14 @@ class AquaOptimizer(BaseOptimizerStrategy):
             self.championship_factors = ChampionshipFactors()
         else:
             self.championship_factors = ChampionshipFactors.disabled()
+
+        # Attrition model (auto-enable for championship profiles)
+        if attrition is not None:
+            self.attrition = attrition
+        elif "championship" in self.profile.name:
+            self.attrition = AttritionRates()
+        else:
+            self.attrition = AttritionRates.disabled()
 
         # Get preset values, allow overrides
         preset = self.QUALITY_PRESETS.get(
@@ -1240,7 +1265,9 @@ class AquaOptimizer(BaseOptimizerStrategy):
 
         # Initialize engines
         constraint_engine = ConstraintEngine(self.profile, events)
-        scoring_engine = ScoringEngine(self.profile, self.fatigue)
+        scoring_engine = ScoringEngine(
+            self.profile, self.fatigue, attrition=self.attrition
+        )
 
         # === Multi-seed ensemble using quality preset ===
         parallel_mode = self.use_parallel and self.num_seeds >= 3

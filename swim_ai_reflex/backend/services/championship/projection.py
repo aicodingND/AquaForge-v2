@@ -10,6 +10,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
+from swim_ai_reflex.backend.core.attrition_model import ATTRITION_RATES, AttritionRates
 from swim_ai_reflex.backend.core.championship_factors import (
     ChampionshipFactors,
     adjust_time,
@@ -156,6 +157,7 @@ class PointProjectionService:
         self,
         meet_profile: str = "vcac_championship",
         championship_factors: ChampionshipFactors | None = None,
+        attrition: AttritionRates | None = None,
     ):
         """
         Initialize projection service.
@@ -164,6 +166,8 @@ class PointProjectionService:
             meet_profile: Meet rules profile to use
             championship_factors: Optional factors for seed time adjustment.
                 Defaults to global singleton (enabled for championship profiles).
+            attrition: Optional attrition rates for DNS/scratch discounting.
+                Defaults to ATTRITION_RATES singleton for championship profiles.
         """
         self.rules = get_meet_profile(meet_profile)
         self.meet_profile = meet_profile
@@ -176,6 +180,14 @@ class PointProjectionService:
             self.factors = ChampionshipFactors()
         else:
             self.factors = ChampionshipFactors.disabled()
+
+        # Enable attrition for championship meet profiles
+        if attrition is not None:
+            self.attrition = attrition
+        elif "championship" in meet_profile or "state" in meet_profile:
+            self.attrition = ATTRITION_RATES
+        else:
+            self.attrition = AttritionRates.disabled()
 
     def project_standings(
         self,
@@ -211,9 +223,10 @@ class PointProjectionService:
             projection = self._project_event(event_name, event_entries)
             event_projections[event_name] = projection
 
-            # Accumulate team totals
+            # Accumulate team totals (discounted by attrition probability)
+            discount = self.attrition.completion_factor(event_name)
             for team, points in projection.team_points.items():
-                team_totals[team] += points
+                team_totals[team] += points * discount
 
             # Find swing events for target team
             swing = self._find_swing_events(projection, target_team)

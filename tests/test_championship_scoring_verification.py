@@ -14,12 +14,21 @@ from swim_ai_reflex.backend.core.rules import get_meet_profile
 
 
 def get_projection_service(meet_profile: str = "vcac_championship"):
-    """Lazy import to avoid circular import issues."""
+    """Lazy import to avoid circular import issues.
+
+    Disables attrition and championship factors to isolate scoring logic.
+    """
+    from swim_ai_reflex.backend.core.attrition_model import AttritionRates
+    from swim_ai_reflex.backend.core.championship_factors import ChampionshipFactors
     from swim_ai_reflex.backend.services.championship.projection import (
         PointProjectionService,
     )
 
-    return PointProjectionService(meet_profile=meet_profile)
+    return PointProjectionService(
+        meet_profile=meet_profile,
+        championship_factors=ChampionshipFactors.disabled(),
+        attrition=AttritionRates.disabled(),
+    )
 
 
 class TestPointsTableAccuracy:

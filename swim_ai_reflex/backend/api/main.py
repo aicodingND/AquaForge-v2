@@ -120,8 +120,8 @@ def create_app() -> FastAPI:
     app.include_router(dual_meet.router, prefix="/api/v2", tags=["Dual Meet"])
     app.include_router(championship.router, prefix="/api/v2", tags=["Championship"])
 
-    # Live tracking (v2)
-    app.include_router(live_tracker.router, tags=["Live Tracking"])
+    # Live tracking
+    app.include_router(live_tracker.router, prefix="/api/v1", tags=["Live Tracking"])
 
     return app
 

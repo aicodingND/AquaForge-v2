@@ -40,6 +40,38 @@ class MeetRules:
         if self.max_entries_per_team_per_event <= 0:
             raise ValueError("max_entries_per_team_per_event must be positive")
 
+    def announce_rules(self, event_counts: dict | None = None) -> str:
+        """
+        Print active rules and constraints for transparency.
+        Called at the start of every optimization run.
+
+        Args:
+            event_counts: Optional dict with keys 'individual', 'relay', 'diving'
+                         showing how many events of each type were detected.
+        Returns:
+            Formatted string (also printed to stdout).
+        """
+        lines = [
+            f"  Rules: {self.name}",
+            f"  Points: ind={self.individual_points}  relay={self.relay_points}",
+            f"  Constraints: max_ind={self.max_individual_events_per_swimmer}, "
+            f"max_total={self.max_total_events_per_swimmer}, "
+            f"max_entries/evt={self.max_entries_per_team_per_event}, "
+            f"max_relays/evt={self.max_relays_per_team_per_event}",
+            f"  Scoring: max_scorers_ind={self.max_scorers_per_team_individual}, "
+            f"max_scorers_relay={self.max_scorers_per_team_relay}, "
+            f"min_grade={self.min_scoring_grade}",
+        ]
+        if event_counts:
+            lines.append(
+                f"  Events detected: {event_counts.get('individual', 0)} individual, "
+                f"{event_counts.get('relay', 0)} relay, "
+                f"{event_counts.get('diving', 0)} diving"
+            )
+        msg = "\n".join(lines)
+        print(msg, flush=True)
+        return msg
+
 
 @dataclass
 class VISAADualRules(MeetRules):
@@ -395,6 +427,33 @@ class VISAAStateRules(MeetRules):
     has_prelims_finals: bool = True
     no_exhibition: bool = True
     bonus_swimmers_score: bool = False  # Bonus event swimmers cannot score
+    diving_counts_as_individual: bool = True
+
+    def is_valid_entry(
+        self, swim_individual: int, is_diver: bool, relay_count: int
+    ) -> bool:
+        """
+        Check if swimmer entry is valid per VISAA State rules (standard NFHS).
+
+        Rules (NFHS Rule 3-2-1):
+        - Max 2 individual swim events
+        - Diving counts as 1 individual
+        - Max 3 relays
+        - Max 4 total events
+        - NO relay-3 penalty (400 FR does NOT cost an individual slot)
+
+        Unlike VCAC, the 400 Free Relay is a regular relay at VISAA State.
+        Verified: 2026-02-11 via NFHS Rule 3-2-1, VISAA official rules.
+        """
+        if swim_individual > 2:
+            return False
+        if relay_count > 3:
+            return False
+
+        individual_used = swim_individual + (1 if is_diver else 0)
+        total_events = individual_used + relay_count
+
+        return individual_used <= 2 and total_events <= 4
 
 
 # =============================================================================

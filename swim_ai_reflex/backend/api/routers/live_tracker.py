@@ -12,7 +12,7 @@ from swim_ai_reflex.backend.services.live_meet_tracker import (
     create_live_tracker,
 )
 
-router = APIRouter(prefix="/api/live", tags=["live-tracking"])
+router = APIRouter(prefix="/live", tags=["live-tracking"])
 
 # In-memory tracker instances (keyed by meet_name)
 # In production, use Redis or database for persistence
@@ -322,6 +322,6 @@ def _get_tracker(meet_name: str) -> LiveMeetTracker:
     if meet_name not in _trackers:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Meet '{meet_name}' not initialized. Use POST /api/live/initialize first.",
+            detail=f"Meet '{meet_name}' not initialized. Use POST /api/v1/live/initialize first.",
         )
     return _trackers[meet_name]

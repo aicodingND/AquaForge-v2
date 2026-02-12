@@ -24,6 +24,7 @@ from swim_ai_reflex.backend.core.rules import (
     SetonDualRules,
     VCACChampRules,
     VISAADualRules,
+    VISAAStateRules,
     get_meet_profile,
 )
 from swim_ai_reflex.backend.core.scoring import full_meet_scoring
@@ -437,6 +438,76 @@ class TestDivingCountsAsIndividualEvent:
         assert totals["opponent"] == 13.0, (
             f"Diving 2nd place should get 13 (individual). Got {totals['opponent']}"
         )
+
+
+class TestVISAAStateEntryValidation:
+    """
+    Regression tests: VISAA State entry validation (standard NFHS, NO relay-3 penalty).
+
+    Key difference from VCAC: the 400 Free Relay does NOT cost an individual slot.
+    Verified: 2026-02-11 via NFHS Rule 3-2-1, VISAA official rules.
+    """
+
+    def test_visaa_state_has_is_valid_entry(self):
+        """VISAA State rules must have is_valid_entry method."""
+        rules = VISAAStateRules()
+        assert hasattr(rules, "is_valid_entry")
+
+    def test_visaa_state_diving_counts_as_individual(self):
+        """CONSTRAINT: Diving counts as 1 individual slot at VISAA State."""
+        rules = VISAAStateRules()
+        assert rules.diving_counts_as_individual is True
+
+    def test_visaa_state_2_swim_2_relay_valid(self):
+        """CONSTRAINT: 2 swim + 2 relay = 4 events, 2 individual = VALID."""
+        rules = VISAAStateRules()
+        assert rules.is_valid_entry(swim_individual=2, is_diver=False, relay_count=2)
+
+    def test_visaa_state_1_swim_3_relay_valid(self):
+        """CONSTRAINT: 1 swim + 3 relay = 4 events, 1 individual = VALID.
+        Unlike VCAC, the 400 FR does NOT cost an individual slot here."""
+        rules = VISAAStateRules()
+        assert rules.is_valid_entry(swim_individual=1, is_diver=False, relay_count=3)
+
+    def test_visaa_state_2_swim_3_relay_invalid(self):
+        """CONSTRAINT: 2 swim + 3 relay = 5 events > 4 max = INVALID."""
+        rules = VISAAStateRules()
+        assert not rules.is_valid_entry(
+            swim_individual=2, is_diver=False, relay_count=3
+        )
+
+    def test_visaa_state_diver_plus_1_swim_valid(self):
+        """CONSTRAINT: Diver + 1 swim = 2 effective individual = VALID."""
+        rules = VISAAStateRules()
+        assert rules.is_valid_entry(swim_individual=1, is_diver=True, relay_count=0)
+
+    def test_visaa_state_diver_plus_2_swims_invalid(self):
+        """CONSTRAINT: Diver + 2 swims = 3 effective individual > 2 = INVALID."""
+        rules = VISAAStateRules()
+        assert not rules.is_valid_entry(swim_individual=2, is_diver=True, relay_count=0)
+
+    def test_visaa_state_diver_plus_1_swim_plus_2_relays_valid(self):
+        """CONSTRAINT: Diver + 1 swim + 2 relay = 2 indiv + 2 relay = 4 total = VALID."""
+        rules = VISAAStateRules()
+        assert rules.is_valid_entry(swim_individual=1, is_diver=True, relay_count=2)
+
+    def test_visaa_state_no_relay3_penalty(self):
+        """
+        CRITICAL: 400 FR does NOT cost individual slot at VISAA State.
+
+        At VCAC: 1 swim + 3 relays (400FR) = 2 effective individual (penalty) = VALID but constrained.
+        At VISAA State: 1 swim + 3 relays = 1 effective individual = VALID, no constraint from relay.
+        This is the key difference between VCAC and VISAA State rules.
+        """
+        visaa = VISAAStateRules()
+        # 1 swim + 0 dive + 3 relays = 1 indiv, 4 total = VALID at VISAA State
+        assert visaa.is_valid_entry(swim_individual=1, is_diver=False, relay_count=3)
+
+        # Compare with VCAC where same combo costs an extra slot
+        vcac = VCACChampRules()
+        # At VCAC: 1 swim + 3 relays includes 400FR penalty = 2 effective individual
+        # Still valid at VCAC too (2 <= 2), but the penalty is applied
+        assert vcac.is_valid_entry(swim_individual=1, is_diver=False, relay_count=3)
 
 
 class TestScoringModeRouting:

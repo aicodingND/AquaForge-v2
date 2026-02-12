@@ -1,0 +1,62 @@
+swimmer,gender,status,coach_events,coach_seed_pts,coach_actual_pts,optimizer_events,optimizer_seed_pts,delta_seed
+Therese Paradise,F,DIFFER,G 500 Free (seed:340.2 P9 4pts) | G 50 Free (seed:26.2 P14 0pts),4,43,G 100 Breast (seed:71.8 P5 10pts) | G 100 Fly (seed:64.0 P6 9pts),19,15
+Penny Kramer,F,Opt only,-,0,0,G 200 Free (seed:106.0 P3 12pts),12,12
+Philomena Kay,F,DIFFER,G 200 Free (seed:134.6 P19 0pts) | G 50 Free (seed:27.1 P19 0pts),0,20,G 100 Breast (seed:78.5 P10 3pts) | G 200 IM (seed:122.0 P6 9pts),12,12
+Betsy Arnold,F,DIFFER,G 100 Back (seed:71.8 P15 0pts) | G 200 Free (seed:149.6 P32 0pts),0,16,G 200 IM (seed:119.0 P4 11pts),11,11
+Siobhan Maher,F,DIFFER,G 50 Free (seed:35.6 P? 0pts) | G 100 Breast (seed:98.2 P? 0pts),0,0,G 200 IM (seed:122.0 P5 10pts),10,10
+Lara Martinez,F,DIFFER,G 100 Fly (seed:69.5 P9 4pts) | G 50 Free (seed:28.2 P? 0pts),4,7,G 100 Breast (seed:74.4 P7 7pts) | G 100 Fly (seed:69.5 P9 4pts),11,7
+Melissa Paradise,F,DIFFER,G 100 Back (seed:56.9 P1 16pts) | G 200 IM (seed:134.0 P7 7pts),23,48,G 100 Back (seed:56.9 P1 16pts) | G 500 Free (seed:326.1 P2 13pts),29,6
+Gigi Gibaldi,F,DIFFER,G 50 Free (seed:34.1 P? 0pts) | G 100 Free (seed:81.0 P? 0pts),0,0,G 200 Free (seed:122.9 P9 4pts),4,4
+Avila Mantooth,F,DIFFER,G 50 Free (seed:27.4 P? 0pts) | G 100 Breast (seed:83.6 P19 0pts),0,4,G 200 IM (seed:124.7 P9 4pts),4,4
+Ariana Aldeguer,F,DIFFER,G 100 Fly (seed:57.0 P2 13pts) | G 200 Free (seed:113.0 P3 12pts),25,45,G 100 Back (seed:57.3 P2 13pts) | G 100 Free (seed:53.0 P1 16pts),29,4
+Annie Dusek,F,Coach only,G 100 Fly (seed:76.0 P19 0pts) | G 500 Free (seed:428.3 P29 0pts),0,4,-,0,0
+Camila Quispe,F,Coach only,G 100 Free (seed:92.7 P? 0pts) | G 100 Breast (seed:119.8 P? 0pts),0,0,-,0,0
+Heidi Mayer,F,Coach only,G 50 Free (seed:40.4 P? 0pts) | G 100 Free (seed:159.2 P? 0pts),0,0,-,0,0
+Caeli McCardell,F,Coach only,G 50 Free (seed:39.4 P? 0pts) | G 100 Back (seed:138.2 P? 0pts),0,0,-,0,0
+Charlotte Meadows,F,Coach only,G 100 Fly (seed:80.1 P26 0pts) | G 100 Back (seed:82.3 P36 0pts),0,2,-,0,0
+Maria Miller,F,Neither,-,0,0,-,0,0
+Maeve Mooney,F,Coach only,G 100 Back (seed:108.8 P? 0pts) | G 50 Free (seed:39.1 P? 0pts),0,0,-,0,0
+Angela Andreu,F,Neither,-,0,0,-,0,0
+Naomi Allen,F,Coach only,G 50 Free (seed:33.1 P? 0pts) | G 100 Free (seed:95.9 P? 0pts),0,0,-,0,0
+Gianna Pillion,F,Coach only,G 50 Free (seed:34.5 P? 0pts) | G 100 Free (seed:85.4 P? 0pts),0,0,-,0,0
+Charlotte Poullath,F,Coach only,G 50 Free (seed:32.2 P? 0pts) | G 100 Free (seed:76.3 P54 0pts),0,0,-,0,0
+Allison Quispe,F,Coach only,G 50 Free (seed:34.0 P? 0pts) | G 100 Breast (seed:108.6 P? 0pts),0,0,-,0,0
+Alexis Reeves,F,Coach only,G 50 Free (seed:30.5 P? 0pts) | G 100 Back (seed:101.3 P? 0pts),0,0,-,0,0
+Mary Elder,F,Coach only,G 50 Free (seed:40.2 P? 0pts) | G 100 Free (seed:102.9 P? 0pts),0,0,-,0,0
+Sofia Reeves,F,Coach only,G 50 Free (seed:33.5 P? 0pts) | G 100 Back (seed:90.2 P? 0pts),0,0,-,0,0
+Therese Rehmann,F,Coach only,G 50 Free (seed:38.4 P? 0pts) | G 100 Breast (seed:142.7 P? 0pts),0,0,-,0,0
+Gabriella Russo,F,Coach only,G 200 Free (seed:152.2 P36 0pts) | G 500 Free (seed:408.3 P20 0pts),0,5,-,0,0
+Caroline Schroer,F,Coach only,G 50 Free (seed:31.6 P? 0pts) | G 100 Breast (seed:88.3 P? 0pts),0,0,-,0,0
+Bella Vaughan,F,Coach only,G 50 Free (seed:34.3 P? 0pts) | G 100 Free (seed:89.4 P? 0pts),0,0,-,0,0
+Jane Vaughan,F,Coach only,G 50 Free (seed:30.3 P? 0pts),0,0,-,0,0
+Lily Waldron,F,Coach only,G 50 Free (seed:29.9 P? 0pts) | G 200 Free (seed:169.8 P? 0pts),0,0,-,0,0
+Jocelynn Wilson,F,Coach only,G 50 Free (seed:34.2 P? 0pts) | G 100 Free (seed:82.5 P? 0pts),0,0,-,0,0
+Clare Judge,F,Neither,-,0,0,-,0,0
+Molly Crosen,F,Neither,-,0,0,-,0,0
+Evie Mayer,F,Coach only,G 50 Free (seed:43.6 P? 0pts) | G 100 Free (seed:104.2 P? 0pts),0,0,-,0,0
+Clara Bauer,F,Coach only,G 50 Free (seed:34.3 P? 0pts) | G 100 Back (seed:98.7 P? 0pts),0,0,-,0,0
+Julia Maranian,F,Coach only,G 50 Free (seed:40.1 P? 0pts) | G 100 Back (seed:110.1 P? 0pts),0,0,-,0,0
+Katie Bauer,F,DIFFER,G 50 Free (seed:30.4 P? 0pts) | G 100 Free (seed:67.6 P37 0pts),0,0,G 200 Free (seed:129.1 P14 0pts),0,0
+Kyleigh Fifield,F,Coach only,G 200 IM (seed:187.1 P52 0pts) | G 500 Free (seed:389.0 P17 0pts),0,8,-,0,0
+Leah Fifield,F,Coach only,G 100 Breast (seed:106.4 P? 0pts) | G 50 Free (seed:38.0 P? 0pts),0,0,-,0,0
+Katie Cooley,F,Coach only,G 50 Free (seed:30.9 P? 0pts) | G 200 IM (seed:0.0 P? 0pts),0,0,-,0,0
+Bella Gorman,F,Neither,-,0,0,-,0,0
+Addi Hadro,F,Coach only,G 50 Free (seed:42.4 P? 0pts),0,0,-,0,0
+Aoife Haggerty,F,Coach only,G 50 Free (seed:30.4 P? 0pts) | G 100 Breast (seed:88.0 P30 0pts),0,2,-,0,0
+Camille Hallada,F,Coach only,G 50 Free (seed:45.1 P? 0pts) | G 100 Free (seed:94.9 P? 0pts),0,0,-,0,0
+Maddie Henderson,F,Coach only,G 50 Free (seed:35.1 P? 0pts) | G 100 Free (seed:81.8 P? 0pts),0,0,-,0,0
+Natalia Hercules,F,Coach only,G 50 Free (seed:45.9 P? 0pts) | G 100 Free (seed:129.2 P? 0pts),0,0,-,0,0
+Lucy Herwick,F,Coach only,G 50 Free (seed:27.4 P20 0pts) | G 100 Free (seed:76.8 P? 0pts),0,0,-,0,0
+Elizabeth Hurley,F,Coach only,G 100 Breast (seed:87.5 P29 0pts) | G 50 Free (seed:30.2 P? 0pts),0,1,-,0,0
+Monica Irving,F,Coach only,G 50 Free (seed:32.8 P? 0pts) | G 100 Back (seed:84.8 P? 0pts),0,0,-,0,0
+Jane Judge,F,Coach only,G 50 Free (seed:30.2 P? 0pts) | G 100 Back (seed:79.2 P31 0pts),0,3,-,0,0
+Clare Kay,F,Coach only,G 50 Free (seed:30.4 P? 0pts) | G 100 Free (seed:71.9 P44 0pts),0,0,-,0,0
+Marian Kay,F,Coach only,G 50 Free (seed:35.1 P? 0pts) | G 100 Free (seed:80.0 P? 0pts),0,0,-,0,0
+Meghan Condon,F,Neither,-,0,0,-,0,0
+Colette Kramer,F,DIFFER,G 50 Free (seed:33.8 P? 0pts) | G 100 Breast (seed:115.4 P? 0pts),0,0,G 200 Free (seed:126.9 P13 0pts),0,0
+Bethany Allen,F,Coach only,G 50 Free (seed:35.1 P? 0pts) | G 100 Free (seed:89.5 P? 0pts),0,0,-,0,0
+Rebecca Kramer,F,Coach only,G 50 Free (seed:35.9 P? 0pts) | G 100 Free (seed:83.7 P? 0pts),0,0,-,0,0
+Emma Beltran,F,Coach only,G 50 Free (seed:32.2 P? 0pts) | G 100 Free (seed:77.0 P? 0pts),0,0,-,0,0
+Cora Kramer,F,Coach only,G 50 Free (seed:37.1 P? 0pts) | G 100 Breast (seed:102.8 P? 0pts),0,0,-,0,0
+Maggie Schroer,F,MATCH,G 50 Free (seed:25.8 P12 1pts) | G 100 Free (seed:57.3 P11 2pts),3,14,G 100 Free (seed:57.3 P12 1pts) | G 50 Free (seed:25.8 P12 1pts),2,-1
+Sophia Halisky,F,DIFFER,G 100 Breast (seed:77.3 P6 9pts) | G 200 IM (seed:155.8 P33 0pts),9,19,G 100 Breast (seed:77.3 P8 5pts),5,-4

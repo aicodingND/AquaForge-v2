@@ -1,0 +1,49 @@
+swimmer,gender,status,coach_events,coach_seed_pts,coach_actual_pts,optimizer_events,optimizer_seed_pts,delta_seed
+Rafael De Micoli,M,DIFFER,B 50 Free (seed:31.9 P? 0pts) | B 100 Breast (seed:86.2 P16 0pts),0,2,B 200 Free (seed:95.1 P1 16pts),16,16
+Patrick Kay,M,DIFFER,B 100 Free (seed:55.3 P9 4pts) | B 100 Back (seed:62.1 P5 10pts),14,18,B 100 Back (seed:62.1 P5 10pts) | B 500 Free (seed:349.3 P6 9pts),19,5
+Thomas Goodman,M,DIFFER,B 50 Free (seed:42.9 P? 0pts) | B 100 Back (seed:157.4 P? 0pts),0,0,B 200 Free (seed:119.7 P9 4pts),4,4
+Lionel Martinez,M,DIFFER,B 100 Fly (seed:50.9 P2 13pts) | B 200 Free (seed:102.5 P2 13pts),26,42,B 100 Fly (seed:50.9 P2 13pts) | B 500 Free (seed:287.2 P1 16pts),29,3
+Brian Orellana,M,Opt only,-,0,0,B 200 IM (seed:129.3 P10 3pts),3,3
+Luke Partridge,M,DIFFER,B 100 Free (seed:60.4 P17 0pts) | B 100 Back (seed:67.5 P11 2pts),2,4,B 100 Breast (seed:74.9 P8 5pts),5,3
+Gregory Bauer,M,DIFFER,B 500 Free (seed:357.0 P6 9pts) | B 50 Free (seed:24.3 P10 3pts),12,17,B 100 Breast (seed:69.2 P6 9pts) | B 500 Free (seed:357.0 P8 5pts),14,2
+Jack Herwick,M,DIFFER,B 100 Fly (seed:62.1 P7 7pts) | B 200 Free (seed:134.9 P13 0pts),7,21,B 100 Fly (seed:62.1 P8 5pts) | B 50 Free (seed:24.2 P9 4pts),9,2
+Thiago Martinez,M,DIFFER,B 100 Back (seed:55.7 P4 11pts) | B 50 Free (seed:23.4 P6 9pts),20,35,B 100 Back (seed:55.7 P4 11pts) | B 100 Fly (seed:53.5 P5 10pts),21,1
+Daniel Sokban,M,MATCH,B 50 Free (seed:22.5 P3 12pts) | B 100 Free (seed:52.2 P5 10pts),22,21,B 100 Free (seed:52.2 P5 10pts) | B 50 Free (seed:22.5 P3 12pts),22,0
+Kolbe Partridge,M,Coach only,B 50 Free (seed:31.3 P? 0pts) | B 100 Free (seed:73.1 P? 0pts),0,0,-,0,0
+Mark Hartung,M,Neither,-,0,0,-,0,0
+Philip Nguyen,M,DIFFER,B 50 Free (seed:34.5 P? 0pts) | B 100 Breast (seed:127.3 P? 0pts),0,0,B 200 Free (seed:137.2 P15 0pts),0,0
+Peter O'Malley,M,Coach only,B 50 Free (seed:31.8 P? 0pts) | B 100 Back (seed:90.8 P? 0pts),0,0,-,0,0
+John Witter,M,Neither,-,0,0,-,0,0
+Joe Witter,M,Coach only,B 50 Free (seed:27.9 P? 0pts) | B 100 Free (seed:69.5 P29 0pts),0,0,-,0,0
+William Orellana,M,DIFFER,B 50 Free (seed:38.5 P? 0pts),0,0,B 200 Free (seed:135.3 P14 0pts),0,0
+Patrick Wise,M,Coach only,B 50 Free (seed:37.8 P? 0pts) | B 100 Free (seed:100.5 P? 0pts),0,0,-,0,0
+Dominic Sciscilo,M,Coach only,B 50 Free (seed:32.2 P? 0pts) | B 100 Free (seed:76.8 P? 0pts),0,0,-,0,0
+Thomas Waldron,M,Neither,-,0,0,-,0,0
+Paul Partridge,M,Coach only,B 100 Fly (seed:73.0 P16 0pts) | B 200 Free (seed:150.2 P20 0pts),0,14,-,0,0
+James Reynolds,M,Coach only,B 50 Free (seed:30.5 P? 0pts) | B 100 Breast (seed:100.5 P? 0pts),0,0,-,0,0
+James Nguyen,M,Coach only,B 100 Breast (seed:83.3 P13 0pts) | B 50 Free (seed:29.8 P? 0pts),0,4,-,0,0
+Daniel Schroer,M,Coach only,B 50 Free (seed:30.1 P? 0pts) | B 100 Back (seed:96.4 P? 0pts),0,0,-,0,0
+Noah Vaughan,M,Coach only,B 50 Free (seed:30.1 P? 0pts),0,0,-,0,0
+Christoper Schroer,M,Coach only,B 50 Free (seed:32.1 P? 0pts) | B 100 Back (seed:93.4 P? 0pts),0,0,-,0,0
+Maximilian Ashton,M,Neither,-,0,0,-,0,0
+Aidan McCardell,M,Coach only,B 50 Free (seed:34.3 P? 0pts) | B 500 Free (seed:496.5 P21 0pts),0,5,-,0,0
+Gabriel Marm,M,Coach only,B 50 Free (seed:35.4 P? 0pts) | B 100 Free (seed:82.8 P? 0pts),0,0,-,0,0
+James Beltran,M,Coach only,B 50 Free (seed:32.3 P? 0pts) | B 100 Free (seed:84.2 P? 0pts),0,0,-,0,0
+Joel Bookwalter,M,DIFFER,B 100 Fly (seed:80.5 P18 0pts) | B 200 Free (seed:141.8 P18 0pts),0,9,B 100 Back (seed:73.5 P14 0pts),0,0
+Michael Brand,M,Coach only,B 50 Free (seed:28.7 P? 0pts),0,0,-,0,0
+Anselm Clune,M,Coach only,B 50 Free (seed:42.7 P? 0pts) | B 100 Breast (seed:128.7 P? 0pts),0,0,-,0,0
+Lucas de Brey,M,Coach only,B 50 Free (seed:39.4 P? 0pts) | B 100 Breast (seed:183.8 P? 0pts),0,0,-,0,0
+Charlie Dusek,M,Coach only,B 100 Fly (seed:108.5 P? 0pts) | B 500 Free (seed:481.6 P20 0pts),0,7,-,0,0
+Luke Fifield,M,Coach only,B 200 IM (seed:190.7 P? 0pts) | B 50 Free (seed:29.9 P? 0pts),0,2,-,0,0
+Eamon Haggerty,M,Coach only,B 50 Free (seed:33.5 P? 0pts) | B 100 Free (seed:81.5 P? 0pts),0,0,-,0,0
+Oisin Haggerty,M,Coach only,B 50 Free (seed:37.1 P? 0pts),0,0,-,0,0
+Gus Halisky,M,Coach only,B 50 Free (seed:36.1 P? 0pts) | B 100 Free (seed:86.6 P? 0pts),0,0,-,0,0
+Blaise Hallada,M,Coach only,B 50 Free (seed:31.3 P? 0pts) | B 100 Back (seed:115.2 P? 0pts),0,0,-,0,0
+Dominic Henry,M,Coach only,B 50 Free (seed:35.0 P? 0pts) | B 100 Breast (seed:136.3 P? 0pts),0,0,-,0,0
+William Judge,M,Coach only,B 200 IM (seed:176.1 P30 0pts) | B 50 Free (seed:31.5 P? 0pts),0,0,-,0,0
+Connor Kay,M,Coach only,B 50 Free (seed:35.2 P? 0pts) | B 100 Free (seed:81.3 P? 0pts),0,0,-,0,0
+Joey Lynch,M,DIFFER,B 100 Back (seed:71.4 P14 0pts) | B 200 IM (seed:158.3 P22 0pts),0,10,B 100 Back (seed:71.4 P13 0pts),0,0
+Caleb Neuhaus,M,Neither,-,0,0,-,0,0
+Jonas Wilson,M,MATCH,B 200 IM (seed:105.1 P1 16pts) | B 500 Free (seed:370.2 P8 5pts),21,21,B 200 IM (seed:105.1 P1 16pts) | B 500 Free (seed:370.2 P10 3pts),19,-2
+Dominic Judge,M,DIFFER,B 100 Breast (seed:72.7 P6 9pts) | B 200 IM (seed:135.5 P10 3pts),12,34,B 100 Breast (seed:72.7 P7 7pts) | B 100 Fly (seed:62.8 P10 3pts),10,-2
+Bennett Ellis,M,DIFFER,B 50 Free (seed:26.8 P20 0pts) | B 100 Breast (seed:77.1 P7 7pts),7,11,B 100 Breast (seed:77.1 P9 4pts),4,-3

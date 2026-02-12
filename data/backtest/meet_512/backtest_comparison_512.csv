@@ -1,0 +1,5 @@
+strategy,seton_pts,rank,time
+Actual Results,529.0,1,-
+Baseline Projection,506.0,1,0.03s
+Gurobi (constrained),501.0,1,1.41s
+Aqua (Seton score),752.0,0,162.61s

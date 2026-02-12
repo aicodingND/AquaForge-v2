@@ -20,6 +20,21 @@ Capture patterns that work well for reuse.
 
 ---
 
+## High-Value Repeats (proven improvements — always apply)
+
+| Pattern | When to Apply | Payoff |
+|---------|---------------|--------|
+| **Callback ref pattern** | Any custom hook accepting `on*` callbacks | Eliminates infinite re-render loops |
+| **Verify domain rules vs authoritative sources** | Any scoring/eligibility/constraint change | Caught 3 swapped scoring tables + wrong grade rules |
+| **Multi-layer code audit** | Verifying a business rule is enforced | Confirmed diving rule across 5 code layers — zero gaps |
+| **Primary + fallback strategy** | Any service with alternative backends | Saved $10K/yr Gurobi license, zero downtime |
+| **Read the file before editing** | Every code change | Caught `// ...` broken JSX instantly |
+
+**On every frontend task:** Apply callback ref pattern to any new custom hook with callbacks.
+**On every domain-rule task:** Verify against external source (NFHS, NCAA, VISAA) before documenting.
+
+---
+
 ## Logged Patterns
 
 <!-- Append new entries below this line -->
@@ -82,6 +97,11 @@ assert abs(aqua_result.score - gurobi_result.score) < threshold
 4. Validation layer (validation.py, scoring_validator.py)
 5. Tests (existing coverage)
 
+## 2026-02-02 Pattern: Heuristic Format Detection Facade
+**Context:** Parsing multiple uploaded file formats (CSV, generic text, HTML) with a single entry point.
+**Solution:** `PsychSheetParser.parse()` acts as a facade. checks file extension or content signatures (e.g., regex match for "HyTek") to select strategy.
+**Reuse:** When building import services for ambiguous inputs.
+
 ## 2026-02-02 Pattern: Live Meet Tracker Architecture
 
 **Context:** Real-time championship meet tracking during competition
@@ -108,3 +128,36 @@ Key decisions:
 - Psych sheet provides initial projections
 - Combines actual + projected for live standings
 - Clinch scenarios guide coaching decisions
+
+## 2026-02-02 Pattern: Callback Ref for Stable React Hook Dependencies
+
+**Context:** Inline callbacks passed to custom hooks cause infinite re-render loops when included in `useEffect`/`useCallback` dependency arrays.
+**What Worked:** Store callbacks in `useRef` and update synchronously during render. Effects read `ref.current` instead of the callback directly — the ref identity never changes, so effects stay stable.
+**Reuse When:** Any custom hook accepts callback options (`onLoad`, `onSave`, `onError`, `onChange`) that callers define inline.
+**Example:**
+```tsx
+function useMyHook({ onLoad, onSave }: Options) {
+  // Stable refs — updated every render, but identity never changes
+  const onLoadRef = useRef(onLoad);
+  const onSaveRef = useRef(onSave);
+  onLoadRef.current = onLoad;
+  onSaveRef.current = onSave;
+
+  useEffect(() => {
+    // ✅ Only fires when `key` changes, not on every render
+    const data = localStorage.getItem(key);
+    if (data) onLoadRef.current?.(JSON.parse(data));
+  }, [key]);
+
+  const save = useCallback((data) => {
+    localStorage.setItem(key, JSON.stringify(data));
+    onSaveRef.current?.(data);
+  }, [key]); // ✅ Stable — no callback in deps
+}
+```
+**Why it works:** `useRef` returns a mutable object with a stable identity across renders. Assigning `.current` during render is safe (synchronous, no side effects). React never "sees" the ref change, so dependency arrays remain stable.
+**Anti-pattern it replaces:**
+```tsx
+// ❌ onLoad is new every render → effect fires every render
+useEffect(() => { onLoad?.(data); }, [key, onLoad]);
+```

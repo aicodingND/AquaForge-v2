@@ -18,6 +18,19 @@ Track errors and their fixes to avoid repeating them.
 
 ---
 
+## Recurring Error Patterns (check these FIRST on every task)
+
+| # | Pattern | Frequency | Files Most Affected | Quick Check |
+|---|---------|-----------|---------------------|-------------|
+| 1 | **Docs wrong, code correct** — documentation diverges from implementation | 3/5 errors | `docs/`, `.agent/KNOWLEDGE_BASE.md`, YAML configs | Always trust the code, verify docs against it |
+| 2 | **Incomplete edits** — partial changes that leave broken references | 2/5 errors | Any file touched by AI or bulk refactor | After every edit: grep for old names, run `tsc --noEmit` |
+| 3 | **React callback instability** — inline functions in hook dep arrays | 1/5 errors | `hooks/`, any custom hook with callback options | Any `useEffect`/`useCallback` with a callback dep → use ref pattern |
+| 4 | **Config value mismatches** — YAML/JSON configs disagree with code constants | 2/5 errors | `SCORING_RULES.yaml`, meet JSON files, `rules.py` | Diff config values against code constants before trusting either |
+
+**On every session start:** Scan modified files for patterns #1 and #2 before doing new work.
+
+---
+
 ## Logged Mistakes
 
 <!-- Append new entries below this line -->
@@ -45,3 +58,33 @@ Track errors and their fixes to avoid repeating them.
 **Root Cause:** Original author may have confused "grades 7 and below" with "grades 7-8". The code correctly uses `min_scoring_grade = 8` (grade >= 8 scores).
 **Fix:** Changed to `exhibition_grades: [6, 7]` and `scoring_grades: [8, 9, 10, 11, 12]`.
 **Prevention:** When documenting grade rules, always cross-check against the code's `min_scoring_grade` value.
+
+## [2026-02-02] UI State Persistence Glitch — Restore Session Popup Infinite Loop
+
+**Files:** `frontend/src/components/AutoSaveIndicator.tsx`, `frontend/src/hooks/usePersistence.tsx`
+
+**Issue:** "Restore Session" popup reoccurred on every render, couldn't be dismissed, and did nothing when clicked.
+
+**Root Causes (2):**
+
+1. **Broken JSX in AutoSaveIndicator.tsx:78** — The component's `return` statement, modal wrapper (`<div className="fixed inset-0 z-50..."`), heading, description, and `handleForceSave` function were replaced with a literal `// ...` comment. This made the component syntactically invalid — the popup couldn't render, and the "Save Now" button crashed on the undefined `handleForceSave`.
+
+2. **Unstable callback refs in usePersistence.tsx** — `onLoad`, `onSave`, `onError` were inline functions included in `useEffect`/`useCallback` dependency arrays. Every re-render created new function references → React saw deps "changed" → load effect re-fired → `setShowRestorePrompt(true)` called again → re-render → infinite cycle. The same instability caused the auto-save `useEffect` (which depended on `saveData`, which depended on `onSave`) to re-fire every render, resetting the 2s debounce timer endlessly.
+
+**Fix:**
+1. Restored complete JSX: `handleForceSave` function + `return (<>` + `{showRestorePrompt && (` conditional + modal overlay + glass card + heading + description.
+2. Added stable `useRef` wrappers for all three callbacks (`onLoadRef`, `onSaveRef`, `onErrorRef`). Refs are updated synchronously during render (`ref.current = callback`) but never change identity, so effects only fire when `key` changes — not on every render.
+
+**Cost of Bug:**
+- Users could never restore a previous session → lost work every page reload
+- Save indicator pulsed continuously (isSaving toggled every 2s) → visual noise
+- Potential localStorage thrashing from constant re-saves
+
+**Prevention:**
+- Never include inline callbacks in `useEffect`/`useCallback` dependency arrays — use the callback ref pattern instead (see PATTERNS.md → "Callback Ref")
+- When editing JSX, always verify the return statement and conditional wrappers remain intact
+- Run `tsc --noEmit` or check IDE diagnostics after edits — the broken file would have shown immediate syntax errors
+
+**Recurring pattern match:** #2 (incomplete edit — `// ...` replaced code) + #3 (React callback instability)
+
+**What worked in diagnosis:** Reading the component file revealed the `// ...` immediately. Tracing the `useEffect` dep chain (`onLoad` → re-render → new `onLoad` → effect re-fires) identified the infinite loop. Both fixes took <5 min once root causes were clear — the lesson is **read the file first, trace the render cycle second**.

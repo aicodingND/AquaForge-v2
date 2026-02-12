@@ -229,3 +229,49 @@ governing body) before documenting. Internal docs can propagate errors if not cr
 - Complete P1 tests
 - Wire live tracker API to main app
 - Test with real VCAC psych sheet data
+
+---
+
+## 2026-02-02 Session (Frontend Persistence Fix)
+
+### Cost / Benefit Analysis
+
+| Item | Cost (Before Fix) | Benefit (After Fix) |
+|---|---|---|
+| Session Restore | Broken — popup infinite loop, never dismisses | Works — shows once, user chooses Restore/Fresh/Clear |
+| Save Indicator | Pulsed every ~2s forever (isSaving loop) | Stable — shows "Just saved" then goes green |
+| localStorage | Thrashed with constant re-writes (debounce reset) | Single write per actual data change (2s debounce) |
+| Page Load | Blocked by infinite re-renders | Clean single-pass load + optional restore prompt |
+| User Data | Lost on every reload (couldn't restore) | Persists 7 days, restorable on return |
+
+### Key Fix: Restore Session Popup Glitch
+
+**Two bugs in `AutoSaveIndicator.tsx` + `usePersistence.tsx`:**
+
+1. **Missing JSX** — `AutoSaveIndicator.tsx:78` had `// ...` replacing the `return` statement, modal overlay, heading, description, and `handleForceSave` function. Component was syntactically broken.
+
+2. **Unstable callback refs** — `onLoad`/`onSave`/`onError` inline functions in `useEffect`/`useCallback` dependency arrays caused infinite re-render loops. Fixed with the **callback ref pattern** (store in `useRef`, read `.current` in effects, remove from dep arrays).
+
+### What Worked (repeat these)
+
+1. **Read the file first** — Opened `AutoSaveIndicator.tsx`, immediately saw `// ...` at line 78. No guessing, no assumptions. The bug was visible in <30 seconds.
+2. **Trace the render cycle** — For the infinite loop: followed the chain `onLoad` (inline) → `useEffect` dep array → re-render → new `onLoad` → effect re-fires. Systematic tracing > trial-and-error.
+3. **Fix root cause + symptom together** — Didn't just restore the JSX (symptom). Also stabilized the callback refs (root cause of the infinite loop). One without the other would have left a latent bug.
+4. **Check IDE diagnostics after edit** — Confirmed zero TypeScript errors post-fix. Only pre-existing Tailwind v4 syntax suggestions remained.
+
+### Watch For (recurring failures in this codebase)
+
+1. **`// ...` placeholder edits** — This is the second time incomplete AI/bulk edits left broken code. After ANY file edit, verify the `return` statement and JSX tree are intact.
+2. **Hook dependency arrays** — `usePersistence.tsx` had callbacks in 4 separate dep arrays (load effect, saveData, clearData, forceSave). All 4 needed fixing. When one dep array is wrong, check ALL of them in the same file.
+3. **Docs ≠ Code** — 3 of 5 logged mistakes are docs diverging from code. Trust the implementation, verify the docs.
+
+### Files Modified
+
+- `frontend/src/components/AutoSaveIndicator.tsx` — Restored complete JSX + `handleForceSave`
+- `frontend/src/hooks/usePersistence.tsx` — Stabilized all callback refs via `useRef`
+
+### Next Session Context
+
+- Verify restore popup works end-to-end in browser
+- Check for other hooks in `frontend/src/hooks/` with same callback instability pattern
+- VCAC championship prep continues — 5 days to Feb 7

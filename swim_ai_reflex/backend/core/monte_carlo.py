@@ -1,16 +1,26 @@
 # core/monte_carlo.py
 import numpy as np
 import pandas as pd
+
+from swim_ai_reflex.backend.core.attrition_model import ATTRITION_RATES
 from swim_ai_reflex.backend.core.rules import VISAADualRules
 
 
-def fast_monte_carlo_simulation(seton_df, opponent_df, trials=500, rules=None):
+def fast_monte_carlo_simulation(
+    seton_df, opponent_df, trials=500, rules=None, attrition=None
+):
     """
     High-performance vectorized Monte Carlo simulation using Numpy.
     Avoids slow Pandas operations inside the simulation loop.
+
+    Args:
+        attrition: AttritionRates instance for stochastic swimmer dropout.
+                   Defaults to ATTRITION_RATES singleton.
     """
     if rules is None:
         rules = VISAADualRules()
+    if attrition is None:
+        attrition = ATTRITION_RATES
 
     combined_base = pd.concat([seton_df, opponent_df], ignore_index=True)
 
@@ -68,6 +78,20 @@ def fast_monte_carlo_simulation(seton_df, opponent_df, trials=500, rules=None):
 
         # Ensure non-negative times (or scores for diving)
         sim_times = np.maximum(0.01, sim_times)
+
+        # Attrition: randomly remove swimmers each trial based on DNS/DQ rate
+        if attrition.enabled:
+            att_rate = attrition.attrition_rate(event)
+            if att_rate > 0:
+                # Generate uniform random (Trials x Swimmers); scratch if < att_rate
+                scratch_rolls = np.random.random(size=(trials, num_swimmers))
+                scratched = scratch_rolls < att_rate
+                if is_diving:
+                    # Diving: lower score = worse → set to 0 to remove
+                    sim_times = np.where(scratched, 0.0, sim_times)
+                else:
+                    # Swimming: higher time = worse → set to large value
+                    sim_times = np.where(scratched, 9999.0, sim_times)
 
         # 2. Determine Ranks (Sorting)
         # argsort along axis 1 (across swimmers for each trial)

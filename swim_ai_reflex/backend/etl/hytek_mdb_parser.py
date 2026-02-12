@@ -91,6 +91,7 @@ class ParsedEntry:
     lane: int | None = None
     is_exhibition: bool = False
     is_dq: bool = False
+    is_dns: bool = False
     course: str | None = None  # Y, L, S
 
 
@@ -104,6 +105,8 @@ class ParsedRelay:
     finals_time: float | None = None
     place: int | None = None
     points: float = 0.0
+    is_dq: bool = False
+    is_dns: bool = False
     legs: list[tuple[int, int]] = field(default_factory=list)  # (ath_no, leg_order)
 
 
@@ -546,6 +549,14 @@ def _parse_with_access_parser(mdb_path: str, result: MeetData) -> MeetData:
                         fin_stat.upper() in ("DQ", "D", "DSQ") if fin_stat else False
                     )
 
+                    # DNS inference: had a seed time, no finals result, not DQ
+                    is_dns = (
+                        seed_time is not None
+                        and finals_time is None
+                        and not is_dq
+                        and place is None
+                    )
+
                     # Course per entry -- normalize to match meet format
                     course_raw = _col_str(endata, "Fin_course", i) or None
                     ENTRY_COURSE_MAP = {"Y": "25Y", "L": "50M", "S": "25M"}
@@ -576,6 +587,7 @@ def _parse_with_access_parser(mdb_path: str, result: MeetData) -> MeetData:
                             lane=lane,
                             is_exhibition=is_exh,
                             is_dq=is_dq,
+                            is_dns=is_dns,
                             course=course,
                         )
                     )
@@ -628,6 +640,14 @@ def _parse_with_access_parser(mdb_path: str, result: MeetData) -> MeetData:
                         fin_stat.upper() in ("DQ", "D", "DSQ") if fin_stat else False
                     )
 
+                    # DNS inference for relays
+                    is_dns_relay = (
+                        seed_time is not None
+                        and finals_time is None
+                        and not is_dq
+                        and place is None
+                    )
+
                     if relay_no > 0 or (team_no > 0 and event_ptr > 0):
                         relay = ParsedRelay(
                             relay_no=relay_no if relay_no > 0 else i + 1,
@@ -638,6 +658,8 @@ def _parse_with_access_parser(mdb_path: str, result: MeetData) -> MeetData:
                             finals_time=finals_time,
                             place=place,
                             points=points,
+                            is_dq=is_dq,
+                            is_dns=is_dns_relay,
                         )
                         relays_map[relay.relay_no] = relay
 

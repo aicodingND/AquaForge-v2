@@ -1,0 +1,242 @@
+{
+  "global_dq_rate": 0.00012,
+  "global_dns_rate": 0.20092,
+  "global_completion_rate": 0.79897,
+  "global_n": 77345,
+  "meets_parsed": 162,
+  "by_event": {
+    "100 Back": {
+      "dq_rate": 0.00015,
+      "dns_rate": 0.20018,
+      "completion_rate": 0.79968,
+      "n": 6784,
+      "dq_count": 1,
+      "dns_count": 1358,
+      "is_relay": false
+    },
+    "100 Breast": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.19104,
+      "completion_rate": 0.80896,
+      "n": 6653,
+      "dq_count": 0,
+      "dns_count": 1271,
+      "is_relay": false
+    },
+    "100 Fly": {
+      "dq_rate": 0.00027,
+      "dns_rate": 0.25609,
+      "completion_rate": 0.74364,
+      "n": 3655,
+      "dq_count": 1,
+      "dns_count": 936,
+      "is_relay": false
+    },
+    "100 Free": {
+      "dq_rate": 0.0001,
+      "dns_rate": 0.20809,
+      "completion_rate": 0.79181,
+      "n": 9597,
+      "dq_count": 1,
+      "dns_count": 1997,
+      "is_relay": false
+    },
+    "100 Free Relay": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.12121,
+      "completion_rate": 0.87879,
+      "n": 66,
+      "dq_count": 0,
+      "dns_count": 8,
+      "is_relay": true
+    },
+    "100 IM": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.0518,
+      "completion_rate": 0.9482,
+      "n": 695,
+      "dq_count": 0,
+      "dns_count": 36,
+      "is_relay": false
+    },
+    "100 Medley Relay": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.05882,
+      "completion_rate": 0.94118,
+      "n": 34,
+      "dq_count": 0,
+      "dns_count": 2,
+      "is_relay": true
+    },
+    "200 Back Relay": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.09333,
+      "completion_rate": 0.90667,
+      "n": 300,
+      "dq_count": 0,
+      "dns_count": 28,
+      "is_relay": true
+    },
+    "200 Breast Relay": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.0812,
+      "completion_rate": 0.9188,
+      "n": 234,
+      "dq_count": 0,
+      "dns_count": 19,
+      "is_relay": true
+    },
+    "200 Free": {
+      "dq_rate": 0.00066,
+      "dns_rate": 0.22006,
+      "completion_rate": 0.77928,
+      "n": 4526,
+      "dq_count": 3,
+      "dns_count": 996,
+      "is_relay": false
+    },
+    "200 Free Relay": {
+      "dq_rate": 0.00016,
+      "dns_rate": 0.18517,
+      "completion_rate": 0.81467,
+      "n": 6421,
+      "dq_count": 1,
+      "dns_count": 1189,
+      "is_relay": true
+    },
+    "200 IM": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.23774,
+      "completion_rate": 0.76226,
+      "n": 3731,
+      "dq_count": 0,
+      "dns_count": 887,
+      "is_relay": false
+    },
+    "200 Medley Relay": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.18496,
+      "completion_rate": 0.81504,
+      "n": 6212,
+      "dq_count": 0,
+      "dns_count": 1149,
+      "is_relay": true
+    },
+    "25 Back": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.88725,
+      "completion_rate": 0.11275,
+      "n": 204,
+      "dq_count": 0,
+      "dns_count": 181,
+      "is_relay": false
+    },
+    "25 Breast": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.85965,
+      "completion_rate": 0.14035,
+      "n": 171,
+      "dq_count": 0,
+      "dns_count": 147,
+      "is_relay": false
+    },
+    "25 Fly": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.85965,
+      "completion_rate": 0.14035,
+      "n": 171,
+      "dq_count": 0,
+      "dns_count": 147,
+      "is_relay": false
+    },
+    "250 Free Relay": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.0,
+      "completion_rate": 1.0,
+      "n": 27,
+      "dq_count": 0,
+      "dns_count": 0,
+      "is_relay": true
+    },
+    "400 Free Relay": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.24715,
+      "completion_rate": 0.75285,
+      "n": 3767,
+      "dq_count": 0,
+      "dns_count": 931,
+      "is_relay": true
+    },
+    "50 Back": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.10597,
+      "completion_rate": 0.89403,
+      "n": 1189,
+      "dq_count": 0,
+      "dns_count": 126,
+      "is_relay": false
+    },
+    "50 Breast": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.08802,
+      "completion_rate": 0.91198,
+      "n": 943,
+      "dq_count": 0,
+      "dns_count": 83,
+      "is_relay": true
+    },
+    "50 Fly": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.1024,
+      "completion_rate": 0.8976,
+      "n": 1250,
+      "dq_count": 0,
+      "dns_count": 128,
+      "is_relay": false
+    },
+    "50 Free": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.2166,
+      "completion_rate": 0.7834,
+      "n": 14100,
+      "dq_count": 0,
+      "dns_count": 3054,
+      "is_relay": false
+    },
+    "500 Free": {
+      "dq_rate": 0.00061,
+      "dns_rate": 0.19794,
+      "completion_rate": 0.80146,
+      "n": 3294,
+      "dq_count": 2,
+      "dns_count": 652,
+      "is_relay": false
+    },
+    "Diving": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.06474,
+      "completion_rate": 0.93526,
+      "n": 3321,
+      "dq_count": 0,
+      "dns_count": 215,
+      "is_relay": false
+    }
+  },
+  "by_meet_type": {
+    "championship": {
+      "dq_rate": 0.00011,
+      "dns_rate": 0.19924,
+      "n": 66228
+    },
+    "dual": {
+      "dq_rate": 0.00047,
+      "dns_rate": 0.21043,
+      "n": 4277
+    },
+    "other": {
+      "dq_rate": 0.0,
+      "dns_rate": 0.21126,
+      "n": 6840
+    }
+  }
+}

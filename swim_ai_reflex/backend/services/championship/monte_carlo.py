@@ -14,10 +14,10 @@ Features:
 import logging
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 
+from swim_ai_reflex.backend.core.attrition_model import ATTRITION_RATES, AttritionRates
 from swim_ai_reflex.backend.core.rules import get_meet_profile
 
 logger = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ class SimulationConfig:
     num_simulations: int = 10000
     variance_model: str = "standard"  # "standard", "historical", "conservative"
     confidence_level: float = 0.95
-    seed: Optional[int] = None
+    seed: int | None = None
 
     # Variance parameters (as percentage of seed time)
     sprint_variance: float = 0.015  # 1.5% for 50/100 events
@@ -48,7 +48,7 @@ class SimulationResult:
     score_std: float
     score_min: float
     score_max: float
-    confidence_interval: Tuple[float, float]
+    confidence_interval: tuple[float, float]
 
     # Rank statistics
     expected_rank: float
@@ -56,17 +56,17 @@ class SimulationResult:
     podium_probability: float  # Probability of top 3
 
     # Team-level results
-    team_scores: Dict[str, Dict[str, float]]  # {team: {mean, std, ci_low, ci_high}}
+    team_scores: dict[str, dict[str, float]]  # {team: {mean, std, ci_low, ci_high}}
 
     # Event-level insights
-    volatile_events: List[Dict]  # Events with highest variance
-    stable_events: List[Dict]  # Events with lowest variance
+    volatile_events: list[dict]  # Events with highest variance
+    stable_events: list[dict]  # Events with lowest variance
 
     # Raw data for visualization
-    score_distribution: List[float]
-    rank_distribution: List[int]
+    score_distribution: list[float]
+    rank_distribution: list[int]
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         return {
             "expected_score": round(self.expected_score, 1),
             "score_std": round(self.score_std, 1),
@@ -123,18 +123,20 @@ class MonteCarloSimulator:
     def __init__(
         self,
         meet_profile: str = "vcac_championship",
-        config: Optional[SimulationConfig] = None,
+        config: SimulationConfig | None = None,
+        attrition: AttritionRates | None = None,
     ):
         self.meet_profile = meet_profile
         self.rules = get_meet_profile(meet_profile)
         self.config = config or SimulationConfig()
+        self.attrition = attrition if attrition is not None else ATTRITION_RATES
 
         if self.config.seed is not None:
             np.random.seed(self.config.seed)
 
     def simulate_meet(
         self,
-        entries: List[Dict],
+        entries: list[dict],
         target_team: str = "SST",
     ) -> SimulationResult:
         """
@@ -251,7 +253,7 @@ class MonteCarloSimulator:
 
         return result
 
-    def _organize_by_event(self, entries: List[Dict]) -> Dict[str, List[Dict]]:
+    def _organize_by_event(self, entries: list[dict]) -> dict[str, list[dict]]:
         """Group entries by event."""
         events = defaultdict(list)
         for entry in entries:
@@ -259,11 +261,17 @@ class MonteCarloSimulator:
             events[event].append(entry)
         return dict(events)
 
-    def _simulate_event(self, entries: List[Dict]) -> List[Dict]:
-        """Simulate times for all entries in an event with variance."""
+    def _simulate_event(self, entries: list[dict]) -> list[dict]:
+        """Simulate times for all entries in an event with variance and attrition."""
         simulated = []
 
         for entry in entries:
+            # Stochastic attrition: randomly drop swimmers based on DNS probability
+            if self.attrition.enabled:
+                event_name = entry.get("event", "")
+                if np.random.random() < self.attrition.attrition_rate(event_name):
+                    continue  # Swimmer scratched/DNS this trial
+
             seed_time = entry.get("time", 9999)
             if isinstance(seed_time, str):
                 try:
@@ -301,9 +309,9 @@ class MonteCarloSimulator:
 
     def _score_event(
         self,
-        entries: List[Dict],
+        entries: list[dict],
         event_name: str,
-    ) -> Dict[str, float]:
+    ) -> dict[str, float]:
         """Score an event based on simulated times."""
         # Sort by simulated time
         sorted_entries = sorted(entries, key=lambda x: x["simulated_time"])
@@ -340,10 +348,10 @@ class MonteCarloSimulator:
 
     def quick_simulation(
         self,
-        entries: List[Dict],
+        entries: list[dict],
         target_team: str = "SST",
         num_simulations: int = 1000,
-    ) -> Dict:
+    ) -> dict:
         """
         Run a quick simulation for UI responsiveness.
 
@@ -375,11 +383,11 @@ class MonteCarloSimulator:
 
 # Convenience function for API
 def run_monte_carlo(
-    entries: List[Dict],
+    entries: list[dict],
     target_team: str = "SST",
     meet_profile: str = "vcac_championship",
     num_simulations: int = 10000,
-) -> Dict:
+) -> dict:
     """
     Convenience function to run Monte Carlo simulation.
 

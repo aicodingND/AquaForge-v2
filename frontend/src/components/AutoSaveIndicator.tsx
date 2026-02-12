@@ -28,23 +28,8 @@ export default function AutoSaveIndicator({
       onLoad: (data) => {
         console.log("📂 Loaded persisted app state");
 
-        // Restore data to store if we don't already have data
-        if (!store.setonTeam && data.setonTeam) {
-          store.setSetonTeam(data.setonTeam);
-        }
-        if (!store.opponentTeam && data.opponentTeam) {
-          store.setOpponentTeam(data.opponentTeam);
-        }
-        if (!store.optimizationResults && data.optimizationResults) {
-          store.setResults(
-            data.optimizationResults,
-            data.setonScore || 0,
-            data.opponentScore || 0,
-          );
-        }
-        if (data.meetMode && store.meetMode !== data.meetMode) {
-          store.setMeetMode(data.meetMode);
-        }
+        // Note: We deliberately do NOT auto-restore data here.
+        // We wait for the user to explicitly confirm via the restore prompt.
 
         setLastSaved(data.lastSaved);
 
@@ -97,7 +82,6 @@ export default function AutoSaveIndicator({
       optimizationResults: store.optimizationResults,
       meetMode: store.meetMode,
     });
-    store.addLog("Manual save triggered");
   };
 
   return (
@@ -121,7 +105,7 @@ export default function AutoSaveIndicator({
                 Restore Data
               </button>
               <button
-                onClick={() => setShowRestorePrompt(false)}
+                onClick={handleClearData}
                 className="flex-1 px-4 py-2 bg-[var(--navy-700)] text-white rounded-lg font-medium hover:bg-[var(--navy-600)] transition-colors"
               >
                 Start Fresh

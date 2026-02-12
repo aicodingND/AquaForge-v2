@@ -55,6 +55,14 @@ export function usePersistence({
   const saveTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const lastSaveRef = useRef<string>("");
 
+  // Stable callback refs — prevent re-render cascades from inline callbacks
+  const onLoadRef = useRef(onLoad);
+  const onSaveRef = useRef(onSave);
+  const onErrorRef = useRef(onError);
+  onLoadRef.current = onLoad;
+  onSaveRef.current = onSave;
+  onErrorRef.current = onError;
+
   // Load data on mount
   useEffect(() => {
     try {
@@ -69,7 +77,7 @@ export function usePersistence({
           (now.getTime() - saveTime.getTime()) / (1000 * 60 * 60 * 24);
 
         if (daysDiff <= 7) {
-          onLoad?.(parsed);
+          onLoadRef.current?.(parsed);
         } else {
           // Clear old data
           localStorage.removeItem(key);
@@ -77,11 +85,11 @@ export function usePersistence({
       }
     } catch (error) {
       console.warn("Failed to load persisted data:", error);
-      onError?.(
+      onErrorRef.current?.(
         error instanceof Error ? error : new Error("Failed to load data"),
       );
     }
-  }, [key, onLoad, onError]);
+  }, [key]);
 
   // Save data with debouncing
   const saveData = useCallback(
@@ -112,11 +120,11 @@ export function usePersistence({
           if (dataStr !== lastSaveRef.current) {
             localStorage.setItem(key, dataStr);
             lastSaveRef.current = dataStr;
-            onSave?.(mergedData);
+            onSaveRef.current?.(mergedData);
           }
         } catch (error) {
           console.error("Failed to save data:", error);
-          onError?.(
+          onErrorRef.current?.(
             error instanceof Error ? error : new Error("Failed to save data"),
           );
         } finally {
@@ -124,7 +132,7 @@ export function usePersistence({
         }
       }, debounceMs);
     },
-    [key, debounceMs, onSave, onError],
+    [key, debounceMs],
   );
 
   // Clear all persisted data
@@ -138,11 +146,11 @@ export function usePersistence({
       }
     } catch (error) {
       console.error("Failed to clear data:", error);
-      onError?.(
+      onErrorRef.current?.(
         error instanceof Error ? error : new Error("Failed to clear data"),
       );
     }
-  }, [key, onError]);
+  }, [key]);
 
   // Force immediate save (bypasses debouncing)
   const forceSave = useCallback(
@@ -168,10 +176,10 @@ export function usePersistence({
         const dataStr = JSON.stringify(mergedData);
         localStorage.setItem(key, dataStr);
         lastSaveRef.current = dataStr;
-        onSave?.(mergedData);
+        onSaveRef.current?.(mergedData);
       } catch (error) {
         console.error("Failed to force save data:", error);
-        onError?.(
+        onErrorRef.current?.(
           error instanceof Error
             ? error
             : new Error("Failed to force save data"),
@@ -180,7 +188,7 @@ export function usePersistence({
         setIsSaving(false);
       }
     },
-    [key, onSave, onError],
+    [key],
   );
 
   // Get current data without triggering save

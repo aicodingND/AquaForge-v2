@@ -1,0 +1,119 @@
+# Central Validation Goal: Optimizer Must Beat Coach
+
+**Every feature, fix, and refactor must serve this goal.**
+If the core optimization doesn't produce better lineups than a coach working manually,
+all supporting features (live tracker, analytics, exports) provide zero value.
+
+---
+
+## Validation Framework
+
+### 1. Pre-Work Check
+Before starting any task, ask:
+> "Does this improve the optimizer's ability to find better lineups?"
+
+If NO — deprioritize unless it's a direct user request.
+If YES — proceed, and validate with backtest after.
+
+### 2. Post-Change Backtest
+After any change to scoring, rules, constraints, or optimizer logic:
+
+```bash
+# Run the canonical backtest
+source .venv/bin/activate
+python scripts/compare_coach_vs_optimizer.py
+
+# Verify delta is positive (optimizer > coach)
+python scripts/backtest_meet_512.py
+```
+
+**Pass criteria**: Optimizer seed-scored total > Coach seed-scored total (currently +112 pts).
+
+### 3. Scoring Rule Validation
+After any change to `rules.py` or `scoring.py`:
+
+```bash
+python -m pytest tests/test_scoring_constraints.py -v
+```
+
+**Pass criteria**: All 38 tests pass, no regression in point tables or constraint enforcement.
+
+### 4. Constraint Validation
+After any change to entry limits or max-events logic:
+
+```bash
+python -m pytest tests/test_constraint_validator.py tests/test_entry_optimizer.py -v
+```
+
+**Pass criteria**: No swimmer exceeds 2 individual events, no swimmer exceeds 4 total events.
+
+---
+
+## Backtest Baseline (Meet 512 — VCAC Regular Season Championship)
+
+### Seed-Time Comparison (Apples-to-Apples)
+
+| Team   | Coach (seed) | Optimizer (seed) | Delta   |
+|--------|-------------|-----------------|---------|
+| Boys   | 103 pts     | 140 pts         | **+37** |
+| Girls  | 56 pts      | 131 pts         | **+75** |
+| **Total** | **159 pts** | **271 pts** | **+112 (+70%)** |
+
+### Where the Optimizer Found Points the Coach Missed
+
+| Swimmer | Coach Assignment | Optimizer Assignment | Delta |
+|---------|-----------------|---------------------|-------|
+| Rafael De Micoli | 50 Free + 100 Breast (0 pts) | 200 Free (16 pts, 1st seed) | +16 |
+| Therese Paradise | 500 Free + 50 Free (4 pts) | 100 Breast + 100 Fly (19 pts) | +15 |
+| Penny Kramer | Not entered | 200 Free (12 pts, 3rd seed) | +12 |
+| Philomena Kay | 200 Free + 50 Free (0 pts) | 100 Breast + 200 IM (12 pts) | +12 |
+| Patrick Kay | 100 Free + 100 Back (14 pts) | 100 Back + 500 Free (19 pts) | +5 |
+
+### What Makes the Optimizer Better
+
+1. **Exhaustive search**: 10,000+ lineup permutations vs coach's ~50 mental scenarios
+2. **Global optimization**: Considers team-wide point maximization, not per-swimmer
+3. **Constraint enforcement**: Mathematically guarantees no rule violations
+4. **Opponent modeling**: Nash equilibrium anticipates counter-strategies
+5. **Hidden opportunities**: Found 4 scoring-eligible swimmers coach didn't enter
+
+### What the Coach Still Does Better
+
+1. **Race-day knowledge**: Who's injured, who's peaking, who's nervous
+2. **Taper effect**: Actual race-day score was 529 pts (3.3x seed projection)
+3. **Relay composition**: Leg selection based on relay-specific splits
+4. **Strategic timing**: Holding back in prelims, saving energy for finals
+
+---
+
+## Improvement Roadmap (Ordered by Impact on Core Goal)
+
+### High Impact (Directly Improves Lineup Quality)
+1. **Better seed times** — Taper-adjusted projections (championship_factor * seed_time)
+2. **Relay-aware optimization** — Joint relay+individual optimization (not sequential)
+3. **Historical performance weighting** — Recent meets weighted higher than season bests
+4. **DQ/scratch probability** — Account for swimmers who historically DQ or scratch
+
+### Medium Impact (Improves Decision Quality)
+5. **Sensitivity analysis** — Show which placements are "close calls" for coach override
+6. **What-if scenarios** — Let coach lock specific assignments, re-optimize rest
+7. **Confidence intervals** — Show range of expected outcomes, not point estimates
+
+### Low Impact (Supporting Features)
+8. Live tracking, email reports, analytics dashboards
+9. Training plan generation, video analysis
+10. Multi-coach collaboration
+
+---
+
+## Decision Heuristic
+
+When choosing what to work on:
+
+```
+IF task improves seed accuracy → DO IT FIRST
+ELIF task improves constraint enforcement → DO IT SECOND
+ELIF task improves search quality → DO IT THIRD
+ELIF task improves UX → DO IT IF TIME PERMITS
+ELSE → SKIP
+```

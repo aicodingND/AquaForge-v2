@@ -29,8 +29,11 @@ Capture patterns that work well for reuse.
 | **Multi-layer code audit** | Verifying a business rule is enforced | Confirmed diving rule across 5 code layers — zero gaps |
 | **Primary + fallback strategy** | Any service with alternative backends | Saved $10K/yr Gurobi license, zero downtime |
 | **Read the file before editing** | Every code change | Caught `// ...` broken JSX instantly |
+| **Backtest after optimization changes** | Any change to scoring, rules, constraints, optimizer | Ensures optimizer still beats coach baseline (+112 pts) |
+| **"Does this improve lineups?" gate** | Before starting any feature work | Keeps focus on core value — optimization accuracy |
 
 **On every frontend task:** Apply callback ref pattern to any new custom hook with callbacks.
+**On every optimization task:** Run `scripts/compare_coach_vs_optimizer.py` after — delta must stay positive.
 **On every domain-rule task:** Verify against external source (NFHS, NCAA, VISAA) before documenting.
 
 ---

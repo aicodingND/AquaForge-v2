@@ -1,6 +1,28 @@
-# Session Learnings 📚
+# Session Learnings
 
 Key learnings from each session that should persist.
+
+**CENTRAL GOAL**: Optimizer must produce measurably better lineups than manual coaching.
+See `VALIDATION_GOAL.md` for full framework and backtest baseline (+112 pts, +70%).
+
+---
+
+## 2026-02-12 Session
+
+### Key Learnings
+
+1. **Optimizer beats coach by +70% on seed-scored lineups** (Meet 512 backtest: 271 vs 159 pts)
+2. **But race-day scores are 3.3x seed projections** — taper/peaking effect is massive
+3. **enforce_max_events_per_swimmer() existed but was never called** in scoring pipeline — now wired in
+4. **`.gitignore` `lib/` pattern was too broad** — caught `frontend/src/lib/`, fixed with `/lib/`
+5. **40+ files were untracked** — committed in 4 logical batches (backend, frontend, scripts, data)
+6. **VISAA State relay-3 rule was already verified** (Feb 11) — no penalty, standard NFHS
+
+### Validation Checkpoint Added
+
+- Created `VALIDATION_GOAL.md` — centralized goal with checkpoints
+- Updated MEMORY.md with backtest baseline and decision heuristic
+- Every future change must pass: "Does this improve lineup quality?"
 
 ---
 

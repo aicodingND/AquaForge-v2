@@ -8,8 +8,13 @@ Used for VCAC, VISAA State, and other multi-team championships.
 import logging
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
+from swim_ai_reflex.backend.core.championship_factors import (
+    ChampionshipFactors,
+    adjust_time,
+    get_event_confidence,
+)
 from swim_ai_reflex.backend.core.rules import get_meet_profile
 from swim_ai_reflex.backend.services.shared.normalization import (
     is_diving_event,
@@ -32,8 +37,9 @@ class SwimmerProjection:
     predicted_place: int
     points: float
     is_scoring: bool = True
+    confidence: str = "medium"  # "high", "medium", "low" — from empirical flip rates
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "swimmer": self.swimmer,
             "team": self.team,
@@ -43,6 +49,7 @@ class SwimmerProjection:
             "predicted_place": self.predicted_place,
             "points": self.points,
             "is_scoring": self.is_scoring,
+            "confidence": self.confidence,
         }
 
 
@@ -51,17 +58,17 @@ class EventProjection:
     """Projected results for a single event."""
 
     event: str
-    entries: List[SwimmerProjection]
-    team_points: Dict[str, float] = field(default_factory=dict)
+    entries: list[SwimmerProjection]
+    team_points: dict[str, float] = field(default_factory=dict)
 
-    def calculate_team_points(self) -> Dict[str, float]:
+    def calculate_team_points(self) -> dict[str, float]:
         """Calculate total points per team for this event."""
         self.team_points = defaultdict(float)
         for entry in self.entries:
             self.team_points[entry.team] += entry.points
         return dict(self.team_points)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "event": self.event,
             "team_points": self.team_points,
@@ -83,7 +90,7 @@ class SwingEvent:
     point_gain: float
     time_gap: float  # Time needed to improve
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "event": self.event,
             "swimmer": self.swimmer,
@@ -103,10 +110,10 @@ class StandingsProjection:
 
     meet_name: str
     target_team: str
-    team_totals: Dict[str, float]
-    standings: List[Tuple[str, float, int]]  # (team, points, rank)
-    event_projections: Dict[str, EventProjection]
-    swing_events: List[SwingEvent]
+    team_totals: dict[str, float]
+    standings: list[tuple[str, float, int]]  # (team, points, rank)
+    event_projections: dict[str, EventProjection]
+    swing_events: list[SwingEvent]
 
     @property
     def target_team_total(self) -> float:
@@ -119,7 +126,7 @@ class StandingsProjection:
                 return rank
         return 0
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "meet_name": self.meet_name,
             "target_team": self.target_team,
@@ -145,20 +152,34 @@ class PointProjectionService:
     expected points for each team.
     """
 
-    def __init__(self, meet_profile: str = "vcac_championship"):
+    def __init__(
+        self,
+        meet_profile: str = "vcac_championship",
+        championship_factors: ChampionshipFactors | None = None,
+    ):
         """
         Initialize projection service.
 
         Args:
             meet_profile: Meet rules profile to use
+            championship_factors: Optional factors for seed time adjustment.
+                Defaults to global singleton (enabled for championship profiles).
         """
         self.rules = get_meet_profile(meet_profile)
         self.meet_profile = meet_profile
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
 
+        # Enable championship factors for championship meet profiles
+        if championship_factors is not None:
+            self.factors = championship_factors
+        elif "championship" in meet_profile or "state" in meet_profile:
+            self.factors = ChampionshipFactors()
+        else:
+            self.factors = ChampionshipFactors.disabled()
+
     def project_standings(
         self,
-        entries: List[Dict[str, Any]],
+        entries: list[dict[str, Any]],
         target_team: str = "Seton",
         meet_name: str = "Championship",
     ) -> StandingsProjection:
@@ -177,14 +198,14 @@ class PointProjectionService:
         normalized = self._normalize_entries(entries)
 
         # Group by event
-        events: Dict[str, List[Dict]] = defaultdict(list)
+        events: dict[str, list[dict]] = defaultdict(list)
         for entry in normalized:
             events[entry["event"]].append(entry)
 
         # Project each event
-        event_projections: Dict[str, EventProjection] = {}
-        team_totals: Dict[str, float] = defaultdict(float)
-        all_swing_events: List[SwingEvent] = []
+        event_projections: dict[str, EventProjection] = {}
+        team_totals: dict[str, float] = defaultdict(float)
+        all_swing_events: list[SwingEvent] = []
 
         for event_name, event_entries in events.items():
             projection = self._project_event(event_name, event_entries)
@@ -219,13 +240,13 @@ class PointProjectionService:
     def project_event(
         self,
         event_name: str,
-        entries: List[Dict[str, Any]],
+        entries: list[dict[str, Any]],
     ) -> EventProjection:
         """Project a single event."""
         normalized = self._normalize_entries(entries)
         return self._project_event(event_name, normalized)
 
-    def _normalize_entries(self, entries: List[Dict]) -> List[Dict]:
+    def _normalize_entries(self, entries: list[dict]) -> list[dict]:
         """
         Normalize entry data using centralized entry schema.
 
@@ -256,7 +277,7 @@ class PointProjectionService:
     def _project_event(
         self,
         event_name: str,
-        entries: List[Dict],
+        entries: list[dict],
     ) -> EventProjection:
         """Project results for a single event."""
         is_relay = is_relay_event(event_name)
@@ -274,7 +295,7 @@ class PointProjectionService:
             else self.rules.max_scorers_per_team_individual
         )
 
-        # Sort entries by time (or dive score for diving)
+        # Sort entries by championship-adjusted time (or dive score for diving)
         if is_diving:
             sorted_entries = sorted(
                 entries,
@@ -283,12 +304,16 @@ class PointProjectionService:
         else:
             sorted_entries = sorted(
                 entries,
-                key=lambda e: e.get("seed_time") or float("inf"),
+                key=lambda e: adjust_time(
+                    e.get("seed_time") or float("inf"),
+                    event_name,
+                    self.factors,
+                ),
             )
 
         # Assign places and points
         projections = []
-        team_scorer_count: Dict[str, int] = defaultdict(int)
+        team_scorer_count: dict[str, int] = defaultdict(int)
 
         for seed_rank, entry in enumerate(sorted_entries, 1):
             team = entry["team"]
@@ -316,6 +341,7 @@ class PointProjectionService:
                     predicted_place=predicted_place,
                     points=points,
                     is_scoring=is_scoring,
+                    confidence=get_event_confidence(event_name, self.factors),
                 )
             )
 
@@ -331,7 +357,7 @@ class PointProjectionService:
         self,
         projection: EventProjection,
         target_team: str,
-    ) -> List[SwingEvent]:
+    ) -> list[SwingEvent]:
         """Find swing events for target team."""
         swing_events = []
         target = normalize_team_name(target_team)
@@ -389,7 +415,7 @@ class PointProjectionService:
 
 # Convenience function
 def project_standings(
-    entries: List[Dict[str, Any]],
+    entries: list[dict[str, Any]],
     target_team: str = "Seton",
     meet_profile: str = "vcac_championship",
     meet_name: str = "Championship",

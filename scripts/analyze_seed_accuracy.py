@@ -10,6 +10,7 @@ Parses championship HyTek databases and measures:
 This directly validates whether the optimizer's seed-based assignments are reliable.
 """
 
+import json
 import os
 import sys
 from collections import defaultdict
@@ -297,6 +298,101 @@ def analyze_results(all_results: list[SeedVsFinals]) -> None:
         print("  Seeds may already include best times — no taper adjustment needed.")
 
 
+def export_championship_factors(
+    all_results: list[SeedVsFinals], output_path: Path
+) -> dict:
+    """Export per-event championship adjustment factors as JSON.
+
+    Returns dict with:
+    - default_factor: uniform baseline (1 - avg_drop_pct/100)
+    - event_factors: {event_name: factor} for events with N >= 20
+    - confidence_tiers: {event_name: "high"|"medium"|"low"}
+    - stats: raw statistics for each event
+    """
+    if not all_results:
+        return {}
+
+    # Overall factor
+    n = len(all_results)
+    avg_drop_pct = sum(r.drop_pct for r in all_results) / n
+    default_factor = 1.0 - (avg_drop_pct / 100.0)
+
+    # Per-event analysis
+    events: dict[str, list[SeedVsFinals]] = defaultdict(list)
+    for r in all_results:
+        events[r.event_name].append(r)
+
+    event_factors = {}
+    confidence_tiers = {}
+    stats = {}
+
+    # Minimum sample size for per-event factors
+    MIN_SAMPLES = 20
+
+    for event_name, ev_results in sorted(events.items()):
+        ev_n = len(ev_results)
+        if ev_n < MIN_SAMPLES:
+            continue
+
+        ev_drop_pct = sum(r.drop_pct for r in ev_results) / ev_n
+        ev_flip_rate = sum(1 for r in ev_results if r.placement_flipped) / ev_n * 100
+
+        ev_top3 = [r for r in ev_results if r.seed_place <= 3]
+        ev_top3_stable = (
+            sum(1 for r in ev_top3 if r.finals_place <= 3) / len(ev_top3) * 100
+            if ev_top3
+            else 0
+        )
+
+        ev_top12 = [r for r in ev_results if r.seed_place <= 12]
+        ev_top12_stable = (
+            sum(1 for r in ev_top12 if r.finals_place <= 12) / len(ev_top12) * 100
+            if ev_top12
+            else 0
+        )
+
+        # Championship factor for this event
+        factor = 1.0 - (ev_drop_pct / 100.0)
+        event_factors[event_name] = round(factor, 4)
+
+        # Confidence tier based on flip rate and top-3 stability
+        if ev_flip_rate < 72 and ev_top3_stable > 75:
+            tier = "high"
+        elif ev_flip_rate < 82 and ev_top3_stable > 60:
+            tier = "medium"
+        else:
+            tier = "low"
+
+        confidence_tiers[event_name] = tier
+
+        stats[event_name] = {
+            "n": ev_n,
+            "avg_drop_pct": round(ev_drop_pct, 3),
+            "flip_rate_pct": round(ev_flip_rate, 1),
+            "top3_stability_pct": round(ev_top3_stable, 1),
+            "top12_stability_pct": round(ev_top12_stable, 1),
+            "factor": round(factor, 4),
+            "confidence": tier,
+        }
+
+    result = {
+        "source": "scripts/analyze_seed_accuracy.py",
+        "total_entries": n,
+        "total_meets": len(set(r.meet_name for r in all_results)),
+        "default_factor": round(default_factor, 4),
+        "event_factors": event_factors,
+        "confidence_tiers": confidence_tiers,
+        "event_stats": stats,
+    }
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w") as f:
+        json.dump(result, f, indent=2)
+
+    print(f"\nExported championship factors to {output_path}")
+    return result
+
+
 def main():
     db_dir = (
         Path(__file__).resolve().parent.parent
@@ -337,6 +433,12 @@ def main():
             print("    -> no valid pairs")
 
     analyze_results(all_results)
+
+    # Export per-event championship factors
+    factors_path = (
+        Path(__file__).resolve().parent.parent / "data" / "championship_factors.json"
+    )
+    export_championship_factors(all_results, factors_path)
 
     # Also output per-meet summary
     meets = defaultdict(list)

@@ -1,0 +1,144 @@
+{
+  "source": "scripts/analyze_seed_accuracy.py",
+  "total_entries": 25830,
+  "total_meets": 52,
+  "default_factor": 0.9899,
+  "event_factors": {
+    "100 Back": 0.988,
+    "100 Breast": 0.9871,
+    "100 Fly": 0.9949,
+    "100 Free": 0.9883,
+    "100 IM": 0.9553,
+    "200 Free": 0.9859,
+    "200 IM": 0.9953,
+    "50 Back": 1.0011,
+    "50 Breast": 0.9958,
+    "50 Fly": 0.9572,
+    "50 Free": 0.9917,
+    "500 Free": 0.9971
+  },
+  "confidence_tiers": {
+    "100 Back": "medium",
+    "100 Breast": "medium",
+    "100 Fly": "high",
+    "100 Free": "medium",
+    "100 IM": "low",
+    "200 Free": "high",
+    "200 IM": "high",
+    "50 Back": "low",
+    "50 Breast": "low",
+    "50 Fly": "low",
+    "50 Free": "low",
+    "500 Free": "high"
+  },
+  "event_stats": {
+    "100 Back": {
+      "n": 2816,
+      "avg_drop_pct": 1.196,
+      "flip_rate_pct": 75.3,
+      "top3_stability_pct": 84.7,
+      "top12_stability_pct": 90.8,
+      "factor": 0.988,
+      "confidence": "medium"
+    },
+    "100 Breast": {
+      "n": 3029,
+      "avg_drop_pct": 1.289,
+      "flip_rate_pct": 75.7,
+      "top3_stability_pct": 78.4,
+      "top12_stability_pct": 90.8,
+      "factor": 0.9871,
+      "confidence": "medium"
+    },
+    "100 Fly": {
+      "n": 1654,
+      "avg_drop_pct": 0.509,
+      "flip_rate_pct": 69.9,
+      "top3_stability_pct": 82.6,
+      "top12_stability_pct": 93.6,
+      "factor": 0.9949,
+      "confidence": "high"
+    },
+    "100 Free": {
+      "n": 4414,
+      "avg_drop_pct": 1.168,
+      "flip_rate_pct": 80.7,
+      "top3_stability_pct": 78.4,
+      "top12_stability_pct": 88.4,
+      "factor": 0.9883,
+      "confidence": "medium"
+    },
+    "100 IM": {
+      "n": 402,
+      "avg_drop_pct": 4.465,
+      "flip_rate_pct": 89.3,
+      "top3_stability_pct": 60.0,
+      "top12_stability_pct": 80.3,
+      "factor": 0.9553,
+      "confidence": "low"
+    },
+    "200 Free": {
+      "n": 2022,
+      "avg_drop_pct": 1.408,
+      "flip_rate_pct": 70.7,
+      "top3_stability_pct": 79.9,
+      "top12_stability_pct": 94.0,
+      "factor": 0.9859,
+      "confidence": "high"
+    },
+    "200 IM": {
+      "n": 1722,
+      "avg_drop_pct": 0.467,
+      "flip_rate_pct": 64.9,
+      "top3_stability_pct": 82.9,
+      "top12_stability_pct": 93.9,
+      "factor": 0.9953,
+      "confidence": "high"
+    },
+    "50 Back": {
+      "n": 641,
+      "avg_drop_pct": -0.114,
+      "flip_rate_pct": 91.0,
+      "top3_stability_pct": 65.4,
+      "top12_stability_pct": 75.0,
+      "factor": 1.0011,
+      "confidence": "low"
+    },
+    "50 Breast": {
+      "n": 544,
+      "avg_drop_pct": 0.424,
+      "flip_rate_pct": 89.5,
+      "top3_stability_pct": 83.8,
+      "top12_stability_pct": 76.6,
+      "factor": 0.9958,
+      "confidence": "low"
+    },
+    "50 Fly": {
+      "n": 295,
+      "avg_drop_pct": 4.276,
+      "flip_rate_pct": 86.8,
+      "top3_stability_pct": 73.5,
+      "top12_stability_pct": 86.4,
+      "factor": 0.9572,
+      "confidence": "low"
+    },
+    "50 Free": {
+      "n": 6669,
+      "avg_drop_pct": 0.827,
+      "flip_rate_pct": 85.9,
+      "top3_stability_pct": 75.6,
+      "top12_stability_pct": 85.7,
+      "factor": 0.9917,
+      "confidence": "low"
+    },
+    "500 Free": {
+      "n": 1622,
+      "avg_drop_pct": 0.292,
+      "flip_rate_pct": 64.3,
+      "top3_stability_pct": 86.4,
+      "top12_stability_pct": 94.7,
+      "factor": 0.9971,
+      "confidence": "high"
+    }
+  }
+}

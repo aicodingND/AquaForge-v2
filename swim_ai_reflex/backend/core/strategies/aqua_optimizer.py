@@ -24,6 +24,10 @@ from typing import Any
 
 import pandas as pd
 
+from swim_ai_reflex.backend.core.championship_factors import (
+    ChampionshipFactors,
+    adjust_times_df,
+)
 from swim_ai_reflex.backend.core.scoring import EVENT_ORDER
 from swim_ai_reflex.backend.core.strategies.base_strategy import BaseOptimizerStrategy
 
@@ -1136,10 +1140,19 @@ class AquaOptimizer(BaseOptimizerStrategy):
         annealing_iterations: int | None = None,
         nash_iterations: int | None = None,
         use_parallel: bool | None = None,  # NEW: enable parallel seed execution
+        championship_factors: ChampionshipFactors | None = None,
     ):
         self.profile = profile or ScoringProfile.visaa_dual()
         self.fatigue = fatigue or FatigueModel()
         self.quality_mode = quality_mode
+
+        # Championship adjustment factors (auto-enable for championship profiles)
+        if championship_factors is not None:
+            self.championship_factors = championship_factors
+        elif "championship" in self.profile.name:
+            self.championship_factors = ChampionshipFactors()
+        else:
+            self.championship_factors = ChampionshipFactors.disabled()
 
         # Get preset values, allow overrides
         preset = self.QUALITY_PRESETS.get(
@@ -1190,6 +1203,18 @@ class AquaOptimizer(BaseOptimizerStrategy):
             seton_df["team"] = "seton"
         if "team" not in opponent_df.columns:
             opponent_df["team"] = "opponent"
+
+        # Apply championship speed-up factor to all seed times
+        # Empirical: swimmers are ~1% faster at championships (per-event factors vary)
+        if self.championship_factors.enabled:
+            seton_df = adjust_times_df(seton_df, factors=self.championship_factors)
+            opponent_df = adjust_times_df(
+                opponent_df, factors=self.championship_factors
+            )
+            logger.info(
+                "Championship factors applied (default=%.4f)",
+                self.championship_factors.default_factor,
+            )
 
         # Setup events
         available_events = set(seton_df["event"].unique())

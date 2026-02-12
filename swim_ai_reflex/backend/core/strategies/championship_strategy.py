@@ -18,6 +18,10 @@ import os
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
+from swim_ai_reflex.backend.core.championship_factors import (
+    ChampionshipFactors,
+    adjust_time,
+)
 from swim_ai_reflex.backend.core.rules import get_meet_profile
 from swim_ai_reflex.backend.services.constraint_validator import (
     get_blocked_events,
@@ -66,11 +70,21 @@ class ChampionshipGurobiStrategy:
     - Diver integration
     """
 
-    def __init__(self, meet_profile: str = "vcac_championship"):
+    def __init__(
+        self,
+        meet_profile: str = "vcac_championship",
+        championship_factors: ChampionshipFactors | None = None,
+    ):
         self.rules = get_meet_profile(meet_profile)
         self.points_table = self.rules.individual_points
         self.relay_points = self.rules.relay_points
         self.max_scorers = self.rules.max_scorers_per_team_individual
+
+        # Championship adjustment factors
+        if championship_factors is not None:
+            self.factors = championship_factors
+        else:
+            self.factors = ChampionshipFactors()
 
     def optimize_entries(
         self,
@@ -355,17 +369,18 @@ class ChampionshipGurobiStrategy:
 
         for event in events:
             # Sort opponent entries for binary-search ranking
+            # Apply championship adjustment (empirical speed-up factor)
             opponent_times = sorted(
-                e.seed_time
+                adjust_time(e.seed_time, event, self.factors)
                 for e in all_entries
                 if e.event == event
                 and e.seed_time > 0
                 and e.team.upper() != target_team.upper()
             )
 
-            # Target team entries for this event
+            # Target team entries for this event (also adjusted)
             team_event_times = {
-                e.swimmer_name: e.seed_time
+                e.swimmer_name: adjust_time(e.seed_time, event, self.factors)
                 for e in all_entries
                 if e.event == event
                 and e.seed_time > 0
@@ -432,8 +447,11 @@ class ChampionshipGurobiStrategy:
                 and (e.swimmer_name, event) in assigned
             ]
 
-            # Combine and sort by seed time
-            combined = sorted(opp + team, key=lambda e: e.seed_time)
+            # Combine and sort by championship-adjusted seed time
+            combined = sorted(
+                opp + team,
+                key=lambda e: adjust_time(e.seed_time, event, self.factors),
+            )
 
             # Assign points (12-place scoring, max 4 scorers per team)
             team_scorers = 0

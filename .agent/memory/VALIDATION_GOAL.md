@@ -86,10 +86,51 @@ python -m pytest tests/test_constraint_validator.py tests/test_entry_optimizer.p
 
 ---
 
+## Seed Accuracy Empirical Analysis (2026-02-12)
+
+**Source**: 25,830 swim entries across 52 championship meets parsed from HyTek MDBs.
+**Script**: `scripts/analyze_seed_accuracy.py`
+
+### Key Findings
+
+| Metric | Value | Implication |
+|--------|-------|-------------|
+| Avg time drop | +1.12s (+1.01%) | Swimmers are consistently faster at meets than seeds |
+| Swam faster | 58.6% | Majority improve, but 41% go slower — variance is real |
+| Exact placement flip | 77.9% | Seeds don't predict specific finishing positions |
+| Top-3 stability | 80.6% | Top seeds reliably win — highest-point assignments are safe |
+| Top-12 stability | 90.7% | Scoring positions are very stable — optimizer's core approach works |
+| Avg flip magnitude | 2.5 places | When flips happen, they're moderate (not catastrophic) |
+
+### Event-Specific Variance (most/least predictable)
+
+| Event | Flip Rate | Notes |
+|-------|-----------|-------|
+| 200 IM | 64.9% | Most predictable — complex event rewards consistent swimmers |
+| 500 Free | 68.2% | Distance = stable |
+| 50 Back | 91.0% | Least predictable — sprint + specialty = high variance |
+| 50 Breast | 88.0% | Sprint specialty events flip frequently |
+
+### Grade-Based Drop (all grades improve similarly)
+
+| Grade | Avg Drop % | Note |
+|-------|-----------|------|
+| 7 | +1.71% | Slight edge but small sample |
+| 8-12 | +1.4-2.5% | Uniform — no grade-specific model needed |
+
+### Actionable Conclusions
+
+1. **Championship adjustment factor: 0.99** (multiply seed times by 0.99 for 1% speed-up)
+2. **Apply uniformly** — no need for per-grade or per-event adjustment models
+3. **Optimizer's seed-based approach is validated** — 91% top-12 stability means assignments hold where points are highest
+4. **Sensitivity focus**: Events with >85% flip rate (50 Back, 50 Breast, 50 Fly) need wider confidence intervals for coach review
+
+---
+
 ## Improvement Roadmap (Ordered by Impact on Core Goal)
 
 ### High Impact (Directly Improves Lineup Quality)
-1. **Better seed times** — Taper-adjusted projections (championship_factor * seed_time)
+1. **Championship speed-up factor (0.99x)** — Apply 1% uniform adjustment to seed times *(validated by empirical analysis)*
 2. **Relay-aware optimization** — Joint relay+individual optimization (not sequential)
 3. **Historical performance weighting** — Recent meets weighted higher than season bests
 4. **DQ/scratch probability** — Account for swimmers who historically DQ or scratch

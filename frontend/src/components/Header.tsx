@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/lib/store';
-import { mainNavigation, secondaryNavigation } from '@/config/navigation';
+import { mainNavigation, championshipNavigation, secondaryNavigation } from '@/config/navigation';
 import { siteConfig, meetModes } from '@/config/site';
 import { useState } from 'react';
 
@@ -73,6 +73,29 @@ export default function Header() {
                   </span>
                   {isActive && (
                     <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[var(--gold-400)] translate-y-2" />
+                  )}
+                </Link>
+              );
+            })}
+            {/* Championship-only navigation */}
+            {meetMode === 'championship' && championshipNavigation.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    isActive
+                      ? 'text-white bg-purple-500/20 shadow-inner'
+                      : 'text-purple-300/60 hover:text-purple-200 hover:bg-purple-500/10'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="opacity-80">{item.icon}</span>
+                    {item.label}
+                  </span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-purple-400 translate-y-2" />
                   )}
                 </Link>
               );
@@ -161,7 +184,7 @@ export default function Header() {
            </div>
         </div>
           <div className="space-y-1">
-            {[...mainNavigation, ...secondaryNavigation].map((item) => (
+            {[...mainNavigation, ...(meetMode === 'championship' ? championshipNavigation : []), ...secondaryNavigation].map((item) => (
               <Link
                 key={item.id}
                 href={item.href}

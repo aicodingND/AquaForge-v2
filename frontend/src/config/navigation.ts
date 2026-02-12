@@ -7,55 +7,66 @@ export type NavItem = {
 };
 
 export const mainNavigation: NavItem[] = [
-  { 
-    id: 'dashboard', 
-    label: 'Dashboard', 
-    icon: '📊', 
+  {
+    id: 'dashboard',
+    label: 'Dashboard',
+    icon: '📊',
     href: '/',
-    description: 'Overview of your swim meet optimization' 
+    description: 'Overview of your swim meet optimization'
   },
-  { 
-    id: 'meet', 
-    label: 'Meet Setup', 
-    icon: '📋', 
+  {
+    id: 'meet',
+    label: 'Meet Setup',
+    icon: '📋',
     href: '/meet',
     description: 'Upload team rosters and configure meet settings'
   },
-  { 
-    id: 'optimize', 
-    label: 'Optimizer', 
-    icon: '⚡', 
+  {
+    id: 'optimize',
+    label: 'Optimizer',
+    icon: '⚡',
     href: '/optimize',
     description: 'Run AI optimization for lineups'
   },
-  { 
-    id: 'results', 
-    label: 'Results', 
-    icon: '🏆', 
+  {
+    id: 'results',
+    label: 'Results',
+    icon: '🏆',
     href: '/results',
     description: 'View and export optimization results'
   },
-  { 
-    id: 'analytics', 
-    label: 'Analytics', 
-    icon: '📈', 
+  {
+    id: 'analytics',
+    label: 'Analytics',
+    icon: '📈',
     href: '/analytics',
     description: 'Team comparison and performance insights'
   },
 ];
 
+// Championship-only navigation items
+export const championshipNavigation: NavItem[] = [
+  {
+    id: 'live',
+    label: 'Live',
+    icon: '🔴',
+    href: '/live',
+    description: 'Real-time championship meet tracking'
+  },
+];
+
 export const secondaryNavigation: NavItem[] = [
-  { 
-    id: 'about', 
-    label: 'About', 
-    icon: 'ℹ️', 
+  {
+    id: 'about',
+    label: 'About',
+    icon: 'ℹ️',
     href: '/about',
     description: 'Learn more about AquaForge'
   },
-  { 
-    id: 'contact', 
-    label: 'Contact', 
-    icon: '💬', 
+  {
+    id: 'contact',
+    label: 'Contact',
+    icon: '💬',
     href: '/contact',
     description: 'Get support or send feedback'
   },

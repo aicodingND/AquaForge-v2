@@ -189,7 +189,15 @@ export const useAppStore = create<AppState>()(
       setMeetMode: (mode) =>
         set((state) => ({
           meetMode: mode,
-          logs: [...state.logs, `Switched to ${mode} meet mode`],
+          // Auto-configure scoring system for the selected mode
+          scoringType:
+            mode === "championship"
+              ? "vcac_championship"
+              : "visaa_top7",
+          logs: [
+            ...state.logs,
+            `Switched to ${mode === "dual" ? "Dual Meet" : "Championship"} mode`,
+          ],
         })),
 
       setSelectedMeet: (meetId) => set({ selectedMeetId: meetId }),

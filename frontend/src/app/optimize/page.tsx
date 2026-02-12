@@ -152,15 +152,26 @@ export default function OptimizePage() {
 
   return (
     <div className="p-6 lg:p-8 space-y-6">
-      {/* Header */}
+      {/* Header — Mode-specific labeling */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">⚡ Optimizer</h1>
+          <h1 className="text-2xl font-bold text-white">
+            {meetMode === "championship" ? "🏆 Championship Optimizer" : "⚡ Dual Meet Optimizer"}
+          </h1>
           <p className="text-white/50 text-sm mt-1">
-            Configure and run lineup optimization
+            {meetMode === "championship"
+              ? "Optimize entries across all events for maximum team score"
+              : "Configure head-to-head lineup optimization"}
           </p>
         </div>
-        <div className="badge badge-gold uppercase">{meetMode} Mode</div>
+        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
+          meetMode === "dual"
+            ? "bg-blue-500/20 text-blue-300 border border-blue-400/30"
+            : "bg-purple-500/20 text-purple-300 border border-purple-400/30"
+        }`}>
+          <span className="w-2 h-2 rounded-full bg-current" />
+          {meetMode === "dual" ? "Dual Meet" : "Championship"}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

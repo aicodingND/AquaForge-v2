@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { useAppStore } from "@/lib/store";
-import { mainNavigation } from "@/config/navigation";
 
 interface WorkflowStep {
   id: string;
@@ -30,11 +29,11 @@ export default function WorkflowBreadcrumbs() {
           label: "Upload Teams",
           href: "/meet",
           completed: !!(hasSeton && hasOpponent),
-          current: pathname === "/meet",
+          current: pathname === "/meet" || pathname === "/",
         },
         {
           id: "optimize",
-          label: "Optimize",
+          label: "Optimize Lineup",
           href: "/optimize",
           completed: hasResults,
           current: pathname === "/optimize",
@@ -43,36 +42,43 @@ export default function WorkflowBreadcrumbs() {
           id: "results",
           label: "View Results",
           href: "/results",
-          completed: false, // Results are never "completed" - they're the final step
+          completed: false,
           current: pathname === "/results",
         },
       ];
     } else {
-      // Championship mode workflow
+      // Championship mode workflow — includes Live Tracker step
       const hasPsychSheet = setonTeam?.data && setonTeam.data.length > 0;
       const hasResults = optimizationResults != null && optimizationResults.length > 0;
 
       return [
         {
           id: "upload",
-          label: "Upload Psych Sheet",
+          label: "Psych Sheet",
           href: "/meet",
           completed: !!hasPsychSheet,
-          current: pathname === "/meet",
+          current: pathname === "/meet" || pathname === "/",
         },
         {
           id: "optimize",
-          label: "Championship Strategy",
+          label: "Strategy",
           href: "/optimize",
           completed: hasResults,
           current: pathname === "/optimize",
         },
         {
           id: "results",
-          label: "Analytics",
+          label: "Projections",
           href: "/results",
           completed: false,
           current: pathname === "/results",
+        },
+        {
+          id: "live",
+          label: "Meet Day",
+          href: "/live",
+          completed: false,
+          current: pathname === "/live",
         },
       ];
     }
@@ -81,9 +87,8 @@ export default function WorkflowBreadcrumbs() {
   const steps = getWorkflowSteps();
   const currentStepIndex = steps.findIndex((step) => step.current);
 
-  // Don't show breadcrumbs on dashboard or unrelated pages
+  // Don't show breadcrumbs on unrelated pages (about, contact, settings)
   if (
-    pathname === "/" ||
     !steps.some((step) => step.current || pathname.startsWith(step.href))
   ) {
     return null;
@@ -214,28 +219,54 @@ export default function WorkflowBreadcrumbs() {
           </div>
         </div>
 
-        {/* Quick Tips */}
-        {currentStepIndex === 0 &&
-          (!setonTeam?.data || !opponentTeam?.data) && (
-            <div className="mt-3 p-2 bg-[var(--gold-500)]/10 border border-[var(--gold-500)]/20 rounded-lg">
-              <p className="text-xs text-[var(--gold-300)]">
-                💡 Upload your team rosters to get started. Supported formats:
-                Excel (.xlsx), CSV, or JSON
-              </p>
-            </div>
-          )}
-
-        {currentStepIndex === 1 &&
-          setonTeam?.data &&
-          opponentTeam?.data &&
-          !optimizationResults && (
-            <div className="mt-3 p-2 bg-blue-500/10 border border-blue-400/20 rounded-lg">
-              <p className="text-xs text-blue-300">
-                🚀 Both teams loaded! Configure your optimization settings and
-                click &quot;Run Optimization&quot;
-              </p>
-            </div>
-          )}
+        {/* Mode-Specific Quick Tips */}
+        {meetMode === "dual" ? (
+          <>
+            {currentStepIndex === 0 &&
+              (!setonTeam?.data || !opponentTeam?.data) && (
+                <div className="mt-3 p-2 bg-blue-500/10 border border-blue-400/20 rounded-lg">
+                  <p className="text-xs text-blue-300">
+                    <span className="font-semibold">Dual Meet:</span> Upload
+                    both team rosters (Seton + opponent) to compare head-to-head.
+                    Formats: Excel (.xlsx), CSV, or JSON
+                  </p>
+                </div>
+              )}
+            {currentStepIndex === 1 &&
+              setonTeam?.data &&
+              opponentTeam?.data &&
+              !optimizationResults && (
+                <div className="mt-3 p-2 bg-blue-500/10 border border-blue-400/20 rounded-lg">
+                  <p className="text-xs text-blue-300">
+                    Both teams loaded! Select VISAA (Top 7) or Standard (Top 5)
+                    scoring, then click &quot;Run Optimization&quot;
+                  </p>
+                </div>
+              )}
+          </>
+        ) : (
+          <>
+            {currentStepIndex === 0 && !setonTeam?.data && (
+              <div className="mt-3 p-2 bg-purple-500/10 border border-purple-400/20 rounded-lg">
+                <p className="text-xs text-purple-300">
+                  <span className="font-semibold">Championship:</span> Upload a
+                  single psych sheet containing all teams. VCAC (Top 12) or
+                  VISAA State (Top 16) scoring.
+                </p>
+              </div>
+            )}
+            {currentStepIndex === 1 &&
+              setonTeam?.data &&
+              !optimizationResults && (
+                <div className="mt-3 p-2 bg-purple-500/10 border border-purple-400/20 rounded-lg">
+                  <p className="text-xs text-purple-300">
+                    Psych sheet loaded! Choose your strategy and scoring system,
+                    then optimize entries across all events.
+                  </p>
+                </div>
+              )}
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,13 @@
 @echo off
 setlocal
+REM ==================================================
+REM DEPRECATED (2026-02-11)
+REM macOS is the canonical platform.
+REM Use: test_e2e_full.sh
+REM This file will be removed in a future cleanup.
+REM ==================================================
 echo ==================================================
-echo   AquaForge E2E Auto-Verification
+echo   AquaForge E2E Auto-Verification [DEPRECATED]
 echo ==================================================
 
 set "VENV_PYTHON=%~dp0..\.venv\Scripts\python.exe"

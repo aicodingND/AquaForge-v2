@@ -84,4 +84,4 @@ lsof -ti:8001 | xargs kill -9
 lsof -ti:3000 | xargs kill -9
 ```
 
-For more details, see `TRANSFER_TO_MAC.md`
+For version history, see `VERSION_LOG.md`

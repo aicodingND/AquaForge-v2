@@ -1,8 +1,11 @@
 @echo off
 REM ============================================
-REM AquaForge Server Launcher
+REM DEPRECATED (2026-02-11)
+REM macOS is the canonical platform.
+REM Use: python run_server.py --mode api --port 8001
+REM This file will be removed in a future cleanup.
 REM ============================================
-REM Quick launcher for different server modes
+REM AquaForge Server Launcher (Legacy Windows)
 REM ============================================
 
 echo.

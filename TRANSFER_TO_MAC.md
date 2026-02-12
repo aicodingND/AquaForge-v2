@@ -1,8 +1,12 @@
 # AquaForge.ai - Transfer Package
 
-**Transfer Date**: 2026-01-10  
-**Source**: Windows Development Environment  
-**Destination**: Mac Development Environment  
+> **DEPRECATED** (2026-02-11): This document is retained for historical reference only.
+> The Windows-to-Mac migration is complete. macOS is the canonical platform.
+> For current setup instructions, see `MAC_QUICKSTART.md`.
+
+**Transfer Date**: 2026-01-10
+**Source**: Windows Development Environment
+**Destination**: Mac Development Environment (now canonical)
 **Version**: v1.0.0-next (Post-Reflex Migration)
 
 ---

@@ -1,6 +1,11 @@
 @echo off
-REM SwimAI Docker Quick Start for Windows
-REM Double-click this file to start SwimAI in development mode
+REM ============================================
+REM DEPRECATED (2026-02-11)
+REM macOS is the canonical platform.
+REM Use: docker-compose --profile dev up --build
+REM This file will be removed in a future cleanup.
+REM ============================================
+REM SwimAI Docker Quick Start (Legacy Windows)
 
 echo.
 echo ================================================

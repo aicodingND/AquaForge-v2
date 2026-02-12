@@ -1,6 +1,13 @@
 @echo off
+REM ========================================
+REM DEPRECATED (2026-02-11)
+REM macOS is the canonical platform.
+REM Use start_dev.sh instead.
+REM This file will be removed in a future cleanup.
+REM ========================================
 echo ========================================
 echo AquaForge Development Server
+echo [DEPRECATED - Use start_dev.sh on Mac]
 echo ========================================
 echo.
 

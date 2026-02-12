@@ -1,21 +1,16 @@
 # AquaForge.ai - Version Log
 
-## Transfer Record: v1.0.0-next
+## Platform History
 
-**Date**: 2026-01-10 20:12:31  
-**Source**: `C:\Users\Michael\Desktop\AquaForgeFinal`  
-**Destination**: `E:\AquaForge_v1.0.0-next_2026-01-10`  
-**Transfer Method**: Robocopy (Windows)
+> **Canonical Platform:** macOS (as of 2026-01-10)
+> **Original Development:** Windows — fully migrated, Windows scripts deprecated.
 
----
+### Transfer Record: v1.0.0-next
 
-## Transfer Statistics
-
-- **Files Copied**: 281
-- **Data Size**: 4.41 MB
-- **Directories**: 39
-- **Excluded**: node_modules, .venv, .next, **pycache**, .git, cache directories
-- **Status**: ✅ Complete
+**Date**: 2026-01-10
+**Source**: Windows development environment
+**Destination**: macOS (canonical)
+**Status**: ✅ Complete — Mac is the single source of truth.
 
 ---
 
@@ -29,7 +24,7 @@
 - ✅ Reorganized project structure (archived legacy UI)
 - ✅ Created comprehensive documentation (HANDOFF.md)
 - ✅ Organized data files into `__DATA__/` directory
-- ✅ Prepared for Mac/iOS development
+- ✅ Consolidated Windows development into macOS as canonical platform
 
 **Tech Stack**:
 
@@ -40,9 +35,8 @@
 **Key Files**:
 
 - `HANDOFF.md` - Project overview and setup
-- `TRANSFER_TO_MAC.md` - Mac-specific setup instructions
-- `start_dev.bat` - Windows startup script (convert to .sh for Mac)
-- `run_server.py` - Cross-platform server runner
+- `start_dev.sh` - Development startup script (macOS)
+- `run_server.py` - Server runner
 
 ---
 
@@ -96,63 +90,22 @@
 
 ---
 
-## Next Steps on Mac
+## Development Setup
 
-1. **Install Prerequisites**:
+See `MAC_QUICKSTART.md` for setup instructions or run:
 
-   - Python 3.11+ via Homebrew
-   - Node.js 18+ via Homebrew
-   - Xcode (for iOS development)
+```bash
+chmod +x setup_mac.sh start_dev.sh
+./setup_mac.sh
+./start_dev.sh
+```
 
-2. **Setup Backend**:
+## Deprecated Files
 
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   pip install -r requirements.txt
-   ```
+The following Windows-era files are deprecated and will be removed in a future cleanup:
 
-3. **Setup Frontend**:
-
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-4. **Run Application**:
-
-   - Backend: `python run_server.py --mode api --port 8001 --reload`
-   - Frontend: `cd frontend && npm run dev`
-
-5. **iOS Mobile Development**:
-   - Install Expo CLI
-   - Create mobile app in `mobile/` directory
-   - Test with iOS Simulator
-
----
-
-## File Integrity
-
-All source code, documentation, and configuration files have been successfully transferred.
-
-**Excluded (as expected)**:
-
-- Build artifacts (`.next/`, `__pycache__/`)
-- Dependencies (`node_modules/`, `.venv/`)
-- Git history (`.git/` - excluded for size, use git clone on Mac if needed)
-- Cache files (`.cache/`, `.web/`)
-
----
-
-## Contact & Support
-
-For questions about this transfer or setup on Mac, refer to:
-
-- `HANDOFF.md` - Comprehensive project documentation
-- `TRANSFER_TO_MAC.md` - Mac setup guide
-- `__ARCHIVE_REFLEX_APP__/README.md` - Legacy code reference
-
----
-
-**Transfer Complete** ✅  
-**Ready for Mac Development** 🍎
+- `start_dev.bat` — use `start_dev.sh`
+- `launch.bat` — use `run_server.py` directly
+- `docker-quickstart.bat` — use `docker-compose` directly
+- `run_e2e_check.bat` — use `test_e2e_full.sh`
+- `TRANSFER_TO_MAC.md` — migration complete, retained for reference only

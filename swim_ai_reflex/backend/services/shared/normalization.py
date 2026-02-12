@@ -12,7 +12,6 @@ This is the single source of truth for data normalization.
 
 import logging
 import re
-from typing import Optional, Union
 
 logger = logging.getLogger(__name__)
 
@@ -77,6 +76,9 @@ EVENT_NORMALIZATION_MAP = {
     "100 fl": "100 Fly",
     "boys 100 fly": "100 Fly",
     "girls 100 fly": "100 Fly",
+    "100 yard butterfly": "100 Fly",
+    "100 yd butterfly": "100 Fly",
+    "100 yd fly": "100 Fly",
     # 100 Free
     "100 freestyle": "100 Free",
     "100 fr": "100 Free",
@@ -243,7 +245,7 @@ def is_individual_event(event: str) -> bool:
 # =============================================================================
 
 
-def normalize_time(time_value: Union[str, float, int, None]) -> Optional[float]:
+def normalize_time(time_value: str | float | int | None) -> float | None:
     """
     Normalize a time value to seconds (float).
 
@@ -309,7 +311,7 @@ def normalize_time(time_value: Union[str, float, int, None]) -> Optional[float]:
     return None
 
 
-def format_time(seconds: Optional[float]) -> str:
+def format_time(seconds: float | None) -> str:
     """
     Format seconds as time string.
 
@@ -450,7 +452,7 @@ def normalize_team_name(team: str) -> str:
 # =============================================================================
 
 
-def normalize_grade(grade: Union[str, int, None]) -> Optional[int]:
+def normalize_grade(grade: str | int | None) -> int | None:
     """
     Normalize grade to integer.
 
@@ -492,7 +494,7 @@ def normalize_grade(grade: Union[str, int, None]) -> Optional[int]:
     return None
 
 
-def is_scoring_eligible(grade: Union[str, int, None], min_grade: int = 9) -> bool:
+def is_scoring_eligible(grade: str | int | None, min_grade: int = 9) -> bool:
     """
     Check if a swimmer is scoring eligible based on grade.
 

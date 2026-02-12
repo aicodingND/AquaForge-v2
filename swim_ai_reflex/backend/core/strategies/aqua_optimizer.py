@@ -87,7 +87,7 @@ class ScoringProfile:
                 4,
                 2,
             ],
-            max_scorers_per_team=18,  # No limit
+            max_scorers_per_team=4,  # VCAC: only top 4 per team per event score
             max_entries_per_event=4,
             max_total_events=4,
         )

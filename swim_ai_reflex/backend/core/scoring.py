@@ -114,6 +114,7 @@ def score_event_with_rules(df_event: pd.DataFrame, rules: MeetRules) -> pd.DataF
         ].fillna(0)
 
     # Enforce Max Scorers Per Team (e.g. only top 3 score)
+    # PERFORMANCE FIX: Vectorized operations instead of .iterrows() (ported from Windows)
     if "team" in scoring_entries.columns:
         scorer_limit = (
             rules.max_scorers_per_team_relay
@@ -121,13 +122,28 @@ def score_event_with_rules(df_event: pd.DataFrame, rules: MeetRules) -> pd.DataF
             else rules.max_scorers_per_team_individual
         )
 
+        # Normalize team names once for all rows
         scoring_entries["_team_norm"] = scoring_entries["team"].apply(
             normalize_team_name
         )
-        scoring_entries["_team_rank"] = scoring_entries.groupby("_team_norm").cumcount()
-        over_limit = scoring_entries["_team_rank"] >= scorer_limit
-        scoring_entries.loc[over_limit, "points"] = 0.0
-        scoring_entries.drop(columns=["_team_norm", "_team_rank"], inplace=True)
+
+        # Create cumulative count per team (only for rows with points > 0)
+        scoring_entries["_team_rank"] = (
+            scoring_entries[scoring_entries["points"] > 0]
+            .groupby("_team_norm")
+            .cumcount()
+            + 1
+        )
+
+        # Zero out points for swimmers beyond the limit
+        scoring_entries.loc[scoring_entries["_team_rank"] > scorer_limit, "points"] = (
+            0.0
+        )
+
+        # Clean up temporary columns
+        scoring_entries.drop(
+            columns=["_team_norm", "_team_rank"], inplace=True, errors="ignore"
+        )
 
     # Handle non-scoring entries (Assign 0 points and 'Exh' place)
     non_scoring_entries["place"] = (
@@ -205,12 +221,110 @@ def apply_event_entry_limits(df: pd.DataFrame, rules: MeetRules) -> pd.DataFrame
 
 def enforce_max_events_per_swimmer(df: pd.DataFrame, rules: MeetRules) -> pd.DataFrame:
     """
-    Enforces max events per swimmer.
+    Enforces max events per swimmer by capping individual and total events.
+
+    For each swimmer who exceeds the limits:
+    - Individual limit: keep only their best individual events (lowest time
+      for swimming, highest dive_score for diving).
+    - Total limit: after applying individual caps, keep best events overall
+      (individual + relay) up to the total cap.
+
+    Relay events do NOT count toward the individual limit but DO count toward
+    the total limit.
     """
-    # For now, just return as is or implement simple capping.
-    # Implementing full optimization here is too heavy.
-    # We assume the input roster is mostly valid.
-    return df
+    if df.empty:
+        return df
+
+    # Ensure required columns
+    if "is_relay" not in df.columns:
+        if "event" in df.columns:
+            df = df.copy()
+            df["is_relay"] = df["event"].str.lower().str.contains("relay", na=False)
+        else:
+            return df
+
+    if "is_diving" not in df.columns:
+        if "event" in df.columns:
+            df = df.copy()
+            df["is_diving"] = (
+                df["event"]
+                .str.lower()
+                .str.contains("diving|dive", regex=True, na=False)
+            )
+        else:
+            df = df.copy()
+            df["is_diving"] = False
+
+    max_individual = rules.max_individual_events_per_swimmer
+    max_total = rules.max_total_events_per_swimmer
+
+    rows_to_keep = []
+
+    for swimmer, swimmer_df in df.groupby("swimmer"):
+        individual_entries = swimmer_df[~swimmer_df["is_relay"]].copy()
+        relay_entries = swimmer_df[swimmer_df["is_relay"]].copy()
+
+        # --- Step 1: Cap individual events ---
+        if len(individual_entries) > max_individual:
+            diving = individual_entries[individual_entries["is_diving"]].copy()
+            swimming = individual_entries[~individual_entries["is_diving"]].copy()
+
+            if not swimming.empty:
+                swimming = swimming.sort_values("time", ascending=True)
+            if not diving.empty:
+                sort_col = (
+                    "dive_score"
+                    if "dive_score" in diving.columns
+                    and diving["dive_score"].notnull().any()
+                    else "time"
+                )
+                diving = diving.sort_values(sort_col, ascending=(sort_col == "time"))
+
+            combined = []
+            if not swimming.empty:
+                swimming = swimming.copy()
+                swimming["_sort_key"] = swimming["time"]
+                combined.append(swimming)
+            if not diving.empty:
+                diving = diving.copy()
+                if (
+                    "dive_score" in diving.columns
+                    and diving["dive_score"].notnull().any()
+                ):
+                    diving["_sort_key"] = -diving["dive_score"]
+                else:
+                    diving["_sort_key"] = diving["time"]
+                combined.append(diving)
+
+            if combined:
+                all_individual = pd.concat(combined)
+                all_individual = all_individual.sort_values("_sort_key", ascending=True)
+                individual_entries = all_individual.head(max_individual).drop(
+                    columns=["_sort_key"]
+                )
+            else:
+                individual_entries = individual_entries.head(max_individual)
+
+        # --- Step 2: Cap total events (individual + relay) ---
+        capped = pd.concat([individual_entries, relay_entries], ignore_index=True)
+
+        if len(capped) > max_total:
+            remaining_slots = max_total - len(individual_entries)
+            if remaining_slots > 0:
+                relay_entries = relay_entries.sort_values("time", ascending=True).head(
+                    remaining_slots
+                )
+                capped = pd.concat(
+                    [individual_entries, relay_entries], ignore_index=True
+                )
+            else:
+                capped = individual_entries.head(max_total)
+
+        rows_to_keep.append(capped)
+
+    if rows_to_keep:
+        return pd.concat(rows_to_keep, ignore_index=True)
+    return pd.DataFrame(columns=df.columns)
 
 
 def full_meet_scoring(
@@ -269,13 +383,20 @@ def full_meet_scoring(
     # OPTIMIZED: Use centralized normalize_team_name function
     full_scored["team_norm"] = full_scored["team"].apply(normalize_team_name)
 
+    # Calculate Seton score explicitly
+    seton_score = float(
+        full_scored.loc[full_scored["team_norm"] == "seton", "points"].sum()
+    )
+
+    # Calculate Opponent score (everyone who is NOT Seton)
+    # This handles case where opponent team name is "Immanuel" or "Trinity" etc.
+    opponent_score = float(
+        full_scored.loc[full_scored["team_norm"] != "seton", "points"].sum()
+    )
+
     totals = {
-        "seton": float(
-            full_scored.loc[full_scored["team_norm"] == "seton", "points"].sum()
-        ),
-        "opponent": float(
-            full_scored.loc[full_scored["team_norm"] == "opponent", "points"].sum()
-        ),
+        "seton": seton_score,
+        "opponent": opponent_score,
     }
 
     # 4. VALIDATION: Check if scoring follows standard dual meet rules

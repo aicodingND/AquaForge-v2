@@ -386,11 +386,11 @@ class ScoringEngine:
         self,
         profile: ScoringProfile,
         fatigue: FatigueModel,
-        attrition: AttritionRates | None = None,
+        attrition: AttritionRates
+        | None = None,  # kept for API compat; unused (zero impact)
     ):
         self.profile = profile
         self.fatigue = fatigue
-        self.attrition = attrition or AttritionRates.disabled()
 
     def calculate_adjusted_time(
         self, base_time: float, swim_count: int, is_back_to_back: bool
@@ -485,9 +485,7 @@ class ScoringEngine:
                 }
             )
 
-        # Risk-adjust by attrition probability (expected-value scoring)
-        discount = self.attrition.completion_factor(event_name) if event_name else 1.0
-        return seton_points * discount, opponent_points * discount, details
+        return seton_points, opponent_points, details
 
     def score_event_fast(
         self,
@@ -538,9 +536,7 @@ class ScoringEngine:
                 total_points += points_table[rank - 1]
                 seton_scorers += 1
 
-        # Risk-adjust by attrition probability
-        discount = self.attrition.completion_factor(event_name) if event_name else 1.0
-        return total_points * discount
+        return total_points
 
     def score_lineup(
         self,
@@ -1157,7 +1153,8 @@ class AquaOptimizer(BaseOptimizerStrategy):
         nash_iterations: int | None = None,
         use_parallel: bool | None = None,  # NEW: enable parallel seed execution
         championship_factors: ChampionshipFactors | None = None,
-        attrition: AttritionRates | None = None,
+        attrition: AttritionRates
+        | None = None,  # accepted but unused (zero optimization impact)
     ):
         self.profile = profile or ScoringProfile.visaa_dual()
         self.fatigue = fatigue or FatigueModel()
@@ -1170,14 +1167,6 @@ class AquaOptimizer(BaseOptimizerStrategy):
             self.championship_factors = ChampionshipFactors()
         else:
             self.championship_factors = ChampionshipFactors.disabled()
-
-        # Attrition model (auto-enable for championship profiles)
-        if attrition is not None:
-            self.attrition = attrition
-        elif "championship" in self.profile.name:
-            self.attrition = AttritionRates()
-        else:
-            self.attrition = AttritionRates.disabled()
 
         # Get preset values, allow overrides
         preset = self.QUALITY_PRESETS.get(
@@ -1265,9 +1254,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
 
         # Initialize engines
         constraint_engine = ConstraintEngine(self.profile, events)
-        scoring_engine = ScoringEngine(
-            self.profile, self.fatigue, attrition=self.attrition
-        )
+        scoring_engine = ScoringEngine(self.profile, self.fatigue)
 
         # === Multi-seed ensemble using quality preset ===
         parallel_mode = self.use_parallel and self.num_seeds >= 3

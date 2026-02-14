@@ -1,0 +1,347 @@
+{
+  "results": [
+    {
+      "meet_id": 464,
+      "meet_name": "National Catholic H.S. Championship 2024",
+      "n_events": 7,
+      "total_seeded": 49,
+      "total_actual_dns": 0,
+      "total_predicted_dns": 10.5,
+      "actual_global_rate": 0.0,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.2154,
+      "bias": 0.2154
+    },
+    {
+      "meet_id": 465,
+      "meet_name": "2024 VISAA Swimming & Diving Championship",
+      "n_events": 8,
+      "total_seeded": 104,
+      "total_actual_dns": 2,
+      "total_predicted_dns": 22.7,
+      "actual_global_rate": 0.0192,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.203,
+      "bias": 0.203
+    },
+    {
+      "meet_id": 470,
+      "meet_name": "Seton Winter Invitational",
+      "n_events": 8,
+      "total_seeded": 158,
+      "total_actual_dns": 5,
+      "total_predicted_dns": 33.9,
+      "actual_global_rate": 0.0316,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1876,
+      "bias": 0.1876
+    },
+    {
+      "meet_id": 471,
+      "meet_name": "2024 NoVa Catholic Invitational Championship",
+      "n_events": 8,
+      "total_seeded": 253,
+      "total_actual_dns": 7,
+      "total_predicted_dns": 53.8,
+      "actual_global_rate": 0.0277,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1844,
+      "bias": 0.1844
+    },
+    {
+      "meet_id": 476,
+      "meet_name": "18th Annual VISAA Division II Invitational",
+      "n_events": 8,
+      "total_seeded": 180,
+      "total_actual_dns": 5,
+      "total_predicted_dns": 38.7,
+      "actual_global_rate": 0.0278,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1929,
+      "bias": 0.1929
+    },
+    {
+      "meet_id": 478,
+      "meet_name": "VCAC Regular Season Championship",
+      "n_events": 8,
+      "total_seeded": 416,
+      "total_actual_dns": 14,
+      "total_predicted_dns": 88.8,
+      "actual_global_rate": 0.0337,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1869,
+      "bias": 0.1869
+    },
+    {
+      "meet_id": 479,
+      "meet_name": "2024 VCAC Championship Meet",
+      "n_events": 8,
+      "total_seeded": 261,
+      "total_actual_dns": 2,
+      "total_predicted_dns": 56.0,
+      "actual_global_rate": 0.0077,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.2078,
+      "bias": 0.2078
+    },
+    {
+      "meet_id": 482,
+      "meet_name": "17th Annual VISAA Junior Varsity Invitational",
+      "n_events": 2,
+      "total_seeded": 125,
+      "total_actual_dns": 2,
+      "total_predicted_dns": 26.7,
+      "actual_global_rate": 0.016,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1954,
+      "bias": 0.1954
+    },
+    {
+      "meet_id": 485,
+      "meet_name": "Seton Icebreaker Invitational",
+      "n_events": 8,
+      "total_seeded": 338,
+      "total_actual_dns": 12,
+      "total_predicted_dns": 72.1,
+      "actual_global_rate": 0.0355,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1812,
+      "bias": 0.1812
+    },
+    {
+      "meet_id": 488,
+      "meet_name": "VCAC Invitational",
+      "n_events": 8,
+      "total_seeded": 453,
+      "total_actual_dns": 23,
+      "total_predicted_dns": 96.3,
+      "actual_global_rate": 0.0508,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1766,
+      "bias": 0.1766
+    },
+    {
+      "meet_id": 489,
+      "meet_name": "Seton Winter Invitational",
+      "n_events": 8,
+      "total_seeded": 245,
+      "total_actual_dns": 6,
+      "total_predicted_dns": 52.0,
+      "actual_global_rate": 0.0245,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1765,
+      "bias": 0.1724
+    },
+    {
+      "meet_id": 493,
+      "meet_name": "2025 NoVa Catholic Invitational Championship",
+      "n_events": 8,
+      "total_seeded": 614,
+      "total_actual_dns": 32,
+      "total_predicted_dns": 131.2,
+      "actual_global_rate": 0.0521,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1692,
+      "bias": 0.1692
+    },
+    {
+      "meet_id": 494,
+      "meet_name": "VISAA Junior Varsity Invitational",
+      "n_events": 2,
+      "total_seeded": 148,
+      "total_actual_dns": 10,
+      "total_predicted_dns": 31.6,
+      "actual_global_rate": 0.0676,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1475,
+      "bias": 0.1475
+    },
+    {
+      "meet_id": 495,
+      "meet_name": "2025 Annual VISAA Division II Invitational",
+      "n_events": 8,
+      "total_seeded": 219,
+      "total_actual_dns": 12,
+      "total_predicted_dns": 47.0,
+      "actual_global_rate": 0.0548,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1494,
+      "bias": 0.1494
+    },
+    {
+      "meet_id": 496,
+      "meet_name": "2025 VCAC Championship Meet",
+      "n_events": 8,
+      "total_seeded": 289,
+      "total_actual_dns": 11,
+      "total_predicted_dns": 62.0,
+      "actual_global_rate": 0.0381,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1751,
+      "bias": 0.1751
+    },
+    {
+      "meet_id": 497,
+      "meet_name": "National Catholic H.S. Championship 2025",
+      "n_events": 8,
+      "total_seeded": 226,
+      "total_actual_dns": 2,
+      "total_predicted_dns": 48.7,
+      "actual_global_rate": 0.0088,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.206,
+      "bias": 0.206
+    },
+    {
+      "meet_id": 498,
+      "meet_name": "2025 VISAA Swimming & Diving Championship",
+      "n_events": 8,
+      "total_seeded": 344,
+      "total_actual_dns": 3,
+      "total_predicted_dns": 74.9,
+      "actual_global_rate": 0.0087,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.2123,
+      "bias": 0.2123
+    },
+    {
+      "meet_id": 500,
+      "meet_name": "NoVA Catholic High School Times",
+      "n_events": 8,
+      "total_seeded": 1038,
+      "total_actual_dns": 0,
+      "total_predicted_dns": 223.1,
+      "actual_global_rate": 0.0,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.216,
+      "bias": 0.216
+    },
+    {
+      "meet_id": 506,
+      "meet_name": "Seton Icebreaker Invitational",
+      "n_events": 8,
+      "total_seeded": 452,
+      "total_actual_dns": 18,
+      "total_predicted_dns": 96.4,
+      "actual_global_rate": 0.0398,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1778,
+      "bias": 0.1778
+    },
+    {
+      "meet_id": 509,
+      "meet_name": "Seton December Invitational",
+      "n_events": 8,
+      "total_seeded": 462,
+      "total_actual_dns": 28,
+      "total_predicted_dns": 98.0,
+      "actual_global_rate": 0.0606,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1553,
+      "bias": 0.1553
+    },
+    {
+      "meet_id": 510,
+      "meet_name": "Seton Homecoming Invitational",
+      "n_events": 8,
+      "total_seeded": 381,
+      "total_actual_dns": 25,
+      "total_predicted_dns": 81.4,
+      "actual_global_rate": 0.0656,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1419,
+      "bias": 0.1419
+    },
+    {
+      "meet_id": 512,
+      "meet_name": "VCAC Regular Season Championship",
+      "n_events": 8,
+      "total_seeded": 420,
+      "total_actual_dns": 9,
+      "total_predicted_dns": 89.8,
+      "actual_global_rate": 0.0214,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1987,
+      "bias": 0.1987
+    },
+    {
+      "meet_id": 513,
+      "meet_name": "2026 NoVa Catholic Invitational Championship",
+      "n_events": 8,
+      "total_seeded": 687,
+      "total_actual_dns": 56,
+      "total_predicted_dns": 146.5,
+      "actual_global_rate": 0.0815,
+      "predicted_global_rate": 0.2009,
+      "mae": 0.1398,
+      "bias": 0.1398
+    }
+  ],
+  "per_event_aggregate": {
+    "100 Back": {
+      "n_meets": 21,
+      "predicted_rate": 0.2002,
+      "mean_actual_rate": 0.04129047619047619,
+      "mae": 0.1589095238095238,
+      "bias": 0.1589095238095238
+    },
+    "100 Breast": {
+      "n_meets": 21,
+      "predicted_rate": 0.191,
+      "mean_actual_rate": 0.026761904761904758,
+      "mae": 0.16423809523809524,
+      "bias": 0.16423809523809524
+    },
+    "100 Fly": {
+      "n_meets": 21,
+      "predicted_rate": 0.2561,
+      "mean_actual_rate": 0.046342857142857144,
+      "mae": 0.21133809523809527,
+      "bias": 0.20975714285714284
+    },
+    "100 Free": {
+      "n_meets": 23,
+      "predicted_rate": 0.2081,
+      "mean_actual_rate": 0.03409565217391304,
+      "mae": 0.17400434782608698,
+      "bias": 0.17400434782608698
+    },
+    "200 IM": {
+      "n_meets": 21,
+      "predicted_rate": 0.2377,
+      "mean_actual_rate": 0.021376190476190476,
+      "mae": 0.2163238095238095,
+      "bias": 0.2163238095238095
+    },
+    "50 Free": {
+      "n_meets": 23,
+      "predicted_rate": 0.2166,
+      "mean_actual_rate": 0.028669565217391304,
+      "mae": 0.1879304347826087,
+      "bias": 0.1879304347826087
+    },
+    "500 Free": {
+      "n_meets": 21,
+      "predicted_rate": 0.1979,
+      "mean_actual_rate": 0.0314047619047619,
+      "mae": 0.16649523809523809,
+      "bias": 0.16649523809523809
+    },
+    "200 Free": {
+      "n_meets": 20,
+      "predicted_rate": 0.2201,
+      "mean_actual_rate": 0.034575,
+      "mae": 0.185525,
+      "bias": 0.185525
+    }
+  },
+  "summary": {
+    "n_meets": 23,
+    "total_seeded": 7862,
+    "total_actual_dns": 284,
+    "total_predicted_dns": 1682.1,
+    "mean_mae": 0.1825,
+    "mean_bias": 0.1823,
+    "accuracy_verdict": "FAIR (MAE < 20%)"
+  }
+}

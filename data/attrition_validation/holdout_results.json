@@ -1,0 +1,123 @@
+{
+  "k": 5,
+  "seed": 42,
+  "n_meets": 162,
+  "fold_results": [
+    {
+      "fold": 0,
+      "train_size": 128,
+      "test_size": 34,
+      "train_rates": {
+        "100 Back": 0.18017,
+        "100 Breast": 0.17712,
+        "100 Fly": 0.23828,
+        "100 Free": 0.19503,
+        "200 Free": 0.20212,
+        "200 Free Relay": 0.17586,
+        "200 IM": 0.2229,
+        "200 Medley Relay": 0.17368,
+        "400 Free Relay": 0.23843,
+        "50 Free": 0.1952,
+        "500 Free": 0.18717,
+        "Diving": 0.08005
+      },
+      "train_default": 0.18963,
+      "test_mae": 0.0644,
+      "test_bias": -0.05848
+    },
+    {
+      "fold": 1,
+      "train_size": 129,
+      "test_size": 33,
+      "train_rates": {
+        "100 Back": 0.19526,
+        "100 Breast": 0.18532,
+        "100 Fly": 0.24257,
+        "100 Free": 0.20002,
+        "200 Free": 0.20831,
+        "200 Free Relay": 0.18388,
+        "200 IM": 0.23251,
+        "200 Medley Relay": 0.18393,
+        "400 Free Relay": 0.24329,
+        "50 Free": 0.20625,
+        "500 Free": 0.18599,
+        "Diving": 0.05236
+      },
+      "train_default": 0.1941,
+      "test_mae": 0.04375,
+      "test_bias": -0.04375
+    },
+    {
+      "fold": 2,
+      "train_size": 130,
+      "test_size": 32,
+      "train_rates": {
+        "100 Back": 0.20789,
+        "100 Breast": 0.19425,
+        "100 Fly": 0.25799,
+        "100 Free": 0.21039,
+        "200 Free": 0.23094,
+        "200 Free Relay": 0.18239,
+        "200 IM": 0.23467,
+        "200 Medley Relay": 0.1797,
+        "400 Free Relay": 0.24438,
+        "50 Free": 0.22039,
+        "500 Free": 0.20318,
+        "Diving": 0.08959
+      },
+      "train_default": 0.2054,
+      "test_mae": 0.02412,
+      "test_bias": 0.01499
+    },
+    {
+      "fold": 3,
+      "train_size": 130,
+      "test_size": 32,
+      "train_rates": {
+        "100 Back": 0.2183,
+        "100 Breast": 0.2058,
+        "100 Fly": 0.28133,
+        "100 Free": 0.22661,
+        "200 Free": 0.23701,
+        "200 Free Relay": 0.19892,
+        "200 IM": 0.2542,
+        "200 Medley Relay": 0.20196,
+        "400 Free Relay": 0.27173,
+        "50 Free": 0.23522,
+        "500 Free": 0.21455,
+        "Diving": 0.07069
+      },
+      "train_default": 0.21837,
+      "test_mae": 0.09071,
+      "test_bias": 0.09071
+    },
+    {
+      "fold": 4,
+      "train_size": 131,
+      "test_size": 31,
+      "train_rates": {
+        "100 Back": 0.1987,
+        "100 Breast": 0.19279,
+        "100 Fly": 0.25923,
+        "100 Free": 0.20809,
+        "200 Free": 0.22169,
+        "200 Free Relay": 0.18452,
+        "200 IM": 0.24271,
+        "200 Medley Relay": 0.18519,
+        "400 Free Relay": 0.23717,
+        "50 Free": 0.22524,
+        "500 Free": 0.19787,
+        "Diving": 0.04332
+      },
+      "train_default": 0.19672,
+      "test_mae": 0.02216,
+      "test_bias": 0.00384
+    }
+  ],
+  "summary": {
+    "mean_mae": 0.04903,
+    "std_mae": 0.02891,
+    "mean_bias": 0.00146,
+    "std_bias": 0.05872
+  }
+}

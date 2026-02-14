@@ -8,6 +8,14 @@ Key finding: DQ is negligible (0.01%), but DNS/scratch is ~20% of all
 seeded entries. This significantly affects championship projections where
 psych sheet entries may not actually swim.
 
+Validated finding (22-meet A/B test): Event-level attrition rates are
+nearly uniform (~19-26%) and have ZERO impact on deterministic optimizer
+lineup decisions. Attrition is therefore only used in:
+  - Monte Carlo simulation (stochastic swimmer dropout per trial)
+  - Championship projections (expected-value discounting)
+It is NOT used in optimizer objective functions (Gurobi, Aqua, HiGHS, etc.)
+because uniform scaling cannot change which assignment maximizes total points.
+
 Usage:
     from swim_ai_reflex.backend.core.attrition_model import (
         AttritionRates,

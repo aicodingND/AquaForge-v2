@@ -1,0 +1,570 @@
+{
+  "all_meets": {
+    "per_event": {
+      "100 Back": {
+        "predicted": 0.2002,
+        "observed_mean": 0.20018,
+        "observed_std": 0.2547,
+        "residual": 2e-05,
+        "mae": 2e-05,
+        "n_meets": 104,
+        "n_entries": 6784
+      },
+      "100 Breast": {
+        "predicted": 0.191,
+        "observed_mean": 0.19104,
+        "observed_std": 0.24936,
+        "residual": -4e-05,
+        "mae": 4e-05,
+        "n_meets": 104,
+        "n_entries": 6653
+      },
+      "100 Fly": {
+        "predicted": 0.2561,
+        "observed_mean": 0.25609,
+        "observed_std": 0.27649,
+        "residual": 1e-05,
+        "mae": 1e-05,
+        "n_meets": 98,
+        "n_entries": 3655
+      },
+      "100 Free": {
+        "predicted": 0.2081,
+        "observed_mean": 0.208,
+        "observed_std": 0.25816,
+        "residual": 0.0001,
+        "mae": 0.0001,
+        "n_meets": 112,
+        "n_entries": 9596
+      },
+      "200 Free": {
+        "predicted": 0.2201,
+        "observed_mean": 0.22006,
+        "observed_std": 0.27304,
+        "residual": 4e-05,
+        "mae": 4e-05,
+        "n_meets": 104,
+        "n_entries": 4526
+      },
+      "200 Free Relay": {
+        "predicted": 0.1852,
+        "observed_mean": 0.18517,
+        "observed_std": 0.21226,
+        "residual": 3e-05,
+        "mae": 3e-05,
+        "n_meets": 147,
+        "n_entries": 6421
+      },
+      "200 IM": {
+        "predicted": 0.2377,
+        "observed_mean": 0.23774,
+        "observed_std": 0.2692,
+        "residual": -4e-05,
+        "mae": 4e-05,
+        "n_meets": 97,
+        "n_entries": 3731
+      },
+      "200 Medley Relay": {
+        "predicted": 0.185,
+        "observed_mean": 0.18496,
+        "observed_std": 0.22006,
+        "residual": 4e-05,
+        "mae": 4e-05,
+        "n_meets": 147,
+        "n_entries": 6212
+      },
+      "400 Free Relay": {
+        "predicted": 0.2472,
+        "observed_mean": 0.24707,
+        "observed_std": 0.22614,
+        "residual": 0.00013,
+        "mae": 0.00013,
+        "n_meets": 133,
+        "n_entries": 3760
+      },
+      "50 Free": {
+        "predicted": 0.2166,
+        "observed_mean": 0.2166,
+        "observed_std": 0.276,
+        "residual": 0.0,
+        "mae": 0.0,
+        "n_meets": 112,
+        "n_entries": 14100
+      },
+      "500 Free": {
+        "predicted": 0.1979,
+        "observed_mean": 0.1972,
+        "observed_std": 0.23712,
+        "residual": 0.0007,
+        "mae": 0.0007,
+        "n_meets": 96,
+        "n_entries": 3291
+      },
+      "Diving": {
+        "predicted": 0.0647,
+        "observed_mean": 0.06474,
+        "observed_std": 0.16989,
+        "residual": -4e-05,
+        "mae": 4e-05,
+        "n_meets": 49,
+        "n_entries": 3321
+      }
+    },
+    "global_mae": 7e-05,
+    "global_bias": 6e-05,
+    "n_meets": 162
+  },
+  "championship_only": {
+    "per_event": {
+      "100 Back": {
+        "predicted": 0.2002,
+        "observed_mean": 0.20401,
+        "observed_std": 0.23473,
+        "residual": -0.00381,
+        "mae": 0.00381,
+        "n_meets": 80,
+        "n_entries": 5490
+      },
+      "100 Breast": {
+        "predicted": 0.191,
+        "observed_mean": 0.19989,
+        "observed_std": 0.22859,
+        "residual": -0.00889,
+        "mae": 0.00889,
+        "n_meets": 80,
+        "n_entries": 5423
+      },
+      "100 Fly": {
+        "predicted": 0.2561,
+        "observed_mean": 0.26012,
+        "observed_std": 0.23979,
+        "residual": -0.00402,
+        "mae": 0.00402,
+        "n_meets": 80,
+        "n_entries": 3310
+      },
+      "100 Free": {
+        "predicted": 0.2081,
+        "observed_mean": 0.21817,
+        "observed_std": 0.24108,
+        "residual": -0.01007,
+        "mae": 0.01007,
+        "n_meets": 88,
+        "n_entries": 8145
+      },
+      "200 Free": {
+        "predicted": 0.2201,
+        "observed_mean": 0.21808,
+        "observed_std": 0.23701,
+        "residual": 0.00202,
+        "mae": 0.00202,
+        "n_meets": 80,
+        "n_entries": 3705
+      },
+      "200 Free Relay": {
+        "predicted": 0.1852,
+        "observed_mean": 0.18335,
+        "observed_std": 0.18805,
+        "residual": 0.00185,
+        "mae": 0.00185,
+        "n_meets": 127,
+        "n_entries": 5863
+      },
+      "200 IM": {
+        "predicted": 0.2377,
+        "observed_mean": 0.24025,
+        "observed_std": 0.24279,
+        "residual": -0.00255,
+        "mae": 0.00255,
+        "n_meets": 80,
+        "n_entries": 3359
+      },
+      "200 Medley Relay": {
+        "predicted": 0.185,
+        "observed_mean": 0.18466,
+        "observed_std": 0.20254,
+        "residual": 0.00034,
+        "mae": 0.00034,
+        "n_meets": 127,
+        "n_entries": 5632
+      },
+      "400 Free Relay": {
+        "predicted": 0.2472,
+        "observed_mean": 0.24711,
+        "observed_std": 0.19921,
+        "residual": 9e-05,
+        "mae": 9e-05,
+        "n_meets": 114,
+        "n_entries": 3460
+      },
+      "50 Free": {
+        "predicted": 0.2166,
+        "observed_mean": 0.21634,
+        "observed_std": 0.25097,
+        "residual": 0.00026,
+        "mae": 0.00026,
+        "n_meets": 88,
+        "n_entries": 12078
+      },
+      "500 Free": {
+        "predicted": 0.1979,
+        "observed_mean": 0.20318,
+        "observed_std": 0.21604,
+        "residual": -0.00528,
+        "mae": 0.00528,
+        "n_meets": 80,
+        "n_entries": 2953
+      },
+      "Diving": {
+        "predicted": 0.0647,
+        "observed_mean": 0.076,
+        "observed_std": 0.17455,
+        "residual": -0.0113,
+        "mae": 0.0113,
+        "n_meets": 45,
+        "n_entries": 2750
+      }
+    },
+    "global_mae": 0.00391,
+    "global_bias": -0.00315,
+    "n_meets": 131
+  },
+  "by_meet_type": {
+    "championship": {
+      "per_event": {
+        "100 Back": {
+          "predicted": 0.2002,
+          "observed_mean": 0.20401,
+          "observed_std": 0.23473,
+          "residual": -0.00381,
+          "mae": 0.00381,
+          "n_meets": 80,
+          "n_entries": 5490
+        },
+        "100 Breast": {
+          "predicted": 0.191,
+          "observed_mean": 0.19989,
+          "observed_std": 0.22859,
+          "residual": -0.00889,
+          "mae": 0.00889,
+          "n_meets": 80,
+          "n_entries": 5423
+        },
+        "100 Fly": {
+          "predicted": 0.2561,
+          "observed_mean": 0.26012,
+          "observed_std": 0.23979,
+          "residual": -0.00402,
+          "mae": 0.00402,
+          "n_meets": 80,
+          "n_entries": 3310
+        },
+        "100 Free": {
+          "predicted": 0.2081,
+          "observed_mean": 0.21817,
+          "observed_std": 0.24108,
+          "residual": -0.01007,
+          "mae": 0.01007,
+          "n_meets": 88,
+          "n_entries": 8145
+        },
+        "200 Free": {
+          "predicted": 0.2201,
+          "observed_mean": 0.21808,
+          "observed_std": 0.23701,
+          "residual": 0.00202,
+          "mae": 0.00202,
+          "n_meets": 80,
+          "n_entries": 3705
+        },
+        "200 Free Relay": {
+          "predicted": 0.1852,
+          "observed_mean": 0.18335,
+          "observed_std": 0.18805,
+          "residual": 0.00185,
+          "mae": 0.00185,
+          "n_meets": 127,
+          "n_entries": 5863
+        },
+        "200 IM": {
+          "predicted": 0.2377,
+          "observed_mean": 0.24025,
+          "observed_std": 0.24279,
+          "residual": -0.00255,
+          "mae": 0.00255,
+          "n_meets": 80,
+          "n_entries": 3359
+        },
+        "200 Medley Relay": {
+          "predicted": 0.185,
+          "observed_mean": 0.18466,
+          "observed_std": 0.20254,
+          "residual": 0.00034,
+          "mae": 0.00034,
+          "n_meets": 127,
+          "n_entries": 5632
+        },
+        "400 Free Relay": {
+          "predicted": 0.2472,
+          "observed_mean": 0.24711,
+          "observed_std": 0.19921,
+          "residual": 9e-05,
+          "mae": 9e-05,
+          "n_meets": 114,
+          "n_entries": 3460
+        },
+        "50 Free": {
+          "predicted": 0.2166,
+          "observed_mean": 0.21634,
+          "observed_std": 0.25097,
+          "residual": 0.00026,
+          "mae": 0.00026,
+          "n_meets": 88,
+          "n_entries": 12078
+        },
+        "500 Free": {
+          "predicted": 0.1979,
+          "observed_mean": 0.20318,
+          "observed_std": 0.21604,
+          "residual": -0.00528,
+          "mae": 0.00528,
+          "n_meets": 80,
+          "n_entries": 2953
+        },
+        "Diving": {
+          "predicted": 0.0647,
+          "observed_mean": 0.076,
+          "observed_std": 0.17455,
+          "residual": -0.0113,
+          "mae": 0.0113,
+          "n_meets": 45,
+          "n_entries": 2750
+        }
+      },
+      "global_mae": 0.00391,
+      "global_bias": -0.00315,
+      "n_meets": 131
+    },
+    "dual": {
+      "per_event": {
+        "100 Back": {
+          "predicted": 0.2002,
+          "observed_mean": 0.13885,
+          "observed_std": 0.31873,
+          "residual": 0.06135,
+          "mae": 0.06135,
+          "n_meets": 9,
+          "n_entries": 677
+        },
+        "100 Breast": {
+          "predicted": 0.191,
+          "observed_mean": 0.13219,
+          "observed_std": 0.31268,
+          "residual": 0.05881,
+          "mae": 0.05881,
+          "n_meets": 9,
+          "n_entries": 643
+        },
+        "100 Fly": {
+          "predicted": 0.2561,
+          "observed_mean": 0.51429,
+          "observed_std": 0.57242,
+          "residual": -0.25819,
+          "mae": 0.25819,
+          "n_meets": 2,
+          "n_entries": 35
+        },
+        "100 Free": {
+          "predicted": 0.2081,
+          "observed_mean": 0.12766,
+          "observed_std": 0.31648,
+          "residual": 0.08044,
+          "mae": 0.08044,
+          "n_meets": 9,
+          "n_entries": 705
+        },
+        "200 Free": {
+          "predicted": 0.2201,
+          "observed_mean": 0.30159,
+          "observed_std": 0.39837,
+          "residual": -0.08149,
+          "mae": 0.08149,
+          "n_meets": 9,
+          "n_entries": 441
+        },
+        "200 Free Relay": {
+          "predicted": 0.1852,
+          "observed_mean": 0.64615,
+          "observed_std": 0.63188,
+          "residual": -0.46095,
+          "mae": 0.46095,
+          "n_meets": 2,
+          "n_entries": 65
+        },
+        "200 IM": {
+          "predicted": 0.2377,
+          "observed_mean": 0.52273,
+          "observed_std": 0.70711,
+          "residual": -0.28503,
+          "mae": 0.28503,
+          "n_meets": 2,
+          "n_entries": 44
+        },
+        "200 Medley Relay": {
+          "predicted": 0.185,
+          "observed_mean": 0.64516,
+          "observed_std": 0.53212,
+          "residual": -0.46016,
+          "mae": 0.46016,
+          "n_meets": 2,
+          "n_entries": 62
+        },
+        "400 Free Relay": {
+          "predicted": 0.2472,
+          "observed_mean": 0.57895,
+          "observed_std": 0.59025,
+          "residual": -0.33175,
+          "mae": 0.33175,
+          "n_meets": 2,
+          "n_entries": 38
+        },
+        "50 Free": {
+          "predicted": 0.2166,
+          "observed_mean": 0.26386,
+          "observed_std": 0.40954,
+          "residual": -0.04726,
+          "mae": 0.04726,
+          "n_meets": 9,
+          "n_entries": 974
+        },
+        "500 Free": {
+          "predicted": 0.1979,
+          "observed_mean": 0.57143,
+          "observed_std": 0.66291,
+          "residual": -0.37353,
+          "mae": 0.37353,
+          "n_meets": 2,
+          "n_entries": 35
+        }
+      },
+      "global_mae": 0.08706,
+      "global_bias": -0.01389,
+      "n_meets": 9
+    },
+    "other": {
+      "per_event": {
+        "100 Back": {
+          "predicted": 0.2002,
+          "observed_mean": 0.23339,
+          "observed_std": 0.32763,
+          "residual": -0.03319,
+          "mae": 0.03319,
+          "n_meets": 15,
+          "n_entries": 617
+        },
+        "100 Breast": {
+          "predicted": 0.191,
+          "observed_mean": 0.17376,
+          "observed_std": 0.32519,
+          "residual": 0.01724,
+          "mae": 0.01724,
+          "n_meets": 15,
+          "n_entries": 587
+        },
+        "100 Fly": {
+          "predicted": 0.2561,
+          "observed_mean": 0.18387,
+          "observed_std": 0.37302,
+          "residual": 0.07223,
+          "mae": 0.07223,
+          "n_meets": 16,
+          "n_entries": 310
+        },
+        "100 Free": {
+          "predicted": 0.2081,
+          "observed_mean": 0.17292,
+          "observed_std": 0.33032,
+          "residual": 0.03518,
+          "mae": 0.03518,
+          "n_meets": 15,
+          "n_entries": 746
+        },
+        "200 Free": {
+          "predicted": 0.2201,
+          "observed_mean": 0.14474,
+          "observed_std": 0.34213,
+          "residual": 0.07536,
+          "mae": 0.07536,
+          "n_meets": 15,
+          "n_entries": 380
+        },
+        "200 Free Relay": {
+          "predicted": 0.1852,
+          "observed_mean": 0.14604,
+          "observed_std": 0.30065,
+          "residual": 0.03916,
+          "mae": 0.03916,
+          "n_meets": 18,
+          "n_entries": 493
+        },
+        "200 IM": {
+          "predicted": 0.2377,
+          "observed_mean": 0.17378,
+          "observed_std": 0.33191,
+          "residual": 0.06392,
+          "mae": 0.06392,
+          "n_meets": 15,
+          "n_entries": 328
+        },
+        "200 Medley Relay": {
+          "predicted": 0.185,
+          "observed_mean": 0.1332,
+          "observed_std": 0.28428,
+          "residual": 0.0518,
+          "mae": 0.0518,
+          "n_meets": 18,
+          "n_entries": 518
+        },
+        "400 Free Relay": {
+          "predicted": 0.2472,
+          "observed_mean": 0.19847,
+          "observed_std": 0.30907,
+          "residual": 0.04873,
+          "mae": 0.04873,
+          "n_meets": 17,
+          "n_entries": 262
+        },
+        "50 Free": {
+          "predicted": 0.2166,
+          "observed_mean": 0.17557,
+          "observed_std": 0.33427,
+          "residual": 0.04103,
+          "mae": 0.04103,
+          "n_meets": 15,
+          "n_entries": 1048
+        },
+        "500 Free": {
+          "predicted": 0.1979,
+          "observed_mean": 0.09571,
+          "observed_std": 0.26169,
+          "residual": 0.10219,
+          "mae": 0.10219,
+          "n_meets": 14,
+          "n_entries": 303
+        },
+        "Diving": {
+          "predicted": 0.0647,
+          "observed_mean": 0.01051,
+          "observed_std": 0.10591,
+          "residual": 0.05419,
+          "mae": 0.05419,
+          "n_meets": 4,
+          "n_entries": 571
+        }
+      },
+      "global_mae": 0.04748,
+      "global_bias": 0.04084,
+      "n_meets": 22
+    }
+  }
+}

@@ -75,7 +75,8 @@ class ChampionshipGurobiStrategy:
         self,
         meet_profile: str = "vcac_championship",
         championship_factors: ChampionshipFactors | None = None,
-        attrition: AttritionRates | None = None,
+        attrition: AttritionRates
+        | None = None,  # accepted but unused (zero optimization impact)
     ):
         self.rules = get_meet_profile(meet_profile)
         self.points_table = self.rules.individual_points
@@ -87,9 +88,6 @@ class ChampionshipGurobiStrategy:
             self.factors = championship_factors
         else:
             self.factors = ChampionshipFactors()
-
-        # Attrition model (always enabled for championship)
-        self.attrition = attrition or AttritionRates()
 
     def optimize_entries(
         self,
@@ -403,10 +401,7 @@ class ChampionshipGurobiStrategy:
 
                 if placement <= len(self.points_table):
                     raw_pts = float(self.points_table[placement - 1])
-                    # Risk-adjust by attrition probability
-                    point_matrix[(swimmer, event)] = (
-                        raw_pts * self.attrition.completion_factor(event)
-                    )
+                    point_matrix[(swimmer, event)] = raw_pts
                 else:
                     point_matrix[(swimmer, event)] = 0.0
 
@@ -471,9 +466,6 @@ class ChampionshipGurobiStrategy:
                         event_pts += self.points_table[i]
                         team_scorers += 1
 
-            # Risk-adjust by attrition probability
-            discount = self.attrition.completion_factor(event)
-            event_pts *= discount
             event_breakdown[event] = event_pts
             total_points += event_pts
 
@@ -514,8 +506,6 @@ class ChampionshipGurobiStrategy:
                 pts = (
                     self.points_table[rank - 1] if rank <= len(self.points_table) else 0
                 )
-                # Risk-adjust by attrition probability
-                pts *= self.attrition.completion_factor(entry.event)
                 entry_scores.append((entry.event, pts))
 
             entry_scores.sort(key=lambda x: -x[1])

@@ -1,7 +1,7 @@
 # Seton Swimming 2025-2026 Season Schedule
 
-**Last Updated**: January 15, 2026  
-**Source**: setonswimming.org  
+**Last Updated**: January 15, 2026
+**Source**: setonswimming.org
 **Home Pool**: Freedom Aquatic and Fitness Center, Manassas, VA
 
 ---
@@ -45,7 +45,7 @@
 | **Jan 24, 2026**    | VISAA JV Invitational          | Invitational (JV)       | Freedom Center                           | Junior Varsity only            |
 | **Jan 31, 2026**    | VISAA Division II Invitational | Regional Championship   | Freedom Center                           | Division II teams              |
 | **Feb 7, 2026**     | 5th Annual VCAC Championship   | Conference Championship | TBD                                      | VCAC finals                    |
-| **Feb 12-14, 2026** | ⭐ VISAA State Championship    | **STATE CHAMPIONSHIP**  | SwimRVA, Richmond VA                     | Dive at St. Catherine's        |
+| **Feb 12-14, 2026** | ⭐ VISAA State Championship    | **STATE CHAMPIONSHIP**  | Collegiate Aquatic Center (SwimRVA)      | 5050 Ridgedale Pkwy, Richmond 23234        |
 | Mar 1, 2026         | Seton Swimming Awards          | Awards Ceremony         | TBD                                      | Tentative                      |
 
 ---
@@ -103,16 +103,11 @@
 - **Pool**: 50-meter competition pool
 - **Used for**: Most regular season meets
 
-### SwimRVA / Collegiate Aquatic Center (States)
+### Collegiate Aquatic Center / SwimRVA (2026 States)
 
-- **Address**: 505 Ridgedale Parkway, Richmond, VA 23233
+- **Address**: 5050 Ridgedale Pkwy, Richmond, VA 23234
 - **Pool**: Championship venue
-- **Used for**: VISAA State Championships
-
-### St. Catherine's School (Diving)
-
-- **Address**: 6001 Grove Avenue, Richmond, VA 23226
-- **Used for**: VISAA State diving (no diving well at SwimRVA)
+- **Used for**: 2026 VISAA State Swim & Dive Championships
 
 ---
 

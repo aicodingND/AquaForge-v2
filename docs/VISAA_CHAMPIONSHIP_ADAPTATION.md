@@ -2,8 +2,8 @@
 
 ## 2026 VISAA State Swimming & Diving Championships
 
-**Document Created**: January 15, 2026  
-**Status**: Strategic Planning & Analysis  
+**Document Created**: January 15, 2026
+**Status**: Strategic Planning & Analysis
 **Author**: AI-Assisted Analysis
 
 ---
@@ -15,8 +15,8 @@
 | Detail             | Information                                                              |
 | ------------------ | ------------------------------------------------------------------------ |
 | **Dates**          | February 12-14, 2026 (Thursday-Saturday)                                 |
-| **Swimming Venue** | SwimRVA / Collegiate Aquatic Center, 505 Ridgedale Parkway, Richmond, VA |
-| **Diving Venue**   | St. Catherine's School, 6001 Grove Avenue, Richmond, VA 23226            |
+| **Swimming Venue** | Collegiate Aquatic Center (SwimRVA), 5050 Ridgedale Pkwy, Richmond, VA 23234 |
+| **Diving Venue**   | St. Catherine's Kenny Center Pool, 6001 Grove Avenue, Richmond, VA 23226 |
 | **Hosts**          | Bishop Ireton High School & Collegiate School                            |
 | **Governing Body** | Virginia Independent Schools Athletic Association (VISAA)                |
 | **Rulebook**       | National Federation High School (NFHS) Swimming & Diving Rules           |

@@ -61,6 +61,7 @@ ruff check . --fix && ruff format .
 ## Context Files
 
 For detailed context, see:
+- `.agent/memory/MEET_REGISTRY.md` - **Canonical meet details (venues, dates, rules) — check FIRST for any meet question**
 - `.agent/CONTEXT_LOADER.md` - Quick reference
 - `.agent/KNOWLEDGE_BASE.md` - Domain knowledge
 - `.agent/skills/` - Task-specific skills
@@ -74,4 +75,5 @@ For detailed context, see:
 
 ## Current Sprint
 
-VCAC Championship Preparation - Feb 7, 2026
+VISAA State Swim & Dive Championships - Feb 12-14, 2026
+(VCAC Championship Feb 7 — completed)

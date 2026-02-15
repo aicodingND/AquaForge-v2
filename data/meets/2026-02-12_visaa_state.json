@@ -1,20 +1,58 @@
 {
   "id": "visaa_state_2026",
-  "name": "VISAA State Championships",
+  "name": "VISAA State Swim & Dive Championships",
   "date": "2026-02-12",
+  "endDate": "2026-02-14",
   "type": "championship",
   "meetMode": "championship",
   "scoringRules": "visaa_state",
   "scoringTable": {
-    "championship": [40, 34, 32, 30, 28, 26, 24, 22, 18, 14, 12, 10, 8, 6, 4, 2],
-    "consolation": [20, 17, 16, 15, 14, 13, 12, 11, 9, 7, 6, 5, 4, 3, 2, 1]
+    "championship": [
+      40,
+      34,
+      32,
+      30,
+      28,
+      26,
+      24,
+      22,
+      18,
+      14,
+      12,
+      10,
+      8,
+      6,
+      4,
+      2
+    ],
+    "consolation": [
+      20,
+      17,
+      16,
+      15,
+      14,
+      13,
+      12,
+      11,
+      9,
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1
+    ]
   },
   "maxScorers": 16,
   "teams": [],
-  "venue": "SwimRVA, Richmond, VA",
+  "venue": "Collegiate Aquatic Center (SwimRVA)",
+  "venueAddress": "5050 Ridgedale Pkwy, Richmond, VA 23234",
   "constraints": {
     "maxIndividualEvents": 2,
     "divingCountsAsIndividual": true,
     "relay3CountsAsIndividual": false
-  }
+  },
+  "diveVenue": "St. Catherine's Kenny Center Pool",
+  "diveVenueAddress": "6001 Grove Avenue, Richmond, VA 23226"
 }

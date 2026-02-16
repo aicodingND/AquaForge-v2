@@ -138,7 +138,7 @@ class ScoringProfile:
                 4,
                 2,
             ],
-            max_scorers_per_team=18,
+            max_scorers_per_team=4,  # VISAA: only top 4 per team per event score
             max_entries_per_event=4,
             max_total_events=4,
         )
@@ -571,7 +571,7 @@ class ScoringEngine:
 
             # Get opponent entries (use all available)
             opp_rows = opponent_roster[opponent_roster["event"] == event]
-            opponent_entries = opp_rows.to_dict("records")[:4]  # Top 4
+            opponent_entries = opp_rows.to_dict("records")
 
             # Score this event
             seton_pts, opp_pts, _ = self.score_event(

@@ -104,3 +104,31 @@ Track errors and their fixes to avoid repeating them.
 4. Added opponent completeness validation to BOTH optimizers — warns when events have no opponents
 **Prevention:** (a) Never hardcode scoring tables — always accept them as parameters, (b) Name scoring table keys by what they ARE (relay/individual) not where they're used (championship/consolation), (c) Always validate opponent roster completeness before running optimization
 **Recurring pattern match:** #4 (config value mismatches)
+
+## 2026-02-16 Error: Gurobi championship strategy not meet-type adaptive
+
+**Files:** `swim_ai_reflex/backend/core/strategies/championship_strategy.py`, `swim_ai_reflex/backend/core/rules.py`
+**Issue:** Three problems prevented Gurobi from adapting to different championship meet types:
+1. `"visaa_championship"` profile mapped to `VISAAChampRules` (consolation) instead of `VISAAStateRules` (correct full rules with `is_valid_entry`, `has_prelims_finals`)
+2. Relay 3 (400 FR) penalty was hardcoded for all meets — but only VCAC penalizes Relay 3 as an individual slot, VISAA State does not
+3. `max_scorers_per_team` (4) was used as max *entries* per event — but at VISAA you can enter unlimited swimmers, only top 4 score. This artificially limited swimmers to 1 event when events were full.
+**Root Cause:** Championship strategy was built for VCAC only. Meet-type-specific rules were not parameterized — constraints were hardcoded assumptions.
+**Fix:**
+1. Added `relay_3_counts_as_individual` attribute to `MeetRules` base class (default `False`), set to `True` only in `VCACChampRules`
+2. Made `ChampionshipGurobiStrategy` check `self.rules.relay_3_counts_as_individual` instead of always penalizing Relay 3
+3. Changed entry constraint from `max_scorers` to `max_entries_per_team_per_event` (999 at VISAA vs 4 for VCAC)
+4. Remapped `"visaa_championship"` → `VISAAStateRules`, added `"visaa_consolation"` for legacy
+**Prevention:** (a) Any new meet-type rule must be an attribute on MeetRules, never hardcoded in a strategy, (b) Always distinguish "max entries" (who can swim) from "max scorers" (who earns points)
+**Recurring pattern match:** #4 (config value mismatches) + #1 (docs/code divergence)
+
+## 2026-02-16 Error: AquaOptimizer VISAA scoring profile had wrong max_scorers_per_team
+
+**Files:** `swim_ai_reflex/backend/core/strategies/aqua_optimizer.py` (line 141)
+**Issue:** Two bugs in AquaOptimizer's VISAA championship scoring:
+1. `max_scorers_per_team=18` in `ScoringProfile.visaa_championship()` — should be 4 (VISAA: only top 4 per team per event score)
+2. `score_lineup()` line 574 sliced opponent entries with `[:4]` — only 4 opponents used in final scoring. Should use all opponents and let `max_scorers_per_team` handle the team cap.
+**Root Cause:** `max_scorers_per_team=18` was likely a placeholder ("unlimited") never corrected. The `[:4]` slice was added as a performance optimization but broke scoring accuracy.
+**Impact:** AquaOptimizer reported ~1014 points instead of correct ~168, making it appear 6× better than Gurobi when both are actually similar.
+**Fix:** Changed `max_scorers_per_team=4` and removed the `[:4]` slice from `score_lineup()`.
+**Prevention:** (a) ScoringProfile values must match the canonical MeetRules values — cross-reference `rules.py` when creating profiles, (b) Never slice entry lists for "performance" if it changes scoring semantics
+**Recurring pattern match:** #4 (config value mismatches)

@@ -2,15 +2,18 @@
 Championship Gurobi Strategy
 
 Extends the dual-meet Gurobi optimizer for multi-team championship meets.
+Adapts scoring tables and constraints from the meet profile (MeetRules).
 
-Key differences from dual meets:
-- Scoring against ALL teams, not just one opponent
-- VCAC 12-place scoring (relay = 2x individual):
-  Individual: [16, 13, 12, 11, 10, 9, 7, 5, 4, 3, 2, 1]
-  Relay:      [32, 26, 24, 22, 20, 18, 14, 10, 8, 6, 4, 2]
-- Max 4 scorers per team per event
-- Relay 3 (400 Free) counts as individual event
-- Diving counts as 1 individual
+Supported meet profiles:
+- vcac_championship: 12-place, relay 2x, Relay 3 = individual slot
+- visaa_state: 16-place, relay 2x, Relay 3 = regular relay (no penalty)
+- visaa_championship: 16-place consolation scoring
+
+Key features:
+- Scoring tables loaded from MeetRules (not hardcoded)
+- Relay 3 penalty adapts via rules.relay_3_counts_as_individual
+- Max scorers per team per event from rules.max_scorers_per_team_individual
+- Diving counts as 1 individual slot
 """
 
 import bisect
@@ -184,8 +187,9 @@ class ChampionshipGurobiStrategy:
                 if (s, e) not in swimmer_event_lookup:
                     m.addConstr(x[s, e] == 0, name=f"no_time_{s}_{e}")
 
-        # 2. Max individual events per swimmer (VCAC: 2)
-        # Adjusted for divers and relay-3 swimmers
+        # 2. Max individual events per swimmer
+        # Adjusted for divers and relay-3 swimmers (meet-type aware)
+        relay_3_penalty = getattr(self.rules, "relay_3_counts_as_individual", False)
         for s in swimmers:
             # Base limit is 2 individual events
             limit = 2
@@ -194,8 +198,9 @@ class ChampionshipGurobiStrategy:
             if s in divers:
                 limit -= 1
 
-            # 400 Free Relay swimmers get 1 fewer slot (VCAC rule)
-            if s in relay_3_swimmers:
+            # 400 Free Relay costs 1 individual slot ONLY at meets where it counts
+            # (e.g., VCAC yes, VISAA State no)
+            if relay_3_penalty and s in relay_3_swimmers:
                 limit -= 1
 
             limit = max(0, limit)  # Can't go negative
@@ -204,11 +209,15 @@ class ChampionshipGurobiStrategy:
                 gp.quicksum(x[s, e] for e in events) <= limit, name=f"max_indiv_{s}"
             )
 
-        # 3. Max scorers per team per event (e.g., top 4 at VCAC)
+        # 3. Max entries per team per event
+        # Note: max_scorers limits how many SCORE, but entries can exceed this.
+        # The point_matrix already accounts for placement among teammates.
+        # Use max_entries (unlimited at VISAA = 999) not max_scorers (4).
+        max_entries = getattr(self.rules, "max_entries_per_team_per_event", 4)
         for e in events:
             m.addConstr(
-                gp.quicksum(x[s, e] for s in swimmers) <= self.max_scorers,
-                name=f"max_scorers_{e}",
+                gp.quicksum(x[s, e] for s in swimmers) <= max_entries,
+                name=f"max_entries_{e}",
             )
 
         # 4. No back-to-back events (STANDARD RULE - including relay leg blocking)

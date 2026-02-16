@@ -1,0 +1,898 @@
+[
+  {
+    "swimmer": "Cecelia Russell",
+    "event": "Girls 100 Fly",
+    "time": 55.78,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Katie Shaps",
+    "event": "Girls 100 Fly",
+    "time": 56.19,
+    "grade": 12,
+    "team": "St Anne's-Belfield"
+  },
+  {
+    "swimmer": "Elliott Rowan",
+    "event": "Girls 100 Fly",
+    "time": 56.24,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Sunny Chen",
+    "event": "Girls 100 Fly",
+    "time": 56.76,
+    "grade": 12,
+    "team": "Madeira School"
+  },
+  {
+    "swimmer": "Stella Mastroianni",
+    "event": "Girls 100 Fly",
+    "time": 57.28,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Hannah Ellis",
+    "event": "Girls 100 Fly",
+    "time": 57.72,
+    "grade": 12,
+    "team": "Fredericksburg Christian"
+  },
+  {
+    "swimmer": "Caroline Hepper",
+    "event": "Girls 100 Fly",
+    "time": 58.2,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Annabelle Bremner",
+    "event": "Girls 100 Fly",
+    "time": 58.5,
+    "grade": 12,
+    "team": "Saint Stephen's and Saint Agnes"
+  },
+  {
+    "swimmer": "Diana Ismailova",
+    "event": "Girls 100 Fly",
+    "time": 58.52,
+    "grade": 12,
+    "team": "St Anne's-Belfield"
+  },
+  {
+    "swimmer": "Kendall Kryszon",
+    "event": "Girls 100 Fly",
+    "time": 58.82,
+    "grade": 12,
+    "team": "Saint Gertrude"
+  },
+  {
+    "swimmer": "Lainey Hooff",
+    "event": "Girls 100 Fly",
+    "time": 59.11,
+    "grade": 12,
+    "team": "Bishop Ireton"
+  },
+  {
+    "swimmer": "Caitlyn Moore",
+    "event": "Girls 100 Fly",
+    "time": 60.17,
+    "grade": 12,
+    "team": "St. Catherine's"
+  },
+  {
+    "swimmer": "Carson Gaddy",
+    "event": "Girls 100 Fly",
+    "time": 60.27,
+    "grade": 12,
+    "team": "Norfolk Academy"
+  },
+  {
+    "swimmer": "Sophia Camp",
+    "event": "Girls 100 Fly",
+    "time": 60.58,
+    "grade": 12,
+    "team": "North Cross"
+  },
+  {
+    "swimmer": "Caroline Barcia",
+    "event": "Girls 100 Fly",
+    "time": 61.02,
+    "grade": 12,
+    "team": "St Anne's-Belfield"
+  },
+  {
+    "swimmer": "Audrey Schlieter",
+    "event": "Girls 100 Fly",
+    "time": 61.35,
+    "grade": 12,
+    "team": "Trinity Christian"
+  },
+  {
+    "swimmer": "Tyler Phillips",
+    "event": "Boys 100 Fly",
+    "time": 47.15,
+    "grade": 12,
+    "team": "Trinity Christian"
+  },
+  {
+    "swimmer": "Ryan Smith",
+    "event": "Boys 100 Fly",
+    "time": 49.24,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "Adam Giersch",
+    "event": "Boys 100 Fly",
+    "time": 50.4,
+    "grade": 12,
+    "team": "Cape Henry"
+  },
+  {
+    "swimmer": "Owen Cullaty",
+    "event": "Boys 100 Fly",
+    "time": 50.61,
+    "grade": 12,
+    "team": "Covenant School"
+  },
+  {
+    "swimmer": "Jo Witdoeckt",
+    "event": "Boys 100 Fly",
+    "time": 50.73,
+    "grade": 12,
+    "team": "Trinity Christian"
+  },
+  {
+    "swimmer": "Elijah Soto",
+    "event": "Boys 100 Fly",
+    "time": 51.61,
+    "grade": 12,
+    "team": "Trinity Academy"
+  },
+  {
+    "swimmer": "Luka Beslic",
+    "event": "Boys 100 Fly",
+    "time": 51.83,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Jamie Arcarese",
+    "event": "Boys 100 Fly",
+    "time": 51.89,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Preston Broderick",
+    "event": "Boys 100 Fly",
+    "time": 52.05,
+    "grade": 12,
+    "team": "Walsingham Academy"
+  },
+  {
+    "swimmer": "Matthew Matthews",
+    "event": "Boys 100 Fly",
+    "time": 52.9,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "Brock Schofield",
+    "event": "Boys 100 Fly",
+    "time": 53.18,
+    "grade": 12,
+    "team": "Episcopal"
+  },
+  {
+    "swimmer": "Cole Dameron",
+    "event": "Boys 100 Fly",
+    "time": 54.16,
+    "grade": 12,
+    "team": "Trinity Episcopal"
+  },
+  {
+    "swimmer": "Keaghan Fahle",
+    "event": "Boys 100 Fly",
+    "time": 54.23,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Aidan DeFeo",
+    "event": "Boys 100 Fly",
+    "time": 55.63,
+    "grade": 12,
+    "team": "Nansemond Suffolk"
+  },
+  {
+    "swimmer": "JD Bulford",
+    "event": "Boys 100 Fly",
+    "time": 55.71,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Gabriel Divaris",
+    "event": "Boys 100 Fly",
+    "time": 55.72,
+    "grade": 12,
+    "team": "Norfolk Academy"
+  },
+  {
+    "swimmer": "Brantley Patterson",
+    "event": "Girls 500 Free",
+    "time": 295.08,
+    "grade": 12,
+    "team": "St. Catherine's"
+  },
+  {
+    "swimmer": "McKinley Busen",
+    "event": "Girls 500 Free",
+    "time": 295.67,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Katie Shaps",
+    "event": "Girls 500 Free",
+    "time": 295.72,
+    "grade": 12,
+    "team": "St Anne's-Belfield"
+  },
+  {
+    "swimmer": "Kalyn O\u2019Hara",
+    "event": "Girls 500 Free",
+    "time": 299.88,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Lila Brock",
+    "event": "Girls 500 Free",
+    "time": 305.63,
+    "grade": 12,
+    "team": "Saint Stephen's and Saint Agnes"
+  },
+  {
+    "swimmer": "Lainey Hooff",
+    "event": "Girls 500 Free",
+    "time": 306.54,
+    "grade": 12,
+    "team": "Bishop Ireton"
+  },
+  {
+    "swimmer": "Kylie Kryszon",
+    "event": "Girls 500 Free",
+    "time": 308.08,
+    "grade": 12,
+    "team": "Saint Gertrude"
+  },
+  {
+    "swimmer": "Caitlyn Moore",
+    "event": "Girls 500 Free",
+    "time": 310.22,
+    "grade": 12,
+    "team": "St. Catherine's"
+  },
+  {
+    "swimmer": "Madeline Schulz",
+    "event": "Girls 500 Free",
+    "time": 311.33,
+    "grade": 12,
+    "team": "Norfolk Academy"
+  },
+  {
+    "swimmer": "Margaret Hepper",
+    "event": "Girls 500 Free",
+    "time": 314.22,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Leah Eubanks",
+    "event": "Girls 500 Free",
+    "time": 314.87,
+    "grade": 12,
+    "team": "Bishop Ireton"
+  },
+  {
+    "swimmer": "Maggie Fickenscher",
+    "event": "Girls 500 Free",
+    "time": 317.48,
+    "grade": 12,
+    "team": "Norfolk Academy"
+  },
+  {
+    "swimmer": "Lindley Hazelwood",
+    "event": "Girls 500 Free",
+    "time": 318.03,
+    "grade": 12,
+    "team": "Oakcrest"
+  },
+  {
+    "swimmer": "Avery Wiltshire",
+    "event": "Girls 500 Free",
+    "time": 324.16,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Devon Perkins",
+    "event": "Girls 500 Free",
+    "time": 324.2,
+    "grade": 12,
+    "team": "North Cross"
+  },
+  {
+    "swimmer": "Evie Miller",
+    "event": "Girls 500 Free",
+    "time": 324.23,
+    "grade": 12,
+    "team": "Fredericksburg Christian"
+  },
+  {
+    "swimmer": "Will Charlton",
+    "event": "Boys 500 Free",
+    "time": 265.12,
+    "grade": 12,
+    "team": "Covenant School"
+  },
+  {
+    "swimmer": "Paul Mullen",
+    "event": "Boys 500 Free",
+    "time": 269.35,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Adam Giersch",
+    "event": "Boys 500 Free",
+    "time": 271.54,
+    "grade": 12,
+    "team": "Cape Henry"
+  },
+  {
+    "swimmer": "Henry Rossman",
+    "event": "Boys 500 Free",
+    "time": 273.24,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Jackson Carpenter",
+    "event": "Boys 500 Free",
+    "time": 277.24,
+    "grade": 12,
+    "team": "Virginia Episcopal"
+  },
+  {
+    "swimmer": "John Ackerly",
+    "event": "Boys 500 Free",
+    "time": 280.04,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "Grant Hewett",
+    "event": "Boys 500 Free",
+    "time": 294.29,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "Dylan Noriega",
+    "event": "Boys 500 Free",
+    "time": 294.38,
+    "grade": 12,
+    "team": "Crusaders"
+  },
+  {
+    "swimmer": "Jaedan Council",
+    "event": "Boys 500 Free",
+    "time": 295.78,
+    "grade": 12,
+    "team": "Crusaders"
+  },
+  {
+    "swimmer": "Keen Wang",
+    "event": "Boys 500 Free",
+    "time": 300.27,
+    "grade": 12,
+    "team": "Fork Union"
+  },
+  {
+    "swimmer": "Nate Jurutka",
+    "event": "Boys 500 Free",
+    "time": 303.9,
+    "grade": 12,
+    "team": "Flint Hill"
+  },
+  {
+    "swimmer": "Cayden Chang",
+    "event": "Boys 500 Free",
+    "time": 304.65,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Karsten Stiles",
+    "event": "Boys 500 Free",
+    "time": 304.76,
+    "grade": 12,
+    "team": "Veritas"
+  },
+  {
+    "swimmer": "George Estill",
+    "event": "Boys 500 Free",
+    "time": 306.99,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "Brandon Scheel",
+    "event": "Boys 500 Free",
+    "time": 309.29,
+    "grade": 12,
+    "team": "Fork Union"
+  },
+  {
+    "swimmer": "Blake Nguyen",
+    "event": "Boys 500 Free",
+    "time": 309.66,
+    "grade": 12,
+    "team": "Flint Hill"
+  },
+  {
+    "swimmer": "Erin Kass",
+    "event": "Girls 100 Back",
+    "time": 54.65,
+    "grade": 12,
+    "team": "Madeira School"
+  },
+  {
+    "swimmer": "Kate Boutry",
+    "event": "Girls 100 Back",
+    "time": 55.72,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Campbell Totton",
+    "event": "Girls 100 Back",
+    "time": 57.01,
+    "grade": 12,
+    "team": "St. Catherine's"
+  },
+  {
+    "swimmer": "Stella Mastroianni",
+    "event": "Girls 100 Back",
+    "time": 57.31,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Elliott Rowan",
+    "event": "Girls 100 Back",
+    "time": 57.45,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Gabby Carvalho",
+    "event": "Girls 100 Back",
+    "time": 57.47,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Natalie Tang",
+    "event": "Girls 100 Back",
+    "time": 57.8,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Caroline Hepper",
+    "event": "Girls 100 Back",
+    "time": 58.12,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Avery Vanlandingham",
+    "event": "Girls 100 Back",
+    "time": 58.29,
+    "grade": 12,
+    "team": "Bishop Ireton"
+  },
+  {
+    "swimmer": "Haley Baker",
+    "event": "Girls 100 Back",
+    "time": 59.62,
+    "grade": 12,
+    "team": "Saint Gertrude"
+  },
+  {
+    "swimmer": "Carson Gaddy",
+    "event": "Girls 100 Back",
+    "time": 59.66,
+    "grade": 12,
+    "team": "Norfolk Academy"
+  },
+  {
+    "swimmer": "Avery Taylor",
+    "event": "Girls 100 Back",
+    "time": 60.61,
+    "grade": 12,
+    "team": "Cape Henry"
+  },
+  {
+    "swimmer": "Diya Redburn",
+    "event": "Girls 100 Back",
+    "time": 61.15,
+    "grade": 12,
+    "team": "Madeira School"
+  },
+  {
+    "swimmer": "Alexa Kriz",
+    "event": "Girls 100 Back",
+    "time": 61.72,
+    "grade": 12,
+    "team": "Trinity Christian"
+  },
+  {
+    "swimmer": "Lucy Perkins",
+    "event": "Girls 100 Back",
+    "time": 61.77,
+    "grade": 12,
+    "team": "Saint Stephen's and Saint Agnes"
+  },
+  {
+    "swimmer": "Marcella Forrer",
+    "event": "Girls 100 Back",
+    "time": 62.07,
+    "grade": 12,
+    "team": "Bishop Ireton"
+  },
+  {
+    "swimmer": "Rawlings Leachman",
+    "event": "Boys 100 Back",
+    "time": 48.91,
+    "grade": 12,
+    "team": "Woodberry Forest"
+  },
+  {
+    "swimmer": "Jo Witdoeckt",
+    "event": "Boys 100 Back",
+    "time": 49.22,
+    "grade": 12,
+    "team": "Trinity Christian"
+  },
+  {
+    "swimmer": "Charlie Taylor",
+    "event": "Boys 100 Back",
+    "time": 50.54,
+    "grade": 12,
+    "team": "Cape Henry"
+  },
+  {
+    "swimmer": "Crawford Craig",
+    "event": "Boys 100 Back",
+    "time": 51.17,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Matthew Matthews",
+    "event": "Boys 100 Back",
+    "time": 51.83,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "Todd Landwehr",
+    "event": "Boys 100 Back",
+    "time": 52.18,
+    "grade": 12,
+    "team": "Flint Hill"
+  },
+  {
+    "swimmer": "Peyton Skipper",
+    "event": "Boys 100 Back",
+    "time": 52.26,
+    "grade": 12,
+    "team": "Miller School"
+  },
+  {
+    "swimmer": "Graham Rowan",
+    "event": "Boys 100 Back",
+    "time": 53.1,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Jack Fuqua",
+    "event": "Boys 100 Back",
+    "time": 54.22,
+    "grade": 12,
+    "team": "Bishop Ireton"
+  },
+  {
+    "swimmer": "Ryan Mariscalco",
+    "event": "Boys 100 Back",
+    "time": 55.17,
+    "grade": 12,
+    "team": "Trinity Episcopal"
+  },
+  {
+    "swimmer": "Keagan Murdock",
+    "event": "Boys 100 Back",
+    "time": 55.2,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Brock Schofield",
+    "event": "Boys 100 Back",
+    "time": 55.69,
+    "grade": 12,
+    "team": "Episcopal"
+  },
+  {
+    "swimmer": "Mason Sever",
+    "event": "Boys 100 Back",
+    "time": 55.91,
+    "grade": 12,
+    "team": "Covenant School"
+  },
+  {
+    "swimmer": "Lucas Bermudez",
+    "event": "Boys 100 Back",
+    "time": 56.14,
+    "grade": 12,
+    "team": "Flint Hill"
+  },
+  {
+    "swimmer": "Preston LaForme",
+    "event": "Boys 100 Back",
+    "time": 56.23,
+    "grade": 12,
+    "team": "Paul VI"
+  },
+  {
+    "swimmer": "Walker Morris",
+    "event": "Boys 100 Back",
+    "time": 57.4,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "Elizabeth Bryan",
+    "event": "Girls 100 Breast",
+    "time": 62.19,
+    "grade": 12,
+    "team": "Oakcrest"
+  },
+  {
+    "swimmer": "Olivia Taylor",
+    "event": "Girls 100 Breast",
+    "time": 63.7,
+    "grade": 12,
+    "team": "Cape Henry"
+  },
+  {
+    "swimmer": "Liza Cutchins",
+    "event": "Girls 100 Breast",
+    "time": 64.88,
+    "grade": 12,
+    "team": "Norfolk Academy"
+  },
+  {
+    "swimmer": "Anne Scherer",
+    "event": "Girls 100 Breast",
+    "time": 65.19,
+    "grade": 12,
+    "team": "Covenant School"
+  },
+  {
+    "swimmer": "Savannah Harris",
+    "event": "Girls 100 Breast",
+    "time": 65.55,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Madeline Howes",
+    "event": "Girls 100 Breast",
+    "time": 65.79,
+    "grade": 12,
+    "team": "North Cross"
+  },
+  {
+    "swimmer": "Hayes Williams",
+    "event": "Girls 100 Breast",
+    "time": 65.83,
+    "grade": 12,
+    "team": "New Community"
+  },
+  {
+    "swimmer": "Caroline Barcia",
+    "event": "Girls 100 Breast",
+    "time": 66.02,
+    "grade": 12,
+    "team": "St Anne's-Belfield"
+  },
+  {
+    "swimmer": "Annabelle Bremner",
+    "event": "Girls 100 Breast",
+    "time": 66.34,
+    "grade": 12,
+    "team": "Saint Stephen's and Saint Agnes"
+  },
+  {
+    "swimmer": "Irene Stedje-Larsen",
+    "event": "Girls 100 Breast",
+    "time": 66.47,
+    "grade": 12,
+    "team": "Crusaders"
+  },
+  {
+    "swimmer": "Rio Walther",
+    "event": "Girls 100 Breast",
+    "time": 66.49,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Anna Sullivan",
+    "event": "Girls 100 Breast",
+    "time": 68.25,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Hannah Ellis",
+    "event": "Girls 100 Breast",
+    "time": 68.53,
+    "grade": 12,
+    "team": "Fredericksburg Christian"
+  },
+  {
+    "swimmer": "Diana Ismailova",
+    "event": "Girls 100 Breast",
+    "time": 68.59,
+    "grade": 12,
+    "team": "St Anne's-Belfield"
+  },
+  {
+    "swimmer": "Natalie Sanford",
+    "event": "Girls 100 Breast",
+    "time": 69.27,
+    "grade": 12,
+    "team": "Walsingham Academy"
+  },
+  {
+    "swimmer": "Abby Harders",
+    "event": "Girls 100 Breast",
+    "time": 69.68,
+    "grade": 12,
+    "team": "Evergreen Christian"
+  },
+  {
+    "swimmer": "Eric Koler",
+    "event": "Boys 100 Breast",
+    "time": 55.77,
+    "grade": 12,
+    "team": "Saint John Paul the Great"
+  },
+  {
+    "swimmer": "Edward Johnson",
+    "event": "Boys 100 Breast",
+    "time": 55.84,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "JD Chen",
+    "event": "Boys 100 Breast",
+    "time": 56.04,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Ben Franks",
+    "event": "Boys 100 Breast",
+    "time": 57.06,
+    "grade": 12,
+    "team": "St. Christopher's"
+  },
+  {
+    "swimmer": "Moses Wolf",
+    "event": "Boys 100 Breast",
+    "time": 57.53,
+    "grade": 12,
+    "team": "Immanuel Christian"
+  },
+  {
+    "swimmer": "Henry Crain",
+    "event": "Boys 100 Breast",
+    "time": 57.68,
+    "grade": 12,
+    "team": "Veritas"
+  },
+  {
+    "swimmer": "Luka Beslic",
+    "event": "Boys 100 Breast",
+    "time": 58.28,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Peyton Skipper",
+    "event": "Boys 100 Breast",
+    "time": 58.59,
+    "grade": 12,
+    "team": "Miller School"
+  },
+  {
+    "swimmer": "Graham Frye",
+    "event": "Boys 100 Breast",
+    "time": 58.83,
+    "grade": 12,
+    "team": "Grace Christian School (Kings)"
+  },
+  {
+    "swimmer": "Beckett Cummins",
+    "event": "Boys 100 Breast",
+    "time": 59.74,
+    "grade": 12,
+    "team": "Flint Hill"
+  },
+  {
+    "swimmer": "Colton Masterson",
+    "event": "Boys 100 Breast",
+    "time": 60.14,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Luke Hottle",
+    "event": "Boys 100 Breast",
+    "time": 60.18,
+    "grade": 12,
+    "team": "Virginia Episcopal"
+  },
+  {
+    "swimmer": "Broderick Nelson",
+    "event": "Boys 100 Breast",
+    "time": 60.58,
+    "grade": 12,
+    "team": "Virginia Episcopal"
+  },
+  {
+    "swimmer": "Tyler Kerrigan",
+    "event": "Boys 100 Breast",
+    "time": 61.02,
+    "grade": 12,
+    "team": "St Anne's-Belfield"
+  },
+  {
+    "swimmer": "Zachary Tan",
+    "event": "Boys 100 Breast",
+    "time": 61.25,
+    "grade": 12,
+    "team": "Flint Hill"
+  },
+  {
+    "swimmer": "Jermaine Worthen",
+    "event": "Boys 100 Breast",
+    "time": 61.78,
+    "grade": 12,
+    "team": "Bishop O'Connell"
+  }
+]

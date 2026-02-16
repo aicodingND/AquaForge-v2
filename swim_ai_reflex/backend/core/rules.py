@@ -20,6 +20,7 @@ class MeetRules:
     max_scorers_per_team_individual: int
     max_scorers_per_team_relay: int
     min_scoring_grade: int = 8
+    relay_3_counts_as_individual: bool = False  # 400 FR costs an individual slot?
 
     def __post_init__(self):
         """Validate rules configuration."""
@@ -325,6 +326,7 @@ class VCACChampRules(MeetRules):
 
     # VCAC-specific rules
     diving_counts_as_individual: bool = True
+    relay_3_counts_as_individual: bool = True  # 400 FR costs 1 individual slot at VCAC
     max_relays: int = 3  # only 3 relay events exist
     no_exhibition: bool = True  # Championship: all entered swimmers score
 
@@ -467,7 +469,8 @@ MEET_PROFILES = {
     # Championships
     "vcac_championship": VCACChampRules,
     "visaa_state": VISAAStateRules,
-    "visaa_championship": VISAAChampRules,  # Legacy/consolation
+    "visaa_championship": VISAAStateRules,  # Canonical: same as visaa_state
+    "visaa_consolation": VISAAChampRules,  # Legacy consolation-only scoring
 }
 
 
@@ -478,8 +481,10 @@ def get_meet_profile(profile_name: str) -> MeetRules:
     Available profiles:
     - seton_dual: Seton Dual Meet (Coach Koehr rules)
     - visaa_dual: VISAA Dual Meet (legacy)
-    - vcac_championship: VCAC Conference Championship
-    - visaa_state: VISAA State Championship
+    - vcac_championship: VCAC Conference Championship (Relay 3 = individual)
+    - visaa_state: VISAA State Championship (Relay 3 = regular relay)
+    - visaa_championship: Alias for visaa_state
+    - visaa_consolation: Legacy consolation-only scoring
     """
     if profile_name not in MEET_PROFILES:
         available = list(MEET_PROFILES.keys())

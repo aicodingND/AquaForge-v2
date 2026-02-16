@@ -1,0 +1,257 @@
+================================================================================
+  AQUAFORGE — VISAA 2026 HEAD-TO-HEAD COMPARISON
+  Gurobi MILP vs AquaOptimizer (Nash+Beam+SA)
+================================================================================
+
+  Scoring profile: VISAA Championship (16-place)
+  Individual: 20-17-16-15-14-13-12-11-9-7-6-5-4-3-2-1
+  Relay: 2x individual (40-34-32-30-28-26-24-22-18-14-12-10-8-6-4-2)
+  Data: SwimCloud Meet 350494 (Feb 14, 2026)
+
+  Seton event coverage: 24 events
+  Opponent data for:    19 events
+  MISSING opponent data: ['Boys 200 Free Relay', 'Boys 400 Free Relay', 'Girls 100 Free', 'Girls 200 Free Relay', 'Girls 400 Free Relay']
+  Supplemental entries: 128 (from scrape)
+
+
+================================================================================
+  GUROBI MILP — VISAA Championship Profile
+================================================================================
+  Divers identified: {'John Witter', 'Meghan Condon', 'Maria Miller', 'Clare Kay', 'Max Ashton', 'Bella Gorman'}
+  Total entries: 351
+  SST entries: 81
+  Opponent entries: 270
+
+  Solving...
+Set parameter WLSAccessID
+Set parameter WLSSecret
+Set parameter LicenseID to value 2749706
+Academic license 2749706 - for non-commercial use only - registered to ck___@hcc-nd.edu
+OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Relay', 'Boys 400 Free Relay', 'Girls 100 Free', 'Girls 200 Free Relay', 'Girls 400 Free Relay']. Scores for these events will be inflated (SST gets automatic top placement).
+  Status: optimal
+  Solve time: 84ms
+  Total points: 117
+  Baseline points: 127
+  Improvement: -10
+
+  Assignments:
+    Ariana Aldeguer                 Girls 100 Free, Girls 200 IM
+    Daniel Sokban                   Boys 50 Free
+    Jane Judge                      Girls 100 Free
+    Lily Waldron                    Girls 100 Free
+    Lio Martinez                    Boys 100 Free
+    Maggie Schroer                  Girls 50 Free
+    Melissa Paradise                Girls 100 Back
+    Philomena Kay                   Girls 100 Free
+    Thiago Martinez                 Boys 100 Fly, Boys 200 IM
+
+================================================================================
+  AQUAOPTIMIZER — VISAA Championship Profile (thorough)
+================================================================================
+  Seton entries: 81
+  Opponent entries: 270
+  Quality mode: thorough
+
+  Solving...
+  Solve time: 42084ms
+  Seton score: 1014
+  Opponent score: 1290
+  Margin: -276
+
+  Assignments:
+    Aidan McCardell                 Boys 100 Breast
+    Anastasia Garvey                Girls 100 Breast, Girls 100 Fly
+    Annie Dusek                     Girls 500 Free
+    Aoife Haggerty                  Girls 100 Breast
+    Ariana Aldeguer                 Girls 100 Free, Girls 200 IM
+    Avila Mantooth                  Girls 100 Fly, Girls 200 IM
+    Bella Gorman                    Girls 1M Diving
+    Bennett Ellis                   Boys 100 Breast, Boys 200 Free
+    Betsy Arnold                    Girls 100 Back, Girls 100 Fly
+    Charlotte Meadows               Girls 200 IM
+    Clare Kay                       Girls 1M Diving
+    Daniel Sokban                   Boys 200 Free, Boys 50 Free
+    Dominic Judge                   Boys 200 IM, Boys 50 Free
+    Elizabeth Hurley                Girls 200 Free
+    Gabriella Russo                 Girls 50 Free, Girls 500 Free
+    Gregory Bauer                   Boys 50 Free, Boys 500 Free
+    JJ Garvey                       Boys 100 Back, Boys 100 Fly
+    Jack Herwick                    Boys 100 Back, Boys 100 Fly
+    Jane Judge                      Girls 100 Back, Girls 100 Free
+    Joe Witter                      Boys 50 Free
+    Joel Bookwalter                 Boys 100 Breast, Boys 100 Free
+    Joey Lynch                      Boys 100 Back, Boys 100 Free
+    Jonas Wilson                    Boys 100 Fly, Boys 500 Free
+    Katie Bauer                     Girls 200 Free, Girls 500 Free
+    Kyleigh Fifield                 Girls 200 IM, Girls 500 Free
+    Lily Waldron                    Girls 100 Free, Girls 50 Free
+    Lio Martinez                    Boys 100 Fly, Boys 100 Free
+    Maggie Schroer                  Girls 100 Back, Girls 50 Free
+    Maria Miller                    Girls 1M Diving
+    Max Ashton                      Boys 1M Diving
+    Meghan Condon                   Girls 1M Diving
+    Melissa Paradise                Girls 100 Back, Girls 100 Fly
+    Michael Zahorchak               Boys 100 Free, Boys 200 Free
+    Patrick Kay                     Boys 100 Back, Boys 200 IM
+    Paul Partridge                  Boys 100 Breast, Boys 500 Free
+    Philomena Kay                   Girls 100 Free, Girls 200 Free
+    Sophia Halisky                  Girls 100 Breast, Girls 50 Free
+    Therese Paradise                Girls 100 Breast, Girls 200 Free
+    Thiago Martinez                 Boys 200 IM, Boys 500 Free
+
+================================================================================
+  UNIFIED RE-SCORING (apples-to-apples)
+================================================================================
+
+  Metric                          Gurobi   AquaOptimizer       Diff
+  ─────────────────────────────────────────────────────────────────
+  Unified SST Points                 168            1084 +916 (Aqua)
+  Solve Time (ms)                     84           42084
+
+  Note: 'Unified' = same ScoringEngine re-scores both lineups.
+  Gurobi's own score (117) only counts assigned swimmers.
+  AquaOptimizer's own score (1014) counts all event participants.
+
+
+================================================================================
+  ASSIGNMENT DIFFERENCES (Individual events only)
+================================================================================
+
+  Aidan McCardell:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Breast
+
+  Anastasia Garvey:
+    Gurobi: (not assigned)
+    Aqua:   Girls 100 Breast, Girls 100 Fly
+
+  Annie Dusek:
+    Gurobi: (not assigned)
+    Aqua:   Girls 500 Free
+
+  Aoife Haggerty:
+    Gurobi: (not assigned)
+    Aqua:   Girls 100 Breast
+
+  Avila Mantooth:
+    Gurobi: (not assigned)
+    Aqua:   Girls 100 Fly, Girls 200 IM
+
+  Bennett Ellis:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Breast, Boys 200 Free
+
+  Betsy Arnold:
+    Gurobi: (not assigned)
+    Aqua:   Girls 100 Back, Girls 100 Fly
+
+  Charlotte Meadows:
+    Gurobi: (not assigned)
+    Aqua:   Girls 200 IM
+
+  Daniel Sokban:
+    Gurobi: Boys 50 Free
+    Aqua:   Boys 200 Free, Boys 50 Free
+
+  Dominic Judge:
+    Gurobi: (not assigned)
+    Aqua:   Boys 200 IM, Boys 50 Free
+
+  Elizabeth Hurley:
+    Gurobi: (not assigned)
+    Aqua:   Girls 200 Free
+
+  Gabriella Russo:
+    Gurobi: (not assigned)
+    Aqua:   Girls 50 Free, Girls 500 Free
+
+  Gregory Bauer:
+    Gurobi: (not assigned)
+    Aqua:   Boys 50 Free, Boys 500 Free
+
+  JJ Garvey:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Back, Boys 100 Fly
+
+  Jack Herwick:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Back, Boys 100 Fly
+
+  Jane Judge:
+    Gurobi: Girls 100 Free
+    Aqua:   Girls 100 Back, Girls 100 Free
+
+  Joe Witter:
+    Gurobi: (not assigned)
+    Aqua:   Boys 50 Free
+
+  Joel Bookwalter:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Breast, Boys 100 Free
+
+  Joey Lynch:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Back, Boys 100 Free
+
+  Jonas Wilson:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Fly, Boys 500 Free
+
+  Katie Bauer:
+    Gurobi: (not assigned)
+    Aqua:   Girls 200 Free, Girls 500 Free
+
+  Kyleigh Fifield:
+    Gurobi: (not assigned)
+    Aqua:   Girls 200 IM, Girls 500 Free
+
+  Lily Waldron:
+    Gurobi: Girls 100 Free
+    Aqua:   Girls 100 Free, Girls 50 Free
+
+  Lio Martinez:
+    Gurobi: Boys 100 Free
+    Aqua:   Boys 100 Fly, Boys 100 Free
+
+  Maggie Schroer:
+    Gurobi: Girls 50 Free
+    Aqua:   Girls 100 Back, Girls 50 Free
+
+  Melissa Paradise:
+    Gurobi: Girls 100 Back
+    Aqua:   Girls 100 Back, Girls 100 Fly
+
+  Michael Zahorchak:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Free, Boys 200 Free
+
+  Patrick Kay:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Back, Boys 200 IM
+
+  Paul Partridge:
+    Gurobi: (not assigned)
+    Aqua:   Boys 100 Breast, Boys 500 Free
+
+  Philomena Kay:
+    Gurobi: Girls 100 Free
+    Aqua:   Girls 100 Free, Girls 200 Free
+
+  Sophia Halisky:
+    Gurobi: (not assigned)
+    Aqua:   Girls 100 Breast, Girls 50 Free
+
+  Therese Paradise:
+    Gurobi: (not assigned)
+    Aqua:   Girls 100 Breast, Girls 200 Free
+
+  Thiago Martinez:
+    Gurobi: Boys 100 Fly, Boys 200 IM
+    Aqua:   Boys 200 IM, Boys 500 Free
+
+  Identical assignments: 1
+  Different assignments: 33
+
+================================================================================
+  Generated by AquaForge v1.0.0-next
+================================================================================

@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 
 import pandas as pd
@@ -5,6 +6,8 @@ import pandas as pd
 from swim_ai_reflex.backend.core.optimizer_utils import evaluate_seton_vs_opponent
 from swim_ai_reflex.backend.core.scoring import EVENT_ORDER
 from swim_ai_reflex.backend.core.strategies.base_strategy import BaseOptimizerStrategy
+
+logger = logging.getLogger(__name__)
 
 # Optional: Probabilistic scoring (Phase 1 enhancement)
 try:
@@ -78,13 +81,26 @@ class GurobiStrategy(BaseOptimizerStrategy):
         opponent_best = greedy_opponent_best_lineup(opponent_df)
         opponent_best["team"] = "opponent"
 
+        # Validate opponent roster completeness
+        seton_events = set(seton_df["event"].unique())
+        opponent_events = (
+            set(opponent_best["event"].unique()) if len(opponent_best) > 0 else set()
+        )
+        missing_opponents = seton_events - opponent_events
+        if missing_opponents:
+            logger.warning(
+                "OPPONENT DATA GAP: %d/%d SST events have NO opponent entries: %s. "
+                "Scores for these events will be inflated.",
+                len(missing_opponents),
+                len(seton_events),
+                sorted(missing_opponents),
+            )
+
         # Events setup
-        available_events = set(seton_df["event"].unique())
+        available_events = seton_events
         events = [e for e in EVENT_ORDER if e in available_events]
         if not events:
             events = sorted(list(available_events))
-
-        {e: i for i, e in enumerate(events)}
         swimmers = seton_df["swimmer"].unique().tolist()
 
         # Initialize Model
@@ -134,20 +150,35 @@ class GurobiStrategy(BaseOptimizerStrategy):
                 m.addConstr(x[s, e1] + x[s, e2] <= 1, name=f"no_b2b_{s}_{i}")
 
         # -------------------------------------------------------------------------
-        # Objective Calculation - PROPER DUAL MEET SCORING SIMULATION
+        # Objective Calculation - SCORING SIMULATION
         # -------------------------------------------------------------------------
-        # KEY RULES (VISAA):
-        # - Grades 8-12 are SCORING eligible
-        # - Grades 7 and below are EXHIBITION (can place but earn 0 points)
-        # - When exhibition swimmer places, points "slide down" to next scorer
-        # - Only top 7 places score: [8, 6, 5, 4, 3, 2, 1]
-        # - Each team limited to 3 scorers per event
+        # Scoring tables are configurable via scoring_profile kwarg.
+        # If no profile is provided, defaults to VISAA dual meet scoring.
+        # For championship meets, pass ScoringProfile.visaa_championship()
+        # or ScoringProfile.vcac_championship() to use correct tables.
         # -------------------------------------------------------------------------
 
-        INDIVIDUAL_POINTS = [8, 6, 5, 4, 3, 2, 1]  # Places 1-7
-        RELAY_POINTS = [8, 4, 2]  # Places 1-3
-        MIN_SCORING_GRADE = 8
-        MAX_SCORERS_PER_TEAM = 4
+        scoring_profile = kwargs.get("scoring_profile", None)
+
+        if scoring_profile is not None:
+            INDIVIDUAL_POINTS = scoring_profile.individual_points
+            RELAY_POINTS = scoring_profile.relay_points
+            MAX_SCORERS_PER_TEAM = scoring_profile.max_scorers_per_team
+            MIN_SCORING_GRADE = scoring_profile.min_scoring_grade
+            logger.info(
+                f"Gurobi using scoring profile: {scoring_profile.name} "
+                f"(ind 1st={INDIVIDUAL_POINTS[0]}, relay 1st={RELAY_POINTS[0]})"
+            )
+        else:
+            # Legacy default: VISAA dual meet scoring
+            INDIVIDUAL_POINTS = [8, 6, 5, 4, 3, 2, 1]  # Places 1-7
+            RELAY_POINTS = [8, 4, 2]  # Places 1-3
+            MAX_SCORERS_PER_TEAM = 4
+            MIN_SCORING_GRADE = 8
+            logger.warning(
+                "Gurobi using default DUAL meet scoring tables. "
+                "For championship meets, pass scoring_profile kwarg."
+            )
 
         def calculate_scoring_position(swimmer_time, swimmer_grade, event_entries):
             """

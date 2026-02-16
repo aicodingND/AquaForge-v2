@@ -88,3 +88,19 @@ Track errors and their fixes to avoid repeating them.
 **Recurring pattern match:** #2 (incomplete edit — `// ...` replaced code) + #3 (React callback instability)
 
 **What worked in diagnosis:** Reading the component file revealed the `// ...` immediately. Tracing the `useEffect` dep chain (`onLoad` → re-render → new `onLoad` → effect re-fires) identified the infinite loop. Both fixes took <5 min once root causes were clear — the lesson is **read the file first, trace the render cycle second**.
+
+## 2026-02-15 Error: Gurobi uses DUAL scoring tables for championship meets
+
+**Files:** `swim_ai_reflex/backend/core/strategies/gurobi_strategy.py` (line 147), `data/meets/2026-02-12_visaa_state.json`, `scripts/generate_visaa_championship_pdf.py`
+**Issue:** Three scoring table problems compounded:
+1. Gurobi hardcoded DUAL meet scoring `[8,6,5,4,3,2,1]` instead of championship `[20,17,16,...,1]` — results in 2.5× lower totals than AquaOptimizer
+2. VISAA meet JSON labeled tables "championship"/"consolation" instead of "relay"/"individual" — same swapped-labels bug as VCAC (2026-02-02)
+3. PDF generator used relay table `[40,34,...]` for individual scoring — 2× inflation
+**Root Cause:** Gurobi never received a championship scoring mode. Built for dual meets, never parameterized for different meet types. Meet JSON repeated the VCAC labeling mistake.
+**Fix:**
+1. Added `scoring_profile` kwarg to Gurobi so it can receive `ScoringProfile.visaa_championship()` — logs a warning when using default dual tables
+2. Renamed JSON keys to `"relay"` / `"individual"` (clear, unambiguous)
+3. Fixed PDF to use `INDIVIDUAL_POINTS=[20,17,...]` and `RELAY_POINTS=[40,34,...]` with `get_points(place, is_relay=bool)`
+4. Added opponent completeness validation to BOTH optimizers — warns when events have no opponents
+**Prevention:** (a) Never hardcode scoring tables — always accept them as parameters, (b) Name scoring table keys by what they ARE (relay/individual) not where they're used (championship/consolation), (c) Always validate opponent roster completeness before running optimization
+**Recurring pattern match:** #4 (config value mismatches)

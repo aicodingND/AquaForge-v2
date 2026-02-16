@@ -1230,8 +1230,23 @@ class AquaOptimizer(BaseOptimizerStrategy):
                 self.championship_factors.default_factor,
             )
 
+        # Validate opponent roster completeness
+        seton_events = set(seton_df["event"].unique())
+        opponent_events = (
+            set(opponent_df["event"].unique()) if len(opponent_df) > 0 else set()
+        )
+        missing_opponents = seton_events - opponent_events
+        if missing_opponents:
+            logger.warning(
+                "OPPONENT DATA GAP: %d/%d SST events have NO opponent entries: %s. "
+                "Scores for these events will be inflated (SST gets automatic top placement).",
+                len(missing_opponents),
+                len(seton_events),
+                sorted(missing_opponents),
+            )
+
         # Setup events
-        available_events = set(seton_df["event"].unique())
+        available_events = seton_events
         events = [e for e in EVENT_ORDER if e in available_events]
         if not events:
             events = sorted(list(available_events))

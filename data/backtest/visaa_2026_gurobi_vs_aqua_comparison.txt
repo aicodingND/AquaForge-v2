@@ -9,54 +9,50 @@
   Data: SwimCloud Meet 350494 (Feb 14, 2026)
 
   Seton event coverage: 24 events
-  Opponent data for:    19 events
-  MISSING opponent data: ['Boys 200 Free Relay', 'Boys 400 Free Relay', 'Girls 100 Free', 'Girls 200 Free Relay', 'Girls 400 Free Relay']
-  Supplemental entries: 128 (from scrape)
+  Opponent data for:    24 events
+  All SST events have opponent data!
+  Supplemental entries: 208 (from scrape)
 
 
 ================================================================================
   GUROBI MILP — VISAA Championship Profile
 ================================================================================
-  Divers identified: {'John Witter', 'Meghan Condon', 'Maria Miller', 'Clare Kay', 'Max Ashton', 'Bella Gorman'}
-  Total entries: 351
+  Divers identified: {'Meghan Condon', 'Maria Miller', 'Clare Kay', 'John Witter', 'Max Ashton', 'Bella Gorman'}
+  Total entries: 431
   SST entries: 81
-  Opponent entries: 270
+  Opponent entries: 350
 
   Solving...
 Set parameter WLSAccessID
 Set parameter WLSSecret
 Set parameter LicenseID to value 2749706
 Academic license 2749706 - for non-commercial use only - registered to ck___@hcc-nd.edu
-OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Relay', 'Boys 400 Free Relay', 'Girls 100 Free', 'Girls 200 Free Relay', 'Girls 400 Free Relay']. Scores for these events will be inflated (SST gets automatic top placement).
   Status: optimal
-  Solve time: 84ms
-  Total points: 117
-  Baseline points: 127
+  Solve time: 1164ms
+  Total points: 54
+  Baseline points: 64
   Improvement: -10
 
   Assignments:
     Ariana Aldeguer                 Girls 100 Free, Girls 200 IM
     Daniel Sokban                   Boys 50 Free
-    Jane Judge                      Girls 100 Free
-    Lily Waldron                    Girls 100 Free
     Lio Martinez                    Boys 100 Free
     Maggie Schroer                  Girls 50 Free
     Melissa Paradise                Girls 100 Back
-    Philomena Kay                   Girls 100 Free
     Thiago Martinez                 Boys 100 Fly, Boys 200 IM
 
 ================================================================================
   AQUAOPTIMIZER — VISAA Championship Profile (thorough)
 ================================================================================
   Seton entries: 81
-  Opponent entries: 270
+  Opponent entries: 350
   Quality mode: thorough
 
   Solving...
-  Solve time: 42084ms
-  Seton score: 1014
-  Opponent score: 1290
-  Margin: -276
+  Solve time: 23317ms
+  Seton score: 947
+  Opponent score: 1902
+  Margin: -955
 
   Assignments:
     Aidan McCardell                 Boys 100 Breast
@@ -71,7 +67,7 @@ OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Rel
     Charlotte Meadows               Girls 200 IM
     Clare Kay                       Girls 1M Diving
     Daniel Sokban                   Boys 200 Free, Boys 50 Free
-    Dominic Judge                   Boys 200 IM, Boys 50 Free
+    Dominic Judge                   Boys 200 Free, Boys 200 IM
     Elizabeth Hurley                Girls 200 Free
     Gabriella Russo                 Girls 50 Free, Girls 500 Free
     Gregory Bauer                   Boys 50 Free, Boys 500 Free
@@ -81,6 +77,7 @@ OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Rel
     Joe Witter                      Boys 50 Free
     Joel Bookwalter                 Boys 100 Breast, Boys 100 Free
     Joey Lynch                      Boys 100 Back, Boys 100 Free
+    John Witter                     Boys 1M Diving
     Jonas Wilson                    Boys 100 Fly, Boys 500 Free
     Katie Bauer                     Girls 200 Free, Girls 500 Free
     Kyleigh Fifield                 Girls 200 IM, Girls 500 Free
@@ -91,8 +88,8 @@ OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Rel
     Max Ashton                      Boys 1M Diving
     Meghan Condon                   Girls 1M Diving
     Melissa Paradise                Girls 100 Back, Girls 100 Fly
-    Michael Zahorchak               Boys 100 Free, Boys 200 Free
-    Patrick Kay                     Boys 100 Back, Boys 200 IM
+    Michael Zahorchak               Boys 100 Free, Boys 50 Free
+    Patrick Kay                     Boys 100 Back, Boys 200 Free
     Paul Partridge                  Boys 100 Breast, Boys 500 Free
     Philomena Kay                   Girls 100 Free, Girls 200 Free
     Sophia Halisky                  Girls 100 Breast, Girls 50 Free
@@ -105,12 +102,12 @@ OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Rel
 
   Metric                          Gurobi   AquaOptimizer       Diff
   ─────────────────────────────────────────────────────────────────
-  Unified SST Points                 168            1084 +916 (Aqua)
-  Solve Time (ms)                     84           42084
+  Unified SST Points                 114            1033 +919 (Aqua)
+  Solve Time (ms)                   1164           23317
 
   Note: 'Unified' = same ScoringEngine re-scores both lineups.
-  Gurobi's own score (117) only counts assigned swimmers.
-  AquaOptimizer's own score (1014) counts all event participants.
+  Gurobi's own score (54) only counts assigned swimmers.
+  AquaOptimizer's own score (947) counts all event participants.
 
 
 ================================================================================
@@ -155,7 +152,7 @@ OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Rel
 
   Dominic Judge:
     Gurobi: (not assigned)
-    Aqua:   Boys 200 IM, Boys 50 Free
+    Aqua:   Boys 200 Free, Boys 200 IM
 
   Elizabeth Hurley:
     Gurobi: (not assigned)
@@ -178,7 +175,7 @@ OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Rel
     Aqua:   Boys 100 Back, Boys 100 Fly
 
   Jane Judge:
-    Gurobi: Girls 100 Free
+    Gurobi: (not assigned)
     Aqua:   Girls 100 Back, Girls 100 Free
 
   Joe Witter:
@@ -206,7 +203,7 @@ OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Rel
     Aqua:   Girls 200 IM, Girls 500 Free
 
   Lily Waldron:
-    Gurobi: Girls 100 Free
+    Gurobi: (not assigned)
     Aqua:   Girls 100 Free, Girls 50 Free
 
   Lio Martinez:
@@ -223,18 +220,18 @@ OPPONENT DATA GAP: 5/24 SST events have NO opponent entries: ['Boys 200 Free Rel
 
   Michael Zahorchak:
     Gurobi: (not assigned)
-    Aqua:   Boys 100 Free, Boys 200 Free
+    Aqua:   Boys 100 Free, Boys 50 Free
 
   Patrick Kay:
     Gurobi: (not assigned)
-    Aqua:   Boys 100 Back, Boys 200 IM
+    Aqua:   Boys 100 Back, Boys 200 Free
 
   Paul Partridge:
     Gurobi: (not assigned)
     Aqua:   Boys 100 Breast, Boys 500 Free
 
   Philomena Kay:
-    Gurobi: Girls 100 Free
+    Gurobi: (not assigned)
     Aqua:   Girls 100 Free, Girls 200 Free
 
   Sophia Halisky:

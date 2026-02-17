@@ -894,5 +894,565 @@
     "time": 61.78,
     "grade": 12,
     "team": "Bishop O'Connell"
+  },
+  {
+    "swimmer": "Emory DeGuenther",
+    "event": "Girls 100 Free",
+    "time": 50.97,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Claire Dobrydney",
+    "event": "Girls 100 Free",
+    "time": 51.38,
+    "grade": 12,
+    "team": "Paul VI"
+  },
+  {
+    "swimmer": "Kate Douglas",
+    "event": "Girls 100 Free",
+    "time": 51.44,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Jasper Jones",
+    "event": "Girls 100 Free",
+    "time": 52.22,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Sunny Chen",
+    "event": "Girls 100 Free",
+    "time": 52.78,
+    "grade": 12,
+    "team": "Madeira School"
+  },
+  {
+    "swimmer": "Cecelia Russell",
+    "event": "Girls 100 Free",
+    "time": 52.84,
+    "grade": 12,
+    "team": "Potomac"
+  },
+  {
+    "swimmer": "Madeline Howes",
+    "event": "Girls 100 Free",
+    "time": 52.95,
+    "grade": 12,
+    "team": "North Cross"
+  },
+  {
+    "swimmer": "Asmara Pina",
+    "event": "Girls 100 Free",
+    "time": 53.08,
+    "grade": 12,
+    "team": "St. Catherine's"
+  },
+  {
+    "swimmer": "Valentina Linkonis",
+    "event": "Girls 100 Free",
+    "time": 53.13,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Lydia Foster",
+    "event": "Girls 100 Free",
+    "time": 53.23,
+    "grade": 12,
+    "team": "Madeira School"
+  },
+  {
+    "swimmer": "Desta Pina",
+    "event": "Girls 100 Free",
+    "time": 53.84,
+    "grade": 12,
+    "team": "St. Catherine's"
+  },
+  {
+    "swimmer": "Blair Parker",
+    "event": "Girls 100 Free",
+    "time": 54.32,
+    "grade": 12,
+    "team": "St. Catherine's"
+  },
+  {
+    "swimmer": "Lila Kate Robinson",
+    "event": "Girls 100 Free",
+    "time": 55.03,
+    "grade": 12,
+    "team": "Miller School"
+  },
+  {
+    "swimmer": "Allie Wiggins",
+    "event": "Girls 100 Free",
+    "time": 55.05,
+    "grade": 12,
+    "team": "Trinity Christian"
+  },
+  {
+    "swimmer": "Elizabeth Cribbs",
+    "event": "Girls 100 Free",
+    "time": 55.48,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Izzie Jewett",
+    "event": "Girls 100 Free",
+    "time": 56.08,
+    "grade": 12,
+    "team": "Collegiate School"
+  },
+  {
+    "swimmer": "Collegiate (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 93.7,
+    "grade": 12,
+    "team": "Collegiate School (A)"
+  },
+  {
+    "swimmer": "Madeira (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 94.94,
+    "grade": 12,
+    "team": "Madeira School (A)"
+  },
+  {
+    "swimmer": "St. Catherines (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 96.09,
+    "grade": 12,
+    "team": "St. Catherine's (A)"
+  },
+  {
+    "swimmer": "Potomac (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 96.4,
+    "grade": 12,
+    "team": "Potomac (A)"
+  },
+  {
+    "swimmer": "Bishop O'Connell (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 100.41,
+    "grade": 12,
+    "team": "Bishop O'Connell (A)"
+  },
+  {
+    "swimmer": "Saint Gertrude (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 100.87,
+    "grade": 12,
+    "team": "Saint Gertrude (A)"
+  },
+  {
+    "swimmer": "Trinity Christian (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 101.5,
+    "grade": 12,
+    "team": "Trinity Christian (A)"
+  },
+  {
+    "swimmer": "St. Catherines (B) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 101.55,
+    "grade": 12,
+    "team": "St. Catherine's (B)"
+  },
+  {
+    "swimmer": "Saint Stephens and Saint Agnes (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 102.16,
+    "grade": 12,
+    "team": "Saint Stephen's and Saint Agnes (A)"
+  },
+  {
+    "swimmer": "Norfolk Academy (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 102.32,
+    "grade": 12,
+    "team": "Norfolk Academy (A)"
+  },
+  {
+    "swimmer": "Cape Henry (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 103.2,
+    "grade": 12,
+    "team": "Cape Henry (A)"
+  },
+  {
+    "swimmer": "Saint John Paul the Great (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 104.58,
+    "grade": 12,
+    "team": "Saint John Paul the Great (A)"
+  },
+  {
+    "swimmer": "Madeira (B) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 104.91,
+    "grade": 12,
+    "team": "Madeira School (B)"
+  },
+  {
+    "swimmer": "Trinity Christian (B) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 104.93,
+    "grade": 12,
+    "team": "Trinity Christian (B)"
+  },
+  {
+    "swimmer": "Bishop Ireton (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 105.08,
+    "grade": 12,
+    "team": "Bishop Ireton (A)"
+  },
+  {
+    "swimmer": "Fredericksburg Christian (A) FR-A",
+    "event": "Girls 200 Free Relay",
+    "time": 105.22,
+    "grade": 12,
+    "team": "Fredericksburg Christian (A)"
+  },
+  {
+    "swimmer": "St. Christophers (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 84.4,
+    "grade": 12,
+    "team": "St. Christopher's (A)"
+  },
+  {
+    "swimmer": "Covenant (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 85.93,
+    "grade": 12,
+    "team": "Covenant School (A)"
+  },
+  {
+    "swimmer": "Collegiate (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 86.34,
+    "grade": 12,
+    "team": "Collegiate School (A)"
+  },
+  {
+    "swimmer": "Flint Hill (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 88.89,
+    "grade": 12,
+    "team": "Flint Hill (A)"
+  },
+  {
+    "swimmer": "Norfolk Academy (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 89.34,
+    "grade": 12,
+    "team": "Norfolk Academy (A)"
+  },
+  {
+    "swimmer": "Potomac (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 89.75,
+    "grade": 12,
+    "team": "Potomac (A)"
+  },
+  {
+    "swimmer": "Bishop O'Connell (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 89.75,
+    "grade": 12,
+    "team": "Bishop O'Connell (A)"
+  },
+  {
+    "swimmer": "St. Christophers (B) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 89.99,
+    "grade": 12,
+    "team": "St. Christopher's (B)"
+  },
+  {
+    "swimmer": "Benedictine (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 90.33,
+    "grade": 12,
+    "team": "Benedictine (A)"
+  },
+  {
+    "swimmer": "Paul VI (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 90.75,
+    "grade": 12,
+    "team": "Paul VI (A)"
+  },
+  {
+    "swimmer": "Nansemond Suffolk (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 91.14,
+    "grade": 12,
+    "team": "Nansemond Suffolk (A)"
+  },
+  {
+    "swimmer": "Episcopal (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 91.31,
+    "grade": 12,
+    "team": "Episcopal (A)"
+  },
+  {
+    "swimmer": "Virginia Episcopal (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 91.95,
+    "grade": 12,
+    "team": "Virginia Episcopal (A)"
+  },
+  {
+    "swimmer": "Fork Union (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 92.45,
+    "grade": 12,
+    "team": "Fork Union (A)"
+  },
+  {
+    "swimmer": "Crusaders (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 93.18,
+    "grade": 12,
+    "team": "Crusaders (A)"
+  },
+  {
+    "swimmer": "Woodberry Forest (A) FR-A",
+    "event": "Boys 200 Free Relay",
+    "time": 93.41,
+    "grade": 12,
+    "team": "Woodberry Forest (A)"
+  },
+  {
+    "swimmer": "Collegiate (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 208.69,
+    "grade": 12,
+    "team": "Collegiate School (A)"
+  },
+  {
+    "swimmer": "St. Catherines (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 211.48,
+    "grade": 12,
+    "team": "St. Catherine's (A)"
+  },
+  {
+    "swimmer": "Madeira (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 212.38,
+    "grade": 12,
+    "team": "Madeira School (A)"
+  },
+  {
+    "swimmer": "Bishop O'Connell (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 212.77,
+    "grade": 12,
+    "team": "Bishop O'Connell (A)"
+  },
+  {
+    "swimmer": "St Annes-Belfield (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 218.18,
+    "grade": 12,
+    "team": "St Anne's-Belfield (A)"
+  },
+  {
+    "swimmer": "Cape Henry (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 218.18,
+    "grade": 12,
+    "team": "Cape Henry (A)"
+  },
+  {
+    "swimmer": "Norfolk Academy (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 219.13,
+    "grade": 12,
+    "team": "Norfolk Academy (A)"
+  },
+  {
+    "swimmer": "Bishop Ireton (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 219.32,
+    "grade": 12,
+    "team": "Bishop Ireton (A)"
+  },
+  {
+    "swimmer": "Paul VI (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 221.27,
+    "grade": 12,
+    "team": "Paul VI (A)"
+  },
+  {
+    "swimmer": "Trinity Christian (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 224.41,
+    "grade": 12,
+    "team": "Trinity Christian (A)"
+  },
+  {
+    "swimmer": "Oakcrest (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 225.28,
+    "grade": 12,
+    "team": "Oakcrest (A)"
+  },
+  {
+    "swimmer": "Potomac (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 226.5,
+    "grade": 12,
+    "team": "Potomac (A)"
+  },
+  {
+    "swimmer": "Collegiate (B) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 227.43,
+    "grade": 12,
+    "team": "Collegiate School (B)"
+  },
+  {
+    "swimmer": "Saint Gertrude (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 231.77,
+    "grade": 12,
+    "team": "Saint Gertrude (A)"
+  },
+  {
+    "swimmer": "Trinity Academy (A) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 233.19,
+    "grade": 12,
+    "team": "Trinity Academy (A)"
+  },
+  {
+    "swimmer": "Paul VI (B) 4FR-A",
+    "event": "Girls 400 Free Relay",
+    "time": 236.22,
+    "grade": 12,
+    "team": "Paul VI (B)"
+  },
+  {
+    "swimmer": "Bishop O'Connell (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 190.53,
+    "grade": 12,
+    "team": "Bishop O'Connell (A)"
+  },
+  {
+    "swimmer": "Trinity Episcopal (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 191.96,
+    "grade": 12,
+    "team": "Trinity Episcopal (A)"
+  },
+  {
+    "swimmer": "St. Christophers (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 195.09,
+    "grade": 12,
+    "team": "St. Christopher's (A)"
+  },
+  {
+    "swimmer": "Cape Henry (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 198.13,
+    "grade": 12,
+    "team": "Cape Henry (A)"
+  },
+  {
+    "swimmer": "Crusaders (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 199.74,
+    "grade": 12,
+    "team": "Crusaders (A)"
+  },
+  {
+    "swimmer": "Flint Hill (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 200.0,
+    "grade": 12,
+    "team": "Flint Hill (A)"
+  },
+  {
+    "swimmer": "Collegiate (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 200.64,
+    "grade": 12,
+    "team": "Collegiate School (A)"
+  },
+  {
+    "swimmer": "Walsingham Academy (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 202.51,
+    "grade": 12,
+    "team": "Walsingham Academy (A)"
+  },
+  {
+    "swimmer": "Immanuel Christian (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 203.23,
+    "grade": 12,
+    "team": "Immanuel Christian (A)"
+  },
+  {
+    "swimmer": "Fork Union (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 203.42,
+    "grade": 12,
+    "team": "Fork Union (A)"
+  },
+  {
+    "swimmer": "Norfolk Academy (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 205.59,
+    "grade": 12,
+    "team": "Norfolk Academy (A)"
+  },
+  {
+    "swimmer": "St. Christophers (B) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 205.6,
+    "grade": 12,
+    "team": "St. Christopher's (B)"
+  },
+  {
+    "swimmer": "Saint John Paul the Great (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 206.53,
+    "grade": 12,
+    "team": "Saint John Paul the Great (A)"
+  },
+  {
+    "swimmer": "Paul VI (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 206.66,
+    "grade": 12,
+    "team": "Paul VI (A)"
+  },
+  {
+    "swimmer": "Trinity Academy (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 207.42,
+    "grade": 12,
+    "team": "Trinity Academy (A)"
+  },
+  {
+    "swimmer": "Nansemond Suffolk (A) 4FR-A",
+    "event": "Boys 400 Free Relay",
+    "time": 208.89,
+    "grade": 12,
+    "team": "Nansemond Suffolk (A)"
   }
 ]

@@ -358,6 +358,54 @@ class ChampionshipGurobiStrategy:
                     os.environ["GRB_LICENSE_FILE"] = path
                     break
 
+    def _get_scoring_eligible_opponent_times(
+        self,
+        all_entries: list[ChampionshipEntry],
+        event: str,
+        target_team: str,
+        use_adjusted: bool = True,
+    ) -> list[float]:
+        """Get opponent times after applying per-team scorer caps.
+
+        At a championship with 20 teams each limited to max_scorers (4)
+        per event, this filters out opponents beyond their team's cap.
+        Returns only the times of opponents who would actually score.
+
+        Args:
+            all_entries: Full psych sheet.
+            event: Event name to filter on.
+            target_team: Team to exclude from opponents.
+            use_adjusted: If True, apply championship adjustment factors.
+        """
+        # Collect opponent entries with team info
+        opp_with_team: list[tuple[float, str]] = []
+        for e in all_entries:
+            if (
+                e.event == event
+                and e.seed_time > 0
+                and e.team.upper() != target_team.upper()
+            ):
+                t = (
+                    adjust_time(e.seed_time, event, self.factors)
+                    if use_adjusted
+                    else e.seed_time
+                )
+                opp_with_team.append((t, e.team.upper()))
+
+        # Sort by time (fastest first)
+        opp_with_team.sort(key=lambda x: x[0])
+
+        # Apply per-team scorer cap: only first max_scorers from each team
+        scoring_times: list[float] = []
+        team_count: dict[str, int] = {}
+        for adj_time, team in opp_with_team:
+            count = team_count.get(team, 0)
+            if count < self.max_scorers:
+                scoring_times.append(adj_time)
+                team_count[team] = count + 1
+
+        return scoring_times
+
     def _build_point_matrix(
         self,
         all_entries: list[ChampionshipEntry],
@@ -368,26 +416,24 @@ class ChampionshipGurobiStrategy:
         """
         Build expected points matrix for each (swimmer, event) pair.
 
-        Uses opponent-only ranking (rank among non-target-team entries)
-        as the optimization objective.  This is slightly optimistic
-        (ignores teammate rank depression) but ensures the optimizer
-        fills all available event slots rather than leaving them empty.
+        Uses opponent-only ranking (rank among scoring-eligible
+        non-target-team entries) as the optimization objective.
+        Per-team scorer caps are applied to opponents so that a team
+        with 6 entries only contributes 4 scoring obstacles.
 
-        The per-team scorer limit (max 4 per event) is enforced as a
-        Gurobi constraint.  After solving, the result is re-scored
-        using accurate placement in _rescore_solution().
+        This is slightly optimistic (ignores teammate rank depression)
+        but ensures the optimizer fills all available event slots
+        rather than leaving them empty.
+
+        After solving, the result is re-scored using accurate placement
+        in _rescore_solution().
         """
         point_matrix: dict[tuple, float] = {}
 
         for event in events:
-            # Sort opponent entries for binary-search ranking
-            # Apply championship adjustment (empirical speed-up factor)
-            opponent_times = sorted(
-                adjust_time(e.seed_time, event, self.factors)
-                for e in all_entries
-                if e.event == event
-                and e.seed_time > 0
-                and e.team.upper() != target_team.upper()
+            # Get opponent times with per-team scorer cap applied
+            opponent_times = self._get_scoring_eligible_opponent_times(
+                all_entries, event, target_team, use_adjusted=True
             )
 
             # Target team entries for this event (also adjusted)
@@ -404,7 +450,7 @@ class ChampionshipGurobiStrategy:
                 if seed_time is None:
                     continue
 
-                # Rank among opponents (best-case: only target-team swimmer)
+                # Rank among scoring-eligible opponents
                 opponents_faster = bisect.bisect_left(opponent_times, seed_time)
                 placement = opponents_faster + 1
 
@@ -425,6 +471,11 @@ class ChampionshipGurobiStrategy:
         """
         Re-score an assignment using accurate placement (all entries
         considered, including assigned teammates).
+
+        Enforces per-team scorer caps for ALL teams, not just the
+        target team.  When an opponent team reaches max_scorers,
+        subsequent swimmers from that team are skipped and do not
+        consume a scoring position.
 
         Returns (total_points, event_breakdown).
         """
@@ -464,16 +515,26 @@ class ChampionshipGurobiStrategy:
                 key=lambda e: adjust_time(e.seed_time, event, self.factors),
             )
 
-            # Assign points (12-place scoring, max 4 scorers per team)
-            team_scorers = 0
+            # Assign points with per-team scorer caps for ALL teams
+            team_scorer_count: dict[str, int] = {}
             event_pts = 0.0
-            for i, entry in enumerate(combined):
-                if i >= len(self.points_table):
+            scoring_place = 0
+
+            for entry in combined:
+                team_upper = entry.team.upper()
+                count = team_scorer_count.get(team_upper, 0)
+
+                if count >= self.max_scorers:
+                    continue  # This swimmer's team is capped out
+
+                team_scorer_count[team_upper] = count + 1
+
+                if scoring_place < len(self.points_table):
+                    if team_upper == target_team.upper():
+                        event_pts += self.points_table[scoring_place]
+                    scoring_place += 1
+                else:
                     break  # No more scoring places
-                if entry.team.upper() == target_team.upper():
-                    if team_scorers < self.max_scorers:
-                        event_pts += self.points_table[i]
-                        team_scorers += 1
 
             event_breakdown[event] = event_pts
             total_points += event_pts
@@ -489,15 +550,16 @@ class ChampionshipGurobiStrategy:
         """Calculate points with greedy best-2-per-swimmer approach.
 
         Assigns each swimmer their 2 highest-value events (by opponent-only
-        rank), then re-scores the resulting lineup accurately.
+        rank with per-team scorer caps), then re-scores the resulting
+        lineup accurately.
         """
-        # Pre-compute opponent times for fast ranking
+        # Pre-compute team-aware opponent times for fast ranking
+        all_events = sorted(set(e.event for e in team_entries))
         opp_times_by_event: dict[str, list[float]] = {}
-        for e in all_entries:
-            if e.seed_time > 0 and e.team.upper() != target_team.upper():
-                opp_times_by_event.setdefault(e.event, []).append(e.seed_time)
-        for evt in opp_times_by_event:
-            opp_times_by_event[evt].sort()
+        for evt in all_events:
+            opp_times_by_event[evt] = self._get_scoring_eligible_opponent_times(
+                all_entries, evt, target_team, use_adjusted=False
+            )
 
         # Group by swimmer
         swimmer_entries: dict[str, list[ChampionshipEntry]] = {}

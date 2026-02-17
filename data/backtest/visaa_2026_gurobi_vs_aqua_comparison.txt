@@ -17,10 +17,11 @@
 ================================================================================
   GUROBI MILP — VISAA Championship Profile
 ================================================================================
-  Divers identified: {'Meghan Condon', 'Maria Miller', 'Clare Kay', 'John Witter', 'Max Ashton', 'Bella Gorman'}
+  Divers identified: {'John Witter', 'Bella Gorman', 'Maria Miller', 'Clare Kay', 'Max Ashton', 'Meghan Condon'}
   Total entries: 431
   SST entries: 81
   Opponent entries: 350
+  Opponent teams: 88 (multi-team scoring enabled)
 
   Solving...
 Set parameter WLSAccessID
@@ -28,7 +29,7 @@ Set parameter WLSSecret
 Set parameter LicenseID to value 2749706
 Academic license 2749706 - for non-commercial use only - registered to ck___@hcc-nd.edu
   Status: optimal
-  Solve time: 1164ms
+  Solve time: 32ms
   Total points: 54
   Baseline points: 64
   Improvement: -10
@@ -36,9 +37,12 @@ Academic license 2749706 - for non-commercial use only - registered to ck___@hcc
   Assignments:
     Ariana Aldeguer                 Girls 100 Free, Girls 200 IM
     Daniel Sokban                   Boys 50 Free
+    Jane Judge                      Girls 100 Free
+    Lily Waldron                    Girls 100 Free
     Lio Martinez                    Boys 100 Free
     Maggie Schroer                  Girls 50 Free
     Melissa Paradise                Girls 100 Back
+    Philomena Kay                   Girls 100 Free
     Thiago Martinez                 Boys 100 Fly, Boys 200 IM
 
 ================================================================================
@@ -49,10 +53,10 @@ Academic license 2749706 - for non-commercial use only - registered to ck___@hcc
   Quality mode: thorough
 
   Solving...
-  Solve time: 23317ms
-  Seton score: 947
+  Solve time: 21899ms
+  Seton score: 948
   Opponent score: 1902
-  Margin: -955
+  Margin: -954
 
   Assignments:
     Aidan McCardell                 Boys 100 Breast
@@ -89,7 +93,7 @@ Academic license 2749706 - for non-commercial use only - registered to ck___@hcc
     Meghan Condon                   Girls 1M Diving
     Melissa Paradise                Girls 100 Back, Girls 100 Fly
     Michael Zahorchak               Boys 100 Free, Boys 50 Free
-    Patrick Kay                     Boys 100 Back, Boys 200 Free
+    Patrick Kay                     Boys 200 Free, Boys 200 IM
     Paul Partridge                  Boys 100 Breast, Boys 500 Free
     Philomena Kay                   Girls 100 Free, Girls 200 Free
     Sophia Halisky                  Girls 100 Breast, Girls 50 Free
@@ -102,12 +106,12 @@ Academic license 2749706 - for non-commercial use only - registered to ck___@hcc
 
   Metric                          Gurobi   AquaOptimizer       Diff
   ─────────────────────────────────────────────────────────────────
-  Unified SST Points                 114            1033 +919 (Aqua)
-  Solve Time (ms)                   1164           23317
+  Unified SST Points                 150            1034 +884 (Aqua)
+  Solve Time (ms)                     32           21899
 
   Note: 'Unified' = same ScoringEngine re-scores both lineups.
   Gurobi's own score (54) only counts assigned swimmers.
-  AquaOptimizer's own score (947) counts all event participants.
+  AquaOptimizer's own score (948) counts all event participants.
 
 
 ================================================================================
@@ -175,7 +179,7 @@ Academic license 2749706 - for non-commercial use only - registered to ck___@hcc
     Aqua:   Boys 100 Back, Boys 100 Fly
 
   Jane Judge:
-    Gurobi: (not assigned)
+    Gurobi: Girls 100 Free
     Aqua:   Girls 100 Back, Girls 100 Free
 
   Joe Witter:
@@ -203,7 +207,7 @@ Academic license 2749706 - for non-commercial use only - registered to ck___@hcc
     Aqua:   Girls 200 IM, Girls 500 Free
 
   Lily Waldron:
-    Gurobi: (not assigned)
+    Gurobi: Girls 100 Free
     Aqua:   Girls 100 Free, Girls 50 Free
 
   Lio Martinez:
@@ -224,14 +228,14 @@ Academic license 2749706 - for non-commercial use only - registered to ck___@hcc
 
   Patrick Kay:
     Gurobi: (not assigned)
-    Aqua:   Boys 100 Back, Boys 200 Free
+    Aqua:   Boys 200 Free, Boys 200 IM
 
   Paul Partridge:
     Gurobi: (not assigned)
     Aqua:   Boys 100 Breast, Boys 500 Free
 
   Philomena Kay:
-    Gurobi: (not assigned)
+    Gurobi: Girls 100 Free
     Aqua:   Girls 100 Free, Girls 200 Free
 
   Sophia Halisky:

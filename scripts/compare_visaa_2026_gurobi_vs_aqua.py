@@ -39,12 +39,37 @@ _SUPPLEMENTAL_PATH = (
 if _SUPPLEMENTAL_PATH.exists():
     with open(_SUPPLEMENTAL_PATH) as f:
         _supplemental = json.load(f)
-    # Strip team field (not needed by optimizers) and merge
-    for entry in _supplemental:
-        entry.pop("team", None)
     ALL_OPPONENT_ENTRIES = OPPONENT_ENTRIES + _supplemental
 else:
     ALL_OPPONENT_ENTRIES = OPPONENT_ENTRIES
+
+# Build swimmer→team lookup for multi-team scoring.
+# Sources: supplemental JSON (has team field) + dedicated team lookup file.
+_SWIMMER_TEAM: dict[str, str] = {}
+_TEAM_LOOKUP_PATH = (
+    PROJECT_ROOT / "data" / "swimcloud" / "visaa_2026_swimmer_teams.json"
+)
+# 1. From supplemental JSON
+for _e in ALL_OPPONENT_ENTRIES:
+    if "team" in _e and _e["team"]:
+        _SWIMMER_TEAM[_e["swimmer"]] = _e["team"]
+# 2. From dedicated team lookup (higher priority — scraped per-swimmer)
+if _TEAM_LOOKUP_PATH.exists():
+    with open(_TEAM_LOOKUP_PATH) as f:
+        _SWIMMER_TEAM.update(json.load(f))
+
+
+def _get_opponent_team(entry: dict) -> str:
+    """Get real team name for an opponent entry.
+
+    Falls back to swimmer name as a unique pseudo-team if no mapping exists.
+    This ensures each unknown swimmer gets their own per-team cap (1 of 4),
+    which is strictly better than pooling all unknowns together.
+    """
+    if "team" in entry and entry["team"]:
+        return entry["team"]
+    return _SWIMMER_TEAM.get(entry["swimmer"], f"UNK_{entry['swimmer']}")
+
 
 SEPARATOR = "=" * 80
 
@@ -67,7 +92,7 @@ def build_championship_entries():
         entries.append(
             ChampionshipEntry(
                 swimmer_name=e["swimmer"],
-                team="OPP",
+                team=_get_opponent_team(e),
                 event=e["event"],
                 seed_time=e["time"],
                 gender="M" if "Boys" in e["event"] else "F",
@@ -91,10 +116,12 @@ def run_gurobi(entries):
         if "Diving" in e.event and e.team == "SST":
             divers.add(e.swimmer_name)
 
+    opp_teams = {e.team for e in entries if e.team != "SST"}
     print(f"  Divers identified: {divers or 'none'}")
     print(f"  Total entries: {len(entries)}")
     print(f"  SST entries: {sum(1 for e in entries if e.team == 'SST')}")
     print(f"  Opponent entries: {sum(1 for e in entries if e.team != 'SST')}")
+    print(f"  Opponent teams: {len(opp_teams)} (multi-team scoring enabled)")
     print()
     print("  Solving...")
 

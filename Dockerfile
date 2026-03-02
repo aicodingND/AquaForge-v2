@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     libcairo2 \
     curl \
+    gnupg \
     procps \
     debian-keyring \
     debian-archive-keyring \

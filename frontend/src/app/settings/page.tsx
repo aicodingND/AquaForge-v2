@@ -1,12 +1,13 @@
 "use client";
 
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 import Toggle from "@/components/ui/Toggle";
 import BackendSelector from "@/components/BackendSelector";
 
 export default function SettingsPage() {
   const { scoringType, robustMode, enforceFatigue, setOptimizerSettings } =
-    useAppStore();
+    useAppStore(useShallow(s => ({ scoringType: s.scoringType, robustMode: s.robustMode, enforceFatigue: s.enforceFatigue, setOptimizerSettings: s.setOptimizerSettings })));
 
   return (
     <div className="p-6 lg:p-8 space-y-6">

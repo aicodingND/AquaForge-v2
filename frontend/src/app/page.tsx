@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 
 export default function Dashboard() {
   const {
@@ -11,7 +12,14 @@ export default function Dashboard() {
     opponentScore,
     optimizationResults,
     logs,
-  } = useAppStore();
+  } = useAppStore(useShallow(s => ({
+    setonTeam: s.setonTeam,
+    opponentTeam: s.opponentTeam,
+    setonScore: s.setonScore,
+    opponentScore: s.opponentScore,
+    optimizationResults: s.optimizationResults,
+    logs: s.logs,
+  })));
 
   const hasTeams = setonTeam && opponentTeam;
   const hasResults = optimizationResults && optimizationResults.length > 0;

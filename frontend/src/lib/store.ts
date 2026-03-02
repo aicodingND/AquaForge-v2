@@ -5,6 +5,7 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { useShallow } from "zustand/react/shallow";
 import { SwimmerEntry, OptimizationResult, StrategyInfo } from "./api";
 
 interface TeamData {
@@ -82,7 +83,6 @@ interface AppState {
   selectedBackend: string;
 
   // UI state
-  activeTab: "upload" | "optimize" | "results";
   logs: string[];
 
   // Actions
@@ -123,7 +123,6 @@ interface AppState {
   setChampionshipStrategy: (strategyId: string) => void;
   setAvailableStrategies: (strategies: StrategyInfo[]) => void;
   setSelectedBackend: (backend: string) => void;
-  setActiveTab: (tab: "upload" | "optimize" | "results") => void;
   addLog: (message: string) => void;
 }
 
@@ -161,7 +160,6 @@ export const useAppStore = create<AppState>()(
       availableStrategies: [],
       selectedBackend: "aqua",
 
-      activeTab: "upload",
       logs: [],
 
       // Actions
@@ -322,8 +320,6 @@ export const useAppStore = create<AppState>()(
           logs: [...state.logs, `Backend changed to: ${backend}`],
         })),
 
-      setActiveTab: (tab) => set({ activeTab: tab }),
-
       addLog: (message) =>
         set((state) => ({
           logs: [...state.logs.slice(-49), message].filter(Boolean) as string[],
@@ -352,7 +348,6 @@ export const useAppStore = create<AppState>()(
             persistedState.selectedStrategy || "maximize_individual",
           availableStrategies: persistedState.availableStrategies || [],
           selectedBackend: persistedState.selectedBackend || "aqua",
-          activeTab: persistedState.activeTab || "upload",
           logs: Array.isArray(persistedState.logs)
             ? persistedState.logs.slice(-20)
             : [],
@@ -392,9 +387,43 @@ export const useAppStore = create<AppState>()(
         selectedStrategy: state.selectedStrategy,
         availableStrategies: state.availableStrategies,
         selectedBackend: state.selectedBackend,
-        activeTab: state.activeTab,
         logs: state.logs.slice(-20), // Keep only last 20 logs to avoid storage limits
       }),
     },
   ),
 );
+
+// ─── Named Selector Hooks ──────────────────────────────────────────────────
+// Prevents components from re-rendering on unrelated store changes.
+// Use these instead of inline useAppStore(useShallow(...)) when the selection
+// matches one of these common patterns.
+
+/** Scores + results — used by LineupEditor, ComparisonView, ResultsTable */
+export const useScores = () =>
+  useAppStore(useShallow(s => ({
+    optimizationResults: s.optimizationResults,
+    setonScore: s.setonScore,
+    opponentScore: s.opponentScore,
+  })));
+
+/** Meet mode + setter — used by Header, MeetSelector */
+export const useMeetMode = () =>
+  useAppStore(useShallow(s => ({
+    meetMode: s.meetMode,
+    setMeetMode: s.setMeetMode,
+  })));
+
+/** Both teams (read-only) — used by WorkflowBreadcrumbs, TeamCard, analytics */
+export const useTeams = () =>
+  useAppStore(useShallow(s => ({
+    setonTeam: s.setonTeam,
+    opponentTeam: s.opponentTeam,
+  })));
+
+/** Team setters + addLog — used by FileUpload, DataSourceSelector */
+export const useTeamActions = () =>
+  useAppStore(useShallow(s => ({
+    setSetonTeam: s.setSetonTeam,
+    setOpponentTeam: s.setOpponentTeam,
+    addLog: s.addLog,
+  })));

@@ -1,64 +1,27 @@
-# Railway Deployment Configuration
-# =================================
-# This is the authoritative Caddy configuration for AquaForge on Railway.
-# Last verified working: 2025-12-30
-#
-# ARCHITECTURE:
-# - Caddy listens on $PORT (Railway provides this, usually 8080)
-# - Caddy serves static frontend from .web/build/client
-# - Caddy proxies WebSocket/API requests to Reflex backend on localhost:8000
-#
-# CRITICAL RULES:
-# 1. DO NOT add a generic /assets/* handler - it will break frontend JS/CSS
-# 2. WebSocket upgrade headers MUST be forwarded for Reflex state sync
-# 3. Health check must respond immediately (don't wait for backend)
+# AquaForge — Caddy reverse proxy
+# Serves Next.js static frontend + proxies API to FastAPI
 
 :{$PORT:8080} {
-    # ============================================
-    # HEALTH CHECKS - Must respond immediately
-    # ============================================
+
+    # Health checks — immediate response (no backend dependency)
     handle /health {
-        header X-Deploy-Version "v8-stable"
         respond "OK" 200
     }
-    
     handle /ping {
         respond "pong" 200
     }
 
-    # ============================================
-    # BACKEND PROXY - WebSocket + API
-    # ============================================
-    # CRITICAL: Must include WebSocket upgrade for Reflex state sync
-    @backend {
-        path /_event
-        path /_event/*
-        path /_upload
-        path /_upload/*
-        path /api/*
-    }
-    handle @backend {
-        reverse_proxy localhost:8000 {
-            # WebSocket support - REQUIRED for Reflex
+    # API proxy → FastAPI on localhost:8001
+    handle /api/* {
+        reverse_proxy localhost:8001 {
             header_up Host {host}
             header_up X-Real-IP {remote}
             header_up X-Forwarded-For {remote}
             header_up X-Forwarded-Proto {scheme}
-            header_up Connection {http.request.header.Connection}
-            header_up Upgrade {http.request.header.Upgrade}
-            
-            # Long-running WebSocket connections
-            transport http {
-                read_timeout 0
-                write_timeout 0
-            }
         }
     }
 
-    # ============================================
-    # COACH DATA FILES - Specific paths only
-    # ============================================
-    # NOTE: Do NOT use /assets/* here - it conflicts with frontend bundle
+    # Coach data files
     handle /data_guide.html {
         root * /app/assets
         file_server
@@ -72,19 +35,13 @@
         file_server
     }
 
-    # ============================================
-    # FRONTEND SPA - Must be LAST handler
-    # ============================================
-    # Serves from .web/build/client (includes /assets/* subfolder)
+    # Frontend SPA — must be last
     handle {
-        root * /app/.web/build/client
-        try_files {path} {path}/ /index.html
+        root * /app/frontend-build
+        try_files {path} {path}.html {path}/ /index.html
         file_server
     }
 
-    # ============================================
-    # LOGGING
-    # ============================================
     log {
         output stdout
         format console

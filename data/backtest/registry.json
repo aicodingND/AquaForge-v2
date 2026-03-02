@@ -1,0 +1,32 @@
+{
+  "description": "Index of meets with backtest data. Each entry maps to a directory under data/backtest/.",
+  "meets": [
+    {
+      "id": "meet_512",
+      "directory": "meet_512",
+      "meet_profile": "visaa_dual",
+      "date": "2026-01-18",
+      "name": "Seton vs Trinity Christian (Dual Meet)",
+      "has_actual_results": true,
+      "has_predictions": { "aqua": false, "gurobi": false }
+    },
+    {
+      "id": "vcac_2026",
+      "directory": "vcac_2026",
+      "meet_profile": "vcac_championship",
+      "date": "2026-02-07",
+      "name": "VCAC Championship",
+      "has_actual_results": false,
+      "has_predictions": { "aqua": false, "gurobi": false }
+    },
+    {
+      "id": "visaa_2026",
+      "directory": "visaa_2026",
+      "meet_profile": "visaa_state",
+      "date": "2026-02-12",
+      "name": "VISAA State Swim & Dive Championships",
+      "has_actual_results": false,
+      "has_predictions": { "aqua": false, "gurobi": false }
+    }
+  ]
+}

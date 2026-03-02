@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 
 interface WorkflowStep {
   id: string;
@@ -14,7 +15,7 @@ interface WorkflowStep {
 export default function WorkflowBreadcrumbs() {
   const pathname = usePathname();
   const { setonTeam, opponentTeam, optimizationResults, meetMode } =
-    useAppStore();
+    useAppStore(useShallow(s => ({ setonTeam: s.setonTeam, opponentTeam: s.opponentTeam, optimizationResults: s.optimizationResults, meetMode: s.meetMode })));
 
   // Define workflow steps based on mode
   const getWorkflowSteps = (): WorkflowStep[] => {

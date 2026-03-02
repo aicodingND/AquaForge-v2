@@ -51,7 +51,7 @@ class TestMeetOptimizationRouter:
         strategy = router.get_strategy(meet_type="dual")
 
         assert isinstance(strategy, AquaOptimizer)
-        assert strategy.profile.name == "visaa_dual"
+        assert strategy.profile.name == "VISAA Dual Meet"
         assert strategy.profile.individual_points == [8, 6, 5, 4, 3, 2, 1]
 
     def test_championship_meet_uses_championship_profile(self):
@@ -60,7 +60,7 @@ class TestMeetOptimizationRouter:
         strategy = router.get_strategy(meet_type="championship")
 
         assert isinstance(strategy, AquaOptimizer)
-        assert strategy.profile.name == "vcac_championship"
+        assert strategy.profile.name == "VCAC Championship"
         assert len(strategy.profile.individual_points) == 12
 
     def test_quality_mode_propagates(self):
@@ -89,7 +89,7 @@ class TestMeetOptimizationRouter:
         strategy = router.get_strategy(meet_type="invitational")
 
         assert isinstance(strategy, AquaOptimizer)
-        assert strategy.profile.name == "vcac_championship"
+        assert strategy.profile.name == "VCAC Championship"
 
     def test_get_available_strategies(self):
         """Should report which strategies are available."""
@@ -115,7 +115,7 @@ class TestGetOptimizerConvenience:
         """Championship should get championship profile."""
         optimizer = get_optimizer(meet_type="championship")  # Aqua is default
         assert isinstance(optimizer, AquaOptimizer)
-        assert optimizer.profile.name == "vcac_championship"
+        assert optimizer.profile.name == "VCAC Championship"
 
     def test_get_optimizer_prefer_gurobi(self):
         """When prefer_gurobi=True, should try Gurobi if available."""

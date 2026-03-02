@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAppStore } from '@/lib/store';
+import { useShallow } from 'zustand/react/shallow';
 
 export interface Meet {
   id: string;
@@ -31,7 +32,7 @@ export default function MeetSelector({
 }: MeetSelectorProps) {
   const [meets, setMeets] = useState<Meet[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const { meetMode, setMeetMode, setOptimizerSettings } = useAppStore();
+  const { meetMode, setMeetMode, setOptimizerSettings } = useAppStore(useShallow(s => ({ meetMode: s.meetMode, setMeetMode: s.setMeetMode, setOptimizerSettings: s.setOptimizerSettings })));
 
   useEffect(() => {
     // Load meets from data folder (mocked for now)
@@ -74,15 +75,15 @@ export default function MeetSelector({
 
   // Filter meets based on current mode
   const filteredMeets = meets.filter((m) => m.meetMode === meetMode);
-  
+
   const selectedMeet = meets.find((m) => m.id === value);
 
   const handleSelectMeet = (meet: Meet) => {
     onChange(meet.id);
-    
+
     // Auto-configure settings based on meet
     setMeetMode(meet.meetMode);
-    
+
     // Map scoring rules
     const scoringMap: Record<string, 'visaa_top7' | 'standard_top5' | 'vcac_championship' | 'visaa_state'> = {
       'vcac_championship': 'vcac_championship',
@@ -90,11 +91,11 @@ export default function MeetSelector({
       'visaa_top7': 'visaa_top7',
       'standard_top5': 'standard_top5',
     };
-    
+
     if (scoringMap[meet.scoringRules]) {
       setOptimizerSettings({ scoring: scoringMap[meet.scoringRules] });
     }
-    
+
     setIsOpen(false);
   };
 
@@ -113,7 +114,7 @@ export default function MeetSelector({
       {label && (
         <label className="block text-sm text-white/60 mb-2">{label}</label>
       )}
-      
+
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -130,7 +131,7 @@ export default function MeetSelector({
         ) : (
           <span className="text-white/40">Choose a meet...</span>
         )}
-        
+
         <svg
           className={`w-5 h-5 text-white/50 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -147,7 +148,7 @@ export default function MeetSelector({
           <div className="border-b border-[var(--navy-600)]">
             <p className="px-4 py-2 text-xs text-white/40 uppercase tracking-wider">Scheduled Meets</p>
           </div>
-          
+
           <div className="max-h-64 overflow-y-auto">
             {filteredMeets.filter((m) => m.date).map((meet) => (
               <button
@@ -181,7 +182,7 @@ export default function MeetSelector({
           <div className="border-t border-[var(--navy-600)]">
             <p className="px-4 py-2 text-xs text-white/40 uppercase tracking-wider">Quick Setup</p>
           </div>
-          
+
           {filteredMeets.filter((m) => !m.date).map((meet) => (
             <button
               key={meet.id}
@@ -200,7 +201,7 @@ export default function MeetSelector({
               </div>
             </button>
           ))}
-          
+
           {showAddNew && (
             <button
               type="button"

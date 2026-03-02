@@ -12,7 +12,7 @@ interface SwimmerInfo {
 }
 
 export default function SwimmerAvailability() {
-  const { setonTeam } = useAppStore();
+  const setonTeam = useAppStore(s => s.setonTeam);
   const [search, setSearch] = useState('');
   const [availability, setAvailability] = useState<Record<string, boolean>>({});
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { api } from "@/lib/api";
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 import StrategySelector from "./StrategySelector";
 
 export default function OptimizePanel() {
@@ -18,7 +19,7 @@ export default function OptimizePanel() {
     setOptimizing,
     setResults,
     addLog,
-  } = useAppStore();
+  } = useAppStore(useShallow(s => ({ setonTeam: s.setonTeam, opponentTeam: s.opponentTeam, meetMode: s.meetMode, selectedStrategy: s.selectedStrategy, isOptimizing: s.isOptimizing, setOptimizing: s.setOptimizing, setResults: s.setResults, addLog: s.addLog })));
 
   const canOptimize = setonTeam && opponentTeam && !isOptimizing;
 

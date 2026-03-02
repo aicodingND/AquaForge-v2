@@ -112,7 +112,7 @@ function LiveDashboardContent() {
             type="text"
             value={meetName}
             onChange={(e) => setMeetName(e.target.value)}
-            className="input-field py-1 px-3 text-sm w-32"
+            className="input py-1 px-3 text-sm w-32"
             placeholder="Meet ID"
           />
           <button onClick={handleRefresh} className="btn btn-sm btn-outline">
@@ -292,7 +292,7 @@ function MeetSetup({
             type="text"
             value={meetName}
             onChange={(e) => onMeetNameChange(e.target.value)}
-            className="input-field w-full"
+            className="input w-full"
             placeholder="e.g. vcac_2026"
           />
         </div>

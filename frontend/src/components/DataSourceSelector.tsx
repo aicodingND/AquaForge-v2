@@ -5,7 +5,8 @@
  * Quick-load buttons for pre-aggregated data, mode-aware
  */
 
-import { useAppStore } from "@/lib/store";
+import { useAppStore, useTeamActions } from "@/lib/store";
+import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
 
 interface DataSource {
@@ -32,14 +33,14 @@ export default function DataSourceSelector({
   const [error, setError] = useState<string | null>(null);
   const [fetching, setFetching] = useState(true);
 
-  const { setSetonTeam, setOpponentTeam, setMeetMode, addLog } = useAppStore();
+  const { setSetonTeam, setOpponentTeam, addLog } = useTeamActions();
+  const setMeetMode = useAppStore(s => s.setMeetMode);
 
   // Fetch available sources on mount
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/data/sources")
-      .then((res) => res.json())
+    api.listDataSources()
       .then((data) => {
-        setSources(data.sources || []);
+        setSources((data.sources || []) as DataSource[]);
         setFetching(false);
       })
       .catch(() => {
@@ -62,24 +63,16 @@ export default function DataSourceSelector({
     setError(null);
 
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/v1/data/load-source?source=${source.id}&team_type=${teamType}`,
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to load: ${response.statusText}`);
-      }
-
-      const data = await response.json();
+      const data = await api.loadDataSource(source.id, teamType);
 
       if (data.success) {
         const teamData = {
           name: data.team_name || source.name,
           filename: `${source.id}.json`,
-          data: data.data,
-          swimmerCount: data.swimmer_count,
-          entryCount: data.entry_count,
-          events: data.events,
+          data: data.data || [],
+          swimmerCount: data.swimmer_count || 0,
+          entryCount: data.entry_count || 0,
+          events: data.events || [],
           teams: data.teams,
         };
 
@@ -91,14 +84,14 @@ export default function DataSourceSelector({
           setOpponentTeam(teamData);
         }
 
-        addLog(`✓ Loaded ${source.name}: ${data.swimmer_count} swimmers`);
+        addLog(`Loaded ${source.name}: ${data.swimmer_count} swimmers`);
       } else {
         throw new Error(data.message || "Load failed");
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to load";
       setError(message);
-      addLog(`✗ Error: ${message}`);
+      addLog(`Error: ${message}`);
     } finally {
       setLoading(null);
     }
@@ -125,8 +118,8 @@ export default function DataSourceSelector({
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-medium text-(--gold-400)">
           {mode === "championship"
-            ? "🏆 Championship Data"
-            : `📋 ${teamType === "seton" ? "Seton" : "Opponent"} Rosters`}
+            ? "Championship Data"
+            : `${teamType === "seton" ? "Seton" : "Opponent"} Rosters`}
         </h4>
         <span className="text-xs text-white/40">Quick load</span>
       </div>
@@ -159,7 +152,7 @@ export default function DataSourceSelector({
                       {source.teams} teams
                     </span>
                   )}
-                  <span className="text-(--gold-400)">→</span>
+                  <span className="text-(--gold-400)">&rarr;</span>
                 </div>
               ) : (
                 <span className="text-xs text-white/30">Unavailable</span>

@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { api } from "@/lib/api";
-import { useAppStore } from "@/lib/store";
+import { useTeamActions } from "@/lib/store";
 import ErrorDisplay, { getErrorContext } from "./ErrorDisplay";
 
 interface FileUploadProps {
@@ -15,7 +15,7 @@ export default function FileUpload({ teamType, label }: FileUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { setSetonTeam, setOpponentTeam, addLog } = useAppStore();
+  const { setSetonTeam, setOpponentTeam, addLog } = useTeamActions();
 
   const handleFile = useCallback(
     async (file: File) => {

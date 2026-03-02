@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useAppStore } from '@/lib/store';
+import { useScores } from '@/lib/store';
 import { OptimizationResult } from '@/lib/api';
 
 interface OptimizationRun {
@@ -15,7 +15,7 @@ interface OptimizationRun {
 }
 
 export default function ComparisonView() {
-  const { optimizationResults, setonScore, opponentScore } = useAppStore();
+  const { optimizationResults, setonScore, opponentScore } = useScores();
 
   const [history, setHistory] = useState<OptimizationRun[]>([]);
   const [selectedRuns, setSelectedRuns] = useState<string[]>([]);

@@ -7,6 +7,7 @@ Uses the VISAA Championship scoring profile and real opponent fields
 to recommend optimal event assignments for each Seton swimmer.
 """
 
+import json
 import sys
 import time
 from pathlib import Path
@@ -22,6 +23,23 @@ from swim_ai_reflex.backend.core.strategies.aqua_optimizer import (  # noqa: E40
     FatigueModel,
     ScoringProfile,
 )
+
+# ─── Multi-team swimmer→team lookup ───────────────────────────────────
+_SWIMMER_TEAM: dict[str, str] = {}
+_TEAM_LOOKUP_PATH = (
+    PROJECT_ROOT / "data" / "swimcloud" / "visaa_2026_swimmer_teams.json"
+)
+if _TEAM_LOOKUP_PATH.exists():
+    with open(_TEAM_LOOKUP_PATH) as f:
+        _SWIMMER_TEAM.update(json.load(f))
+
+
+def _get_opponent_team(entry: dict) -> str:
+    """Get real team name for an opponent entry."""
+    if "team" in entry and entry["team"]:
+        return entry["team"]
+    return _SWIMMER_TEAM.get(entry["swimmer"], f"UNK_{entry['swimmer']}")
+
 
 # ═══════════════════════════════════════════════════════════════════════
 #  VISAA STATE CHAMPIONSHIP 2026 — FULL PSYCH SHEET DATA
@@ -758,7 +776,10 @@ def run_optimizer():
     seton_df["team"] = "seton"
 
     opponent_df = pd.DataFrame(OPPONENT_ENTRIES)
-    opponent_df["team"] = "opponent"
+    # Assign real team names for multi-team scoring
+    opponent_df["team"] = opponent_df.apply(
+        lambda row: _get_opponent_team(row.to_dict()), axis=1
+    )
 
     print(
         f"  Seton entries:    {len(seton_df)} (across {seton_df['swimmer'].nunique()} swimmers)"

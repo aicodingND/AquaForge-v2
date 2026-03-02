@@ -2,22 +2,13 @@
 
 import { useState } from "react";
 import { useAppStore } from "@/lib/store";
-import { API_BASE } from "@/lib/config";
+import { useShallow } from "zustand/react/shallow";
+import { api } from "@/lib/api";
 import Link from "next/link";
 import BackendSelector from "@/components/BackendSelector";
 import ChampionshipStrategySelector from "@/components/ChampionshipStrategySelector";
 
 export default function OptimizePage() {
-  const store = useAppStore();
-  const [progress, setProgress] = useState(0);
-  const [error, setError] = useState<string | null>(null);
-  const [localResult, setLocalResult] = useState<{
-    seton: number;
-    opponent: number;
-  } | null>(null);
-  const [championshipStrategy, setChampionshipStrategy] =
-    useState<string>("aqua");
-
   const {
     setonTeam,
     opponentTeam,
@@ -27,7 +18,32 @@ export default function OptimizePage() {
     enforceFatigue,
     robustMode,
     scoringType,
-  } = store;
+    setOptimizing,
+    setResults,
+    setOptimizerSettings,
+    addLog,
+  } = useAppStore(useShallow(s => ({
+    setonTeam: s.setonTeam,
+    opponentTeam: s.opponentTeam,
+    meetMode: s.meetMode,
+    isOptimizing: s.isOptimizing,
+    selectedBackend: s.selectedBackend,
+    enforceFatigue: s.enforceFatigue,
+    robustMode: s.robustMode,
+    scoringType: s.scoringType,
+    setOptimizing: s.setOptimizing,
+    setResults: s.setResults,
+    setOptimizerSettings: s.setOptimizerSettings,
+    addLog: s.addLog,
+  })));
+  const [progress, setProgress] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [localResult, setLocalResult] = useState<{
+    seton: number;
+    opponent: number;
+  } | null>(null);
+  const [championshipStrategy, setChampionshipStrategy] =
+    useState<string>("aqua");
 
   const canOptimize =
     meetMode === "championship"
@@ -50,46 +66,25 @@ export default function OptimizePage() {
       return;
     }
 
-    store.setOptimizing(true);
+    setOptimizing(true);
     setProgress(0);
     setError(null);
-    store.addLog(`🚀 Starting ${meetMode} optimization...`);
+    addLog(`🚀 Starting ${meetMode} optimization...`);
 
     try {
       setProgress(20);
 
-      // Debug payload sizes
-      console.log(
-        "Sending Optimize Request:",
-        "Seton:",
-        setonTeam?.data?.length,
-        "Opponent:",
-        meetMode === "dual" ? opponentTeam?.data?.length || 0 : "N/A",
-      );
-
-      const response = await fetch(`${API_BASE}/optimize`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          seton_data: setonTeam.data,
-          opponent_data: meetMode === "dual" ? opponentTeam?.data || [] : [],
-          optimizer_backend: selectedBackend,
-          enforce_fatigue: enforceFatigue,
-          robust_mode: meetMode === "dual" ? robustMode : false,
-          scoring_type: scoringType,
-          championship_strategy:
-            meetMode === "championship" ? championshipStrategy : "aqua",
-        }),
+      const data = await api.optimize({
+        seton_data: setonTeam.data,
+        opponent_data: meetMode === "dual" ? opponentTeam?.data || [] : [],
+        optimizer_backend: selectedBackend,
+        enforce_fatigue: enforceFatigue,
+        robust_mode: meetMode === "dual" ? robustMode : false,
+        scoring_type: scoringType,
+        strategy:
+          meetMode === "championship" ? championshipStrategy : undefined,
       });
 
-      setProgress(80);
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || `HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
       setProgress(100);
 
       // Debug logging for championship mode
@@ -105,7 +100,7 @@ export default function OptimizePage() {
 
       if (data.success) {
         // Pass championship-specific data if available
-        store.setResults(
+        setResults(
           data.results,
           data.seton_score,
           data.opponent_score,
@@ -121,7 +116,7 @@ export default function OptimizePage() {
           seton: data.seton_score,
           opponent: data.opponent_score,
         });
-        store.addLog(
+        addLog(
           meetMode === "championship"
             ? `✓ Projected Score: ${data.seton_score} points`
             : `✓ Score: ${data.seton_score} - ${data.opponent_score}`,
@@ -132,9 +127,9 @@ export default function OptimizePage() {
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown error";
       setError(message);
-      store.addLog(`✗ Error: ${message}`);
+      addLog(`✗ Error: ${message}`);
     } finally {
-      store.setOptimizing(false);
+      setOptimizing(false);
     }
   };
 
@@ -144,11 +139,11 @@ export default function OptimizePage() {
       | "standard_top5"
       | "vcac_championship"
       | "visaa_state",
-  ) => store.setOptimizerSettings({ scoring });
+  ) => setOptimizerSettings({ scoring });
   const toggleFatigue = () =>
-    store.setOptimizerSettings({ fatigue: !enforceFatigue });
+    setOptimizerSettings({ fatigue: !enforceFatigue });
   const toggleRobust = () =>
-    store.setOptimizerSettings({ robust: !robustMode });
+    setOptimizerSettings({ robust: !robustMode });
 
   return (
     <div className="p-6 lg:p-8 space-y-6">

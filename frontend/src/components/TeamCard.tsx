@@ -1,13 +1,14 @@
 'use client';
 
 import { useAppStore } from '@/lib/store';
+import { useShallow } from 'zustand/react/shallow';
 
 interface TeamCardProps {
     teamType: 'seton' | 'opponent';
 }
 
 export default function TeamCard({ teamType }: TeamCardProps) {
-    const { setonTeam, opponentTeam, setSetonTeam, setOpponentTeam } = useAppStore();
+    const { setonTeam, opponentTeam, setSetonTeam, setOpponentTeam } = useAppStore(useShallow(s => ({ setonTeam: s.setonTeam, opponentTeam: s.opponentTeam, setSetonTeam: s.setSetonTeam, setOpponentTeam: s.setOpponentTeam })));
 
     const team = teamType === 'seton' ? setonTeam : opponentTeam;
     const gradientFrom = teamType === 'seton' ? 'from-[#D4AF37]' : 'from-[#7C8B9A]';

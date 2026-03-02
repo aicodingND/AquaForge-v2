@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,7 +15,16 @@ export default function ResultsPage() {
     meetMode,
     championshipStandings,
     swingEvents,
-  } = useAppStore();
+  } = useAppStore(useShallow(s => ({
+    optimizationResults: s.optimizationResults,
+    setonScore: s.setonScore,
+    opponentScore: s.opponentScore,
+    setonTeam: s.setonTeam,
+    opponentTeam: s.opponentTeam,
+    meetMode: s.meetMode,
+    championshipStandings: s.championshipStandings,
+    swingEvents: s.swingEvents,
+  })));
   const [expandedEvent, setExpandedEvent] = useState<number | null>(null);
 
   const hasResults = optimizationResults && optimizationResults.length > 0;
@@ -153,17 +163,17 @@ export default function ResultsPage() {
             </div>
           ) : (
             <div className="score-hero">
-              <div className="flex items-center justify-center gap-12">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
                 <div className="text-center">
                   <p className="text-white/60 text-sm uppercase tracking-wider mb-1">
                     {setonTeam?.name || "Seton"}
                   </p>
-                  <p className="score-value">{setonScore}</p>
+                  <p className="score-value text-3xl sm:text-[4rem]">{setonScore}</p>
                 </div>
 
                 <div className="flex flex-col items-center">
                   <div
-                    className={`text-4xl font-bold ${isWinning ? "text-[var(--success)]" : isTied ? "text-[var(--gold-400)]" : "text-[var(--error)]"}`}
+                    className={`text-2xl sm:text-4xl font-bold ${isWinning ? "text-[var(--success)]" : isTied ? "text-[var(--gold-400)]" : "text-[var(--error)]"}`}
                   >
                     {isWinning ? "WIN" : isTied ? "TIE" : "LOSS"}
                   </div>
@@ -183,7 +193,7 @@ export default function ResultsPage() {
                   <p className="text-white/60 text-sm uppercase tracking-wider mb-1">
                     {opponentTeam?.name || "Opponent"}
                   </p>
-                  <p className="text-4xl font-bold text-white/70">
+                  <p className="text-3xl sm:text-4xl font-bold text-white/70">
                     {opponentScore}
                   </p>
                 </div>

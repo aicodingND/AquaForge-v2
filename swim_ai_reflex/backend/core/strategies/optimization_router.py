@@ -78,6 +78,7 @@ class MeetOptimizationRouter:
         meet_type: str = "dual",
         quality_mode: str = "balanced",
         force_strategy: str | None = None,
+        meet_profile: str | None = None,
     ) -> BaseOptimizerStrategy:
         """
         Get the appropriate optimization strategy.
@@ -86,13 +87,17 @@ class MeetOptimizationRouter:
             meet_type: "dual", "championship", or "invitational"
             quality_mode: For Aqua - "fast", "balanced", or "thorough"
             force_strategy: Override auto-selection with "gurobi", "aqua", or "heuristic"
+            meet_profile: Specific meet profile name (e.g., "vcac_championship",
+                         "visaa_state"). If None, inferred from meet_type.
 
         Returns:
             Configured optimizer strategy
         """
         # Handle forced strategy
         if force_strategy:
-            return self._get_forced_strategy(force_strategy, meet_type, quality_mode)
+            return self._get_forced_strategy(
+                force_strategy, meet_type, quality_mode, meet_profile
+            )
 
         # Auto-select: Aqua is PRIMARY, Gurobi only if explicitly preferred
         use_gurobi = self.has_gurobi() and self.prefer_gurobi
@@ -101,13 +106,17 @@ class MeetOptimizationRouter:
             return self._get_dual_strategy(use_gurobi, quality_mode)
 
         elif meet_type == MeetType.CHAMPIONSHIP.value or meet_type == "championship":
-            return self._get_championship_strategy(use_gurobi, quality_mode)
+            return self._get_championship_strategy(
+                use_gurobi, quality_mode, meet_profile
+            )
 
         else:
             # Invitational or unknown - use Aqua with championship profile
             logger.info(f"Unknown meet type '{meet_type}', using Aqua optimizer")
+            profile_name = meet_profile or "vcac_championship"
             return AquaOptimizer(
-                profile=ScoringProfile.vcac_championship(), quality_mode=quality_mode
+                profile=ScoringProfile.from_meet_profile(profile_name),
+                quality_mode=quality_mode,
             )
 
     def _get_dual_strategy(
@@ -133,27 +142,37 @@ class MeetOptimizationRouter:
         )
 
     def _get_championship_strategy(
-        self, use_gurobi: bool, quality_mode: str
+        self, use_gurobi: bool, quality_mode: str, meet_profile: str | None = None
     ) -> BaseOptimizerStrategy:
         """Get strategy for championship meets."""
+        profile_name = meet_profile or "vcac_championship"
+
         if use_gurobi:
             try:
                 from swim_ai_reflex.backend.core.strategies.championship_strategy import (
                     ChampionshipGurobiStrategy,
                 )
 
-                logger.info("Using ChampionshipGurobiStrategy for championship")
-                return ChampionshipGurobiStrategy()
+                logger.info(
+                    "Using ChampionshipGurobiStrategy for championship (%s)",
+                    profile_name,
+                )
+                return ChampionshipGurobiStrategy(meet_profile=profile_name)
             except Exception as e:
                 logger.warning(f"Championship Gurobi failed: {e}, falling back to Aqua")
 
-        logger.info("Using AquaOptimizer (championship profile)")
+        logger.info("Using AquaOptimizer (championship profile: %s)", profile_name)
         return AquaOptimizer(
-            profile=ScoringProfile.vcac_championship(), quality_mode=quality_mode
+            profile=ScoringProfile.from_meet_profile(profile_name),
+            quality_mode=quality_mode,
         )
 
     def _get_forced_strategy(
-        self, force_strategy: str, meet_type: str, quality_mode: str
+        self,
+        force_strategy: str,
+        meet_type: str,
+        quality_mode: str,
+        meet_profile: str | None = None,
     ) -> BaseOptimizerStrategy:
         """Get a specific forced strategy."""
         if force_strategy == "gurobi":
@@ -162,7 +181,8 @@ class MeetOptimizationRouter:
                     ChampionshipGurobiStrategy,
                 )
 
-                return ChampionshipGurobiStrategy()
+                profile_name = meet_profile or "vcac_championship"
+                return ChampionshipGurobiStrategy(meet_profile=profile_name)
             else:
                 from swim_ai_reflex.backend.core.strategies.gurobi_strategy import (
                     GurobiStrategy,
@@ -171,11 +191,11 @@ class MeetOptimizationRouter:
                 return GurobiStrategy()
 
         elif force_strategy == "aqua":
-            profile = (
-                ScoringProfile.vcac_championship()
-                if meet_type == "championship"
-                else ScoringProfile.visaa_dual()
-            )
+            if meet_type == "championship":
+                profile_name = meet_profile or "vcac_championship"
+            else:
+                profile_name = meet_profile or "visaa_dual"
+            profile = ScoringProfile.from_meet_profile(profile_name)
             return AquaOptimizer(profile=profile, quality_mode=quality_mode)
 
         elif force_strategy == "heuristic":
@@ -198,6 +218,7 @@ def get_optimizer(
     meet_type: str = "dual",
     quality_mode: str = "balanced",
     prefer_gurobi: bool = False,
+    meet_profile: str | None = None,
 ) -> BaseOptimizerStrategy:
     """
     Get an optimizer for the given meet type.
@@ -206,12 +227,15 @@ def get_optimizer(
         meet_type: "dual" or "championship"
         quality_mode: "fast", "balanced", or "thorough"
         prefer_gurobi: If True, use Gurobi instead of Aqua (for validation)
+        meet_profile: Specific meet profile (e.g., "visaa_state", "vcac_championship")
 
     Returns:
         Configured optimizer (Aqua by default)
     """
     router = MeetOptimizationRouter(prefer_gurobi=prefer_gurobi)
-    return router.get_strategy(meet_type=meet_type, quality_mode=quality_mode)
+    return router.get_strategy(
+        meet_type=meet_type, quality_mode=quality_mode, meet_profile=meet_profile
+    )
 
 
 __all__ = ["MeetOptimizationRouter", "MeetType", "get_optimizer"]

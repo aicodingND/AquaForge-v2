@@ -58,7 +58,7 @@ export default function ResultEntry({
             value={event}
             onChange={(e) => setEvent(e.target.value)}
             placeholder="e.g. Boys 50 Free"
-            className="input-field w-full"
+            className="input w-full"
             required
           />
         </div>
@@ -74,7 +74,7 @@ export default function ResultEntry({
               value={place}
               onChange={(e) => setPlace(Number(e.target.value))}
               placeholder="1"
-              className="input-field w-full"
+              className="input w-full"
               required
             />
           </div>
@@ -89,7 +89,7 @@ export default function ResultEntry({
               value={time}
               onChange={(e) => setTime(e.target.value)}
               placeholder="22.50"
-              className="input-field w-full"
+              className="input w-full"
             />
           </div>
         </div>
@@ -102,7 +102,7 @@ export default function ResultEntry({
             value={swimmer}
             onChange={(e) => setSwimmer(e.target.value)}
             placeholder="Name"
-            className="input-field w-full"
+            className="input w-full"
             required
           />
         </div>
@@ -113,7 +113,7 @@ export default function ResultEntry({
           <select
             value={team}
             onChange={(e) => setTeam(e.target.value)}
-            className="input-field w-full bg-[var(--navy-800)]"
+            className="input w-full bg-[var(--navy-800)]"
             required
           >
             <option value="">Select Team</option>

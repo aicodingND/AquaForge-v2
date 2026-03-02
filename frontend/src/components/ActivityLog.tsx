@@ -3,7 +3,7 @@
 import { useAppStore } from '@/lib/store';
 
 export default function ActivityLog() {
-    const { logs } = useAppStore();
+    const logs = useAppStore(s => s.logs);
 
     return (
         <div className="glass-card rounded-xl p-4 sticky top-32">

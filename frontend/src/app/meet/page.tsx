@@ -7,8 +7,10 @@ import RosterTable from "@/components/RosterTable";
 import ChampionshipTeamsGrid from "@/components/ChampionshipTeamsGrid";
 import DataSourceSelector from "@/components/DataSourceSelector";
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { FEATURES } from "@/lib/config";
 
 export default function MeetSetupPage() {
   const {
@@ -25,7 +27,21 @@ export default function MeetSetupPage() {
     unlockSwimmerEvent,
     toggleSwimmerExcluded,
     updateSwimmerTime,
-  } = useAppStore();
+  } = useAppStore(useShallow(s => ({
+    setonTeam: s.setonTeam,
+    opponentTeam: s.opponentTeam,
+    meetMode: s.meetMode,
+    selectedMeetId: s.selectedMeetId,
+    selectedOpponentId: s.selectedOpponentId,
+    setSelectedMeet: s.setSelectedMeet,
+    setSelectedOpponent: s.setSelectedOpponent,
+    coachLockedEvents: s.coachLockedEvents,
+    excludedSwimmers: s.excludedSwimmers,
+    lockSwimmerEvent: s.lockSwimmerEvent,
+    unlockSwimmerEvent: s.unlockSwimmerEvent,
+    toggleSwimmerExcluded: s.toggleSwimmerExcluded,
+    updateSwimmerTime: s.updateSwimmerTime,
+  })));
 
   const [activeSection, setActiveSection] = useState<
     "setup" | "upload" | "roster" | "teams"
@@ -216,24 +232,26 @@ export default function MeetSetupPage() {
             </Link>
           )}
 
-          {/* DEV: Load Sample Data Button */}
-          <button
-            onClick={async () => {
-              try {
-                const res = await fetch("/fixtures/sample-teams.json");
-                const data = await res.json();
-                useAppStore.getState().setMeetMode("dual");
-                useAppStore.getState().setSelectedMeet("dual_template");
-                useAppStore.getState().setSetonTeam(data.seton);
-                useAppStore.getState().setOpponentTeam(data.opponent);
-              } catch (err) {
-                console.error("Failed to load sample data:", err);
-              }
-            }}
-            className="btn btn-outline w-full py-2 text-sm mt-4 border-dashed opacity-50 hover:opacity-100"
-          >
-            🛠️ DEV: Load Sample Data
-          </button>
+          {/* DEV: Load Sample Data Button — only in development */}
+          {FEATURES.sample_data_button && (
+            <button
+              onClick={async () => {
+                try {
+                  const res = await fetch("/fixtures/sample-teams.json");
+                  const data = await res.json();
+                  useAppStore.getState().setMeetMode("dual");
+                  useAppStore.getState().setSelectedMeet("dual_template");
+                  useAppStore.getState().setSetonTeam(data.seton);
+                  useAppStore.getState().setOpponentTeam(data.opponent);
+                } catch (err) {
+                  console.error("Failed to load sample data:", err);
+                }
+              }}
+              className="btn btn-outline w-full py-2 text-sm mt-4 border-dashed opacity-50 hover:opacity-100"
+            >
+              DEV: Load Sample Data
+            </button>
+          )}
         </div>
       )}
 

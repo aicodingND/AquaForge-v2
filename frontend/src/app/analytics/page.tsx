@@ -1,12 +1,14 @@
 "use client";
 
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 import Link from "next/link";
 
 export default function AnalyticsPage() {
-  const { setonTeam, opponentTeam } = useAppStore();
+  const { setonTeam, opponentTeam, meetMode, championshipStandings, swingEvents } = useAppStore(useShallow(s => ({ setonTeam: s.setonTeam, opponentTeam: s.opponentTeam, meetMode: s.meetMode, championshipStandings: s.championshipStandings, swingEvents: s.swingEvents })));
 
-  const hasTeams = setonTeam && opponentTeam;
+  const isDual = meetMode === "dual";
+  const hasTeams = isDual ? (setonTeam && opponentTeam) : !!setonTeam;
 
   return (
     <div className="p-6 lg:p-8 space-y-6">
@@ -34,9 +36,111 @@ export default function AnalyticsPage() {
             Go to Meet Setup →
           </Link>
         </div>
+      ) : !isDual ? (
+        /* Championship Analytics */
+        <>
+          {/* Team Overview */}
+          <div className="glass-card p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--gold-400)] to-[var(--gold-500)] flex items-center justify-center font-bold text-[var(--navy-900)]">
+                S
+              </div>
+              <div>
+                <h3 className="font-semibold text-white">{setonTeam?.name || "Seton"}</h3>
+                <p className="text-xs text-white/50">Championship Analysis</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div>
+                <p className="text-white/50 text-sm">Swimmers</p>
+                <p className="text-white font-bold text-2xl">{setonTeam?.swimmerCount}</p>
+              </div>
+              <div>
+                <p className="text-white/50 text-sm">Entries</p>
+                <p className="text-white font-bold text-2xl">{setonTeam?.entryCount}</p>
+              </div>
+              <div>
+                <p className="text-white/50 text-sm">Events</p>
+                <p className="text-white font-bold text-2xl">{setonTeam?.events?.length}</p>
+              </div>
+              <div>
+                <p className="text-white/50 text-sm">Teams in Meet</p>
+                <p className="text-white font-bold text-2xl">{setonTeam?.teams?.length || "—"}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Championship Standings */}
+          {championshipStandings && championshipStandings.length > 0 && (
+            <div className="glass-card overflow-hidden">
+              <div className="p-4 border-b border-[var(--navy-500)]">
+                <h3 className="font-semibold text-white flex items-center gap-2">
+                  <span className="text-[var(--gold-400)]">🏆</span> Team Standings
+                </h3>
+              </div>
+              <div className="divide-y divide-[var(--navy-600)]">
+                {championshipStandings.map((team) => {
+                  const isSeton = team.team === "SST" || team.team.toLowerCase().includes("seton");
+                  return (
+                    <div key={team.team} className={`flex items-center gap-4 p-4 ${isSeton ? "bg-[var(--gold-muted)]" : ""}`}>
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                        team.rank === 1 ? "bg-[var(--gold-500)] text-[var(--navy-900)]" :
+                        team.rank === 2 ? "bg-gray-300 text-[var(--navy-900)]" :
+                        team.rank === 3 ? "bg-amber-600 text-white" :
+                        "bg-[var(--navy-600)] text-white/70"
+                      }`}>
+                        {team.rank}
+                      </div>
+                      <div className="flex-1">
+                        <p className={`font-medium ${isSeton ? "text-[var(--gold-400)]" : "text-white"}`}>{team.team}</p>
+                      </div>
+                      <p className={`font-bold text-lg ${isSeton ? "text-[var(--gold-400)]" : "text-white"}`}>
+                        {team.points.toFixed(1)} pts
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Coaching Insights — Swing Events */}
+          {swingEvents && swingEvents.length > 0 && (
+            <div className="glass-card overflow-hidden">
+              <div className="p-4 border-b border-[var(--navy-500)]">
+                <h3 className="font-semibold text-white flex items-center gap-2">
+                  <span className="text-[var(--gold-400)]">💡</span> Where to Focus in Practice
+                </h3>
+                <p className="text-xs text-white/50 mt-1">Swimmers closest to moving up a scoring position</p>
+              </div>
+              <div className="divide-y divide-[var(--navy-600)]">
+                {swingEvents.slice(0, 8).map((swing, i) => (
+                  <div key={i} className="p-4 flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-white">{swing.swimmer}</p>
+                      <p className="text-sm text-white/50">{swing.event}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[var(--success)] font-bold">+{swing.point_gain?.toFixed(1)} pts</p>
+                      <p className="text-xs text-white/50">#{swing.current_place} → #{swing.target_place}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* No results yet — prompt to optimize */}
+          {!championshipStandings && (
+            <div className="glass-card p-8 text-center">
+              <p className="text-white/50 mb-4">Run a championship optimization to see team standings and coaching insights.</p>
+              <Link href="/optimize" className="btn btn-gold">Go to Optimizer →</Link>
+            </div>
+          )}
+        </>
       ) : (
         <>
-          {/* Team Comparison Overview */}
+          {/* Dual Meet Team Comparison */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Seton Analysis */}
             <div className="glass-card p-6">

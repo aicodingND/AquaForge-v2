@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useAppStore } from '@/lib/store';
+import { useMeetMode } from '@/lib/store';
 import { mainNavigation, championshipNavigation, secondaryNavigation } from '@/config/navigation';
 import { siteConfig, meetModes } from '@/config/site';
 import { useState } from 'react';
 
 export default function Header() {
   const pathname = usePathname();
-  const { meetMode, setMeetMode } = useAppStore();
+  const { meetMode, setMeetMode } = useMeetMode();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Enhanced mode indicator with context

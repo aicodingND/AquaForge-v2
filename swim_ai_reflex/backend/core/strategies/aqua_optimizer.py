@@ -29,6 +29,7 @@ from swim_ai_reflex.backend.core.championship_factors import (
     ChampionshipFactors,
     adjust_times_df,
 )
+from swim_ai_reflex.backend.core.rules import MeetRules, get_meet_profile
 from swim_ai_reflex.backend.core.scoring import EVENT_ORDER
 from swim_ai_reflex.backend.core.strategies.base_strategy import BaseOptimizerStrategy
 
@@ -42,7 +43,11 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ScoringProfile:
-    """Configurable scoring profile for different meet types."""
+    """Configurable scoring profile for different meet types.
+
+    All meet-type-specific fields are derived from MeetRules via from_rules().
+    This ensures AquaOptimizer always uses the same canonical rules as Gurobi.
+    """
 
     name: str = "visaa_dual"
     individual_points: list[int] = field(default_factory=lambda: [8, 6, 5, 4, 3, 2, 1])
@@ -55,92 +60,94 @@ class ScoringProfile:
     max_individual_events: int = 2
     max_total_events: int = 4  # 2 individual + up to 3 relays, max 4
 
+    # Meet-type-specific constraint fields (from MeetRules)
+    relay_3_counts_as_individual: bool = (
+        False  # 400 FR costs individual slot (VCAC only)
+    )
+    diving_counts_as_individual: bool = True  # Diving uses individual slot (all champs)
+
+    @classmethod
+    def from_rules(cls, rules: MeetRules) -> "ScoringProfile":
+        """Create a ScoringProfile from canonical MeetRules.
+
+        This is the preferred constructor — it ensures all values match the
+        authoritative rule definitions in rules.py.
+        """
+        return cls(
+            name=rules.name,
+            individual_points=list(rules.individual_points),
+            relay_points=list(rules.relay_points),
+            min_scoring_grade=rules.min_scoring_grade,
+            max_scorers_per_team=rules.max_scorers_per_team_individual,
+            max_entries_per_event=rules.max_entries_per_team_per_event,
+            max_individual_events=rules.max_individual_events_per_swimmer,
+            max_total_events=rules.max_total_events_per_swimmer,
+            relay_3_counts_as_individual=rules.relay_3_counts_as_individual,
+            diving_counts_as_individual=getattr(
+                rules, "diving_counts_as_individual", True
+            ),
+        )
+
+    @classmethod
+    def from_meet_profile(cls, profile_name: str) -> "ScoringProfile":
+        """Create from a meet profile name (e.g., 'vcac_championship', 'visaa_state')."""
+        rules = get_meet_profile(profile_name)
+        return cls.from_rules(rules)
+
     @classmethod
     def visaa_dual(cls) -> "ScoringProfile":
-        return cls(name="visaa_dual")
+        return cls.from_meet_profile("visaa_dual")
 
     @classmethod
     def vcac_championship(cls) -> "ScoringProfile":
         """VCAC Conference scoring: Top 12 (16-13-12-11-10-9, 7-5-4-3-2-1)"""
-        return cls(
-            name="vcac_championship",
-            individual_points=[
-                16,
-                13,
-                12,
-                11,
-                10,
-                9,
-                7,
-                5,
-                4,
-                3,
-                2,
-                1,
-            ],
-            relay_points=[
-                32,
-                26,
-                24,
-                22,
-                20,
-                18,
-                14,
-                10,
-                8,
-                6,
-                4,
-                2,
-            ],
-            max_scorers_per_team=4,  # VCAC: only top 4 per team per event score
-            max_entries_per_event=4,
-            max_total_events=4,
-        )
+        return cls.from_meet_profile("vcac_championship")
 
     @classmethod
     def visaa_championship(cls) -> "ScoringProfile":
         """VISAA State scoring: Top 16 (20-17-16...1)"""
+        return cls.from_meet_profile("visaa_state")
+
+
+@dataclass
+class OpponentModelConfig:
+    """Configuration for opponent field depth and stochastic modeling.
+
+    Controls three independent capabilities that improve championship projections:
+    1. Field depth: how many opponents per event to consider (default 16 → up to 32+)
+    2. Time variance: gaussian spread model to account for seed-to-finals uncertainty
+    3. Attrition: thin the field by removing slowest entries based on DNS probability
+
+    All features are opt-in and default to OFF for backward compatibility.
+    """
+
+    # Field depth
+    max_opponents_per_event: int = 16
+
+    # Time variance — gaussian expected-value adjustment
+    apply_time_variance: bool = False
+    sprint_cv: float = 0.015  # Coefficient of variation for 50/100 events
+    distance_cv: float = 0.020  # CV for 200+ events
+
+    # Attrition — directional field thinning (remove slowest likely-to-scratch entries)
+    apply_attrition: bool = False
+
+    # Post-optimization Monte Carlo validation
+    monte_carlo_validation: bool = False
+    monte_carlo_trials: int = 5000
+
+    @classmethod
+    def default(cls) -> "OpponentModelConfig":
+        """Backward-compatible default: no modeling enhancements."""
+        return cls()
+
+    @classmethod
+    def championship(cls) -> "OpponentModelConfig":
+        """Full championship modeling: deeper fields + variance + attrition."""
         return cls(
-            name="visaa_championship",
-            individual_points=[
-                20,
-                17,
-                16,
-                15,
-                14,
-                13,
-                12,
-                11,
-                9,
-                7,
-                6,
-                5,
-                4,
-                3,
-                2,
-                1,
-            ],
-            relay_points=[
-                40,
-                34,
-                32,
-                30,
-                28,
-                26,
-                24,
-                22,
-                18,
-                14,
-                12,
-                10,
-                8,
-                6,
-                4,
-                2,
-            ],
-            max_scorers_per_team=4,  # VISAA: only top 4 per team per event score
-            max_entries_per_event=4,
-            max_total_events=4,
+            max_opponents_per_event=32,
+            apply_time_variance=True,
+            apply_attrition=True,
         )
 
 
@@ -313,13 +320,54 @@ class Lineup:
 
 
 class ConstraintEngine:
-    """Validates lineup constraints."""
+    """Validates lineup constraints with meet-type-specific rules.
 
-    def __init__(self, profile: ScoringProfile, events: list[str]):
+    Key meet-type differences enforced:
+    - relay_3_counts_as_individual: At VCAC, 400 FR costs 1 individual slot.
+      At VISAA State, it does NOT.
+    - diving_counts_as_individual: At both championships, diving = 1 individual slot.
+    - max_entries_per_event: 4 at dual, 999 at championships.
+    """
+
+    def __init__(
+        self,
+        profile: ScoringProfile,
+        events: list[str],
+        divers: set[str] | None = None,
+        relay_3_swimmers: set[str] | None = None,
+    ):
         self.profile = profile
         self.events = events
         self.individual_events = [e for e in events if "Relay" not in e]
         self.relay_events = [e for e in events if "Relay" in e]
+        self.divers = divers or set()
+        self.relay_3_swimmers = relay_3_swimmers or set()
+
+    def _count_individual_slots(self, swimmer: str, events: set[str]) -> int:
+        """Count individual event slots used, respecting meet-specific rules.
+
+        At VCAC: swims + diving + relay_3 each cost individual slots.
+        At VISAA: swims + diving cost individual slots, relay_3 does NOT.
+        """
+        count = 0
+        for e in events:
+            if "Relay" in e:
+                # Only count relay_3 (400 Free Relay) if rule says so
+                if (
+                    self.profile.relay_3_counts_as_individual
+                    and "400" in e
+                    and swimmer in self.relay_3_swimmers
+                ):
+                    count += 1
+            else:
+                # Individual swim or diving — always counts
+                count += 1
+
+        # Diving counts as individual if swimmer is a diver AND has a diving event
+        # (Diving is already counted above since it's not a "Relay" event)
+        # No extra logic needed — "Diving" events pass the "Relay not in e" filter
+
+        return count
 
     def is_valid(
         self, lineup: Lineup, roster_df: pd.DataFrame
@@ -335,11 +383,11 @@ class ConstraintEngine:
                     f"{swimmer}: {len(events)} events > {self.profile.max_total_events} max"
                 )
 
-            # Max individual events
-            indiv = [e for e in events if e in self.individual_events]
-            if len(indiv) > self.profile.max_individual_events:
+            # Max individual events (meet-type-aware)
+            indiv_slots = self._count_individual_slots(swimmer, events)
+            if indiv_slots > self.profile.max_individual_events:
                 violations.append(
-                    f"{swimmer}: {len(indiv)} individual > {self.profile.max_individual_events} max"
+                    f"{swimmer}: {indiv_slots} individual slots > {self.profile.max_individual_events} max"
                 )
 
             # Back-to-back constraint
@@ -434,15 +482,18 @@ class ScoringEngine:
         for e in seton_entries:
             all_entries.append({**e, "team": "seton"})
         for e in opponent_entries:
-            all_entries.append({**e, "team": "opponent"})
+            # Preserve real team name if present; fall back to "opponent"
+            opp_team = e.get("team", "opponent")
+            if not opp_team or opp_team == "seton":
+                opp_team = "opponent"
+            all_entries.append({**e, "team": opp_team})
 
         all_entries.sort(key=lambda x: x.get("time", 999))
 
-        # Assign points (only to scoring-eligible swimmers)
+        # Assign points with per-team scorer caps (multi-team aware)
         seton_points = 0.0
         opponent_points = 0.0
-        seton_scorers = 0
-        opponent_scorers = 0
+        team_scorer_count: dict[str, int] = {}
         details = []
 
         scoring_pos = 0
@@ -456,26 +507,21 @@ class ScoringEngine:
             is_scoring = grade >= self.profile.min_scoring_grade
             team = entry.get("team", "")
 
-            # Check team scorer limit
-            if team == "seton" and seton_scorers >= self.profile.max_scorers_per_team:
-                is_scoring = False
-            if (
-                team == "opponent"
-                and opponent_scorers >= self.profile.max_scorers_per_team
-            ):
+            # Check per-team scorer limit
+            team_count = team_scorer_count.get(team, 0)
+            if team_count >= self.profile.max_scorers_per_team:
                 is_scoring = False
 
             points = 0
             if is_scoring and scoring_pos < len(points_table):
                 points = points_table[scoring_pos]
                 scoring_pos += 1
+                team_scorer_count[team] = team_count + 1
 
                 if team == "seton":
                     seton_points += points
-                    seton_scorers += 1
                 else:
                     opponent_points += points
-                    opponent_scorers += 1
 
             details.append(
                 {
@@ -487,6 +533,44 @@ class ScoringEngine:
 
         return seton_points, opponent_points, details
 
+    @staticmethod
+    def get_scoring_eligible_opponent_times(
+        opponent_entries: list[dict],
+        max_scorers_per_team: int,
+    ) -> list[float]:
+        """Get opponent times after applying per-team scorer caps.
+
+        Sorts all opponents by time, then walks through them applying per-team
+        limits. Only times from scoring-eligible opponents are returned.
+
+        This mirrors Gurobi's _get_scoring_eligible_opponent_times() to ensure
+        consistent scoring between both optimizers.
+        """
+        # Collect (time, team) pairs
+        opp_with_team: list[tuple[float, str]] = []
+        for e in opponent_entries:
+            t = e.get("time", 999.0)
+            if t is None or t <= 0:
+                continue
+            team = e.get("team", "opponent")
+            if not team or team == "seton":
+                team = "opponent"
+            opp_with_team.append((t, team))
+
+        # Sort by time (fastest first)
+        opp_with_team.sort(key=lambda x: x[0])
+
+        # Apply per-team scorer cap
+        scoring_times: list[float] = []
+        team_count: dict[str, int] = {}
+        for adj_time, team in opp_with_team:
+            count = team_count.get(team, 0)
+            if count < max_scorers_per_team:
+                scoring_times.append(adj_time)
+                team_count[team] = count + 1
+
+        return scoring_times
+
     def score_event_fast(
         self,
         seton_entries: list[dict],
@@ -497,6 +581,9 @@ class ScoringEngine:
         """
         Fast O(log N) scoring for championships using pre-sorted opponent times.
         Only calculates Seton points (opponent score irrelevant in optimization loop).
+
+        Note: opponent_times should already be filtered for per-team scorer caps
+        (via _get_scoring_eligible_opponent_times or equivalent pre-processing).
         """
         import bisect
 
@@ -524,9 +611,6 @@ class ScoringEngine:
                 continue
 
             # Find rank: opponents faster + seton teammates faster
-            # bisect_left gives count of opponents strictly faster (or equal, effectively assumes we lose ties to existing times or win?
-            # Standard swimming: ties split points. Here getting strict rank.
-            # bisect_right: we lose to everyone with same time. Conservative.
             opp_ahead = bisect.bisect_left(opponent_times, swim_time)
 
             # Rank (1-based) = opponents better + teammates better (i) + 1
@@ -639,21 +723,22 @@ class BeamSearch:
             swimmer_events[swimmer].add(event)
             swimmer_data[(swimmer, event)] = row.to_dict()
 
-        # Pre-compute opponent times per event for faster scoring
+        # Pre-compute opponent data per event for scoring
         opponent_by_event: dict[str, list[dict]] = {}
         opponent_times_sorted: dict[str, list[float]] = {}
 
         for event in events:
             opp_rows = opponent_roster[opponent_roster["event"] == event]
-            opponent_by_event[event] = opp_rows.to_dict("records")[
-                :4
-            ]  # Only keep top 4 for display/heuristics if needed
+            all_opp_records = opp_rows.to_dict("records")
+            opponent_by_event[event] = all_opp_records
 
-            # Pre-sort all opponent times for fast bisect scoring
-            # Filter out non-scoring times? No, bisect handles it.
-            # Assuming 'time' column exists and is float
-            times = opp_rows["time"].dropna().sort_values().tolist()
-            opponent_times_sorted[event] = times
+            # Pre-compute scoring-eligible opponent times with per-team caps
+            # This ensures the fast bisect path uses correct multi-team placement
+            opponent_times_sorted[event] = (
+                scoring_engine.get_scoring_eligible_opponent_times(
+                    all_opp_records, scoring_engine.profile.max_scorers_per_team
+                )
+            )
 
         # Initial beam: empty lineup
         beam: list[Lineup] = [Lineup(assignments={})]
@@ -930,11 +1015,11 @@ class SimulatedAnnealing:
             swimmer_events[swimmer].add(event)
             swimmer_data[(swimmer, event)] = row.to_dict()
 
-        # Pre-compute opponent times
+        # Pre-compute opponent data (no truncation — per-team caps applied in scoring)
         opponent_by_event: dict[str, list[dict]] = {}
         for event in events:
             opp_rows = opponent_roster[opponent_roster["event"] == event]
-            opponent_by_event[event] = opp_rows.to_dict("records")[:4]
+            opponent_by_event[event] = opp_rows.to_dict("records")
 
         current = initial_lineup.copy()
         best = current.copy()
@@ -1155,15 +1240,25 @@ class AquaOptimizer(BaseOptimizerStrategy):
         championship_factors: ChampionshipFactors | None = None,
         attrition: AttritionRates
         | None = None,  # accepted but unused (zero optimization impact)
+        opponent_model: OpponentModelConfig | None = None,
     ):
         self.profile = profile or ScoringProfile.visaa_dual()
         self.fatigue = fatigue or FatigueModel()
         self.quality_mode = quality_mode
 
+        # Opponent modeling config (auto-enable for championship profiles)
+        profile_lower = self.profile.name.lower()
+        if opponent_model is not None:
+            self.opponent_model = opponent_model
+        elif "championship" in profile_lower:
+            self.opponent_model = OpponentModelConfig.championship()
+        else:
+            self.opponent_model = OpponentModelConfig.default()
+
         # Championship adjustment factors (auto-enable for championship profiles)
         if championship_factors is not None:
             self.championship_factors = championship_factors
-        elif "championship" in self.profile.name:
+        elif "championship" in profile_lower:
             self.championship_factors = ChampionshipFactors()
         else:
             self.championship_factors = ChampionshipFactors.disabled()
@@ -1189,6 +1284,132 @@ class AquaOptimizer(BaseOptimizerStrategy):
             if use_parallel is not None
             else preset.get("use_parallel", False)
         )
+
+    # ── Opponent Field Pre-Processing ──────────────────────────────────
+
+    def _preprocess_opponent_field(
+        self,
+        opponent_df: pd.DataFrame,
+        events: list[str],
+    ) -> pd.DataFrame:
+        """Pre-process opponent field with depth limiting, time variance, and attrition.
+
+        Runs ONCE before optimization begins. Transforms the raw opponent
+        roster into an "expected field" that the deterministic optimizer uses.
+
+        Pipeline order:
+        1. Depth limiting — trim to max_opponents_per_event per event
+        2. Time variance — gaussian expected-value adjustment on opponent seeds
+        3. Attrition — remove slowest entries based on DNS probability
+        """
+        config = self.opponent_model
+        df = opponent_df.copy()
+
+        # Step 1: Depth limiting
+        if config.max_opponents_per_event < 999:
+            trimmed_parts = []
+            for event in events:
+                event_df = df[df["event"] == event].copy()
+                if len(event_df) > config.max_opponents_per_event:
+                    event_df = event_df.nsmallest(
+                        config.max_opponents_per_event, "time"
+                    )
+                trimmed_parts.append(event_df)
+            # Include entries for events not in our event list (relays, etc.)
+            other_df = df[~df["event"].isin(events)]
+            if not other_df.empty:
+                trimmed_parts.append(other_df)
+            df = pd.concat(trimmed_parts, ignore_index=True) if trimmed_parts else df
+
+        # Step 2: Time variance — gaussian expected-value adjustment
+        if config.apply_time_variance:
+            df = self._apply_opponent_time_variance(df, config)
+
+        # Step 3: Attrition — directional field thinning
+        if config.apply_attrition:
+            df = self._apply_attrition_thinning(df, config)
+
+        return df
+
+    @staticmethod
+    def _apply_opponent_time_variance(
+        df: pd.DataFrame,
+        config: OpponentModelConfig,
+    ) -> pd.DataFrame:
+        """Apply gaussian expected-value time adjustment to opponent entries.
+
+        At championships, swimmers typically go faster than seed. Championship
+        factors already apply a uniform per-event adjustment (lines 1320-1330),
+        but that treats every swimmer identically. This adds a spread-aware
+        adjustment: given a field of swimmers with similar seeds, the expected
+        competitive time is slightly below seed due to variance.
+
+        Model: expected_time = seed * (1 - cv * 0.5)
+        The 0.5 factor reflects that the expected value of the faster half
+        of a symmetric distribution is ~0.5σ below the mean.
+        """
+        df = df.copy()
+        times = df["time"].copy()
+        events = df["event"]
+
+        for idx in df.index:
+            seed_time = times.at[idx]
+            if seed_time is None or seed_time <= 0 or seed_time >= 599:
+                continue
+
+            event_lower = str(events.at[idx]).lower()
+            if any(x in event_lower for x in ["50 ", "100 "]):
+                cv = config.sprint_cv
+            else:
+                cv = config.distance_cv
+
+            times.at[idx] = seed_time * (1 - cv * 0.5)
+
+        df["time"] = times
+        return df
+
+    @staticmethod
+    def _apply_attrition_thinning(
+        df: pd.DataFrame,
+        config: OpponentModelConfig,
+    ) -> pd.DataFrame:
+        """Apply attrition-based field thinning to opponent entries.
+
+        For each event, removes the slowest (N * attrition_rate) entries.
+        This is directional — slower swimmers are more likely to scratch at
+        championships — unlike uniform scaling which has zero optimizer impact.
+
+        The AttritionRates singleton provides per-event DNS probabilities
+        derived from 77,345 entries across 162 meets.
+        """
+        from swim_ai_reflex.backend.core.attrition_model import ATTRITION_RATES
+
+        events = df["event"].unique()
+        keep_parts = []
+
+        for event in events:
+            event_df = df[df["event"] == event].copy()
+            n = len(event_df)
+            if n == 0:
+                continue
+
+            # Strip gender prefix for rate lookup (e.g., "Boys 100 Fly" → "100 Fly")
+            event_base = str(event)
+            for prefix in ("Boys ", "Girls "):
+                if event_base.startswith(prefix):
+                    event_base = event_base[len(prefix) :]
+                    break
+
+            att_rate = ATTRITION_RATES.attrition_rate(event_base)
+            expected_n = max(1, int(n * (1 - att_rate)))
+
+            # Keep the fastest expected_n entries
+            event_df = event_df.nsmallest(expected_n, "time")
+            keep_parts.append(event_df)
+
+        return pd.concat(keep_parts, ignore_index=True) if keep_parts else df
+
+    # ── Main Optimization Entry Point ──────────────────────────────────
 
     def optimize(
         self,
@@ -1217,6 +1438,10 @@ class AquaOptimizer(BaseOptimizerStrategy):
             seton_df["team"] = "seton"
         if "team" not in opponent_df.columns:
             opponent_df["team"] = "opponent"
+        else:
+            # Fill any empty/null team values but preserve existing real team names
+            opponent_df["team"] = opponent_df["team"].fillna("opponent")
+            opponent_df.loc[opponent_df["team"] == "", "team"] = "opponent"
 
         # Apply championship speed-up factor to all seed times
         # Empirical: swimmers are ~1% faster at championships (per-event factors vary)
@@ -1245,6 +1470,26 @@ class AquaOptimizer(BaseOptimizerStrategy):
                 sorted(missing_opponents),
             )
 
+        # Apply opponent modeling pipeline (depth limiting, time variance, attrition)
+        opp_model = self.opponent_model
+        if (
+            opp_model.apply_time_variance
+            or opp_model.apply_attrition
+            or opp_model.max_opponents_per_event != 16
+        ):
+            original_opp_count = len(opponent_df)
+            opponent_df = self._preprocess_opponent_field(
+                opponent_df, sorted(seton_events)
+            )
+            logger.info(
+                "Opponent modeling: %d → %d entries (depth=%d, variance=%s, attrition=%s)",
+                original_opp_count,
+                len(opponent_df),
+                opp_model.max_opponents_per_event,
+                opp_model.apply_time_variance,
+                opp_model.apply_attrition,
+            )
+
         # Setup events
         available_events = seton_events
         events = [e for e in EVENT_ORDER if e in available_events]
@@ -1267,8 +1512,21 @@ class AquaOptimizer(BaseOptimizerStrategy):
                 event_swimmers[event] = set()
             event_swimmers[event].add(row["swimmer"])
 
+        # Detect divers and relay-3 swimmers from roster for constraint enforcement
+        divers: set[str] = set()
+        relay_3_swimmers: set[str] = set()
+        for _, row in seton_df.iterrows():
+            event = str(row.get("event", ""))
+            swimmer = str(row.get("swimmer", ""))
+            if "Diving" in event or "diving" in event:
+                divers.add(swimmer)
+            if "400" in event and "Relay" in event:
+                relay_3_swimmers.add(swimmer)
+
         # Initialize engines
-        constraint_engine = ConstraintEngine(self.profile, events)
+        constraint_engine = ConstraintEngine(
+            self.profile, events, divers=divers, relay_3_swimmers=relay_3_swimmers
+        )
         scoring_engine = ScoringEngine(self.profile, self.fatigue)
 
         # === Multi-seed ensemble using quality preset ===
@@ -1477,11 +1735,11 @@ class AquaOptimizer(BaseOptimizerStrategy):
         for _, row in seton_df.iterrows():
             swimmer_data[(row["swimmer"], row["event"])] = row.to_dict()
 
-        # Pre-compute opponent times for scoring
+        # Pre-compute opponent data (no truncation — per-team caps applied in scoring)
         opponent_by_event: dict[str, list[dict]] = {}
         for event in events:
             opp_rows = opponent_df[opponent_df["event"] == event]
-            opponent_by_event[event] = opp_rows.to_dict("records")[:4]
+            opponent_by_event[event] = opp_rows.to_dict("records")
 
         # Sort swimmers by their best time for each event
         for event in events:

@@ -236,7 +236,10 @@ def main():
     seton_df["team"] = "seton"
 
     opponent_df = pd.DataFrame(ALL_OPPONENT_ENTRIES)
-    opponent_df["team"] = "opponent"
+    # Assign real team names for multi-team scoring (same lookup as Gurobi)
+    opponent_df["team"] = opponent_df.apply(
+        lambda row: _get_opponent_team(row.to_dict()), axis=1
+    )
 
     # ─── Run Gurobi ───────────────────────────────────────────────
     try:
@@ -278,7 +281,11 @@ def main():
                 for e in SETON_ENTRIES
                 if e["event"] == event and e["swimmer"] in assigned
             ]
-            opp_entries = [e for e in ALL_OPPONENT_ENTRIES if e["event"] == event]
+            opp_entries = [
+                {**e, "team": _get_opponent_team(e)}
+                for e in ALL_OPPONENT_ENTRIES
+                if e["event"] == event
+            ]
             s_pts, _, _ = engine.score_event(
                 seton_entries, opp_entries, is_relay=is_relay, event_name=event
             )

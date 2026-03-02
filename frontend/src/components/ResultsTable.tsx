@@ -2,9 +2,10 @@
 
 import { api } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function ResultsTable() {
-    const { optimizationResults, setonScore, opponentScore, setResults, addLog } = useAppStore();
+    const { optimizationResults, setonScore, opponentScore, setResults, addLog } = useAppStore(useShallow(s => ({ optimizationResults: s.optimizationResults, setonScore: s.setonScore, opponentScore: s.opponentScore, setResults: s.setResults, addLog: s.addLog })));
     const clearResults = () => setResults([], 0, 0);
 
     if (!optimizationResults || optimizationResults.length === 0) {

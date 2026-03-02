@@ -94,6 +94,12 @@ class AttritionRates:
     default_dns: float = DEFAULT_DNS_RATE
     default_dq: float = DEFAULT_DQ_RATE
 
+    # Per-swimmer overrides for targeted attrition modeling
+    # Format: {"swimmer_name": {"100 Fly": 0.08, "50 Free": 0.02}}
+    swimmer_overrides: dict[str, dict[str, float]] = field(default_factory=dict)
+    # Sample sizes for hierarchical blending: {"swimmer_name": {"100 Fly": 12}}
+    swimmer_sample_sizes: dict[str, dict[str, int]] = field(default_factory=dict)
+
     def dns_rate(self, event_name: str) -> float:
         """P(seeded swimmer doesn't swim this event)."""
         if not self.enabled:
@@ -117,6 +123,30 @@ class AttritionRates:
         probability that the swimmer scratches or DQs.
         """
         return 1.0 - self.attrition_rate(event_name)
+
+    def swimmer_attrition_rate(
+        self, swimmer: str, event_name: str, min_n: int = 5
+    ) -> float:
+        """Blended swimmer+event attrition rate using hierarchical shrinkage.
+
+        When we have per-swimmer historical data, blend it with the event-level
+        prior. The weight increases with sample size: at min_n entries, the
+        swimmer-specific rate fully replaces the prior.
+
+        Falls back to event-level rate when no swimmer data exists.
+        """
+        event_rate = self.attrition_rate(event_name)
+
+        swimmer_rates = self.swimmer_overrides.get(swimmer, {})
+        if event_name not in swimmer_rates:
+            return event_rate
+
+        swimmer_rate = swimmer_rates[event_name]
+        swimmer_n = self.swimmer_sample_sizes.get(swimmer, {}).get(event_name, 0)
+
+        # Shrinkage weight: full weight at min_n entries, zero at 0
+        weight = min(swimmer_n / min_n, 1.0) if min_n > 0 else 1.0
+        return weight * swimmer_rate + (1 - weight) * event_rate
 
     @classmethod
     def from_json(cls, path: str | Path) -> "AttritionRates":

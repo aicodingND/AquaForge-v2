@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useMemo, useRef } from 'react';
-import { useAppStore } from '@/lib/store';
+import { useScores } from '@/lib/store';
 import { api, OptimizationResult } from '@/lib/api';
 
 interface SwimmerAssignment {
@@ -19,7 +19,7 @@ interface ModifiedLineup {
 }
 
 export default function LineupEditor() {
-  const { optimizationResults, setonScore, opponentScore } = useAppStore();
+  const { optimizationResults, setonScore, opponentScore } = useScores();
 
   const [modified, setModified] = useState<ModifiedLineup | null>(null);
   const [movingSwimmer, setMovingSwimmer] = useState<{

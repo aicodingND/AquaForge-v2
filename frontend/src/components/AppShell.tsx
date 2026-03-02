@@ -3,7 +3,6 @@
 import Header from '@/components/Header';
 import QuickActions, { useQuickActions } from '@/components/QuickActions';
 import WorkflowBreadcrumbs from '@/components/WorkflowBreadcrumbs';
-import AutoSaveIndicator from '@/components/AutoSaveIndicator';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -22,9 +21,6 @@ export default function AppShell({ children }: AppShellProps) {
 
       {/* Quick Actions Modal (Cmd+K) */}
       <QuickActions show={showQuickActions} onClose={closeQuickActions} />
-
-      {/* Auto-save Indicator */}
-      <AutoSaveIndicator />
 
       {/* Keyboard shortcut hint */}
       <div className="fixed bottom-4 right-4 hidden lg:flex items-center gap-2 text-xs text-white/30">

@@ -26,6 +26,7 @@ Track errors and their fixes to avoid repeating them.
 | 2 | **Incomplete edits** — partial changes that leave broken references | 2/5 errors | Any file touched by AI or bulk refactor | After every edit: grep for old names, run `tsc --noEmit` |
 | 3 | **React callback instability** — inline functions in hook dep arrays | 1/5 errors | `hooks/`, any custom hook with callback options | Any `useEffect`/`useCallback` with a callback dep → use ref pattern |
 | 4 | **Config value mismatches** — YAML/JSON configs disagree with code constants | 2/5 errors | `SCORING_RULES.yaml`, meet JSON files, `rules.py` | Diff config values against code constants before trusting either |
+| 5 | **Single-team assumption in multi-team context** — pooling all opponents as one team | 2/8 errors | Optimizer strategies, comparison scripts | Any scoring code MUST use `dict[str, int]` per-team counters, never a single counter |
 
 **On every session start:** Scan modified files for patterns #1 and #2 before doing new work.
 
@@ -132,3 +133,35 @@ Track errors and their fixes to avoid repeating them.
 **Fix:** Changed `max_scorers_per_team=4` and removed the `[:4]` slice from `score_lineup()`.
 **Prevention:** (a) ScoringProfile values must match the canonical MeetRules values — cross-reference `rules.py` when creating profiles, (b) Never slice entry lists for "performance" if it changes scoring semantics
 **Recurring pattern match:** #4 (config value mismatches)
+
+## 2026-02-16 Error: Gurobi pools all opponents as single team, ignoring per-team scorer caps
+
+**Files:** `swim_ai_reflex/backend/core/strategies/championship_strategy.py`
+**Issue:** Three methods in ChampionshipGurobiStrategy treated ALL opponent entries as one team:
+1. `_build_point_matrix()` — sorted all opponent times into one flat list for `bisect.bisect_left` ranking. With ~350 opponent entries pooled together, most SST swimmers ranked 17th+ (0 points), so Gurobi only assigned 6 swimmers.
+2. `_rescore_solution()` — enforced max_scorers cap for the target team (SST) but NOT for opponent teams. All opponents scored freely, inflating their displacement.
+3. `_calculate_baseline_points()` — same pooled-opponent ranking as the point matrix.
+**Root Cause:** `ChampionshipEntry.team` for all opponents was hardcoded to `"OPP"` in the comparison script. The strategy code never had multi-team logic because it was originally built for dual meets (one opponent team). Even after adding the team field to ChampionshipEntry, no code used it for opponent-side cap enforcement.
+**Impact:** Gurobi assigned only 6 swimmers (114 unified pts) when it should assign 9+ (150 unified pts). The per-team cap means only ~12 of 16 scoring positions are taken by opponents (4 per team × ~3 teams per event), leaving scoring slots for SST.
+**Fix:**
+1. Added `_get_scoring_eligible_opponent_times()` helper that walks sorted opponents applying per-team cap, returns only scoring-eligible times
+2. Used helper in `_build_point_matrix()` and `_calculate_baseline_points()`
+3. Changed `_rescore_solution()` to track `team_scorer_count: dict[str, int]` for ALL teams
+4. Updated comparison script to pass real team names (from scraped swimmer→team lookup) instead of "OPP"
+**Prevention:** (a) Any scoring/placement calculation must enforce per-team caps for ALL teams, not just the target team, (b) Never use a single "OPP" team for multi-team meets — always pass real team names
+**Recurring pattern match:** #4 (config value mismatches) + new pattern: "single-team assumption in multi-team context"
+**Update 2026-02-17:** AquaOptimizer bug now FIXED — see entry below.
+
+## 2026-02-17 Fix: AquaOptimizer multi-team scoring (same bug as Gurobi 2026-02-16)
+
+**Files:** `swim_ai_reflex/backend/core/strategies/aqua_optimizer.py`, `scripts/compare_visaa_2026_gurobi_vs_aqua.py`, `scripts/run_visaa_optimizer.py`
+**Issue:** AquaOptimizer had the identical single-team bug as Gurobi: `score_event()` used a single `opponent_scorers` counter for ALL opponents instead of per-team tracking. Additionally, `score_event_fast()` used a flat sorted list of all opponent times without per-team caps. Three locations truncated opponent entries to `[:4]` regardless of team count. Both scripts hardcoded `opponent_df["team"] = "opponent"`, overwriting any real team data.
+**Root Cause:** AquaOptimizer was built for dual meets (one opponent team) and never updated for multi-team championships. The `[:4]` slices were a misguided "performance optimization" that broke scoring semantics.
+**Fix:**
+1. Replaced single `opponent_scorers` counter with `team_scorer_count: dict[str, int]` — per-team caps for ALL teams (seton + each opponent team)
+2. Added `get_scoring_eligible_opponent_times()` static method (mirrors Gurobi's helper) — pre-filters opponent times by per-team cap for the bisect-based fast scorer
+3. Removed all `[:4]` truncations (3 locations: beam search, simulated annealing, greedy initializer)
+4. Updated `optimize()` to preserve existing team names and fill only null/empty values
+5. Fixed comparison and optimizer scripts to pass real team names via `_get_opponent_team()` lookup
+6. Added 11 new tests in `test_aqua_multi_team_scoring.py` covering: per-team caps, multi-team slots, seton cap enforcement, no-team-field fallback, helper filtering, and VISAA integration scenarios
+**Prevention:** (a) All new scoring code must use `dict[str, int]` team counters, never a single counter, (b) Never truncate entry lists — let the scoring engine handle per-team caps, (c) Test file: `tests/test_aqua_multi_team_scoring.py` guards against regression

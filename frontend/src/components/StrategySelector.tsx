@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api, StrategyInfo } from "@/lib/api";
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 
 interface StrategySelectorProps {
   className?: string;
@@ -29,7 +30,7 @@ export default function StrategySelector({
     availableStrategies,
     setAvailableStrategies,
     addLog,
-  } = useAppStore();
+  } = useAppStore(useShallow(s => ({ selectedStrategy: s.selectedStrategy, setChampionshipStrategy: s.setChampionshipStrategy, availableStrategies: s.availableStrategies, setAvailableStrategies: s.setAvailableStrategies, addLog: s.addLog })));
 
   // Fetch strategies on mount
   useEffect(() => {

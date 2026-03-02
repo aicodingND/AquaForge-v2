@@ -30,7 +30,7 @@ export interface SwimmerEntry {
 export interface OptimizeRequest {
   seton_data: SwimmerEntry[];
   opponent_data: SwimmerEntry[];
-  optimizer_backend: "heuristic" | "gurobi";
+  optimizer_backend: string;
   enforce_fatigue: boolean;
   robust_mode: boolean;
   scoring_type:
@@ -38,8 +38,8 @@ export interface OptimizeRequest {
     | "standard_top5"
     | "vcac_championship"
     | "visaa_state";
-  // Championship strategy (future: used when backend supports multiple strategies)
   strategy?: string;
+  championship_strategy?: string;
 }
 
 export interface OptimizeResponse {
@@ -51,6 +51,10 @@ export interface OptimizeResponse {
   statistics: Record<string, unknown>;
   warnings: string[];
   optimization_time_ms: number;
+  // Championship-specific fields
+  championship_standings?: { rank: number; team: string; points: number }[];
+  event_breakdowns?: Record<string, { event: string; entries: { swimmer: string; team: string; time: number; place: number; points: number }[]; team_points: Record<string, number> }>;
+  swing_events?: { swimmer: string; event: string; point_gain: number; current_place: number; target_place: number }[];
 }
 
 export interface OptimizationResult {
@@ -232,6 +236,25 @@ class ApiClient {
     }
 
     return response.blob();
+  }
+
+  // List available data sources
+  async listDataSources(): Promise<{ sources: { id: string; name: string; description: string; type: string; teams?: number; entries?: number; available?: boolean }[] }> {
+    return this.request("/data/sources");
+  }
+
+  // Load a specific data source
+  async loadDataSource(sourceId: string, teamType: string): Promise<{
+    success: boolean;
+    team_name?: string;
+    data?: SwimmerEntry[];
+    swimmer_count?: number;
+    entry_count?: number;
+    events?: string[];
+    teams?: string[];
+    message?: string;
+  }> {
+    return this.request(`/data/load-source?source=${encodeURIComponent(sourceId)}&team_type=${encodeURIComponent(teamType)}`);
   }
 
   // Get strategies...

@@ -13,20 +13,32 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+from swim_ai_reflex.backend.core.settings import get_settings
+from swim_ai_reflex.backend.utils.observability import (
+    RequestIdMiddleware,
+    setup_logging,
+    setup_telemetry,
+)
+
 logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan manager for startup/shutdown events."""
+    settings = get_settings()
+
+    # Initialize structured logging
+    setup_logging(log_level=settings.log_level, environment=settings.environment)
+
     # Startup
-    logger.info("🚀 AquaForge FastAPI Backend starting up...")
-    logger.info(f"📁 Upload directory: {os.getenv('UPLOAD_DIR', 'uploads')}")
+    logger.info("AquaForge FastAPI Backend starting up...")
+    logger.info("Upload directory: %s", settings.upload_dir)
+    logger.info("Environment: %s", settings.environment)
+    logger.info("Default optimizer: %s", settings.default_optimizer)
     yield
     # Shutdown
-    logger.info("🛑 AquaForge FastAPI Backend shutting down...")
+    logger.info("AquaForge FastAPI Backend shutting down...")
 
 
 def create_app() -> FastAPI:
@@ -36,6 +48,8 @@ def create_app() -> FastAPI:
     Returns:
         Configured FastAPI application instance
     """
+    settings = get_settings()
+
     app = FastAPI(
         title="AquaForge API",
         description="Swim Meet Optimization API - Backend services for AquaForge.ai",
@@ -46,33 +60,26 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
-    # Configure CORS for frontend access
-    origins = [
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:3001",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-        "http://localhost:8001",
-        "http://127.0.0.1:8001",
-    ]
+    # Request ID middleware (adds X-Request-ID header)
+    app.add_middleware(RequestIdMiddleware)
 
-    # Add local network IPs if known or dynamic
-    # In a real dev environment, we often allow all on local network
+    # Configure CORS from settings
+    origins = list(settings.cors_origins_list)
 
     # Add production origins from environment
     railway_domain = os.getenv("RAILWAY_PUBLIC_DOMAIN")
     render_url = os.getenv("RENDER_EXTERNAL_URL")
+    frontend_url = os.getenv("FRONTEND_URL")
 
     if railway_domain:
         origins.append(f"https://{railway_domain}")
     if render_url:
         origins.append(render_url)
+    if frontend_url:
+        origins.append(frontend_url)
 
-    # Allow all origins in development or if explicitly allowed
-    is_dev = os.getenv("ENVIRONMENT", "development") == "development"
-    allow_all = is_dev or os.getenv("CORS_ALLOW_ALL", "true").lower() == "true"
+    # Only allow all origins in development
+    allow_all = settings.is_development
 
     app.add_middleware(
         CORSMiddleware,
@@ -82,17 +89,18 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    # OpenTelemetry tracing (if configured)
+    setup_telemetry(app)
+
     # Global exception handler
     @app.exception_handler(Exception)
     async def global_exception_handler(request: Request, exc: Exception):
-        logger.error(f"Unhandled exception: {exc}", exc_info=True)
+        logger.error("Unhandled exception: %s", exc, exc_info=True)
         return JSONResponse(
             status_code=500,
             content={
                 "error": "Internal server error",
-                "detail": str(exc)
-                if os.getenv("DEBUG", "false").lower() == "true"
-                else None,
+                "detail": str(exc) if settings.debug else None,
             },
         )
 
@@ -104,6 +112,8 @@ def create_app() -> FastAPI:
         dual_meet,
         export,
         health,
+        historical,
+        intelligence,
         live_tracker,
         optimization,
     )
@@ -122,6 +132,12 @@ def create_app() -> FastAPI:
 
     # Live tracking
     app.include_router(live_tracker.router, prefix="/api/v1", tags=["Live Tracking"])
+
+    # Historical data
+    app.include_router(historical.router, prefix="/api/v1", tags=["Historical"])
+
+    # Intelligence analysis
+    app.include_router(intelligence.router, prefix="/api/v1", tags=["Intelligence"])
 
     return app
 

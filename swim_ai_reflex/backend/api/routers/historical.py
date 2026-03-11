@@ -1067,6 +1067,61 @@ async def get_team_roster(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/historical/scouting/{team_id}/optimizer-data")
+async def get_optimizer_data(
+    team_id: int,
+    season: str | None = Query(None, description="Season name (e.g. 2025-2026)"),
+):
+    """Get team data formatted for the optimizer (SwimmerEntry format).
+
+    Returns scouting data ready to use as opponent_data in optimization
+    requests, eliminating the need for file upload.
+    """
+    try:
+        from swim_ai_reflex.backend.services.scouting_service import (
+            get_team_roster_for_optimizer,
+        )
+
+        entries = get_team_roster_for_optimizer(team_id=team_id, season_name=season)
+
+        if not entries:
+            raise HTTPException(
+                status_code=404,
+                detail="No scouting data found for this team/season",
+            )
+
+        return {
+            "success": True,
+            "team_id": team_id,
+            "entry_count": len(entries),
+            "swimmer_count": len(set(e["swimmer"] for e in entries)),
+            "events": sorted(set(e["event"] for e in entries)),
+            "data": entries,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to get optimizer data: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/historical/scouted-teams")
+async def list_scouted_teams(
+    season: str | None = Query(None, description="Season name filter"),
+):
+    """List all teams with scouting data in the database."""
+    try:
+        from swim_ai_reflex.backend.services.scouting_service import (
+            list_scouted_teams as _list_teams,
+        )
+
+        teams = _list_teams(season_name=season)
+        return {"teams": teams, "count": len(teams)}
+    except Exception as e:
+        logger.error(f"Failed to list scouted teams: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # =============================================================================
 # Import Logs
 # =============================================================================

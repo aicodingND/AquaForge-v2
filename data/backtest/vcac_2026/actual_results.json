@@ -1,10 +1,158 @@
 {
   "meet_id": "vcac_2026",
-  "meet_name": "VCAC Championship",
+  "meet_name": "5th Annual VCAC Conference Championship",
   "meet_date": "2026-02-07",
   "meet_profile": "vcac_championship",
-  "source": "",
-  "transcribed_date": "",
-  "team_scores": {},
-  "events": []
+  "source": "Awaiting HyTek Meet Manager export. Populate from data/organized/championship_meets/ psych sheet files or HyTek database exports.",
+  "transcribed_date": "2026-03-11",
+  "team_scores": {
+    "Boys": {},
+    "Girls": {}
+  },
+  "events": [
+    {
+      "event_name": "200 Medley Relay",
+      "gender": "Boys",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "200 Free",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "200 IM",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "50 Free",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "Diving",
+      "gender": "Boys",
+      "event_type": "diving",
+      "results": []
+    },
+    {
+      "event_name": "100 Fly",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Free",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "500 Free",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "200 Free Relay",
+      "gender": "Boys",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "100 Back",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Breast",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "400 Free Relay",
+      "gender": "Boys",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "200 Medley Relay",
+      "gender": "Girls",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "200 Free",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "200 IM",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "50 Free",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "Diving",
+      "gender": "Girls",
+      "event_type": "diving",
+      "results": []
+    },
+    {
+      "event_name": "100 Fly",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Free",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "500 Free",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "200 Free Relay",
+      "gender": "Girls",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "100 Back",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Breast",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "400 Free Relay",
+      "gender": "Girls",
+      "event_type": "relay",
+      "results": []
+    }
+  ]
 }

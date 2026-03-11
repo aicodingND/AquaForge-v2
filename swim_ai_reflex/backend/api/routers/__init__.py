@@ -11,6 +11,9 @@ from swim_ai_reflex.backend.api.routers import (
     dual_meet,
     export,
     health,
+    historical,
+    intelligence,
+    live_tracker,
     optimization,
 )
 
@@ -22,4 +25,7 @@ __all__ = [
     "analytics",
     "dual_meet",
     "championship",
+    "historical",
+    "intelligence",
+    "live_tracker",
 ]

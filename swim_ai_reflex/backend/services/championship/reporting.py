@@ -1,6 +1,9 @@
+import logging
 import os
 import shutil
-from typing import Any, Dict
+from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 class PremiumReporter:
@@ -13,7 +16,7 @@ class PremiumReporter:
         self.templates_dir = templates_dir
         self.base_output_dir = "reports"
 
-    def generate_dashboard(self, context: Dict[str, Any]):
+    def generate_dashboard(self, context: dict[str, Any]):
         """
         Generate the executive dashboard for a specific meet.
 
@@ -50,10 +53,10 @@ class PremiumReporter:
 
         template_path = os.path.join(self.templates_dir, "dashboard.html")
         if not os.path.exists(template_path):
-            print(f"Warning: Template not found at {template_path}")
+            logger.warning(f"Template not found at {template_path}")
             return
 
-        with open(template_path, "r") as f:
+        with open(template_path) as f:
             template_content = f.read()
 
         rendered_html = self._render(template_content, context)
@@ -62,10 +65,10 @@ class PremiumReporter:
         with open(output_path, "w") as f:
             f.write(rendered_html)
 
-        print(f"✨ Dashboard generated at: {output_path}")
+        logger.info(f"✨ Dashboard generated at: {output_path}")
         return output_path
 
-    def _render(self, template: str, context: Dict[str, Any]) -> str:
+    def _render(self, template: str, context: dict[str, Any]) -> str:
         """
         A lightweight template renderer that handles basic Jinja2-like syntax.
         Supports: {{ var }}, {% if var %}, {% for item in list %}
@@ -82,7 +85,7 @@ class PremiumReporter:
             t = Template(template)
             return t.render(**context)
         except ImportError:
-            print(
+            logger.warning(
                 "Jinja2 not found. Falling back to simple replacement (loops may fail)."
             )
             # Simple fallback for creating the file even if imperfect
@@ -92,7 +95,7 @@ class PremiumReporter:
                     output = output.replace(f"{{{{ {k} }}}}", str(v))
             return output
 
-    def generate_roster(self, context: Dict[str, Any]):
+    def generate_roster(self, context: dict[str, Any]):
         """Generate the printable roster view."""
         meet_name = context.get("meet_name", "Unknown Meet")
         safe_name = "".join(
@@ -105,10 +108,10 @@ class PremiumReporter:
 
         template_path = os.path.join(self.templates_dir, "roster.html")
         if not os.path.exists(template_path):
-            print(f"Warning: Template not found at {template_path}")
+            logger.warning(f"Template not found at {template_path}")
             return
 
-        with open(template_path, "r") as f:
+        with open(template_path) as f:
             template_content = f.read()
 
         rendered_html = self._render(template_content, context)
@@ -117,10 +120,10 @@ class PremiumReporter:
         with open(output_path, "w") as f:
             f.write(rendered_html)
 
-        print(f"📄 Roster generated at: {output_path}")
+        logger.info(f"📄 Roster generated at: {output_path}")
         return output_path
 
-    def generate_pdf(self, context: Dict[str, Any]) -> str:
+    def generate_pdf(self, context: dict[str, Any]) -> str:
         """
         Generate PDF export from dashboard HTML.
 
@@ -144,7 +147,7 @@ class PremiumReporter:
             from weasyprint import HTML
 
             HTML(filename=html_path).write_pdf(pdf_path)
-            print(f"📕 PDF generated at: {pdf_path}")
+            logger.info(f"📕 PDF generated at: {pdf_path}")
             return pdf_path
         except ImportError:
             pass
@@ -154,17 +157,17 @@ class PremiumReporter:
             import pdfkit
 
             pdfkit.from_file(html_path, pdf_path)
-            print(f"📕 PDF generated at: {pdf_path}")
+            logger.info(f"📕 PDF generated at: {pdf_path}")
             return pdf_path
         except ImportError:
             pass
 
         # Fallback: save HTML with print-friendly CSS
-        print("⚠️ No PDF library available. Install weasyprint or pdfkit.")
-        print(f"   HTML report available at: {html_path}")
+        logger.warning("⚠️ No PDF library available. Install weasyprint or pdfkit.")
+        logger.warning(f"   HTML report available at: {html_path}")
         return html_path
 
-    def export_all_formats(self, context: Dict[str, Any]) -> Dict[str, str]:
+    def export_all_formats(self, context: dict[str, Any]) -> dict[str, str]:
         """
         Generate all report formats: HTML, PDF, and roster.
 

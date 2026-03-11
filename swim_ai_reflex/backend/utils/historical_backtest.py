@@ -15,6 +15,7 @@ core.championship_strategy which may be at strategies/championship_strategy.py o
 """
 
 import asyncio
+import logging
 
 import pandas as pd
 from sqlalchemy import text
@@ -25,6 +26,8 @@ from swim_ai_reflex.backend.core.rules import VISAAChampRules, VISAADualRules
 from swim_ai_reflex.backend.core.scoring import full_meet_scoring
 from swim_ai_reflex.backend.persistence.database import engine
 from swim_ai_reflex.backend.persistence.db_models import Meet, Team
+
+logger = logging.getLogger(__name__)
 
 
 def compute_team_seed_bias(team_id: int, before_date: str | None = None) -> dict:
@@ -554,7 +557,9 @@ async def run_backtest(
             err_type = (
                 "timed out" if isinstance(e, asyncio.TimeoutError) else f"failed: {e}"
             )
-            print(f"  WARNING: Optimizer {err_type}. Using projected scores only.")
+            logger.warning(
+                f"  WARNING: Optimizer {err_type}. Using projected scores only."
+            )
 
     event_comparison = _build_event_comparison(
         projected_scored, actual_scored, meet_info["events"]

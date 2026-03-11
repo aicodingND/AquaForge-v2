@@ -3,6 +3,7 @@ Periodic Performance Optimizer
 Automatically runs optimizations every N minutes to prevent lag buildup
 """
 
+import logging
 import os
 import shutil
 import time
@@ -10,6 +11,8 @@ from datetime import datetime
 from pathlib import Path
 
 import psutil
+
+logger = logging.getLogger(__name__)
 
 
 class PeriodicOptimizer:
@@ -42,7 +45,7 @@ class PeriodicOptimizer:
                 shutil.rmtree(pycache)
                 cleared += 1
             except Exception as e:
-                print(f"[!] Could not remove {pycache}: {e}")
+                logger.warning(f"[!] Could not remove {pycache}: {e}")
         return cleared
 
     def clear_pyc_files(self, root_dir="."):
@@ -53,7 +56,7 @@ class PeriodicOptimizer:
                 pyc.unlink()
                 cleared += 1
             except Exception as e:
-                print(f"[!] Could not remove {pyc}: {e}")
+                logger.warning(f"[!] Could not remove {pyc}: {e}")
         return cleared
 
     def clear_reflex_cache(self):
@@ -80,7 +83,7 @@ class PeriodicOptimizer:
                                     item.unlink()
                                     cleared += 1
                     except Exception as e:
-                        print(f"[!] Could not clear {cache_dir}: {e}")
+                        logger.warning(f"[!] Could not clear {cache_dir}: {e}")
 
         return cleared
 
@@ -99,38 +102,40 @@ class PeriodicOptimizer:
         start_time = time.time()
         self.optimization_count += 1
 
-        print(f"\n[RESET] Running periodic optimization #{self.optimization_count}...")
-        print(f"[-] Time: {datetime.now().strftime('%H:%M:%S')}")
+        logger.info(
+            f"\n[RESET] Running periodic optimization #{self.optimization_count}..."
+        )
+        logger.info(f"[-] Time: {datetime.now().strftime('%H:%M:%S')}")
 
         # 1. Check memory before
         mem_before = self.get_memory_usage()
-        print(f"[-] Memory before: {mem_before:.2f} MB")
+        logger.info(f"[-] Memory before: {mem_before:.2f} MB")
 
         # 2. Clear Python caches
         pycache_cleared = self.clear_pycache()
         pyc_cleared = self.clear_pyc_files()
         if pycache_cleared or pyc_cleared:
-            print(
+            logger.info(
                 f"[-] Cleared {pycache_cleared} __pycache__ dirs, {pyc_cleared} .pyc files"
             )
 
         # 3. Clear Reflex cache if needed
         reflex_cleared = self.clear_reflex_cache()
         if reflex_cleared:
-            print(f"[-] Cleared {reflex_cleared} old Reflex cache files")
+            logger.info(f"[-] Cleared {reflex_cleared} old Reflex cache files")
 
         # 4. Optimize memory
         freed_mb = self.optimize_memory()
-        print(f"[-] Garbage collection freed: {freed_mb:.2f} MB")
+        logger.info(f"[-] Garbage collection freed: {freed_mb:.2f} MB")
 
         # 5. Check memory after
         mem_after = self.get_memory_usage()
-        print(f"[-] Memory after: {mem_after:.2f} MB")
+        logger.info(f"[-] Memory after: {mem_after:.2f} MB")
 
         # 6. Calculate time taken
         elapsed = time.time() - start_time
-        print(f"[OK] Optimization complete in {elapsed:.2f}s")
-        print(f"[-] Next optimization in {self.interval_minutes} minutes\n")
+        logger.info(f"[OK] Optimization complete in {elapsed:.2f}s")
+        logger.info(f"[-] Next optimization in {self.interval_minutes} minutes\n")
 
         self.last_optimization = time.time()
 

@@ -652,7 +652,7 @@ class OptimizationService(BaseService):
         except Exception as e:
             import traceback
 
-            print(f"Strategy execution failed: {traceback.format_exc()}")
+            self.log_error(f"Strategy execution failed: {traceback.format_exc()}")
             return {"error": f"Optimization failed: {str(e)}"}
 
         # Validate results

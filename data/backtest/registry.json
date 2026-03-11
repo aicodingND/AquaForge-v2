@@ -15,18 +15,20 @@
       "directory": "vcac_2026",
       "meet_profile": "vcac_championship",
       "date": "2026-02-07",
-      "name": "VCAC Championship",
+      "name": "5th Annual VCAC Conference Championship",
       "has_actual_results": false,
-      "has_predictions": { "aqua": false, "gurobi": false }
+      "has_predictions": { "aqua": false, "gurobi": false },
+      "notes": "Schema populated, awaiting HyTek event-level results transcription"
     },
     {
       "id": "visaa_2026",
       "directory": "visaa_2026",
       "meet_profile": "visaa_state",
       "date": "2026-02-12",
-      "name": "VISAA State Swim & Dive Championships",
-      "has_actual_results": false,
-      "has_predictions": { "aqua": false, "gurobi": false }
+      "name": "2026 VISAA Swimming & Diving Championship",
+      "has_actual_results": true,
+      "has_predictions": { "aqua": false, "gurobi": false },
+      "notes": "Team scores transcribed from HyTek PDF. Event-level results partially transcribed (Boys 200 MR only). Full event data needs HyTek database export."
     }
   ]
 }

@@ -9,9 +9,12 @@ STANDARD DUAL MEET RULES:
 - 4 swimmers per team per event (or forfeit points)
 """
 
+import logging
 from typing import Any
 
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 # Standard dual meet individual events (per gender)
 STANDARD_INDIVIDUAL_EVENTS = [
@@ -176,52 +179,52 @@ def print_validation_report(validation: dict[str, Any]):
     """
     Print a formatted validation report.
     """
-    print("\n" + "=" * 80)
-    print("📊 DUAL MEET SCORING VALIDATION REPORT")
-    print("=" * 80)
+    logger.info("\n" + "=" * 80)
+    logger.info("📊 DUAL MEET SCORING VALIDATION REPORT")
+    logger.info("=" * 80)
 
     # Summary
     summary = validation["summary"]
-    print(
+    logger.info(
         f"\n✓ Events Scored: {summary['events_scored']} (expected: {summary['expected_events']})"
     )
-    print(
+    logger.info(
         f"✓ Points Awarded: {summary['points_awarded']:.1f} / {summary['max_possible']} max"
     )
-    print(f"✓ Percentage: {summary['percentage_of_max']:.1f}%")
+    logger.info(f"✓ Percentage: {summary['percentage_of_max']:.1f}%")
 
     # Team scores
     totals = validation["totals"]
-    print("\n📈 Team Scores:")
+    logger.info("\n📈 Team Scores:")
     for team, score in totals.items():
-        print(f"   {team.capitalize()}: {score:.1f}")
+        logger.info(f"   {team.capitalize()}: {score:.1f}")
 
     # Warnings
     if validation["warnings"]:
-        print(f"\n⚠️  WARNINGS ({len(validation['warnings'])}):")
+        logger.warning(f"\n⚠️  WARNINGS ({len(validation['warnings'])}):")
         for warning in validation["warnings"]:
-            print(f"   {warning}")
+            logger.warning(f"   {warning}")
 
     # Event validation warnings
     event_val = validation["event_validation"]
     if event_val["warnings"]:
-        print("\n⚠️  EVENT LIST WARNINGS:")
+        logger.warning("\n⚠️  EVENT LIST WARNINGS:")
         for warning in event_val["warnings"]:
-            print(f"   {warning}")
+            logger.warning(f"   {warning}")
 
     # Event-specific issues
     problem_events = [e for e in validation["event_results"] if e["warnings"]]
     if problem_events:
-        print("\n⚠️  EVENT-SPECIFIC ISSUES:")
+        logger.warning("\n⚠️  EVENT-SPECIFIC ISSUES:")
         for event in problem_events:
-            print(f"   {event['event']}:")
+            logger.warning(f"   {event['event']}:")
             for warning in event["warnings"]:
-                print(f"      - {warning}")
+                logger.warning(f"      - {warning}")
 
     # Status
     status = "✅ VALID" if validation["valid"] else "❌ INVALID"
-    print(f"\n{status}")
-    print("=" * 80 + "\n")
+    logger.info(f"\n{status}")
+    logger.info("=" * 80 + "\n")
 
 
 def get_standard_events_for_gender(gender: str) -> list[str]:

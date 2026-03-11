@@ -14,10 +14,13 @@ Usage:
 """
 
 import json
+import logging
 import os
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 class MemoryService:
@@ -44,25 +47,27 @@ class MemoryService:
         """Initialize Mem0 if available and enabled."""
         # Check kill switch
         if os.environ.get("MEM0_ENABLED", "true").lower() == "false":
-            print("Mem0 disabled via MEM0_ENABLED=false")
+            logger.info("Mem0 disabled via MEM0_ENABLED=false")
             return False
 
         api_key = os.environ.get("MEM0_API_KEY")
         if not api_key:
-            print("Mem0 not configured (no API key), using file-based memory")
+            logger.info("Mem0 not configured (no API key), using file-based memory")
             return False
 
         try:
             from mem0 import MemoryClient
 
             self.mem0_client = MemoryClient(api_key=api_key)
-            print("Mem0 connected successfully")
+            logger.info("Mem0 connected successfully")
             return True
         except ImportError:
-            print("Mem0 not installed (pip install mem0ai), using file-based memory")
+            logger.info(
+                "Mem0 not installed (pip install mem0ai), using file-based memory"
+            )
             return False
         except Exception as e:
-            print(f"Mem0 init failed: {e}, using file-based memory")
+            logger.warning(f"Mem0 init failed: {e}, using file-based memory")
             return False
 
     # -------------------------------------------------------------------------
@@ -151,7 +156,7 @@ class MemoryService:
                 )
                 results.extend(mem0_results.get("results", []))
             except Exception as e:
-                print(f"Mem0 search failed: {e}, falling back to files")
+                logger.warning(f"Mem0 search failed: {e}, falling back to files")
 
         # Always include file-based results
         file_results = self._search_files(query)
@@ -248,7 +253,7 @@ class MemoryService:
             messages = [{"role": "assistant", "content": f"Learned: {content}"}]
             self.mem0_client.add(messages, user_id=self.user_id)
         except Exception as e:
-            print(f"Mem0 sync failed (non-fatal): {e}")
+            logger.warning(f"Mem0 sync failed (non-fatal): {e}")
 
 
 # Convenience singleton

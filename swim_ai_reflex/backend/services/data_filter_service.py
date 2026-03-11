@@ -7,10 +7,14 @@ Applies filters like:
 - Grade Range (e.g., 7-12 for all, 8-12 for scoring only)
 """
 
+import logging
+
 import pandas as pd
 
 from swim_ai_reflex.backend.core.rules import VISAADualRules
 from swim_ai_reflex.backend.services.base_service import BaseService
+
+logger = logging.getLogger(__name__)
 
 
 class DataFilterService(BaseService):
@@ -195,27 +199,29 @@ class DataFilterService(BaseService):
             else 0
         )
 
-        print(f"\n{'=' * 50}")
-        print("DATA FILTER SUMMARY")
-        print(f"{'=' * 50}")
-        print(f"Original entries: {original_count}")
-        print(f"Filtered entries: {len(filtered)}")
-        print(
+        logger.info(f"\n{'=' * 50}")
+        logger.info("DATA FILTER SUMMARY")
+        logger.info(f"{'=' * 50}")
+        logger.info(f"Original entries: {original_count}")
+        logger.info(f"Filtered entries: {len(filtered)}")
+        logger.info(
             f"Unique swimmers: {filtered['swimmer'].nunique() if 'swimmer' in filtered.columns else 'N/A'}"
         )
-        print(f"  - Scoring eligible (8-12): {scoring_swimmers}")
-        print(f"  - Non-scoring (7th grade and below): {non_scoring_swimmers}")
-        print(
+        logger.info(f"  - Scoring eligible (8-12): {scoring_swimmers}")
+        logger.info(f"  - Non-scoring (7th grade and below): {non_scoring_swimmers}")
+        logger.info(
             f"Events: {filtered['event'].nunique() if 'event' in filtered.columns else 'N/A'}"
         )
-        print(f"{'=' * 50}\n")
+        logger.info(f"{'=' * 50}\n")
 
         return filtered
 
     def _log_filter(self, filter_name: str, filter_value: str, before: int, after: int):
         """Log a filter application."""
         removed = before - after
-        print(f"  [{filter_name}] {filter_value}: {before} → {after} (-{removed})")
+        logger.info(
+            f"  [{filter_name}] {filter_value}: {before} → {after} (-{removed})"
+        )
 
     def get_individual_events(self, df: pd.DataFrame) -> list[str]:
         """Get list of individual events in the data."""

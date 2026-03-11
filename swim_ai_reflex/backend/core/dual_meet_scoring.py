@@ -9,9 +9,13 @@ CRITICAL RULE: In a dual meet, all 232 points MUST be distributed.
 - Seton + Trinity = 232 (always, exactly)
 """
 
+import logging
+
 import pandas as pd
 
 from swim_ai_reflex.backend.core.rules import MeetRules, VISAADualRules
+
+logger = logging.getLogger(__name__)
 
 # Standard dual meet scoring
 INDIVIDUAL_POINTS = [8, 6, 5, 4, 3, 2, 1]  # Total: 29 points
@@ -234,15 +238,17 @@ def score_dual_meet(
     expected_total = len(event_totals) * POINTS_PER_EVENT
 
     if abs(combined_total - expected_total) > 0.1:  # Allow tiny floating point errors
-        print("\n⚠️  WARNING: Point total mismatch!")
-        print(
+        logger.warning("\n⚠️  WARNING: Point total mismatch!")
+        logger.warning(
             f"   Expected: {expected_total} points ({len(event_totals)} events × {POINTS_PER_EVENT})"
         )
-        print(f"   Actual: {combined_total} points")
-        print(f"   Seton: {seton_total}, Opponent: {opponent_total}")
-        print("\n   Event breakdown:")
+        logger.warning(f"   Actual: {combined_total} points")
+        logger.warning(f"   Seton: {seton_total}, Opponent: {opponent_total}")
+        logger.warning("\n   Event breakdown:")
         for event, points in event_totals.items():
-            print(f"     {event}: {points} points (expected {POINTS_PER_EVENT})")
+            logger.warning(
+                f"     {event}: {points} points (expected {POINTS_PER_EVENT})"
+            )
 
     return full_scored, totals
 
@@ -271,17 +277,17 @@ def print_dual_meet_summary(totals: dict[str, float], num_events: int = 8):
     actual = sum(totals.values())
     is_valid = abs(actual - expected) < 0.1
 
-    print(f"\n{'=' * 60}")
-    print("DUAL MEET SCORING SUMMARY")
-    print(f"{'=' * 60}")
-    print(f"Events: {num_events}")
-    print(f"Points per event: {POINTS_PER_EVENT}")
-    print(f"Expected total: {expected}")
-    print("\nTeam Scores:")
-    print(f"  Seton:    {totals.get('seton', 0):.1f}")
-    print(f"  Opponent: {totals.get('opponent', 0):.1f}")
-    print(f"  Total:    {actual:.1f}")
-    print(f"\nValidation: {'✅ VALID' if is_valid else '❌ INVALID'}")
+    logger.info(f"\n{'=' * 60}")
+    logger.info("DUAL MEET SCORING SUMMARY")
+    logger.info(f"{'=' * 60}")
+    logger.info(f"Events: {num_events}")
+    logger.info(f"Points per event: {POINTS_PER_EVENT}")
+    logger.info(f"Expected total: {expected}")
+    logger.info("\nTeam Scores:")
+    logger.info(f"  Seton:    {totals.get('seton', 0):.1f}")
+    logger.info(f"  Opponent: {totals.get('opponent', 0):.1f}")
+    logger.info(f"  Total:    {actual:.1f}")
+    logger.info(f"\nValidation: {'✅ VALID' if is_valid else '❌ INVALID'}")
     if not is_valid:
-        print(f"  Difference: {actual - expected:.1f} points")
-    print(f"{'=' * 60}\n")
+        logger.warning(f"  Difference: {actual - expected:.1f} points")
+    logger.info(f"{'=' * 60}\n")

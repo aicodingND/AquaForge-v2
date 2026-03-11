@@ -42,6 +42,20 @@ export const mainNavigation: NavItem[] = [
     href: '/analytics',
     description: 'Team comparison and performance insights'
   },
+  {
+    id: 'history',
+    label: 'History',
+    icon: '📚',
+    href: '/history',
+    description: 'Historical meet data, teams, and swimmer profiles'
+  },
+  {
+    id: 'intelligence',
+    label: 'Intel',
+    icon: '🧠',
+    href: '/intelligence',
+    description: 'AI-powered trajectory, psychological, and coaching analysis'
+  },
 ];
 
 // Championship-only navigation items

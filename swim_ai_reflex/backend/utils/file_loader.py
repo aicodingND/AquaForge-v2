@@ -1,9 +1,12 @@
 # utils/file_loader.py
+import logging
 import math
 import re
 from functools import lru_cache
 
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 _RE_TIME_SIMPLE = re.compile(r"^(?:(\d+):)?(\d+(?:\.\d+)?)$")
 _RE_TIME_HMS = re.compile(r"^(\d+):(\d{2}):(\d+(?:\.\d+)?)$")
@@ -121,13 +124,13 @@ def load_file_dynamic(file_like_or_path):
 
         # If we found a good candidate (at least 2 keywords), use it. Otherwise default to 0.
         if max_matches >= 2:
-            print(
-                f"DEBUG: Detailed Header Detection - Using row {best_header_row} as header (matches={max_matches})"
+            logger.debug(
+                f"Detailed Header Detection - Using row {best_header_row} as header (matches={max_matches})"
             )
             df_raw = xl.parse(chosen, header=best_header_row, dtype=object)
         else:
-            print(
-                "DEBUG: Detailed Header Detection - No clear header row found, defaulting to row 0"
+            logger.debug(
+                "Detailed Header Detection - No clear header row found, defaulting to row 0"
             )
             df_raw = xl.parse(chosen, header=0, dtype=object)
 
@@ -162,7 +165,7 @@ def load_file_dynamic(file_like_or_path):
 
     # Composite Name Synthesis
     if not col_map["name"] and col_map["last_name"] and col_map["first_name"]:
-        print("DEBUG: Synthesizing 'swimmer' column from Last/First name columns")
+        logger.debug("Synthesizing 'swimmer' column from Last/First name columns")
         df_raw["Synthesized_Name"] = (
             df_raw[col_map["last_name"]].astype(str)
             + ", "

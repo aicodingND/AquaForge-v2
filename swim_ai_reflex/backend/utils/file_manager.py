@@ -1,3 +1,4 @@
+import logging
 import os
 
 import pandas as pd
@@ -7,6 +8,8 @@ from swim_ai_reflex.backend.core.normalization import (
     load_first_two_sheets_as_standard,
     load_roster_file,
 )
+
+logger = logging.getLogger(__name__)
 
 ALLOWED_EXTENSIONS = {"xlsx", "xls", "csv", "pdf"}
 
@@ -30,7 +33,7 @@ class FileManager:
 
             # Get original filename
             original_filename = file_obj.filename
-            print(f"[FileManager] Original filename: {original_filename}")
+            logger.debug(f"[FileManager] Original filename: {original_filename}")
 
             # Sanitize filename - remove/replace problematic characters for Windows
             # Windows doesn't allow: < > : " / \ | ? *
@@ -48,34 +51,38 @@ class FileManager:
             else:
                 filename = f"{prefix}{safe_name}_{int(time.time())}"
 
-            print(f"[FileManager] Sanitized filename: {filename}")
+            logger.debug(f"[FileManager] Sanitized filename: {filename}")
 
             # Construct absolute path
             filepath = os.path.abspath(os.path.join(self.upload_dir, filename))
-            print(f"[FileManager] Full filepath: {filepath}")
+            logger.debug(f"[FileManager] Full filepath: {filepath}")
 
             # Verify upload directory exists
             if not os.path.exists(self.upload_dir):
-                print(f"[FileManager] Creating upload directory: {self.upload_dir}")
+                logger.debug(
+                    f"[FileManager] Creating upload directory: {self.upload_dir}"
+                )
                 os.makedirs(self.upload_dir, exist_ok=True)
 
             try:
-                print("[FileManager] Attempting to save file...")
+                logger.debug("[FileManager] Attempting to save file...")
                 file_obj.save(filepath)
-                print(f"[FileManager] File saved successfully: {filepath}")
+                logger.info(f"[FileManager] File saved successfully: {filepath}")
                 return filepath
             except Exception as e:
-                print(f"[FileManager] ERROR saving file: {e}")
-                print(f"[FileManager] Error type: {type(e).__name__}")
+                logger.error(f"[FileManager] ERROR saving file: {e}")
+                logger.error(f"[FileManager] Error type: {type(e).__name__}")
                 import traceback
 
                 traceback.print_exc()
                 raise
         else:
             if not file_obj:
-                print("[FileManager] No file object provided")
+                logger.warning("[FileManager] No file object provided")
             elif not self.allowed_file(file_obj.filename):
-                print(f"[FileManager] File type not allowed: {file_obj.filename}")
+                logger.warning(
+                    f"[FileManager] File type not allowed: {file_obj.filename}"
+                )
         return None
 
     def load_data(
@@ -104,7 +111,7 @@ class FileManager:
 
             # Apply Filters
             if filters:
-                print(f"[FileManager] Applying filters: {filters}")
+                logger.debug(f"[FileManager] Applying filters: {filters}")
                 if seton_std is not None and not seton_std.empty:
                     seton_std = self.apply_filters(seton_std, filters)
                 if opp_std is not None and not opp_std.empty:
@@ -127,7 +134,7 @@ class FileManager:
         if df is None or df.empty:
             return df
 
-        print(f"[DEBUG] Rows before filter: {len(df)}")
+        logger.debug(f"[DEBUG] Rows before filter: {len(df)}")
         # 1. Gender Filter
         genders = filters.get("genders", [])
         if genders:
@@ -135,9 +142,9 @@ class FileManager:
             if "gender" in df.columns and df["gender"].notna().any():
                 df = df[df["gender"].isin(genders)]
             else:
-                print("[DEBUG] Skipping gender filter due to missing/empty col")
+                logger.debug("[DEBUG] Skipping gender filter due to missing/empty col")
 
-        print(f"[DEBUG] Rows after gender: {len(df)}")
+        logger.debug(f"[DEBUG] Rows after gender: {len(df)}")
 
         # 2. Category Filter
         category = filters.get("category", "").strip()
@@ -145,7 +152,7 @@ class FileManager:
             # Case-insensitive substring match in event name
             df = df[df["event"].str.contains(category, case=False, na=False)]
 
-        print(f"[DEBUG] Rows after category: {len(df)}")
+        logger.debug(f"[DEBUG] Rows after category: {len(df)}")
 
         # 3. Event Type Filters
         include_relays = filters.get("include_relays", True)
@@ -188,7 +195,7 @@ class FileManager:
             # If no individual events selected, we don't keep any individual events
             pass
 
-        print(f"[DEBUG] Mask sum: {keep_mask.sum()}")
+        logger.debug(f"[DEBUG] Mask sum: {keep_mask.sum()}")
         return df[keep_mask].reset_index(drop=True)
 
     def validate_rosters(self, seton_df, opp_df):
@@ -218,5 +225,5 @@ class FileManager:
                 reverse=True,
             )
         except Exception as e:
-            print(f"[FileManager] Error listing files: {e}")
+            logger.error(f"[FileManager] Error listing files: {e}")
         return files

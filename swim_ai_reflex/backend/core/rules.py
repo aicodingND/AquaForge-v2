@@ -1,6 +1,9 @@
+import logging
 from dataclasses import dataclass, field
 
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -70,7 +73,7 @@ class MeetRules:
                 f"{event_counts.get('diving', 0)} diving"
             )
         msg = "\n".join(lines)
-        print(msg, flush=True)
+        logger.info(msg)
         return msg
 
 

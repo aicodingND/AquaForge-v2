@@ -5,6 +5,7 @@ Dedicated module for ingesting historical meet data from MDB files
 into the centralized AquaForge SQLite database.
 """
 
+import logging
 import os
 from datetime import datetime
 
@@ -14,6 +15,8 @@ from sqlmodel import Session, select
 from swim_ai_reflex.backend.database.engine import create_db_and_tables, engine
 from swim_ai_reflex.backend.database.models import EventEntry, Meet, Swimmer, Team
 from swim_ai_reflex.backend.utils.mdb_connector import MDBConnector
+
+logger = logging.getLogger(__name__)
 
 # Stroke mapping for event name construction
 STROKE_MAP = {1: "Free", 2: "Back", 3: "Breast", 4: "Fly", 5: "IM"}
@@ -101,13 +104,13 @@ class MDBIngestor:
 
         Returns True if successful, False if skipped/failed.
         """
-        print(f"Ingesting meet {meet_id}: {meet_name}")
+        logger.info(f"Ingesting meet {meet_id}: {meet_name}")
 
         # Check if meet exists
         statement = select(Meet).where(Meet.name == meet_name)
         existing = session.exec(statement).first()
         if existing:
-            print("  - Meet already exists, skipping")
+            logger.info("  - Meet already exists, skipping")
             return False
 
         # Load MDB tables
@@ -119,7 +122,7 @@ class MDBIngestor:
         # Find meet row
         meet_row = meet_df[meet_df["MEET"] == meet_id]
         if meet_row.empty:
-            print("  - Meet not found in MDB")
+            logger.warning("  - Meet not found in MDB")
             return False
 
         # Extract date and location safely
@@ -215,16 +218,16 @@ class MDBIngestor:
             count += 1
 
         session.commit()
-        print(f"  - Ingested {count} entries")
+        logger.info(f"  - Ingested {count} entries")
         return True
 
 
 def run_full_ingestion(mdb_path: str, meets: list[tuple[int, str, str]]):
     """Run full ingestion for a list of meets."""
-    print("Initializing Database...")
+    logger.info("Initializing Database...")
     create_db_and_tables()
 
-    print(f"Connecting to MDB: {mdb_path}")
+    logger.info(f"Connecting to MDB: {mdb_path}")
     ingestor = MDBIngestor(mdb_path)
 
     with Session(engine) as session:
@@ -234,6 +237,6 @@ def run_full_ingestion(mdb_path: str, meets: list[tuple[int, str, str]]):
                 if ingestor.ingest_meet(session, meet_id, meet_name, profile):
                     success += 1
             except Exception as e:
-                print(f"Error ingesting meet {meet_id}: {e}")
+                logger.error(f"Error ingesting meet {meet_id}: {e}")
 
-    print(f"\nIngestion complete: {success}/{len(meets)} meets processed")
+    logger.info(f"\nIngestion complete: {success}/{len(meets)} meets processed")

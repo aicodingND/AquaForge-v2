@@ -398,7 +398,7 @@ export const useAppStore = create<AppState>()(
 // Use these instead of inline useAppStore(useShallow(...)) when the selection
 // matches one of these common patterns.
 
-/** Scores + results — used by LineupEditor, ComparisonView, ResultsTable */
+/** Scores + results — used by LineupEditor, ResultsTable */
 export const useScores = () =>
   useAppStore(useShallow(s => ({
     optimizationResults: s.optimizationResults,

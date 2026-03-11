@@ -1,9 +1,12 @@
+import logging
 import re
 
 import pandas as pd
 import pdfplumber
 
 from swim_ai_reflex.backend.utils.file_loader import parse_flexible_time
+
+logger = logging.getLogger(__name__)
 
 
 def parse_hytek_pdf(pdf_path):
@@ -217,7 +220,7 @@ def parse_hytek_pdf(pdf_path):
                     )
 
     except Exception as e:
-        print(f"Error parsing PDF: {e}")
+        logger.error(f"Error parsing PDF: {e}")
         return pd.DataFrame()
 
     return pd.DataFrame(data)

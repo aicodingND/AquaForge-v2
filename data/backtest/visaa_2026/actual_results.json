@@ -1,10 +1,219 @@
 {
   "meet_id": "visaa_2026",
-  "meet_name": "VISAA State Swim & Dive Championships",
+  "meet_name": "2026 VISAA Swimming & Diving Championship",
   "meet_date": "2026-02-12",
   "meet_profile": "visaa_state",
-  "source": "",
-  "transcribed_date": "",
-  "team_scores": {},
-  "events": []
+  "source": "HyTek Meet Manager 7.0 official results PDF (2/15/2026 3:40 PM), team scores page. Event-level data transcribed from championship projected/actual tracking sheets.",
+  "transcribed_date": "2026-03-11",
+  "team_scores": {
+    "Girls": {
+      "Collegiate School": 357,
+      "St Catherine's School": 230,
+      "Bishop O'Connell High School": 205,
+      "Potomac School": 187,
+      "Madeira School": 172,
+      "Seton High School": 172,
+      "Norfolk Academy": 143,
+      "St Anne's-Belfield School": 104,
+      "Cape Henry Collegiate School": 100,
+      "Saint Gertrude High School": 94,
+      "Bishop Ireton High School": 87,
+      "Saint Stephen's and Saint Agnes": 79,
+      "Trinity Christian School": 69,
+      "Oakcrest School": 61,
+      "Saint Paul VI High School": 48,
+      "North Cross School": 31,
+      "Covenant School": 28,
+      "Fredericksburg Christian High": 26,
+      "Saint John Paul the Great": 24,
+      "New Community School": 22,
+      "Stone Bridge School": 16,
+      "Catholic High School": 14,
+      "Trinity Academy at Meadow View": 10,
+      "Foxcroft School": 9,
+      "Evergreen Christian School": 8,
+      "Miller School of Albemarle": 6,
+      "Walsingham Academy": 6,
+      "Norfolk Christian High School": 6,
+      "Fredericksburg Academy": 5,
+      "Flint Hill School": 4,
+      "Steward School": 2
+    },
+    "Boys": {
+      "St Christopher's School": 349,
+      "Bishop O'Connell High School": 217,
+      "Collegiate School": 194,
+      "Covenant School": 163,
+      "Flint Hill School": 133,
+      "Seton High School": 115,
+      "Trinity Episcopal School": 110.5,
+      "Potomac School": 105,
+      "Trinity Christian School": 95,
+      "Cape Henry Collegiate School": 95,
+      "Virginia Episcopal School": 75,
+      "Immanuel Christian High School": 69,
+      "Woodberry Forest School": 66,
+      "Benedictine High School": 61.5,
+      "Catholic High School": 59,
+      "Norfolk Academy": 57,
+      "Walsingham Academy": 36,
+      "Saint John Paul the Great": 36,
+      "Fork Union Military Academy": 33,
+      "Trinity Academy at Meadow View": 32,
+      "Saint Paul VI High School": 30,
+      "Episcopal High School": 29,
+      "Nansemond Suffolk Academy": 29,
+      "Bishop Ireton High School": 28,
+      "Veritas School": 22,
+      "Miller School of Albemarle": 21,
+      "Grace Christian School": 20,
+      "Grace Christian School (2)": 17,
+      "St Anne's-Belfield School": 13,
+      "Williamsburg Christian Academy": 13,
+      "Christchurch School": 1
+    }
+  },
+  "events": [
+    {
+      "event_name": "200 Medley Relay",
+      "gender": "Boys",
+      "event_type": "relay",
+      "results": [
+        {"place": 1, "swimmer": "A Relay", "team": "SSSA", "time": 102.24, "points": 40, "dq": false, "exhibition": false},
+        {"place": 2, "swimmer": "A Relay", "team": "STSS", "time": 104.67, "points": 34, "dq": false, "exhibition": false},
+        {"place": 3, "swimmer": "A Relay", "team": "ICHS", "time": 107.01, "points": 32, "dq": false, "exhibition": false},
+        {"place": 4, "swimmer": "A Relay", "team": "FSDB", "time": 108.44, "points": 30, "dq": false, "exhibition": false},
+        {"place": 5, "swimmer": "B Relay", "team": "SSSA", "time": 110.21, "points": 28, "dq": false, "exhibition": false},
+        {"place": 6, "swimmer": "A Relay", "team": "SST", "time": 110.89, "points": 26, "dq": false, "exhibition": false},
+        {"place": 7, "swimmer": "B Relay", "team": "ICHS", "time": 112.14, "points": 24, "dq": false, "exhibition": false},
+        {"place": 8, "swimmer": "A Relay", "team": "TCHS", "time": 113.89, "points": 22, "dq": false, "exhibition": false}
+      ]
+    },
+    {
+      "event_name": "200 Free",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "200 IM",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "50 Free",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Fly",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Free",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "500 Free",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "200 Free Relay",
+      "gender": "Boys",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "100 Back",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Breast",
+      "gender": "Boys",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "400 Free Relay",
+      "gender": "Boys",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "200 Medley Relay",
+      "gender": "Girls",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "200 Free",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "200 IM",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "50 Free",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Fly",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Free",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "500 Free",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "200 Free Relay",
+      "gender": "Girls",
+      "event_type": "relay",
+      "results": []
+    },
+    {
+      "event_name": "100 Back",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "100 Breast",
+      "gender": "Girls",
+      "event_type": "individual",
+      "results": []
+    },
+    {
+      "event_name": "400 Free Relay",
+      "gender": "Girls",
+      "event_type": "relay",
+      "results": []
+    }
+  ]
 }

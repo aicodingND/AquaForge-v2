@@ -1,4 +1,5 @@
 # core/normalization.py
+import logging
 import os
 import re
 from functools import lru_cache
@@ -7,6 +8,8 @@ import pandas as pd
 
 from swim_ai_reflex.backend.core.hytek_pdf_parser import parse_hytek_pdf
 from swim_ai_reflex.backend.utils.file_loader import parse_flexible_time
+
+logger = logging.getLogger(__name__)
 
 GRADE_MAP = {"FR": 9, "SO": 10, "JR": 11, "SR": 12, "8": 8}
 EVENT_ORDER = [
@@ -210,7 +213,7 @@ def normalize_to_standard(normalized_df, team="seton"):
     exclude_cols = {swimmer_col, gender_col, grade_col}
     event_cols = [c for c in cols if c not in exclude_cols]
 
-    print(f"[NORM] Normalizing raw dataframe with cols: {cols}")
+    logger.debug(f"[NORM] Normalizing raw dataframe with cols: {cols}")
     records = []
     for idx, row in normalized_df.iterrows():
         try:
@@ -260,7 +263,7 @@ def normalize_to_standard(normalized_df, team="seton"):
                     }
                 )
         except Exception as e:
-            print(f"[NORM] Error processing row {idx}: {e}")
+            logger.error(f"[NORM] Error processing row {idx}: {e}")
             continue
 
     if not records:

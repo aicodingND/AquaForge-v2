@@ -109,6 +109,11 @@ class ApiClient {
     this.baseUrl = baseUrl;
   }
 
+  private getAuthHeaders(): Record<string, string> {
+    const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+    return apiKey ? { "X-API-Key": apiKey } : {};
+  }
+
   private async request<T>(
     endpoint: string,
     options: RequestInit = {},
@@ -118,6 +123,7 @@ class ApiClient {
     const response = await fetch(url, {
       ...options,
       headers: {
+        ...this.getAuthHeaders(),
         ...options.headers,
       },
     });
@@ -227,7 +233,7 @@ class ApiClient {
 
     const response = await fetch(`${this.baseUrl}/export`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...this.getAuthHeaders() },
       body: JSON.stringify(payload),
     });
 
@@ -260,7 +266,9 @@ class ApiClient {
   // Get strategies...
   async getStrategies(): Promise<StrategiesResponse> {
     const v2Base = this.baseUrl.replace("/api/v1", "/api/v2");
-    const response = await fetch(`${v2Base}/championship/strategies`);
+    const response = await fetch(`${v2Base}/championship/strategies`, {
+      headers: this.getAuthHeaders(),
+    });
     if (!response.ok) {
       throw new Error(`Failed to fetch strategies: HTTP ${response.status}`);
     }

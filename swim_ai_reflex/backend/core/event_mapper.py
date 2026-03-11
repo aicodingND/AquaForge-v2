@@ -15,9 +15,11 @@ STANDARD DUAL MEET INDIVIDUAL EVENTS (per gender):
 Total: 8 events × 29 points = 232 maximum points
 """
 
-from typing import Dict, Optional
+import logging
 
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 # Standard event names (without gender prefix)
 STANDARD_EVENTS = [
@@ -32,7 +34,7 @@ STANDARD_EVENTS = [
 ]
 
 
-def normalize_event_name(event: str) -> Optional[str]:
+def normalize_event_name(event: str) -> str | None:
     """
     Normalize event name to standard dual meet format.
 
@@ -77,7 +79,7 @@ def normalize_event_name(event: str) -> Optional[str]:
 
 
 def filter_to_standard_events(
-    df: pd.DataFrame, gender: Optional[str] = None
+    df: pd.DataFrame, gender: str | None = None
 ) -> pd.DataFrame:
     """
     Filter DataFrame to only include standard dual meet events.
@@ -143,7 +145,7 @@ def add_gender_prefix(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def get_event_summary(df: pd.DataFrame) -> Dict:
+def get_event_summary(df: pd.DataFrame) -> dict:
     """
     Get summary of events in the DataFrame.
 
@@ -181,26 +183,28 @@ def print_event_summary(df: pd.DataFrame, title: str = "Event Summary"):
     """
     summary = get_event_summary(df)
 
-    print(f"\n{'=' * 60}")
-    print(f"{title}")
-    print(f"{'=' * 60}")
-    print(f"Total Events: {summary['total_events']} (standard: {len(STANDARD_EVENTS)})")
-    print(f"Standard Format: {'✅ YES' if summary['is_standard'] else '❌ NO'}")
+    logger.info(f"\n{'=' * 60}")
+    logger.info(f"{title}")
+    logger.info(f"{'=' * 60}")
+    logger.info(
+        f"Total Events: {summary['total_events']} (standard: {len(STANDARD_EVENTS)})"
+    )
+    logger.info(f"Standard Format: {'✅ YES' if summary['is_standard'] else '❌ NO'}")
 
     if summary["events"]:
-        print("\nEvents Included:")
+        logger.info("\nEvents Included:")
         for event in summary["events"]:
             count = len(df[df["event"] == event])
-            print(f"  • {event}: {count} entries")
+            logger.info(f"  • {event}: {count} entries")
 
     if summary["missing_events"]:
-        print("\n⚠️  Missing Standard Events:")
+        logger.warning("\n⚠️  Missing Standard Events:")
         for event in summary["missing_events"]:
-            print(f"  • {event}")
+            logger.warning(f"  • {event}")
 
     if summary["extra_events"]:
-        print("\n⚠️  Non-Standard Events:")
+        logger.warning("\n⚠️  Non-Standard Events:")
         for event in summary["extra_events"]:
-            print(f"  • {event}")
+            logger.warning(f"  • {event}")
 
-    print(f"{'=' * 60}\n")
+    logger.info(f"{'=' * 60}\n")

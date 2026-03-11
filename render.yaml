@@ -6,12 +6,16 @@ services:
     region: oregon
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: REFLEX_ENV
-        value: prod
+      - key: ENVIRONMENT
+        value: production
       - key: PYTHONUNBUFFERED
         value: "1"
       - key: PORT
-        value: "3000"
+        value: "8080"
+      - key: API_PORT
+        value: "8001"
+      - key: CORS_ALLOW_ALL
+        value: "false"
       # Gurobi WLS credentials - set these in Render dashboard
       - key: WLSACCESSID
         sync: false
@@ -19,5 +23,8 @@ services:
         sync: false
       - key: LICENSEID
         sync: false
-    healthCheckPath: /
+      # Sentry (optional) - set in Render dashboard
+      - key: SENTRY_DSN
+        sync: false
+    healthCheckPath: /api/v1/health
     autoDeploy: true

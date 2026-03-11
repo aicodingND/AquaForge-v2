@@ -1,7 +1,10 @@
+import logging
 import re
 
 import requests
 from bs4 import BeautifulSoup
+
+logger = logging.getLogger(__name__)
 
 
 class SetonScraper:
@@ -45,7 +48,7 @@ class SetonScraper:
 
             return posts
         except Exception as e:
-            print(f"Error fetching posts: {e}")
+            logger.error(f"Error fetching posts: {e}")
             return []
 
     def extract_pdf_links(self, post_url: str) -> list[dict[str, str]]:
@@ -68,7 +71,7 @@ class SetonScraper:
 
             return pdf_links
         except Exception as e:
-            print(f"Error extracting PDFs from {post_url}: {e}")
+            logger.error(f"Error extracting PDFs from {post_url}: {e}")
             return []
 
 

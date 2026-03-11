@@ -1,18 +1,16 @@
 version: '3.8'
 
 services:
-  # Development service with hot reload
-  swimai-dev:
+  # Development backend (FastAPI on port 8001)
+  backend-dev:
     build:
       context: .
-      target: builder
-    container_name: swimai-dev
+      target: production
+    container_name: aquaforge-backend-dev
     profiles: ["dev"]
     ports:
-      - "3000:3000"  # Frontend
-      - "8000:8000"  # Backend API
+      - "8001:8001"
     volumes:
-      # Windows-optimized volume mounts
       - type: bind
         source: ./swim_ai_reflex
         target: /app/swim_ai_reflex
@@ -22,39 +20,61 @@ services:
       - type: bind
         source: ./assets
         target: /app/assets
-      # Named volumes for better performance on Windows
-      - node_modules:/app/.web/node_modules
-      - pycache:/app/__pycache__
     environment:
       - PYTHONUNBUFFERED=1
-      - REFLEX_ENV=dev
-      - WATCHFILES_FORCE_POLLING=true  # For Windows file watching
-    command: reflex run --loglevel debug
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - API_HOST=0.0.0.0
+      - API_PORT=8001
+      - CORS_ALLOW_ALL=true
+    command: python run_server.py --mode api --port 8001 --reload
     restart: unless-stopped
 
-  # Production service (optimized image)
-  # Caddy reverse-proxies both frontend and API on a single port
-  swimai:
+  # Development frontend (Next.js on port 3000)
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: aquaforge-frontend-dev
+    profiles: ["dev"]
+    ports:
+      - "3000:3000"
+    volumes:
+      - type: bind
+        source: ./frontend/src
+        target: /app/src
+      - type: bind
+        source: ./frontend/public
+        target: /app/public
+      - frontend_node_modules:/app/node_modules
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8001/api/v1
+      - NEXT_PUBLIC_API_URL_V2=http://localhost:8001/api/v2
+      - NODE_ENV=development
+    restart: unless-stopped
+
+  # Production service (Caddy reverse-proxies frontend + API on a single port)
+  aquaforge:
     build:
       context: .
-      target: production
-    container_name: swimai-app
+    container_name: aquaforge-app
     profiles: ["prod"]
     ports:
-      - "${PORT:-8080}:${PORT:-8080}"   # Single entry point via Caddy
+      - "${PORT:-8080}:${PORT:-8080}"
     volumes:
-      # Production: only mount data directories
       - ./uploads:/app/uploads:rw
       - ./assets:/app/assets:ro
-      - swimai_web:/app/.web
     environment:
       - PYTHONUNBUFFERED=1
-      - REFLEX_ENV=prod
+      - ENVIRONMENT=production
+      - CORS_ALLOW_ALL=false
+      - API_HOST=0.0.0.0
+      - API_PORT=8001
       - PORT=${PORT:-8080}
-    command: reflex run --env prod --loglevel info
+    command: /bin/bash /app/start.sh
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${PORT:-8080}/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8001/api/v1/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -63,18 +83,18 @@ services:
   # Optional: PostgreSQL database
   postgres:
     image: postgres:15-alpine
-    container_name: swimai-db
+    container_name: aquaforge-db
     profiles: ["db"]
     environment:
-      POSTGRES_DB: swimai
-      POSTGRES_USER: swimai
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-swimai_dev_password}
+      POSTGRES_DB: aquaforge
+      POSTGRES_USER: aquaforge
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-aquaforge_dev_password}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U swimai"]
+      test: ["CMD-SHELL", "pg_isready -U aquaforge"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -82,9 +102,5 @@ services:
 volumes:
   postgres_data:
     driver: local
-  swimai_web:
-    driver: local
-  node_modules:
-    driver: local
-  pycache:
+  frontend_node_modules:
     driver: local

@@ -130,6 +130,7 @@ class Settings(BaseSettings):
         case_sensitive = False
         # Allow environment variables without prefix
         env_prefix = ""
+        extra = "ignore"
 
 
 @lru_cache

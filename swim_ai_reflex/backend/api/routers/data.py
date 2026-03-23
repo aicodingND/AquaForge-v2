@@ -44,7 +44,7 @@ async def upload_team_file(
     """
     Upload and process a team roster file.
 
-    Supports Excel (.xlsx, .xls), CSV, and JSON files.
+    Supports Excel (.xlsx, .xls), CSV, JSON, and HyTek (.hy3) files.
 
     Args:
         file: The roster file to upload
@@ -67,7 +67,7 @@ async def upload_team_file(
         # Validate file extension
         filename = file.filename or "unknown"
         ext = Path(filename).suffix.lower()
-        allowed_extensions = [".xlsx", ".xls", ".csv", ".json"]
+        allowed_extensions = [".xlsx", ".xls", ".csv", ".json", ".hy3"]
 
         if ext not in allowed_extensions:
             raise FileUploadError(

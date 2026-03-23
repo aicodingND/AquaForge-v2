@@ -6,7 +6,7 @@ Centralizes logic for both Dual Meet and Championship response construction to k
 """
 
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 import pandas as pd
 
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def format_dual_meet_response(
-    result: Dict[str, Any],
+    result: dict[str, Any],
     seton_score: float,
     opponent_score: float,
     optimization_time_ms: float,
@@ -36,7 +36,7 @@ def format_dual_meet_response(
         OptimizationResponse object
     """
 
-    warnings: List[str] = []
+    warnings: list[str] = []
 
     if not result.get("success"):
         # Convert error to string for warnings list
@@ -46,7 +46,7 @@ def format_dual_meet_response(
         warnings.append(str(error))
 
     # Transform lineup data to response format
-    results: List[OptimizationResult] = []
+    results: list[OptimizationResult] = []
 
     # Extract data from the result dictionary
     data = result.get("data", {})
@@ -224,13 +224,41 @@ def format_dual_meet_response(
                     )
                 )
 
+    # Extract sensitivity and relay data from optimizer details
+    sensitivity = None
+    relay_assignments = None
+    if data:
+        # Sensitivity and relay_assignments may be in the top-level data dict or nested in details
+        raw_details = data.get("details", [])
+        if isinstance(raw_details, list):
+            for d in raw_details:
+                if isinstance(d, dict):
+                    if "sensitivity" in d and sensitivity is None:
+                        sensitivity = d["sensitivity"]
+                    if "relay_assignments" in d and relay_assignments is None:
+                        relay_assignments = d["relay_assignments"]
+
+    # Build statistics dict with championship factor metadata
+    stats: dict[str, Any] = {
+        "method": method,
+        "iterations": data.get("iterations", 0) if data else 0,
+    }
+    if isinstance(raw_details, list):
+        for d in raw_details:
+            if isinstance(d, dict):
+                if d.get("championship_factors_applied"):
+                    stats["championship_factors_applied"] = True
+                    stats["championship_factors"] = d.get("championship_factors")
+
     return OptimizationResponse(
         success=result.get("success", False),
         seton_score=float(seton_score),
         opponent_score=float(opponent_score),
         score_margin=float(seton_score) - float(opponent_score),
         results=results,
-        statistics={"method": method, "iterations": result.get("iterations", 0)},
+        statistics=stats,
         warnings=warnings,
         optimization_time_ms=optimization_time_ms,
+        sensitivity=sensitivity,
+        relay_assignments=relay_assignments,
     )

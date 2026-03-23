@@ -5,7 +5,7 @@ Provides endpoints for exporting optimization results in various formats.
 """
 
 import logging
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import Response
@@ -107,23 +107,59 @@ async def export_results(request: ExportRequest):
             else:
                 results_list = request.optimization_results
 
-            # Return HTML as fallback for PDF request
-            content = export_service.to_html_table(
+            # Generate HTML first, then attempt PDF conversion
+            html_content = export_service.to_html_table(
                 optimization_results=results_list,
                 seton_score=request.seton_score,
                 opponent_score=request.opponent_score,
             )
-            filename = f"aquaforge_lineup_{timestamp}.html"
+
+            # Try PDF conversion, fall back to HTML download
+            pdf_bytes = export_service.to_pdf(html_content)
+            if pdf_bytes:
+                filename = f"aquaforge_lineup_{timestamp}.pdf"
+                return Response(
+                    content=pdf_bytes,
+                    media_type="application/pdf",
+                    headers={"Content-Disposition": f"attachment; filename={filename}"},
+                )
+            else:
+                # Fallback to HTML when PDF library not available
+                filename = f"aquaforge_lineup_{timestamp}.html"
+                return Response(
+                    content=html_content,
+                    media_type="text/html",
+                    headers={"Content-Disposition": f"attachment; filename={filename}"},
+                )
+
+        elif request.format == ExportFormat.XLSX:
+            # Extract list from dict
+            results_list = []
+            if isinstance(request.optimization_results, dict):
+                results_list = (
+                    request.optimization_results.get("details")
+                    or request.optimization_results.get("best_lineup")
+                    or request.optimization_results.get("results")
+                    or []
+                )
+            else:
+                results_list = request.optimization_results
+
+            content = export_service.to_xlsx(
+                optimization_results=results_list,
+                seton_score=request.seton_score,
+                opponent_score=request.opponent_score,
+            )
+            filename = f"aquaforge_lineup_{timestamp}.xlsx"
 
             return Response(
                 content=content,
-                media_type="text/html",
+                media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 headers={"Content-Disposition": f"attachment; filename={filename}"},
             )
 
         elif request.format == ExportFormat.JSON:
             import json
-            from datetime import timezone
 
             content = json.dumps(
                 {
@@ -131,7 +167,7 @@ async def export_results(request: ExportRequest):
                     "seton_score": request.seton_score,
                     "opponent_score": request.opponent_score,
                     "metadata": request.metadata,
-                    "exported_at": datetime.now(timezone.utc).isoformat(),
+                    "exported_at": datetime.now(UTC).isoformat(),
                 },
                 indent=2,
             )

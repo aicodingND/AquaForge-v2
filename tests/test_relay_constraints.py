@@ -1,12 +1,25 @@
 import unittest
 
+import pytest
+
 from swim_ai_reflex.backend.core.strategies.championship_strategy import (
     ChampionshipEntry,
     ChampionshipGurobiStrategy,
 )
 
 
+def _gurobi_available():
+    try:
+        import gurobipy as gp
+
+        gp.Model("test")
+        return True
+    except Exception:
+        return False
+
+
 class TestRelayConstraints(unittest.TestCase):
+    @pytest.mark.skipif(not _gurobi_available(), reason="Gurobi license unavailable")
     def test_relay_blocks_individual(self):
         """Test that being on 400 Free Relay blocks 100 Breast."""
         strategy = ChampionshipGurobiStrategy("vcac_championship")

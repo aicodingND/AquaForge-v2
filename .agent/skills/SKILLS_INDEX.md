@@ -25,6 +25,12 @@ Skills are modular, battle-tested behaviors that load dynamically to enhance spe
 | **api-docs**           | `skills/api-docs/`           | Generate and maintain API documentation       |
 | **browser-automation** | `skills/browser-automation/` | Stagehand/AI-powered web scraping             |
 
+### Thinking Skills
+
+| Skill               | Path                      | Use Case                                                         |
+| -------------------- | ------------------------- | ---------------------------------------------------------------- |
+| **discovery-flow**   | `skills/discovery-flow/`  | Structured creative exploration — find patterns across domains, name them, see where they break. For when the goal is the INSIGHT, not a deliverable. |
+
 ### Meta Skills
 
 | Skill              | Path                     | Use Case                                      |

@@ -40,6 +40,10 @@ export interface OptimizeRequest {
     | "visaa_state";
   strategy?: string;
   championship_strategy?: string;
+  use_championship_factors?: boolean | null;
+  locked_assignments?: { swimmer: string; event: string }[];
+  excluded_swimmers?: string[];
+  time_overrides?: { swimmer: string; event: string; time: string }[];
 }
 
 export interface OptimizeResponse {
@@ -55,6 +59,8 @@ export interface OptimizeResponse {
   championship_standings?: { rank: number; team: string; points: number }[];
   event_breakdowns?: Record<string, { event: string; entries: { swimmer: string; team: string; time: number; place: number; points: number }[]; team_points: Record<string, number> }>;
   swing_events?: { swimmer: string; event: string; point_gain: number; current_place: number; target_place: number }[];
+  sensitivity?: EventSensitivity[];
+  relay_assignments?: RelayAssignment[];
 }
 
 export interface OptimizationResult {
@@ -65,6 +71,25 @@ export interface OptimizationResult {
   seton_times: string[];
   opponent_times: string[];
   projected_score: { seton: number; opponent: number };
+}
+
+export interface EventSensitivity {
+  event: string;
+  swimmer: string;
+  placement: number;
+  points_earned: number;
+  gap_to_next_place: number | null;
+  gap_to_better_place: number | null;
+  risk_level: "safe" | "competitive" | "at_risk";
+  next_best_swimmer: string | null;
+  score_impact_if_swapped: number | null;
+}
+
+export interface RelayAssignment {
+  relay_event: string;
+  team: string; // "A" or "B"
+  legs: string[];
+  predicted_time: number;
 }
 
 export interface UploadResponse {
@@ -216,7 +241,7 @@ class ApiClient {
   // Export results
   // Export results
   async exportResults(
-    format: "csv" | "html",
+    format: "csv" | "html" | "pdf" | "xlsx",
     results: OptimizationResult[],
     scores: { seton: number; opponent: number },
   ): Promise<Blob> {
@@ -261,6 +286,20 @@ class ApiClient {
     message?: string;
   }> {
     return this.request(`/data/load-source?source=${encodeURIComponent(sourceId)}&team_type=${encodeURIComponent(teamType)}`);
+  }
+
+  // Get optimization history for comparison
+  async getHistory(
+    opponent?: string,
+    limit: number = 5,
+  ): Promise<{
+    runs: { opponent: string; our_score: number; opponent_score: number; date: string }[];
+    count: number;
+  }> {
+    const params = new URLSearchParams();
+    if (opponent) params.set("opponent", opponent);
+    params.set("limit", String(limit));
+    return this.request(`/optimize/history?${params.toString()}`);
   }
 
   // Get strategies...

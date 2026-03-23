@@ -4,7 +4,20 @@ Test Championship Scoring End-to-End
 Verifies that a 6-team championship meet returns proper standings.
 """
 
+import pytest
 
+
+def _gurobi_available():
+    try:
+        import gurobipy as gp
+
+        gp.Model("test")
+        return True
+    except Exception:
+        return False
+
+
+@pytest.mark.skipif(not _gurobi_available(), reason="Gurobi license unavailable")
 def test_championship_6_teams_returns_standings():
     """Test that championship mode with 6 teams returns all team standings."""
     from swim_ai_reflex.backend.core.strategies.championship_strategy import (

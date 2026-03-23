@@ -18,6 +18,9 @@ export default function OptimizePage() {
     enforceFatigue,
     robustMode,
     scoringType,
+    coachLockedEvents,
+    excludedSwimmers,
+    swimmerTimeOverrides,
     setOptimizing,
     setResults,
     setOptimizerSettings,
@@ -31,6 +34,9 @@ export default function OptimizePage() {
     enforceFatigue: s.enforceFatigue,
     robustMode: s.robustMode,
     scoringType: s.scoringType,
+    coachLockedEvents: s.coachLockedEvents,
+    excludedSwimmers: s.excludedSwimmers,
+    swimmerTimeOverrides: s.swimmerTimeOverrides,
     setOptimizing: s.setOptimizing,
     setResults: s.setResults,
     setOptimizerSettings: s.setOptimizerSettings,
@@ -74,6 +80,11 @@ export default function OptimizePage() {
     try {
       setProgress(20);
 
+      // Build locked assignments from store (flatten CoachLockEntry[] to {swimmer, event}[])
+      const lockedAssignments = coachLockedEvents.flatMap(lock =>
+        lock.events.map(event => ({ swimmer: lock.swimmer, event }))
+      );
+
       const data = await api.optimize({
         seton_data: setonTeam.data,
         opponent_data: meetMode === "dual" ? opponentTeam?.data || [] : [],
@@ -83,6 +94,9 @@ export default function OptimizePage() {
         scoring_type: scoringType,
         strategy:
           meetMode === "championship" ? championshipStrategy : undefined,
+        locked_assignments: lockedAssignments.length > 0 ? lockedAssignments : undefined,
+        excluded_swimmers: excludedSwimmers.length > 0 ? excludedSwimmers : undefined,
+        time_overrides: swimmerTimeOverrides.length > 0 ? swimmerTimeOverrides : undefined,
       });
 
       setProgress(100);
@@ -111,6 +125,8 @@ export default function OptimizePage() {
                 swingEvents: data.swing_events,
               }
             : undefined,
+          data.sensitivity,
+          data.relay_assignments,
         );
         setLocalResult({
           seton: data.seton_score,

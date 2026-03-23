@@ -270,6 +270,17 @@ class ConfidenceScore:
 
 
 @dataclass
+class RelayAssignment:
+    """Represents a relay team assignment."""
+
+    relay_event: str  # e.g. "200 Medley Relay"
+    team_designation: str  # "A" or "B"
+    legs: list[str]  # swimmer names in leg order
+    predicted_time: float = 0.0  # estimated combined relay time
+    predicted_points: float = 0.0  # projected points for this relay
+
+
+@dataclass
 class Lineup:
     """Represents a lineup assignment (swimmer → events)."""
 
@@ -277,6 +288,7 @@ class Lineup:
     score: float = 0.0
     opponent_score: float = 0.0
     explanations: list[str] = field(default_factory=list)
+    relay_assignments: list[RelayAssignment] = field(default_factory=list)
 
     def copy(self) -> "Lineup":
         return Lineup(
@@ -284,6 +296,16 @@ class Lineup:
             score=self.score,
             opponent_score=self.opponent_score,
             explanations=self.explanations.copy(),
+            relay_assignments=[
+                RelayAssignment(
+                    relay_event=ra.relay_event,
+                    team_designation=ra.team_designation,
+                    legs=ra.legs.copy(),
+                    predicted_time=ra.predicted_time,
+                    predicted_points=ra.predicted_points,
+                )
+                for ra in self.relay_assignments
+            ],
         )
 
     def add_assignment(self, swimmer: str, event: str) -> None:
@@ -985,11 +1007,13 @@ class SimulatedAnnealing:
         cooling_rate: float = 0.995,  # Faster cooling (was 0.995)
         min_temp: float = 0.1,
         max_iterations: int = 2500,  # Reduced (was 5000)
+        locked_pairs: set[tuple[str, str]] | None = None,
     ):
         self.initial_temp = initial_temp
         self.cooling_rate = cooling_rate
         self.min_temp = min_temp
         self.max_iterations = max_iterations
+        self.locked_pairs = locked_pairs or set()
 
     def search(
         self,
@@ -1111,9 +1135,12 @@ class SimulatedAnnealing:
                         return neighbor
 
         elif operation == "remove":
-            # Remove a random assignment
+            # Remove a random assignment (never remove locked pairs)
             all_assignments = [
-                (s, e) for s, evts in neighbor.assignments.items() for e in evts
+                (s, e)
+                for s, evts in neighbor.assignments.items()
+                for e in evts
+                if (s, e) not in self.locked_pairs
             ]
             if all_assignments:
                 swimmer, event = random.choice(all_assignments)
@@ -1121,18 +1148,22 @@ class SimulatedAnnealing:
                 return neighbor
 
         else:  # swap
-            # Swap two swimmers in an event
+            # Swap two swimmers in an event (never remove locked swimmers from their events)
             shuffled_events = events.copy()
             random.shuffle(shuffled_events)
             for event in shuffled_events[:3]:  # Only try 3 events
                 current_swimmers = neighbor.get_event_swimmers(event)
-                if current_swimmers:
+                # Filter out locked swimmers for this event
+                swappable = [
+                    s for s in current_swimmers if (s, event) not in self.locked_pairs
+                ]
+                if swappable:
                     # Find a candidate swimmer for this event
                     for swimmer in swimmers:
                         if swimmer not in current_swimmers:
                             if event in swimmer_events.get(swimmer, set()):
                                 # Do swap
-                                old_swimmer = random.choice(current_swimmers)
+                                old_swimmer = random.choice(swappable)
                                 test = neighbor.copy()
                                 test.remove_assignment(old_swimmer, event)
                                 if constraint_engine.can_add(
@@ -1238,13 +1269,22 @@ class AquaOptimizer(BaseOptimizerStrategy):
         nash_iterations: int | None = None,
         use_parallel: bool | None = None,  # NEW: enable parallel seed execution
         championship_factors: ChampionshipFactors | None = None,
+        use_championship_factors: bool | None = None,  # Explicit override (None=auto)
         attrition: AttritionRates
         | None = None,  # accepted but unused (zero optimization impact)
         opponent_model: OpponentModelConfig | None = None,
+        locked_assignments: list[dict[str, Any]] | None = None,
+        excluded_swimmers: list[str] | None = None,
+        time_overrides: list[dict[str, Any]] | None = None,
     ):
         self.profile = profile or ScoringProfile.visaa_dual()
         self.fatigue = fatigue or FatigueModel()
         self.quality_mode = quality_mode
+
+        # What-If parameters
+        self.locked_assignments = locked_assignments or []
+        self.excluded_swimmers = excluded_swimmers or []
+        self.time_overrides = time_overrides or []
 
         # Opponent modeling config (auto-enable for championship profiles)
         profile_lower = self.profile.name.lower()
@@ -1255,8 +1295,13 @@ class AquaOptimizer(BaseOptimizerStrategy):
         else:
             self.opponent_model = OpponentModelConfig.default()
 
-        # Championship adjustment factors (auto-enable for championship profiles)
-        if championship_factors is not None:
+        # Championship adjustment factors
+        # Priority: explicit use_championship_factors > championship_factors instance > auto-detect
+        if use_championship_factors is True:
+            self.championship_factors = championship_factors or ChampionshipFactors()
+        elif use_championship_factors is False:
+            self.championship_factors = ChampionshipFactors.disabled()
+        elif championship_factors is not None:
             self.championship_factors = championship_factors
         elif "championship" in profile_lower:
             self.championship_factors = ChampionshipFactors()
@@ -1445,7 +1490,8 @@ class AquaOptimizer(BaseOptimizerStrategy):
 
         # Apply championship speed-up factor to all seed times
         # Empirical: swimmers are ~1% faster at championships (per-event factors vary)
-        if self.championship_factors.enabled:
+        championship_factors_applied = self.championship_factors.enabled
+        if championship_factors_applied:
             seton_df = adjust_times_df(seton_df, factors=self.championship_factors)
             opponent_df = adjust_times_df(
                 opponent_df, factors=self.championship_factors
@@ -1454,6 +1500,52 @@ class AquaOptimizer(BaseOptimizerStrategy):
                 "Championship factors applied (default=%.4f)",
                 self.championship_factors.default_factor,
             )
+
+        # ── What-If: Exclude swimmers ──
+        if self.excluded_swimmers:
+            before_count = len(seton_df)
+            seton_df = seton_df[
+                ~seton_df["swimmer"].isin(self.excluded_swimmers)
+            ].reset_index(drop=True)
+            logger.info(
+                "Excluded %d swimmers (%d → %d entries)",
+                len(self.excluded_swimmers),
+                before_count,
+                len(seton_df),
+            )
+
+        # ── What-If: Apply time overrides (after championship factors) ──
+        if self.time_overrides:
+            for override in self.time_overrides:
+                swimmer = override.get("swimmer", "")
+                event = override.get("event", "")
+                new_time = override.get("time")
+                if swimmer and event and new_time is not None:
+                    try:
+                        new_time_float = float(new_time)
+                    except (ValueError, TypeError):
+                        continue
+                    mask = (seton_df["swimmer"] == swimmer) & (
+                        seton_df["event"] == event
+                    )
+                    if mask.any():
+                        seton_df.loc[mask, "time"] = new_time_float
+                        logger.info(
+                            "Time override: %s in %s → %.2f",
+                            swimmer,
+                            event,
+                            new_time_float,
+                        )
+
+        # ── What-If: Build locked pairs set ──
+        locked_pairs: set[tuple[str, str]] = set()
+        if self.locked_assignments:
+            for lock in self.locked_assignments:
+                swimmer = lock.get("swimmer", "")
+                event = lock.get("event", "")
+                if swimmer and event:
+                    locked_pairs.add((swimmer, event))
+            logger.info("Locked %d swimmer-event pairs", len(locked_pairs))
 
         # Validate opponent roster completeness
         seton_events = set(seton_df["event"].unique())
@@ -1490,11 +1582,17 @@ class AquaOptimizer(BaseOptimizerStrategy):
                 opp_model.apply_attrition,
             )
 
-        # Setup events
+        # Setup events — split into individual and relay for two-phase optimization
         available_events = seton_events
-        events = [e for e in EVENT_ORDER if e in available_events]
-        if not events:
-            events = sorted(list(available_events))
+        all_events = [e for e in EVENT_ORDER if e in available_events]
+        if not all_events:
+            all_events = sorted(list(available_events))
+
+        individual_events = [e for e in all_events if "Relay" not in e]
+        relay_events = [e for e in all_events if "Relay" in e]
+
+        # Phase 1 runs on individual events only; relays are assigned post-optimization
+        events = individual_events if relay_events else all_events
 
         # === PRE-COMPUTE INVARIANTS (Tier 1 Optimization) ===
         # Cache swimmer-event mappings for O(1) lookup instead of DataFrame filtering
@@ -1540,9 +1638,14 @@ class AquaOptimizer(BaseOptimizerStrategy):
             """Run optimization for a single seed."""
             random.seed(seed_idx * 42)  # Deterministic but different seeds
 
-            # Phase 0: Greedy warm start
+            # Phase 0: Greedy warm start (pre-seeds locked pairs)
             greedy_lineup = self._greedy_initialize(
-                seton_df, opponent_df, events, constraint_engine, scoring_engine
+                seton_df,
+                opponent_df,
+                events,
+                constraint_engine,
+                scoring_engine,
+                locked_pairs=locked_pairs,
             )
 
             # Phase 1: Beam search
@@ -1559,7 +1662,10 @@ class AquaOptimizer(BaseOptimizerStrategy):
             )
 
             # Phase 2: Simulated annealing
-            annealing = SimulatedAnnealing(max_iterations=self.annealing_iterations)
+            annealing = SimulatedAnnealing(
+                max_iterations=self.annealing_iterations,
+                locked_pairs=locked_pairs,
+            )
             refined_lineup = annealing.search(
                 initial_lineup,
                 seton_df,
@@ -1577,6 +1683,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
                 events,
                 constraint_engine,
                 scoring_engine,
+                locked_pairs=locked_pairs,
             )
 
             margin = polished_lineup.score - polished_lineup.opponent_score
@@ -1628,9 +1735,54 @@ class AquaOptimizer(BaseOptimizerStrategy):
                 scoring_engine,
             )
 
+        # Phase 5: Relay assignment (post-individual optimization)
+        if relay_events:
+            try:
+                relay_assigner = RelayAwareAssigner(self.profile, constraint_engine)
+                relay_results = relay_assigner.assign_relays(
+                    best_lineup,
+                    seton_df,
+                    opponent_df,
+                    relay_events,
+                    all_events,
+                    scoring_engine,
+                )
+                best_lineup.relay_assignments = relay_results
+
+                # Add relay swimmers to lineup assignments for scoring
+                for ra in relay_results:
+                    for swimmer in ra.legs:
+                        best_lineup.add_assignment(swimmer, ra.relay_event)
+
+                # Phase 5b: Relay-individual swap refinement
+                relay_results = self._refine_relay_individual(
+                    best_lineup,
+                    relay_results,
+                    seton_df,
+                    opponent_df,
+                    all_events,
+                    constraint_engine,
+                    scoring_engine,
+                    relay_assigner,
+                    relay_events,
+                    locked_pairs,
+                )
+                best_lineup.relay_assignments = relay_results
+
+                logger.info(
+                    "Relay assignment: %d relay teams assigned across %d events",
+                    len(relay_results),
+                    len(relay_events),
+                )
+            except Exception as e:
+                logger.warning("Relay assignment failed: %s", e)
+
+        # Score using all events (individual + relay) for final totals
+        scoring_events = all_events if relay_events else events
+
         # Final scoring
         seton_score, opponent_score, explanations = scoring_engine.score_lineup(
-            best_lineup, seton_df, opponent_df, events
+            best_lineup, seton_df, opponent_df, scoring_events
         )
 
         elapsed_ms = (time.perf_counter() - start_time) * 1000
@@ -1643,7 +1795,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
 
         # Build scored DataFrame
         scored_rows = []
-        for event in events:
+        for event in scoring_events:
             seton_swimmers = best_lineup.get_event_swimmers(event)
             for swimmer in seton_swimmers:
                 row = seton_df[
@@ -1655,7 +1807,70 @@ class AquaOptimizer(BaseOptimizerStrategy):
         scored_df = pd.DataFrame(scored_rows) if scored_rows else pd.DataFrame()
 
         # Build details
-        details = [{"explanations": explanations, "optimizer": "aqua"}]
+        # Build details with metadata
+        detail_entry: dict[str, Any] = {
+            "explanations": explanations,
+            "optimizer": "aqua",
+            "championship_factors_applied": championship_factors_applied,
+        }
+        if championship_factors_applied:
+            detail_entry["championship_factors"] = {
+                "default_factor": self.championship_factors.default_factor,
+                "event_factors": dict(self.championship_factors.event_factors),
+                "confidence_tiers": dict(self.championship_factors.confidence_tiers),
+            }
+        if locked_pairs:
+            detail_entry["locked_assignments"] = [
+                {"swimmer": s, "event": e} for s, e in locked_pairs
+            ]
+        if self.excluded_swimmers:
+            detail_entry["excluded_swimmers"] = list(self.excluded_swimmers)
+        if self.time_overrides:
+            detail_entry["time_overrides_applied"] = len(self.time_overrides)
+
+        # Relay assignment metadata
+        if best_lineup.relay_assignments:
+            detail_entry["relay_assignments"] = [
+                {
+                    "relay_event": ra.relay_event,
+                    "team": ra.team_designation,
+                    "legs": ra.legs,
+                    "predicted_time": ra.predicted_time,
+                }
+                for ra in best_lineup.relay_assignments
+            ]
+
+        # Post-optimization validation: assert all locked pairs present
+        if locked_pairs:
+            missing_locks = []
+            for swimmer, event in locked_pairs:
+                if (
+                    swimmer not in best_lineup.assignments
+                    or event not in best_lineup.assignments.get(swimmer, set())
+                ):
+                    missing_locks.append({"swimmer": swimmer, "event": event})
+            if missing_locks:
+                logger.warning("Locked pairs NOT in final lineup: %s", missing_locks)
+                detail_entry["missing_locks"] = missing_locks
+
+        # ── Sensitivity Analysis (post-optimization, does not change results) ──
+        sensitivity_data: list[dict[str, Any]] = []
+        try:
+            analyzer = SensitivityAnalyzer()
+            sensitivity_results = analyzer.analyze(
+                best_lineup, seton_df, opponent_df, scoring_events, scoring_engine
+            )
+            sensitivity_data = [s.to_dict() for s in sensitivity_results]
+            at_risk_count = sum(
+                1 for s in sensitivity_results if s.risk_level == "at_risk"
+            )
+            if at_risk_count:
+                logger.info("Sensitivity: %d at-risk assignments", at_risk_count)
+        except Exception as e:
+            logger.warning("Sensitivity analysis failed: %s", e)
+
+        detail_entry["sensitivity"] = sensitivity_data
+        details = [detail_entry]
 
         totals = {
             "seton": seton_score,
@@ -1719,16 +1934,24 @@ class AquaOptimizer(BaseOptimizerStrategy):
         events: list[str],
         constraint_engine: ConstraintEngine,
         scoring_engine: ScoringEngine,
+        locked_pairs: set[tuple[str, str]] | None = None,
     ) -> Lineup:
         """
         Generate a greedy initial lineup by assigning fastest swimmers to events.
 
         Strategy:
+        0. Pre-seed any locked swimmer-event pairs
         1. For each event, rank swimmers by time
         2. Assign the fastest available swimmer (respecting constraints)
         3. This gives a strong baseline for further optimization
         """
         lineup = Lineup(assignments={})
+
+        # Pre-seed locked pairs first
+        if locked_pairs:
+            for swimmer, event in locked_pairs:
+                if constraint_engine.can_add(lineup, swimmer, event, seton_df):
+                    lineup.add_assignment(swimmer, event)
 
         # Pre-compute swimmer-event lookup
         swimmer_data: dict[tuple[str, str], dict] = {}
@@ -1784,6 +2007,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         constraint_engine: ConstraintEngine,
         scoring_engine: ScoringEngine,
         max_iterations: int = 300,
+        locked_pairs: set[tuple[str, str]] | None = None,
     ) -> Lineup:
         """
         Hill climbing to polish the solution.
@@ -1791,6 +2015,7 @@ class AquaOptimizer(BaseOptimizerStrategy):
         Only accepts strict improvements (no worse solutions).
         Guaranteed to find a local optimum.
         """
+        locked_pairs = locked_pairs or set()
         current = lineup.copy()
         swimmers = seton_df["swimmer"].unique().tolist()
 
@@ -1825,8 +2050,10 @@ class AquaOptimizer(BaseOptimizerStrategy):
                     # Try adding this swimmer
                     test = current.copy()
                     if current_swimmers:
-                        # Swap: remove one, add new
+                        # Swap: remove one, add new (skip locked)
                         for old_swimmer in current_swimmers:
+                            if (old_swimmer, event) in locked_pairs:
+                                continue
                             swap_test = current.copy()
                             swap_test.remove_assignment(old_swimmer, event)
 
@@ -1878,6 +2105,616 @@ class AquaOptimizer(BaseOptimizerStrategy):
         current.explanations = explanations
 
         return current
+
+    def _refine_relay_individual(
+        self,
+        lineup: Lineup,
+        relay_assignments: list[RelayAssignment],
+        seton_df: pd.DataFrame,
+        opponent_df: pd.DataFrame,
+        all_events: list[str],
+        constraint_engine: ConstraintEngine,
+        scoring_engine: ScoringEngine,
+        relay_assigner: Any,
+        relay_events: list[str],
+        locked_pairs: set[tuple[str, str]],
+        max_iterations: int = 30,
+    ) -> list[RelayAssignment]:
+        """Post-relay hill climb: try swapping swimmers between relay and individual.
+
+        For each relay swimmer, considers: remove from relay, add different
+        swimmer, use freed swimmer for a new individual event. Keeps swap
+        only if total score (individual + relay) improves.
+        """
+        # Score current state
+        best_score, best_opp, _ = scoring_engine.score_lineup(
+            lineup, seton_df, opponent_df, all_events
+        )
+        best_margin = best_score - best_opp
+
+        improved = True
+        iterations = 0
+
+        while improved and iterations < max_iterations:
+            improved = False
+            iterations += 1
+
+            for ra_idx, ra in enumerate(relay_assignments):
+                for leg_idx, relay_swimmer in enumerate(ra.legs):
+                    # Skip locked swimmers
+                    if (relay_swimmer, ra.relay_event) in locked_pairs:
+                        continue
+
+                    # Find alternative swimmers who could take this relay leg
+                    stroke = (
+                        MEDLEY_RELAY_STROKES[leg_idx]
+                        if "Medley" in ra.relay_event
+                        else "100 Free"
+                    )
+                    prefix = ""
+                    if ra.relay_event.startswith("Girls "):
+                        prefix = "Girls "
+                    elif ra.relay_event.startswith("Boys "):
+                        prefix = "Boys "
+
+                    full_stroke = f"{prefix}{stroke}" if prefix else stroke
+
+                    # Find candidates with times for this stroke
+                    candidates = seton_df[seton_df["event"] == full_stroke].copy()
+                    if candidates.empty:
+                        candidates = seton_df[seton_df["event"] == stroke].copy()
+
+                    for _, cand_row in candidates.iterrows():
+                        alt_swimmer = cand_row["swimmer"]
+                        if alt_swimmer == relay_swimmer:
+                            continue
+                        # Skip if alt is already on this relay team
+                        if alt_swimmer in ra.legs:
+                            continue
+                        # Check capacity
+                        alt_events = lineup.get_swimmer_events(alt_swimmer)
+                        if len(alt_events) >= self.profile.max_total_events:
+                            continue
+
+                        # Try the swap: remove relay_swimmer from relay, add alt_swimmer
+                        test_lineup = lineup.copy()
+
+                        # Remove relay_swimmer from relay event in lineup
+                        test_lineup.remove_assignment(relay_swimmer, ra.relay_event)
+                        # Add alt_swimmer to relay event
+                        test_lineup.add_assignment(alt_swimmer, ra.relay_event)
+
+                        # Score the modified lineup
+                        s, o, _ = scoring_engine.score_lineup(
+                            test_lineup, seton_df, opponent_df, all_events
+                        )
+                        new_margin = s - o
+
+                        if new_margin > best_margin + 0.01:
+                            # Accept the swap
+                            best_margin = new_margin
+                            lineup.remove_assignment(relay_swimmer, ra.relay_event)
+                            lineup.add_assignment(alt_swimmer, ra.relay_event)
+
+                            # Update relay assignment
+                            new_legs = list(ra.legs)
+                            new_legs[leg_idx] = alt_swimmer
+                            relay_assignments[ra_idx] = RelayAssignment(
+                                relay_event=ra.relay_event,
+                                team_designation=ra.team_designation,
+                                legs=new_legs,
+                                predicted_time=ra.predicted_time,
+                                predicted_points=ra.predicted_points,
+                            )
+                            improved = True
+                            logger.info(
+                                "Relay swap: %s -> %s on %s %s (margin +%.1f)",
+                                relay_swimmer,
+                                alt_swimmer,
+                                ra.relay_event,
+                                ra.team_designation,
+                                new_margin - (best_margin - (new_margin - best_margin)),
+                            )
+                            break
+                    if improved:
+                        break
+                if improved:
+                    break
+
+        return relay_assignments
+
+
+# ============================================================================
+# RELAY-AWARE ASSIGNMENT
+# ============================================================================
+
+# Stroke mapping for 200 Medley Relay legs: Back, Breast, Fly, Free
+MEDLEY_RELAY_STROKES = ["100 Back", "100 Breast", "100 Fly", "100 Free"]
+
+# Per-stroke split factors: 50-yard split relative to 100-yard individual time
+# Calibrated from empirical high school relay splits vs individual times
+RELAY_SPLIT_FACTORS: dict[str, float] = {
+    "100 Back": 0.47,  # Backstroke relay starts are faster (no turn penalty)
+    "100 Breast": 0.49,  # Breaststroke has larger turn/finish variance
+    "100 Fly": 0.47,  # Butterfly splits are front-loaded
+    "100 Free": 0.48,  # Standard freestyle ratio
+    "50 Free": 1.0,  # Direct: 50 Free time IS the split for 200 FR
+}
+
+# Legacy fallback for unrecognized strokes
+SPLIT_FACTOR = 0.48
+
+
+class RelayAwareAssigner:
+    """Post-individual-optimization relay assignment.
+
+    Given a finalized individual lineup, assigns swimmers to relay teams
+    (A and B) for 200 Medley Relay, 200 Free Relay, and 400 Free Relay.
+
+    Uses individual stroke times to estimate relay leg splits. Respects
+    max_total_events and relay_3_counts_as_individual constraints.
+    """
+
+    def __init__(
+        self,
+        profile: ScoringProfile,
+        constraint_engine: ConstraintEngine,
+    ):
+        self.profile = profile
+        self.constraint_engine = constraint_engine
+
+    def assign_relays(
+        self,
+        individual_lineup: Lineup,
+        seton_df: pd.DataFrame,
+        opponent_df: pd.DataFrame,
+        relay_events: list[str],
+        all_events: list[str],
+        scoring_engine: ScoringEngine,
+    ) -> list[RelayAssignment]:
+        """Assign swimmers to relay teams after individual optimization.
+
+        Returns list of RelayAssignment objects. Does NOT modify the
+        individual_lineup — the caller merges relay results.
+        """
+        assignments: list[RelayAssignment] = []
+        # Track relay slots used per swimmer across all relays
+        relay_slots_used: dict[str, int] = {}
+
+        for relay_event in relay_events:
+            if "Medley" in relay_event:
+                relay_teams = self._assign_medley_relay(
+                    individual_lineup,
+                    seton_df,
+                    relay_event,
+                    all_events,
+                    relay_slots_used,
+                )
+            else:
+                relay_teams = self._assign_free_relay(
+                    individual_lineup,
+                    seton_df,
+                    relay_event,
+                    all_events,
+                    relay_slots_used,
+                )
+            assignments.extend(relay_teams)
+
+        return assignments
+
+    def _get_eligible_swimmers(
+        self,
+        individual_lineup: Lineup,
+        seton_df: pd.DataFrame,
+        relay_event: str,
+        all_events: list[str],
+        relay_slots_used: dict[str, int],
+    ) -> list[str]:
+        """Get swimmers eligible for a relay, respecting event limits."""
+        all_swimmers = seton_df["swimmer"].unique().tolist()
+        eligible = []
+
+        for swimmer in all_swimmers:
+            current_events = individual_lineup.get_swimmer_events(swimmer)
+            total_count = len(current_events) + relay_slots_used.get(swimmer, 0)
+
+            # Check total event cap
+            if total_count >= self.profile.max_total_events:
+                continue
+
+            # Check relay_3_counts_as_individual constraint
+            if self.profile.relay_3_counts_as_individual and "400" in relay_event:
+                indiv_count = self.constraint_engine._count_individual_slots(
+                    swimmer, current_events
+                )
+                # Adding 400 FR would cost an individual slot
+                if indiv_count >= self.profile.max_individual_events:
+                    continue
+
+            eligible.append(swimmer)
+
+        return eligible
+
+    def _assign_medley_relay(
+        self,
+        individual_lineup: Lineup,
+        seton_df: pd.DataFrame,
+        relay_event: str,
+        all_events: list[str],
+        relay_slots_used: dict[str, int],
+    ) -> list[RelayAssignment]:
+        """Assign 200 Medley Relay by selecting fastest swimmer per stroke."""
+        eligible = self._get_eligible_swimmers(
+            individual_lineup,
+            seton_df,
+            relay_event,
+            all_events,
+            relay_slots_used,
+        )
+        if not eligible:
+            return []
+
+        # For each stroke leg, find fastest eligible swimmer
+        # Determine gender prefix from relay_event
+        prefix = ""
+        if relay_event.startswith("Girls "):
+            prefix = "Girls "
+        elif relay_event.startswith("Boys "):
+            prefix = "Boys "
+
+        # Build stroke-time lookup for eligible swimmers
+        stroke_times: dict[str, list[tuple[str, float]]] = {}
+        for stroke in MEDLEY_RELAY_STROKES:
+            full_stroke = f"{prefix}{stroke}" if prefix else stroke
+            stroke_times[stroke] = []
+            for swimmer in eligible:
+                row = seton_df[
+                    (seton_df["swimmer"] == swimmer)
+                    & (seton_df["event"] == full_stroke)
+                ]
+                if row.empty:
+                    # Try without prefix
+                    row = seton_df[
+                        (seton_df["swimmer"] == swimmer) & (seton_df["event"] == stroke)
+                    ]
+                if not row.empty:
+                    t = float(row.iloc[0]["time"])
+                    stroke_times[stroke].append((swimmer, t))
+
+            # Sort by time (fastest first)
+            stroke_times[stroke].sort(key=lambda x: x[1])
+
+        # Greedy assignment: pick fastest for each leg, avoiding duplicates
+        relay_teams: list[RelayAssignment] = []
+        for team_idx, designation in enumerate(["A", "B"]):
+            legs: list[str] = []
+            leg_times: list[float] = []
+            used_in_team: set[str] = set()
+
+            for stroke in MEDLEY_RELAY_STROKES:
+                candidates = stroke_times.get(stroke, [])
+                assigned = False
+                for swimmer, t in candidates:
+                    if swimmer not in used_in_team:
+                        # Check total event capacity including this relay
+                        current_total = len(
+                            individual_lineup.get_swimmer_events(swimmer)
+                        ) + relay_slots_used.get(swimmer, 0)
+                        if current_total < self.profile.max_total_events:
+                            legs.append(swimmer)
+                            # Estimate 50-yard split from 100-yard time (per-stroke calibrated)
+                            leg_times.append(
+                                t * RELAY_SPLIT_FACTORS.get(stroke, SPLIT_FACTOR)
+                            )
+                            used_in_team.add(swimmer)
+                            assigned = True
+                            break
+                if not assigned:
+                    break  # Can't fill this team
+
+            if len(legs) == 4:
+                total_time = sum(leg_times)
+                relay_teams.append(
+                    RelayAssignment(
+                        relay_event=relay_event,
+                        team_designation=designation,
+                        legs=legs,
+                        predicted_time=round(total_time, 2),
+                    )
+                )
+                # Track relay usage
+                for swimmer in legs:
+                    relay_slots_used[swimmer] = relay_slots_used.get(swimmer, 0) + 1
+
+                # Remove A-team swimmers from candidate pools for B-team
+                for stroke in MEDLEY_RELAY_STROKES:
+                    stroke_times[stroke] = [
+                        (s, t) for s, t in stroke_times[stroke] if s not in used_in_team
+                    ]
+            else:
+                break  # Not enough swimmers to fill this team
+
+        return relay_teams
+
+    def _assign_free_relay(
+        self,
+        individual_lineup: Lineup,
+        seton_df: pd.DataFrame,
+        relay_event: str,
+        all_events: list[str],
+        relay_slots_used: dict[str, int],
+    ) -> list[RelayAssignment]:
+        """Assign 200 Free Relay or 400 Free Relay by fastest freestyle swimmers."""
+        eligible = self._get_eligible_swimmers(
+            individual_lineup,
+            seton_df,
+            relay_event,
+            all_events,
+            relay_slots_used,
+        )
+        if not eligible:
+            return []
+
+        # Determine the relevant individual free event for split estimation
+        prefix = ""
+        if relay_event.startswith("Girls "):
+            prefix = "Girls "
+        elif relay_event.startswith("Boys "):
+            prefix = "Boys "
+
+        # For 200 Free Relay → use 50 Free or 100 Free times
+        # For 400 Free Relay → use 100 Free times
+        if "400" in relay_event:
+            base_event = "100 Free"
+            split_factor = 1.0  # Use full 100 Free time
+        else:
+            base_event = "50 Free"
+            split_factor = 1.0  # Use full 50 Free time
+
+        full_event = f"{prefix}{base_event}" if prefix else base_event
+
+        # Build swimmer-time lookup
+        swimmer_times: list[tuple[str, float]] = []
+        for swimmer in eligible:
+            row = seton_df[
+                (seton_df["swimmer"] == swimmer) & (seton_df["event"] == full_event)
+            ]
+            if row.empty:
+                row = seton_df[
+                    (seton_df["swimmer"] == swimmer) & (seton_df["event"] == base_event)
+                ]
+            if row.empty:
+                # Fallback: try 100 Free for 200 Free Relay (estimate 50 split)
+                if "200" in relay_event:
+                    alt_event = f"{prefix}100 Free" if prefix else "100 Free"
+                    row = seton_df[
+                        (seton_df["swimmer"] == swimmer)
+                        & (seton_df["event"] == alt_event)
+                    ]
+                    if not row.empty:
+                        t = float(row.iloc[0]["time"]) * RELAY_SPLIT_FACTORS.get(
+                            "100 Free", SPLIT_FACTOR
+                        )
+                        swimmer_times.append((swimmer, t))
+                        continue
+                continue
+            t = float(row.iloc[0]["time"]) * split_factor
+            swimmer_times.append((swimmer, t))
+
+        # Sort by time
+        swimmer_times.sort(key=lambda x: x[1])
+
+        relay_teams: list[RelayAssignment] = []
+        used_globally: set[str] = set()
+
+        for designation in ["A", "B"]:
+            legs: list[str] = []
+            leg_times: list[float] = []
+
+            for swimmer, t in swimmer_times:
+                if swimmer in used_globally:
+                    continue
+                # Check capacity
+                current_total = len(
+                    individual_lineup.get_swimmer_events(swimmer)
+                ) + relay_slots_used.get(swimmer, 0)
+                if current_total >= self.profile.max_total_events:
+                    continue
+
+                legs.append(swimmer)
+                leg_times.append(t)
+                if len(legs) == 4:
+                    break
+
+            if len(legs) == 4:
+                total_time = sum(leg_times)
+                relay_teams.append(
+                    RelayAssignment(
+                        relay_event=relay_event,
+                        team_designation=designation,
+                        legs=legs,
+                        predicted_time=round(total_time, 2),
+                    )
+                )
+                for swimmer in legs:
+                    used_globally.add(swimmer)
+                    relay_slots_used[swimmer] = relay_slots_used.get(swimmer, 0) + 1
+            else:
+                break
+
+        return relay_teams
+
+
+# ============================================================================
+# SENSITIVITY ANALYSIS
+# ============================================================================
+
+
+@dataclass
+class EventSensitivity:
+    """Sensitivity result for one swimmer-event assignment."""
+
+    event: str
+    swimmer: str
+    placement: int
+    points_earned: float
+    gap_to_next_place: float | None  # seconds to losing current placement
+    gap_to_better_place: float | None  # seconds to gaining a better placement
+    risk_level: str  # "safe" (>2s), "competitive" (0.5-2s), "at_risk" (<0.5s)
+    next_best_swimmer: str | None
+    score_impact_if_swapped: float | None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "event": self.event,
+            "swimmer": self.swimmer,
+            "placement": self.placement,
+            "points_earned": self.points_earned,
+            "gap_to_next_place": self.gap_to_next_place,
+            "gap_to_better_place": self.gap_to_better_place,
+            "risk_level": self.risk_level,
+            "next_best_swimmer": self.next_best_swimmer,
+            "score_impact_if_swapped": self.score_impact_if_swapped,
+        }
+
+
+class SensitivityAnalyzer:
+    """Post-optimization analysis: how vulnerable is each assignment?"""
+
+    @staticmethod
+    def _classify_risk(gap: float | None) -> str:
+        if gap is None:
+            return "safe"
+        abs_gap = abs(gap)
+        if abs_gap < 0.5:
+            return "at_risk"
+        if abs_gap < 2.0:
+            return "competitive"
+        return "safe"
+
+    def analyze(
+        self,
+        lineup: Lineup,
+        seton_df: pd.DataFrame,
+        opponent_df: pd.DataFrame,
+        events: list[str],
+        scoring_engine: ScoringEngine,
+    ) -> list[EventSensitivity]:
+        """Analyze sensitivity for each Seton swimmer-event assignment."""
+        results: list[EventSensitivity] = []
+
+        for event in events:
+            seton_swimmers = lineup.get_event_swimmers(event)
+            if not seton_swimmers:
+                continue
+
+            # Gather all entries for this event (Seton + opponent)
+            seton_entries = []
+            for swimmer in seton_swimmers:
+                row = seton_df[
+                    (seton_df["swimmer"] == swimmer) & (seton_df["event"] == event)
+                ]
+                if not row.empty:
+                    seton_entries.append(row.iloc[0].to_dict())
+
+            opp_rows = opponent_df[opponent_df["event"] == event]
+            opp_entries = opp_rows.to_dict("records")
+
+            # Combine and sort all entries by time
+            all_entries = []
+            for e in seton_entries:
+                all_entries.append({**e, "_team": "seton"})
+            for e in opp_entries:
+                all_entries.append({**e, "_team": "opponent"})
+            all_entries.sort(key=lambda x: x.get("time", 999))
+
+            # Find placement for each Seton swimmer
+            for swimmer in seton_swimmers:
+                swimmer_time = None
+                for e in seton_entries:
+                    if e.get("swimmer") == swimmer:
+                        swimmer_time = e.get("time", 999)
+                        break
+                if swimmer_time is None:
+                    continue
+
+                # Determine placement (1-indexed)
+                placement = 1
+                for e in all_entries:
+                    if e.get("swimmer") == swimmer and e.get("_team") == "seton":
+                        break
+                    placement += 1
+
+                # Points earned at this placement
+                pts_table = scoring_engine.profile.individual_points
+                points_earned = (
+                    pts_table[placement - 1] if placement <= len(pts_table) else 0
+                )
+
+                # Gap to next place (the swimmer behind who could pass us)
+                gap_to_next = None
+                if placement < len(all_entries):
+                    next_time = all_entries[placement].get("time", 999)
+                    gap_to_next = round(next_time - swimmer_time, 3)
+
+                # Gap to better place (the swimmer ahead we could pass)
+                gap_to_better = None
+                if placement > 1:
+                    better_time = all_entries[placement - 2].get("time", 999)
+                    gap_to_better = round(swimmer_time - better_time, 3)
+
+                # Risk based on the tighter of the two gaps
+                risk_gap = gap_to_next  # primary risk is being overtaken
+                risk_level = self._classify_risk(risk_gap)
+
+                # Find next best Seton swimmer not in lineup for this event
+                next_best = None
+                swap_impact = None
+                event_roster = seton_df[seton_df["event"] == event].sort_values("time")
+                for _, row in event_roster.iterrows():
+                    alt = row["swimmer"]
+                    if alt != swimmer and alt not in seton_swimmers:
+                        next_best = alt
+                        # Estimate impact: the point difference if swapped
+                        alt_time = row["time"]
+                        # Find where alt would place
+                        alt_placement = 1
+                        for e in all_entries:
+                            e_time = e.get("time", 999)
+                            if (
+                                e.get("swimmer") == swimmer
+                                and e.get("_team") == "seton"
+                            ):
+                                if alt_time <= e_time:
+                                    break
+                                alt_placement += 1
+                            elif alt_time <= e_time:
+                                break
+                            else:
+                                alt_placement += 1
+                        alt_points = (
+                            pts_table[alt_placement - 1]
+                            if alt_placement <= len(pts_table)
+                            else 0
+                        )
+                        swap_impact = round(alt_points - points_earned, 1)
+                        break
+
+                results.append(
+                    EventSensitivity(
+                        event=event,
+                        swimmer=swimmer,
+                        placement=placement,
+                        points_earned=points_earned,
+                        gap_to_next_place=gap_to_next,
+                        gap_to_better_place=gap_to_better,
+                        risk_level=risk_level,
+                        next_best_swimmer=next_best,
+                        score_impact_if_swapped=swap_impact,
+                    )
+                )
+
+        return results
 
 
 # ============================================================================

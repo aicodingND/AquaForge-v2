@@ -251,6 +251,37 @@ class DataService(BaseService):
                     ),
                 )
 
+            elif filepath.lower().endswith(".hy3"):
+                import asyncio
+
+                from swim_ai_reflex.backend.core.hy3_parser import parse_hy3_file
+
+                df = await asyncio.to_thread(parse_hy3_file, filepath)
+
+                if df.empty:
+                    return self._error(
+                        f"No data found in {filepath}", code="EMPTY_ROSTER"
+                    )
+
+                # Extract teams for championship metadata
+                teams = (
+                    sorted(df["team"].dropna().unique().tolist())
+                    if "team" in df.columns
+                    else []
+                )
+
+                return self._success(
+                    data=df,
+                    message=f"HY3 loaded: {len(df)} entries, {df['swimmer'].nunique()} swimmers",
+                    metadata={
+                        "teams": teams,
+                        "meet_name": "HyTek Import",
+                        "total_entries": len(df),
+                    }
+                    if teams
+                    else None,
+                )
+
             elif filepath.lower().endswith(".json"):
                 # Handle JSON files - championship psych sheets have specific structure
                 import json

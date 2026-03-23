@@ -3,7 +3,7 @@
 import { useAppStore } from "@/lib/store";
 import { useShallow } from "zustand/react/shallow";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ResultsPage() {
   const {
@@ -15,6 +15,8 @@ export default function ResultsPage() {
     meetMode,
     championshipStandings,
     swingEvents,
+    sensitivity,
+    relayAssignments,
   } = useAppStore(useShallow(s => ({
     optimizationResults: s.optimizationResults,
     setonScore: s.setonScore,
@@ -24,8 +26,11 @@ export default function ResultsPage() {
     meetMode: s.meetMode,
     championshipStandings: s.championshipStandings,
     swingEvents: s.swingEvents,
+    sensitivity: s.sensitivity,
+    relayAssignments: s.relayAssignments,
   })));
   const [expandedEvent, setExpandedEvent] = useState<number | null>(null);
+  const [previousScore, setPreviousScore] = useState<number | null>(null);
 
   const hasResults = optimizationResults && optimizationResults.length > 0;
   const scoreDelta = setonScore - opponentScore;
@@ -33,7 +38,27 @@ export default function ResultsPage() {
   const isTied = scoreDelta === 0;
   const isChampionship = meetMode === "championship";
 
-  const handleExport = async (format: "csv" | "html") => {
+  // Fetch previous run for historical comparison
+  useEffect(() => {
+    if (!hasResults || !opponentTeam?.name) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { api } = await import("@/lib/api");
+        const history = await api.getHistory(opponentTeam.name, 1);
+        if (!cancelled && history.runs.length > 0) {
+          const prev = history.runs[0];
+          const prevMargin = prev.our_score - prev.opponent_score;
+          setPreviousScore(prevMargin);
+        }
+      } catch {
+        // History not available, no-op
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [hasResults, opponentTeam?.name]);
+
+  const handleExport = async (format: "csv" | "html" | "pdf" | "xlsx") => {
     if (!optimizationResults) return;
 
     try {
@@ -46,7 +71,8 @@ export default function ResultsPage() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `aquaforge-results.${format}`;
+      const ext = format === "xlsx" ? "xlsx" : format === "pdf" ? "pdf" : format;
+      a.download = `aquaforge-results.${ext}`;
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
@@ -79,13 +105,25 @@ export default function ResultsPage() {
               onClick={() => handleExport("csv")}
               className="btn btn-outline btn-sm"
             >
-              📄 Export CSV
+              Export CSV
             </button>
             <button
               onClick={() => handleExport("html")}
               className="btn btn-outline btn-sm"
             >
-              🌐 Export HTML
+              Export HTML
+            </button>
+            <button
+              onClick={() => handleExport("pdf")}
+              className="btn btn-outline btn-sm"
+            >
+              Export PDF
+            </button>
+            <button
+              onClick={() => handleExport("xlsx")}
+              className="btn btn-outline btn-sm"
+            >
+              Export Excel
             </button>
           </div>
         )}
@@ -187,6 +225,16 @@ export default function ResultsPage() {
                         : scoreDelta}{" "}
                     points
                   </div>
+                  {previousScore !== null && (() => {
+                    const improvement = scoreDelta - previousScore;
+                    if (Math.abs(improvement) < 0.1) return null;
+                    const improved = improvement > 0;
+                    return (
+                      <div className={`mt-2 text-xs font-medium ${improved ? "text-green-400" : "text-red-400"}`}>
+                        {improved ? "+" : ""}{improvement.toFixed(0)} vs last run
+                      </div>
+                    );
+                  })()}
                 </div>
 
                 <div className="text-center">
@@ -315,6 +363,95 @@ export default function ResultsPage() {
             </div>
           )}
 
+          {/* At Risk Assignments Summary */}
+          {sensitivity && sensitivity.length > 0 && (() => {
+            const atRisk = sensitivity.filter(s => s.risk_level === "at_risk");
+            const competitive = sensitivity.filter(s => s.risk_level === "competitive");
+            if (atRisk.length === 0 && competitive.length === 0) return null;
+            return (
+              <div className="glass-card overflow-hidden">
+                <div className="p-4 border-b border-[var(--navy-500)]">
+                  <h3 className="font-semibold text-white flex items-center gap-2">
+                    <span className="text-red-400">!</span> Assignment Risk Summary
+                  </h3>
+                </div>
+                <div className="p-4 space-y-2">
+                  {atRisk.length > 0 && (
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                      <span className="w-3 h-3 mt-0.5 rounded-full bg-red-500 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-red-300">
+                          {atRisk.length} At Risk ({`<`}0.5s gap)
+                        </p>
+                        <p className="text-xs text-white/50 mt-1">
+                          {atRisk.map(s => `${s.swimmer} in ${s.event}`).join(", ")}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {competitive.length > 0 && (
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                      <span className="w-3 h-3 mt-0.5 rounded-full bg-yellow-500 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-yellow-300">
+                          {competitive.length} Competitive (0.5-2s gap)
+                        </p>
+                        <p className="text-xs text-white/50 mt-1">
+                          {competitive.map(s => `${s.swimmer} in ${s.event}`).join(", ")}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Relay Team Compositions */}
+          {relayAssignments && relayAssignments.length > 0 && (
+            <div className="glass-card overflow-hidden">
+              <div className="p-4 border-b border-[var(--navy-500)]">
+                <h3 className="font-semibold text-white flex items-center gap-2">
+                  Relay Teams
+                </h3>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                {relayAssignments.map((relay, i) => {
+                  const isMedley = relay.relay_event.toLowerCase().includes("medley");
+                  const legLabels = isMedley
+                    ? ["Back", "Breast", "Fly", "Free"]
+                    : ["Leg 1", "Leg 2", "Leg 3", "Leg 4"];
+                  return (
+                    <div key={i} className="p-4 rounded-lg bg-[var(--navy-800)] border border-[var(--navy-600)]">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-medium text-white text-sm">
+                          {relay.relay_event}
+                        </h4>
+                        <span className="px-2 py-0.5 rounded text-xs font-bold bg-[var(--gold-500)] text-[var(--navy-900)]">
+                          {relay.team}
+                        </span>
+                      </div>
+                      <div className="space-y-1">
+                        {relay.legs.map((swimmer, legIdx) => (
+                          <div key={legIdx} className="flex items-center justify-between text-sm">
+                            <span className="text-white/50">{legLabels[legIdx]}</span>
+                            <span className="text-white font-medium">{swimmer}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-3 pt-2 border-t border-[var(--navy-600)] text-right">
+                        <span className="text-white/40 text-xs">Predicted: </span>
+                        <span className="text-[var(--gold-400)] font-mono text-sm">
+                          {relay.predicted_time.toFixed(2)}s
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Event Results Table */}
           <div className="glass-card overflow-hidden">
             <div className="p-4 border-b border-[var(--navy-500)]">
@@ -379,19 +516,40 @@ export default function ResultsPage() {
                           <p className="text-xs text-[var(--gold-400)] uppercase tracking-wider mb-2">
                             {setonTeam?.name || "Seton"} Entries
                           </p>
-                          {result.seton_swimmers.map((swimmer, i) => (
-                            <div
-                              key={i}
-                              className="flex items-center justify-between py-1"
-                            >
-                              <span className="text-white text-sm">
-                                {swimmer}
-                              </span>
-                              <span className="text-white/60 font-mono text-sm">
-                                {result.seton_times[i]}
-                              </span>
-                            </div>
-                          ))}
+                          {result.seton_swimmers.map((swimmer, i) => {
+                            const sens = sensitivity?.find(
+                              s => s.swimmer === swimmer && s.event === result.event
+                            );
+                            const riskColor = sens?.risk_level === "at_risk"
+                              ? "bg-red-500"
+                              : sens?.risk_level === "competitive"
+                                ? "bg-yellow-500"
+                                : "bg-green-500";
+                            return (
+                              <div
+                                key={i}
+                                className="flex items-center justify-between py-1"
+                              >
+                                <span className="text-white text-sm flex items-center gap-2">
+                                  {sens && (
+                                    <span
+                                      className={`w-2 h-2 rounded-full ${riskColor}`}
+                                      title={`${sens.risk_level}: gap ${sens.gap_to_next_place?.toFixed(2) ?? "?"}s`}
+                                    />
+                                  )}
+                                  {swimmer}
+                                </span>
+                                <span className="text-white/60 font-mono text-sm">
+                                  {result.seton_times[i]}
+                                  {sens?.gap_to_next_place != null && (
+                                    <span className={`ml-2 text-xs ${sens.risk_level === "at_risk" ? "text-red-400" : sens.risk_level === "competitive" ? "text-yellow-400" : "text-green-400"}`}>
+                                      +{sens.gap_to_next_place.toFixed(2)}s
+                                    </span>
+                                  )}
+                                </span>
+                              </div>
+                            );
+                          })}
                         </div>
                         {!isChampionship && (
                           <div>

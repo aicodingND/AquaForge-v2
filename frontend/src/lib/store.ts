@@ -6,7 +6,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
-import { SwimmerEntry, OptimizationResult, StrategyInfo } from "./api";
+import { SwimmerEntry, OptimizationResult, StrategyInfo, EventSensitivity, RelayAssignment } from "./api";
 
 interface TeamData {
   name: string;
@@ -66,6 +66,12 @@ interface AppState {
   eventBreakdowns: Record<string, EventBreakdown> | null;
   swingEvents: SwingEvent[] | null;
 
+  // Sensitivity analysis
+  sensitivity: EventSensitivity[] | null;
+
+  // Relay assignments
+  relayAssignments: RelayAssignment[] | null;
+
   // Advanced Settings
   enforceFatigue: boolean;
   robustMode: boolean;
@@ -119,6 +125,8 @@ interface AppState {
       eventBreakdowns?: Record<string, EventBreakdown>;
       swingEvents?: SwingEvent[];
     },
+    sensitivity?: EventSensitivity[] | null,
+    relayAssignments?: RelayAssignment[] | null,
   ) => void;
   setChampionshipStrategy: (strategyId: string) => void;
   setAvailableStrategies: (strategies: StrategyInfo[]) => void;
@@ -126,7 +134,7 @@ interface AppState {
   addLog: (message: string) => void;
 }
 
-const STORAGE_VERSION = 2; // Increment when state shape changes significantly
+const STORAGE_VERSION = 3; // v3: added relayAssignments
 
 export const useAppStore = create<AppState>()(
   persist(
@@ -151,6 +159,8 @@ export const useAppStore = create<AppState>()(
       championshipStandings: null,
       eventBreakdowns: null,
       swingEvents: null,
+      sensitivity: null,
+      relayAssignments: null,
 
       enforceFatigue: true,
       robustMode: false,
@@ -290,7 +300,7 @@ export const useAppStore = create<AppState>()(
           logs: [...state.logs, "Updated optimization settings"],
         })),
 
-      setResults: (results, setonScore, opponentScore, championshipData) =>
+      setResults: (results, setonScore, opponentScore, championshipData, sensitivity, relayAssignments) =>
         set((state) => ({
           optimizationResults: results,
           setonScore,
@@ -298,6 +308,8 @@ export const useAppStore = create<AppState>()(
           championshipStandings: championshipData?.standings || null,
           eventBreakdowns: championshipData?.eventBreakdowns || null,
           swingEvents: championshipData?.swingEvents || null,
+          sensitivity: sensitivity || null,
+          relayAssignments: relayAssignments || null,
           isOptimizing: false,
           logs: [
             ...state.logs,
@@ -342,6 +354,8 @@ export const useAppStore = create<AppState>()(
           championshipStandings: persistedState.championshipStandings || null,
           eventBreakdowns: persistedState.eventBreakdowns || null,
           swingEvents: persistedState.swingEvents || null,
+          sensitivity: persistedState.sensitivity || null,
+          relayAssignments: persistedState.relayAssignments || null,
           enforceFatigue: persistedState.enforceFatigue ?? true,
           robustMode: persistedState.robustMode ?? false,
           selectedStrategy:
@@ -381,6 +395,8 @@ export const useAppStore = create<AppState>()(
         championshipStandings: state.championshipStandings,
         eventBreakdowns: state.eventBreakdowns,
         swingEvents: state.swingEvents,
+        sensitivity: state.sensitivity,
+        relayAssignments: state.relayAssignments,
         enforceFatigue: state.enforceFatigue,
         robustMode: state.robustMode,
         scoringType: state.scoringType,

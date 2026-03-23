@@ -29,9 +29,10 @@ export default function FileUpload({ teamType, label }: FileUploadProps) {
       if (
         !file.name.endsWith(".xlsx") &&
         !file.name.endsWith(".csv") &&
-        !file.name.endsWith(".json")
+        !file.name.endsWith(".json") &&
+        !file.name.endsWith(".hy3")
       ) {
-        setError("Please upload an Excel (.xlsx), CSV, or JSON file");
+        setError("Please upload an Excel (.xlsx), CSV, JSON, or HyTek (.hy3) file");
         return;
       }
 
@@ -142,10 +143,10 @@ export default function FileUpload({ teamType, label }: FileUploadProps) {
       >
         <input
           type="file"
-          accept=".xlsx,.csv,.json"
+          accept=".xlsx,.csv,.json,.hy3"
           onChange={handleInputChange}
           aria-label="Upload team roster file"
-          title="Upload Excel, CSV, or JSON file"
+          title="Upload Excel, CSV, JSON, or HyTek file"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           disabled={isUploading}
         />
@@ -177,7 +178,7 @@ export default function FileUpload({ teamType, label }: FileUploadProps) {
               or drag and drop
               <br />
               <span className="text-sm text-white/40">
-                Excel, CSV, or JSON files
+                Excel, CSV, JSON, or HyTek (.hy3) files
               </span>
             </p>
           </>

@@ -43,6 +43,7 @@ class ExportFormat(str, Enum):
     PDF = "pdf"
     HTML = "html"
     JSON = "json"
+    XLSX = "xlsx"
 
 
 class TeamType(str, Enum):
@@ -102,6 +103,26 @@ class OptimizationRequest(BaseModel):
     championship_strategy: str = Field(
         default="aqua",
         description="Championship optimization strategy: 'aqua' (recommended, +43% vs coach) or 'gurobi' (fast but lower quality)",
+    )
+
+    # Championship speed-up factors (empirical seed-to-finals corrections)
+    use_championship_factors: bool | None = Field(
+        default=None,
+        description="Apply championship speed-up factors to times. None = auto-detect from profile name.",
+    )
+
+    # What-If / Lock-and-Reoptimize
+    locked_assignments: list[dict[str, Any]] | None = Field(
+        default=None,
+        description="Locked swimmer-event pairs: [{swimmer, event}, ...]. Max 3.",
+    )
+    excluded_swimmers: list[str] | None = Field(
+        default=None,
+        description="Swimmers to exclude from optimization.",
+    )
+    time_overrides: list[dict[str, Any]] | None = Field(
+        default=None,
+        description="Time overrides: [{swimmer, event, time}, ...].",
     )
 
     # Optional team names
@@ -176,6 +197,29 @@ class OptimizationResult(BaseModel):
     projected_score: dict[str, float]
 
 
+class RelayAssignmentResult(BaseModel):
+    """A single relay team assignment."""
+
+    relay_event: str
+    team: str  # "A" or "B"
+    legs: list[str]
+    predicted_time: float
+
+
+class SensitivityEntry(BaseModel):
+    """Per-swimmer-event sensitivity data."""
+
+    event: str
+    swimmer: str
+    placement: int
+    points_earned: float
+    gap_to_next_place: float | None = None
+    gap_to_better_place: float | None = None
+    risk_level: str  # "safe", "competitive", "at_risk"
+    next_best_swimmer: str | None = None
+    score_impact_if_swapped: float | None = None
+
+
 class OptimizationResponse(BaseModel):
     """Response from optimization request."""
 
@@ -205,6 +249,18 @@ class OptimizationResponse(BaseModel):
     analytics: dict[str, Any] | None = Field(
         default=None,
         description="Advanced analytics: monte_carlo, fatigue_warnings, nash_insights, relay_tradeoffs",
+    )
+
+    # Sensitivity Analysis
+    sensitivity: list[SensitivityEntry] | None = Field(
+        default=None,
+        description="Per-event sensitivity data: gap_to_next/better_place, risk_level, next_best_swimmer",
+    )
+
+    # Relay Assignments
+    relay_assignments: list[RelayAssignmentResult] | None = Field(
+        default=None,
+        description="Relay team compositions: [{relay_event, team, legs, predicted_time}]",
     )
 
 

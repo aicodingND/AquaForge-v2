@@ -161,6 +161,10 @@ async def _run_championship_optimization(request, seton_raw, start_time):
                 profile=scoring_profile,
                 quality_mode="thorough",
                 nash_iterations=5,
+                use_championship_factors=request.use_championship_factors,
+                locked_assignments=request.locked_assignments,
+                excluded_swimmers=request.excluded_swimmers,
+                time_overrides=request.time_overrides,
             )
 
             # Run optimization
@@ -308,6 +312,10 @@ async def _run_dual_optimization(request, seton_df, opponent_df, method, start_t
         enforce_fatigue=request.enforce_fatigue,
         scoring_type=request.scoring_type,
         robust_mode=request.robust_mode,
+        use_championship_factors=request.use_championship_factors,
+        locked_assignments=request.locked_assignments,
+        excluded_swimmers=request.excluded_swimmers,
+        time_overrides=request.time_overrides,
     )
 
     # Calculate timing
@@ -323,13 +331,36 @@ async def _run_dual_optimization(request, seton_df, opponent_df, method, start_t
         opponent_score = data.get("opponent_score", 0)
 
     # Use the new centralized formatter
-    return format_dual_meet_response(
+    response = format_dual_meet_response(
         result=result,
         seton_score=seton_score,
         opponent_score=opponent_score,
         optimization_time_ms=optimization_time_ms,
         method=method,
     )
+
+    # Auto-save run for historical comparison
+    try:
+        import json as _json
+
+        from swim_ai_reflex.backend.persistence.sqlite_repository import (
+            SQLiteRepository,
+        )
+
+        repo = SQLiteRepository()
+        await repo.save_meet(
+            {
+                "meet_id": f"opt_{int(time.time())}",
+                "opponent": getattr(request, "opponent_team_name", None) or "Opponent",
+                "our_score": seton_score,
+                "opponent_score": opponent_score,
+                "lineup_json": _json.dumps(result.get("data", {}), default=str),
+            }
+        )
+    except Exception as e:
+        logger.debug(f"Failed to persist optimization run: {e}")
+
+    return response
 
 
 @router.post(
@@ -571,3 +602,23 @@ async def list_backends():
     }
 
     return {"backends": backends, "default": "aqua", "recommended": "aqua"}
+
+
+@router.get("/optimize/history")
+async def get_optimization_history(opponent: str | None = None, limit: int = 10):
+    """Get recent optimization runs for historical comparison."""
+    try:
+        from swim_ai_reflex.backend.persistence.sqlite_repository import (
+            SQLiteRepository,
+        )
+
+        repo = SQLiteRepository()
+        if opponent:
+            runs = await repo.get_meets_by_opponent(opponent)
+        else:
+            runs = await repo.get_recent_meets(limit=limit)
+
+        return {"runs": runs, "count": len(runs)}
+    except Exception as e:
+        logger.warning(f"History fetch failed: {e}")
+        return {"runs": [], "count": 0}

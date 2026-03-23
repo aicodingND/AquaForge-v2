@@ -93,6 +93,10 @@ class OptimizationService(BaseService):
         use_cache: bool = True,
         retry_on_failure: bool = True,
         max_retries: int = 2,
+        use_championship_factors: bool | None = None,
+        locked_assignments: list[dict] | None = None,
+        excluded_swimmers: list[str] | None = None,
+        time_overrides: list[dict] | None = None,
     ) -> dict[str, Any]:
         """
         Run the lineup optimization engine with caching and retry logic.
@@ -172,6 +176,10 @@ class OptimizationService(BaseService):
                     enforce_fatigue,
                     scoring_type,
                     robust_mode,
+                    use_championship_factors=use_championship_factors,
+                    locked_assignments=locked_assignments,
+                    excluded_swimmers=excluded_swimmers,
+                    time_overrides=time_overrides,
                 )
 
                 # Check for internal error
@@ -216,6 +224,10 @@ class OptimizationService(BaseService):
         enforce_fatigue: bool = False,
         scoring_type: str = "visaa_top7",
         robust_mode: bool = False,
+        use_championship_factors: bool | None = None,
+        locked_assignments: list[dict] | None = None,
+        excluded_swimmers: list[str] | None = None,
+        time_overrides: list[dict] | None = None,
     ) -> dict[str, Any]:
         """
         Internal method to run the actual optimization using the Strategy pattern.
@@ -318,6 +330,35 @@ class OptimizationService(BaseService):
             try:
                 strategy = OptimizerFactory.get_strategy(method)
                 self.log_info(f"Using {method} optimization strategy")
+
+                # Apply what-if parameters to AquaOptimizer instances
+                from swim_ai_reflex.backend.core.strategies.aqua_optimizer import (
+                    AquaOptimizer as _AquaOpt,
+                )
+
+                if isinstance(strategy, _AquaOpt):
+                    if use_championship_factors is not None:
+                        if use_championship_factors:
+                            from swim_ai_reflex.backend.core.championship_factors import (
+                                ChampionshipFactors,
+                            )
+
+                            strategy.championship_factors = ChampionshipFactors()
+                        else:
+                            from swim_ai_reflex.backend.core.championship_factors import (
+                                ChampionshipFactors,
+                            )
+
+                            strategy.championship_factors = (
+                                ChampionshipFactors.disabled()
+                            )
+                    if locked_assignments:
+                        strategy.locked_assignments = locked_assignments
+                    if excluded_swimmers:
+                        strategy.excluded_swimmers = excluded_swimmers
+                    if time_overrides:
+                        strategy.time_overrides = time_overrides
+
             except (ImportError, ModuleNotFoundError) as e:
                 # Gurobi not available, fallback to heuristic
                 if method == "gurobi":

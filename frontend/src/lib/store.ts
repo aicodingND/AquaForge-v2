@@ -272,6 +272,16 @@ export const useAppStore = create<AppState>()(
 
       updateSwimmerTime: (swimmer, event, time) =>
         set((state) => {
+          // Empty time = remove the override
+          if (!time) {
+            return {
+              swimmerTimeOverrides: state.swimmerTimeOverrides.filter(
+                (o) => !(o.swimmer === swimmer && o.event === event),
+              ),
+              logs: [...state.logs, `Removed time override for ${swimmer} in ${event}`],
+            };
+          }
+
           const existing = state.swimmerTimeOverrides.findIndex(
             (o) => o.swimmer === swimmer && o.event === event,
           );

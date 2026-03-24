@@ -7,6 +7,7 @@ import { api } from "@/lib/api";
 import Link from "next/link";
 import BackendSelector from "@/components/BackendSelector";
 import ChampionshipStrategySelector from "@/components/ChampionshipStrategySelector";
+import WhatIfPanel from "@/components/WhatIfPanel";
 
 export default function OptimizePage() {
   const {
@@ -299,6 +300,9 @@ export default function OptimizePage() {
               )}
             </div>
           </div>
+
+          {/* What-If Panel */}
+          <WhatIfPanel />
         </div>
 
         {/* Action Panel */}

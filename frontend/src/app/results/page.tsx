@@ -17,6 +17,11 @@ export default function ResultsPage() {
     swingEvents,
     sensitivity,
     relayAssignments,
+    coachLockedEvents,
+    excludedSwimmers,
+    swimmerTimeOverrides,
+    lockSwimmerEvent,
+    unlockSwimmerEvent,
   } = useAppStore(useShallow(s => ({
     optimizationResults: s.optimizationResults,
     setonScore: s.setonScore,
@@ -28,9 +33,18 @@ export default function ResultsPage() {
     swingEvents: s.swingEvents,
     sensitivity: s.sensitivity,
     relayAssignments: s.relayAssignments,
+    coachLockedEvents: s.coachLockedEvents,
+    excludedSwimmers: s.excludedSwimmers,
+    swimmerTimeOverrides: s.swimmerTimeOverrides,
+    lockSwimmerEvent: s.lockSwimmerEvent,
+    unlockSwimmerEvent: s.unlockSwimmerEvent,
   })));
   const [expandedEvent, setExpandedEvent] = useState<number | null>(null);
   const [previousScore, setPreviousScore] = useState<number | null>(null);
+
+  const flatLockCount = coachLockedEvents.reduce((n, l) => n + l.events.length, 0);
+  const isLocked = (swimmer: string, event: string) =>
+    coachLockedEvents.some(l => l.swimmer === swimmer && l.events.includes(event));
 
   const hasResults = optimizationResults && optimizationResults.length > 0;
   const scoreDelta = setonScore - opponentScore;
@@ -147,6 +161,31 @@ export default function ResultsPage() {
         </div>
       ) : (
         <>
+          {/* What-If Active Banner */}
+          {(() => {
+            const flatLocks = coachLockedEvents.flatMap(l => l.events.map(e => ({ swimmer: l.swimmer, event: e })));
+            const totalMods = flatLocks.length + excludedSwimmers.length + swimmerTimeOverrides.length;
+            if (totalMods === 0) return null;
+            return (
+              <div className="mb-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-start gap-3">
+                <span className="text-blue-400 text-sm mt-0.5">&#9432;</span>
+                <div className="text-sm">
+                  <p className="text-blue-200 font-medium">What-If mode active</p>
+                  <p className="text-white/50 text-xs mt-1">
+                    {[
+                      flatLocks.length > 0 && `${flatLocks.length} locked (${flatLocks.map(l => `${l.swimmer.split(" ").pop()} in ${l.event.replace(/^(Girls |Boys )/, "")}`).join(", ")})`,
+                      excludedSwimmers.length > 0 && `${excludedSwimmers.length} excluded (${excludedSwimmers.join(", ")})`,
+                      swimmerTimeOverrides.length > 0 && `${swimmerTimeOverrides.length} time override${swimmerTimeOverrides.length > 1 ? "s" : ""}`,
+                    ].filter(Boolean).join(" · ")}
+                  </p>
+                  <Link href="/optimize" className="text-blue-400 text-xs hover:text-blue-300 mt-1 inline-block">
+                    Modify in What-If panel &rarr;
+                  </Link>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* Score Hero - Different layout for Championship vs Dual */}
           {isChampionship ? (
             <div className="score-hero">
@@ -525,10 +564,11 @@ export default function ResultsPage() {
                               : sens?.risk_level === "competitive"
                                 ? "bg-yellow-500"
                                 : "bg-green-500";
+                            const locked = isLocked(swimmer, result.event);
                             return (
                               <div
                                 key={i}
-                                className="flex items-center justify-between py-1"
+                                className={`flex items-center justify-between py-1.5 px-2 -mx-2 rounded transition-colors ${locked ? "bg-blue-500/10" : "hover:bg-white/3"}`}
                               >
                                 <span className="text-white text-sm flex items-center gap-2">
                                   {sens && (
@@ -538,14 +578,54 @@ export default function ResultsPage() {
                                     />
                                   )}
                                   {swimmer}
-                                </span>
-                                <span className="text-white/60 font-mono text-sm">
-                                  {result.seton_times[i]}
-                                  {sens?.gap_to_next_place != null && (
-                                    <span className={`ml-2 text-xs ${sens.risk_level === "at_risk" ? "text-red-400" : sens.risk_level === "competitive" ? "text-yellow-400" : "text-green-400"}`}>
-                                      +{sens.gap_to_next_place.toFixed(2)}s
+                                  {locked && (
+                                    <span className="text-blue-400 text-[10px] uppercase tracking-wider font-bold">
+                                      locked
                                     </span>
                                   )}
+                                </span>
+                                <span className="flex items-center gap-2">
+                                  <span className="text-white/60 font-mono text-sm">
+                                    {result.seton_times[i]}
+                                    {sens?.gap_to_next_place != null && (
+                                      <span className={`ml-2 text-xs ${sens.risk_level === "at_risk" ? "text-red-400" : sens.risk_level === "competitive" ? "text-yellow-400" : "text-green-400"}`}>
+                                        +{sens.gap_to_next_place.toFixed(2)}s
+                                      </span>
+                                    )}
+                                  </span>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      if (locked) {
+                                        unlockSwimmerEvent(swimmer, result.event);
+                                      } else {
+                                        lockSwimmerEvent(swimmer, result.event);
+                                      }
+                                    }}
+                                    disabled={!locked && flatLockCount >= 3}
+                                    title={
+                                      locked
+                                        ? `Unlock ${swimmer} from ${result.event}`
+                                        : flatLockCount >= 3
+                                          ? "Max 3 locks reached"
+                                          : `Lock ${swimmer} into ${result.event}`
+                                    }
+                                    className={`w-6 h-6 rounded flex items-center justify-center transition-colors ${
+                                      locked
+                                        ? "bg-blue-500/30 text-blue-300 hover:bg-blue-500/50"
+                                        : flatLockCount >= 3
+                                          ? "text-white/10 cursor-not-allowed"
+                                          : "text-white/20 hover:text-white/50 hover:bg-white/5"
+                                    }`}
+                                  >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      {locked ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                      ) : (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                      )}
+                                    </svg>
+                                  </button>
                                 </span>
                               </div>
                             );

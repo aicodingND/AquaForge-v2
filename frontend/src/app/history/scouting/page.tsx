@@ -2,12 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getApiBase } from "@/lib/api";
 
-const API_BASE =
-  typeof window !== "undefined"
-    ? process.env.NEXT_PUBLIC_API_URL ||
-      `http://${window.location.hostname}:8001/api/v1`
-    : "http://localhost:8001/api/v1";
+const API_BASE = getApiBase();
 
 function getHeaders(): Record<string, string> {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;

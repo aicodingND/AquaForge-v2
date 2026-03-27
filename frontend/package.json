@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.0",
+    "lucide-react": "^1.7.0",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -26,6 +27,7 @@
     "@vitejs/plugin-react": "latest",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "jsdom": "^29.0.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.0.18"

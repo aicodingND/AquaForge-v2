@@ -3,7 +3,7 @@
  * Communicates with the FastAPI backend
  */
 
-const getApiBase = () => {
+export const getApiBase = () => {
   if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
 
   // In browser, use the same host but backend port 8001

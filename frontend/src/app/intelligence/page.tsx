@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { getApiBase } from "@/lib/api";
 
 interface TrajectoryData {
   swimmer: string;
@@ -43,9 +44,7 @@ interface CoachTendencyData {
 
 type Tab = "trajectory" | "psychological" | "coach";
 
-const API_BASE = typeof window !== "undefined"
-  ? (process.env.NEXT_PUBLIC_API_URL || `http://${window.location.hostname}:8001/api/v1`)
-  : "http://localhost:8001/api/v1";
+const API_BASE = getApiBase();
 
 async function fetchIntelligence<T>(path: string): Promise<T> {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;

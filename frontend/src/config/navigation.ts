@@ -1,7 +1,21 @@
+import {
+  LayoutDashboard,
+  ClipboardList,
+  Zap,
+  Trophy,
+  TrendingUp,
+  BookOpen,
+  Brain,
+  Radio,
+  Info,
+  MessageSquare,
+  type LucideIcon,
+} from 'lucide-react';
+
 export type NavItem = {
   id: string;
   label: string;
-  icon: string;
+  icon: LucideIcon;
   href: string;
   description?: string;
 };
@@ -10,49 +24,49 @@ export const mainNavigation: NavItem[] = [
   {
     id: 'dashboard',
     label: 'Dashboard',
-    icon: '📊',
+    icon: LayoutDashboard,
     href: '/',
     description: 'Overview of your swim meet optimization'
   },
   {
     id: 'meet',
     label: 'Meet Setup',
-    icon: '📋',
+    icon: ClipboardList,
     href: '/meet',
     description: 'Upload team rosters and configure meet settings'
   },
   {
     id: 'optimize',
     label: 'Optimizer',
-    icon: '⚡',
+    icon: Zap,
     href: '/optimize',
     description: 'Run AI optimization for lineups'
   },
   {
     id: 'results',
     label: 'Results',
-    icon: '🏆',
+    icon: Trophy,
     href: '/results',
     description: 'View and export optimization results'
   },
   {
     id: 'analytics',
     label: 'Analytics',
-    icon: '📈',
+    icon: TrendingUp,
     href: '/analytics',
     description: 'Team comparison and performance insights'
   },
   {
     id: 'history',
     label: 'History',
-    icon: '📚',
+    icon: BookOpen,
     href: '/history',
     description: 'Historical meet data, teams, and swimmer profiles'
   },
   {
     id: 'intelligence',
     label: 'Intel',
-    icon: '🧠',
+    icon: Brain,
     href: '/intelligence',
     description: 'AI-powered trajectory, psychological, and coaching analysis'
   },
@@ -63,7 +77,7 @@ export const championshipNavigation: NavItem[] = [
   {
     id: 'live',
     label: 'Live',
-    icon: '🔴',
+    icon: Radio,
     href: '/live',
     description: 'Real-time championship meet tracking'
   },
@@ -73,14 +87,14 @@ export const secondaryNavigation: NavItem[] = [
   {
     id: 'about',
     label: 'About',
-    icon: 'ℹ️',
+    icon: Info,
     href: '/about',
     description: 'Learn more about AquaForge'
   },
   {
     id: 'contact',
     label: 'Contact',
-    icon: '💬',
+    icon: MessageSquare,
     href: '/contact',
     description: 'Get support or send feedback'
   },

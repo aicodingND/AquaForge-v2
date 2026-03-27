@@ -6,6 +6,7 @@ import { useMeetMode } from '@/lib/store';
 import { mainNavigation, championshipNavigation, secondaryNavigation } from '@/config/navigation';
 import { siteConfig, meetModes } from '@/config/site';
 import { useState } from 'react';
+import { Settings, Menu } from 'lucide-react';
 
 export default function Header() {
   const pathname = usePathname();
@@ -68,7 +69,7 @@ export default function Header() {
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="opacity-80">{item.icon}</span>
+                    <item.icon className="w-4 h-4 opacity-80" />
                     {item.label}
                   </span>
                   {isActive && (
@@ -91,7 +92,7 @@ export default function Header() {
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="opacity-80">{item.icon}</span>
+                    <item.icon className="w-4 h-4 opacity-80" />
                     {item.label}
                   </span>
                   {isActive && (
@@ -149,7 +150,7 @@ export default function Header() {
               pathname === '/settings' ? 'bg-white/10 text-white' : 'text-white/60 hover:text-white hover:bg-white/5'
             }`}
           >
-            ⚙️
+            <Settings className="w-5 h-5" />
           </Link>
 
           {/* Mobile Menu Toggle */}
@@ -157,7 +158,7 @@ export default function Header() {
             className="md:hidden p-2 text-white/80"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            ☰
+            <Menu className="w-5 h-5" />
           </button>
         </div>
       </div>
@@ -195,7 +196,7 @@ export default function Header() {
                     : 'text-white/60 hover:bg-white/5'
                 }`}
               >
-                <span>{item.icon}</span>
+                <item.icon className="w-4 h-4" />
                 {item.label}
               </Link>
             ))}

@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo, useRef } from 'react';
 import { useScores } from '@/lib/store';
-import { api, OptimizationResult } from '@/lib/api';
+import { api, getApiBase, OptimizationResult } from '@/lib/api';
 
 interface SwimmerAssignment {
   swimmer: string;
@@ -102,7 +102,7 @@ export default function LineupEditor() {
         // Attempt to rescore via API
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001/api/v1'}/rescore`,
+            `${getApiBase()}/rescore`,
             {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },

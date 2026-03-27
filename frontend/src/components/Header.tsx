@@ -157,6 +157,8 @@ export default function Header() {
           <button
             className="md:hidden p-2 text-white/80"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMobileMenuOpen}
           >
             <Menu className="w-5 h-5" />
           </button>

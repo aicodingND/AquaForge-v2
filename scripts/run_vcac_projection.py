@@ -266,7 +266,7 @@ def find_swing_events(
 def main():
     """Run the VCAC projection."""
     print("=" * 70)
-    print("🏊 VCAC Championship 2026 - Point Projection")
+    print("▸ VCAC Championship 2026 - Point Projection")
     print("=" * 70)
 
     project_root = Path(__file__).parent.parent
@@ -281,52 +281,52 @@ def main():
     print("\n[1] Loading unified psych sheet...")
     psych_sheet = load_psych_sheet(psych_path)
     print(
-        f"  Loaded {psych_sheet['total_entries']} entries from {len(psych_sheet['teams'])} teams"
+        f"Loaded {psych_sheet['total_entries']} entries from {len(psych_sheet['teams'])} teams"
     )
 
     # Run projection
     print("\n[2] Projecting meet results...")
     projections, team_summaries = run_projection(psych_sheet)
-    print(f"  Projected {len(projections)} event/gender combinations")
+    print(f"Projected {len(projections)} event/gender combinations")
 
     # Display standings
     print("\n" + "=" * 70)
-    print("📊 PROJECTED TEAM STANDINGS")
+    print("▸ PROJECTED TEAM STANDINGS")
     print("=" * 70)
 
     standings = sorted(team_summaries.values(), key=lambda x: -x.total_points)
 
     for i, team in enumerate(standings, 1):
-        print(f"\n  {i}. {team.team_name} ({team.team_code})")
-        print(f"     Total Points: {team.total_points:.0f}")
+        print(f"\n{i}. {team.team_name} ({team.team_code})")
+        print(f"Total Points: {team.total_points:.0f}")
         if team.top_scorers:
             top_3 = team.top_scorers[:3]
             print(
-                f"     Top Scorers: {', '.join(f'{s["name"]} ({s["points"]:.0f})' for s in top_3)}"
+                f"Top Scorers: {', '.join(f'{s["name"]} ({s["points"]:.0f})' for s in top_3)}"
             )
 
     # Find swing events for Seton
     print("\n" + "=" * 70)
-    print("🎯 SWING EVENT ANALYSIS (Where Seton Can Gain Points)")
+    print("→ SWING EVENT ANALYSIS (Where Seton Can Gain Points)")
     print("=" * 70)
 
     swing_events = find_swing_events(projections, "SST")
 
     if swing_events:
-        print(f"\n  Found {len(swing_events)} potential swing events:")
+        print(f"\nFound {len(swing_events)} potential swing events:")
         for i, se in enumerate(swing_events[:10], 1):
-            print(f"\n  {i}. {se['event']}")
+            print(f"\n{i}. {se['event']}")
             print(
-                f"     {se['seton_swimmer']} ({se['seton_time']:.2f}s) → currently {se['seton_place']}th"
+                f"{se['seton_swimmer']} ({se['seton_time']:.2f}s) → currently {se['seton_place']}th"
             )
             print(
-                f"     Target: {se['target_swimmer']} ({se['target_team']}) at {se['target_time']:.2f}s"
+                f"Target: {se['target_swimmer']} ({se['target_team']}) at {se['target_time']:.2f}s"
             )
             print(
-                f"     Gap: {se['time_gap']:.2f}s | Potential gain: +{se['potential_points_gain']} pts"
+                f"Gap: {se['time_gap']:.2f}s | Potential gain: +{se['potential_points_gain']} pts"
             )
     else:
-        print("\n  No swing events identified.")
+        print("\nNo swing events identified.")
 
     # Save detailed results
     print("\n" + "=" * 70)
@@ -346,7 +346,7 @@ def main():
     standings_path = output_dir / "VCAC_2026_standings_projection.json"
     with open(standings_path, "w") as f:
         json.dump(standings_data, f, indent=2)
-    print(f"  Saved to: {standings_path}")
+    print(f"Saved to: {standings_path}")
 
     # Summary for Seton
     seton_summary = team_summaries.get("SST")
@@ -355,23 +355,23 @@ def main():
             (i for i, t in enumerate(standings, 1) if t.team_code == "SST"), None
         )
         print("\n" + "=" * 70)
-        print("🏅 SETON SUMMARY")
+        print("SETON SUMMARY")
         print("=" * 70)
-        print(f"\n  Projected Position: {seton_position}th place")
-        print(f"  Projected Points: {seton_summary.total_points:.0f}")
+        print(f"\nProjected Position: {seton_position}th place")
+        print(f"Projected Points: {seton_summary.total_points:.0f}")
 
         if standings and seton_position and seton_position > 1:
             team_ahead = standings[seton_position - 2]
             gap = team_ahead.total_points - seton_summary.total_points
-            print(f"  Gap to {seton_position - 1}th: {gap:.0f} points")
+            print(f"Gap to {seton_position - 1}th: {gap:.0f} points")
 
         if seton_summary.top_scorers:
-            print("\n  Top Scorers:")
+            print("\nTop Scorers:")
             for scorer in seton_summary.top_scorers:
-                print(f"    - {scorer['name']}: {scorer['points']:.0f} pts")
+                print(f"- {scorer['name']}: {scorer['points']:.0f} pts")
 
     print("\n" + "=" * 70)
-    print("✅ VCAC Projection Complete!")
+    print("✓ VCAC Projection Complete!")
     print("=" * 70)
 
 

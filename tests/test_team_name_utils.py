@@ -13,12 +13,12 @@ from swim_ai_reflex.backend.utils.helpers import normalize_team_name, sanitize_t
 
 def test_normalize_team_name():
     """Test team name normalization."""
-    assert normalize_team_name("  SETON  ") == "seton"
+    assert normalize_team_name(" SETON ") == "seton"
     assert normalize_team_name("Trinity Christian") == "trinity christian"
     assert normalize_team_name("OPPONENT") == "opponent"
     assert normalize_team_name("") == ""
     assert normalize_team_name(None) == ""
-    print("✅ normalize_team_name tests passed!")
+    print("✓ normalize_team_name tests passed!")
 
 
 def test_sanitize_team_name():
@@ -42,10 +42,10 @@ def test_sanitize_team_name():
     assert sanitize_team_name("") == ""
     assert sanitize_team_name(None) == ""
 
-    print("✅ sanitize_team_name tests passed!")
+    print("✓ sanitize_team_name tests passed!")
 
 
 if __name__ == "__main__":
     test_normalize_team_name()
     test_sanitize_team_name()
-    print("\n✅ All team name utility tests passed!")
+    print("\n✓ All team name utility tests passed!")

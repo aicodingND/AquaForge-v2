@@ -51,7 +51,7 @@ class LLMConfig:
                 cost_per_1k_output=0.005,
             ),
             "standard": ModelTier(
-                model_id="claude-sonnet-4-5-20250929",
+                model_id="claude-sonnet-4-6",
                 max_tokens=1024,
                 temperature=0.5,
                 cost_per_1k_input=0.003,

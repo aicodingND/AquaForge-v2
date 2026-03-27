@@ -189,22 +189,22 @@ def print_event_summary(df: pd.DataFrame, title: str = "Event Summary"):
     logger.info(
         f"Total Events: {summary['total_events']} (standard: {len(STANDARD_EVENTS)})"
     )
-    logger.info(f"Standard Format: {'✅ YES' if summary['is_standard'] else '❌ NO'}")
+    logger.info(f"Standard Format: {' ✓ YES' if summary['is_standard'] else ' NO'}")
 
     if summary["events"]:
         logger.info("\nEvents Included:")
         for event in summary["events"]:
             count = len(df[df["event"] == event])
-            logger.info(f"  • {event}: {count} entries")
+            logger.info(f"• {event}: {count} entries")
 
     if summary["missing_events"]:
-        logger.warning("\n⚠️  Missing Standard Events:")
+        logger.warning("\nMissing Standard Events:")
         for event in summary["missing_events"]:
-            logger.warning(f"  • {event}")
+            logger.warning(f"• {event}")
 
     if summary["extra_events"]:
-        logger.warning("\n⚠️  Non-Standard Events:")
+        logger.warning("\nNon-Standard Events:")
         for event in summary["extra_events"]:
-            logger.warning(f"  • {event}")
+            logger.warning(f"• {event}")
 
     logger.info(f"{'=' * 60}\n")

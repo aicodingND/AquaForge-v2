@@ -212,7 +212,7 @@ def run_gurobi_backtest(
         )
 
     except Exception as e:
-        print(f"  ⚠️ Gurobi error: {e}")
+        print(f"! Gurobi error: {e}")
         return 0.0, 0.0, {"error": str(e)}
 
 
@@ -278,7 +278,7 @@ def run_aqua_backtest(
         return 0.0, elapsed, {"error": "Unexpected result format"}
 
     except Exception as e:
-        print(f"  ⚠️ AquaOptimizer error: {e}")
+        print(f"! AquaOptimizer error: {e}")
         import traceback
 
         traceback.print_exc()
@@ -304,12 +304,12 @@ def run_single_backtest(
 
     if error:
         result.error = error
-        print(f"  ❌ Error: {error}")
+        print(f"✗ Error: {error}")
         return result
 
     if len(entries) == 0:
         result.error = "No entries found"
-        print("  ❌ No entries found")
+        print("✗ No entries found")
         return result
 
     result.entries = len(entries)
@@ -321,31 +321,29 @@ def run_single_backtest(
     # Get coach's actual score if available
     result.actual_score = get_actual_score(metadata, target_team)
 
-    print(f"  📊 Total Entries: {result.entries}")
-    print(f"  🏊 Teams: {result.teams}")
-    print(f"  🎯 {target_team} Entries: {result.seton_entries}")
+    print(f"▸ Total Entries: {result.entries}")
+    print(f"▸ Teams: {result.teams}")
+    print(f"→ {target_team} Entries: {result.seton_entries}")
     if result.actual_score > 0:
-        print(f"  📋 Coach Actual Score: {result.actual_score:.0f} pts")
+        print(f"▸ Coach Actual Score: {result.actual_score:.0f} pts")
 
     # Run Gurobi
-    print("\n  🔧 Running Gurobi MILP...")
+    print("\n→ Running Gurobi MILP...")
     result.gurobi_score, result.gurobi_time_ms, gurobi_details = run_gurobi_backtest(
         entries, profile, target_team
     )
-    print(f"     ✅ Score: {result.gurobi_score:.1f} pts")
-    print(f"     ⏱️ Time: {result.gurobi_time_ms:.0f}ms")
+    print(f"✓ Score: {result.gurobi_score:.1f} pts")
+    print(f"Time: {result.gurobi_time_ms:.0f}ms")
     if "baseline" in gurobi_details:
-        print(
-            f"     📈 Improvement: +{gurobi_details.get('improvement', 0):.1f} over baseline"
-        )
+        print(f"Improvement: +{gurobi_details.get('improvement', 0):.1f} over baseline")
 
     # Run AquaOptimizer
-    print("\n  🌊 Running AquaOptimizer (Nash+Beam+SA)...")
+    print("\n→ Running AquaOptimizer (Nash+Beam+SA)...")
     result.aqua_score, result.aqua_time_ms, aqua_details = run_aqua_backtest(
         entries, profile, target_team
     )
-    print(f"     ✅ Score: {result.aqua_score:.1f} pts")
-    print(f"     ⏱️ Time: {result.aqua_time_ms:.0f}ms")
+    print(f"✓ Score: {result.aqua_score:.1f} pts")
+    print(f"Time: {result.aqua_time_ms:.0f}ms")
 
     # Determine winner
     diff = result.gurobi_score - result.aqua_score
@@ -356,18 +354,16 @@ def run_single_backtest(
     else:
         result.winner = "Tie"
 
-    print(f"\n  🏆 WINNER: {result.winner}")
+    print(f"\nWINNER: {result.winner}")
     print(
-        f"     Gurobi: {result.gurobi_score:.1f} | Aqua: {result.aqua_score:.1f} | Diff: {abs(diff):.1f}"
+        f"Gurobi: {result.gurobi_score:.1f} | Aqua: {result.aqua_score:.1f} | Diff: {abs(diff):.1f}"
     )
 
     # Compare to coach's actual
     if result.actual_score > 0:
         gurobi_vs_coach = result.gurobi_score - result.actual_score
         aqua_vs_coach = result.aqua_score - result.actual_score
-        print(
-            f"  📊 vs Coach: Gurobi {gurobi_vs_coach:+.0f} | Aqua {aqua_vs_coach:+.0f}"
-        )
+        print(f"vs Coach: Gurobi {gurobi_vs_coach:+.0f} | Aqua {aqua_vs_coach:+.0f}")
 
     return result
 
@@ -412,7 +408,7 @@ def generate_report(results: list[BacktestResult]) -> str:
 
     for r in results:
         if r.error:
-            lines.append(f"| {r.meet_name} | - | ❌ | ❌ | - | Error | - |")
+            lines.append(f"| {r.meet_name} | - | | | - | Error | - |")
         else:
             diff = r.gurobi_score - r.aqua_score
             diff_str = f"+{diff:.1f}" if diff > 0 else f"{diff:.1f}"
@@ -459,7 +455,7 @@ def main():
             result = run_single_backtest(json_path, profile, target_team)
             results.append(result)
         except Exception as e:
-            print(f"\n❌ Fatal error: {e}")
+            print(f"\n✗ Fatal error: {e}")
             import traceback
 
             traceback.print_exc()
@@ -483,7 +479,7 @@ def main():
 
     report_path = output_dir / "gurobi_vs_aqua_report.md"
     report_path.write_text(report)
-    print(f"\n📝 Report saved: {report_path}")
+    print(f"\nReport saved: {report_path}")
 
     # Print summary
     print("\n" + report)

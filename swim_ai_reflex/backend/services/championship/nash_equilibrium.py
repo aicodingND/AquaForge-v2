@@ -15,7 +15,6 @@ import copy
 import logging
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
 
 from swim_ai_reflex.backend.core.rules import get_meet_profile
 
@@ -27,7 +26,7 @@ class TeamStrategy:
     """Represents a team's event assignment strategy."""
 
     team: str
-    assignments: Dict[str, List[str]]  # {event: [swimmers]}
+    assignments: dict[str, list[str]]  # {event: [swimmers]}
     projected_points: float = 0.0
 
     def copy(self) -> "TeamStrategy":
@@ -44,13 +43,13 @@ class NashResult:
 
     equilibrium_found: bool
     iterations_used: int
-    final_strategies: Dict[str, TeamStrategy]
-    team_rankings: List[Tuple[str, float]]  # [(team, points), ...]
+    final_strategies: dict[str, TeamStrategy]
+    team_rankings: list[tuple[str, float]]  # [(team, points), ...]
     stability_score: float  # 0-1, higher = more stable
-    strategic_insights: List[str]
-    convergence_history: List[Dict[str, float]]
+    strategic_insights: list[str]
+    convergence_history: list[dict[str, float]]
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         return {
             "equilibrium_found": self.equilibrium_found,
             "iterations": self.iterations_used,
@@ -104,7 +103,7 @@ class NashEquilibriumStrategy:
 
     def find_equilibrium(
         self,
-        entries: List[Dict],
+        entries: list[dict],
         target_team: str = "SST",
     ) -> NashResult:
         """
@@ -193,7 +192,7 @@ class NashEquilibriumStrategy:
             convergence_history=convergence_history,
         )
 
-    def _group_by_team(self, entries: List[Dict]) -> Dict[str, List[Dict]]:
+    def _group_by_team(self, entries: list[dict]) -> dict[str, list[dict]]:
         """Group entries by team."""
         team_entries = defaultdict(list)
         for entry in entries:
@@ -201,7 +200,7 @@ class NashEquilibriumStrategy:
             team_entries[team].append(entry)
         return dict(team_entries)
 
-    def _initialize_strategy(self, team: str, entries: List[Dict]) -> TeamStrategy:
+    def _initialize_strategy(self, team: str, entries: list[dict]) -> TeamStrategy:
         """Initialize strategy based on seed times (best swimmers in each event)."""
         # Group by event
         event_entries = defaultdict(list)
@@ -227,9 +226,9 @@ class NashEquilibriumStrategy:
     def _best_response(
         self,
         team: str,
-        team_entries: List[Dict],
-        other_strategies: Dict[str, TeamStrategy],
-        all_entries: List[Dict],
+        team_entries: list[dict],
+        other_strategies: dict[str, TeamStrategy],
+        all_entries: list[dict],
     ) -> TeamStrategy:
         """
         Compute best response for a team given others' strategies.
@@ -285,8 +284,8 @@ class NashEquilibriumStrategy:
     def _score_strategy(
         self,
         strategy: TeamStrategy,
-        other_strategies: Dict[str, TeamStrategy],
-        all_entries: List[Dict],
+        other_strategies: dict[str, TeamStrategy],
+        all_entries: list[dict],
     ) -> float:
         """Score a strategy against other teams' strategies."""
         # Combine all strategies
@@ -311,9 +310,9 @@ class NashEquilibriumStrategy:
     def _score_event_with_strategies(
         self,
         event: str,
-        entries: List[Dict],
-        strategies: Dict[str, TeamStrategy],
-    ) -> Dict[str, float]:
+        entries: list[dict],
+        strategies: dict[str, TeamStrategy],
+    ) -> dict[str, float]:
         """Score an event considering all teams' strategies."""
         # Filter to swimmers actually assigned to this event
         active_entries = []
@@ -358,8 +357,8 @@ class NashEquilibriumStrategy:
 
     def _score_all_strategies(
         self,
-        strategies: Dict[str, TeamStrategy],
-        all_entries: List[Dict],
+        strategies: dict[str, TeamStrategy],
+        all_entries: list[dict],
     ):
         """Score all strategies and update projected points."""
         for team, strategy in strategies.items():
@@ -370,8 +369,8 @@ class NashEquilibriumStrategy:
 
     def _calculate_stability(
         self,
-        strategies: Dict[str, TeamStrategy],
-        all_entries: List[Dict],
+        strategies: dict[str, TeamStrategy],
+        all_entries: list[dict],
     ) -> float:
         """
         Calculate stability score (0-1).
@@ -400,10 +399,10 @@ class NashEquilibriumStrategy:
 
     def _generate_insights(
         self,
-        strategies: Dict[str, TeamStrategy],
+        strategies: dict[str, TeamStrategy],
         target_team: str,
-        all_entries: List[Dict],
-    ) -> List[str]:
+        all_entries: list[dict],
+    ) -> list[str]:
         """Generate strategic insights for target team."""
         insights = []
 
@@ -418,14 +417,14 @@ class NashEquilibriumStrategy:
         )
 
         if target_rank == 1:
-            insights.append("🏆 Team is projected to WIN - maintain current strategy")
+            insights.append("Team is projected to WIN - maintain current strategy")
         elif target_rank <= 3:
             insights.append(
-                f"🥈 Team is projected {target_rank}{'nd' if target_rank == 2 else 'rd'} - strong position"
+                f"Team is projected {target_rank}{'nd' if target_rank == 2 else 'rd'} - strong position"
             )
         else:
             insights.append(
-                f"📊 Team is projected {target_rank}th - consider aggressive moves"
+                f"▸ Team is projected {target_rank}th - consider aggressive moves"
             )
 
         # Find closest competitor
@@ -449,9 +448,9 @@ class NashEquilibriumStrategy:
 
     def _find_contested_events(
         self,
-        strategies: Dict[str, TeamStrategy],
-        all_entries: List[Dict],
-    ) -> List[str]:
+        strategies: dict[str, TeamStrategy],
+        all_entries: list[dict],
+    ) -> list[str]:
         """Find events where multiple teams are competitive."""
         event_entries = defaultdict(list)
         for entry in all_entries:
@@ -480,10 +479,10 @@ class NashEquilibriumStrategy:
 
 # Convenience function
 def run_nash_equilibrium(
-    entries: List[Dict],
+    entries: list[dict],
     target_team: str = "SST",
     meet_profile: str = "vcac_championship",
-) -> Dict:
+) -> dict:
     """
     Run Nash Equilibrium optimization.
 

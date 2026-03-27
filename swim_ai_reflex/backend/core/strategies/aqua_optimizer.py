@@ -2773,12 +2773,10 @@ if __name__ == "__main__":
         test_seton, test_opponent, None, None
     )
 
-    print("\n✅ Optimization Complete")
-    print(f"   Seton: {totals['seton']:.0f}")
-    print(f"   Opponent: {totals['opponent']:.0f}")
-    print(
-        f"   Winner: {'Seton' if totals['seton'] > totals['opponent'] else 'Opponent'}"
-    )
-    print(f"\n   Lineup: {len(best_seton)} assignments")
+    print("\n✓ Optimization Complete")
+    print(f"Seton: {totals['seton']:.0f}")
+    print(f"Opponent: {totals['opponent']:.0f}")
+    print(f"Winner: {'Seton' if totals['seton'] > totals['opponent'] else 'Opponent'}")
+    print(f"\nLineup: {len(best_seton)} assignments")
     for _, row in best_seton.iterrows():
-        print(f"      {row['swimmer']} → {row['event']} ({row['time']}s)")
+        print(f"{row['swimmer']} → {row['event']} ({row['time']}s)")

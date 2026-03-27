@@ -18,9 +18,9 @@ try:
     # Read all sheets
     xl = pd.ExcelFile(COACH_FILE)
 
-    print(f"\n📊 Excel File: {Path(COACH_FILE).name}")
-    print(f"📄 Number of sheets: {len(xl.sheet_names)}")
-    print(f"📑 Sheet names: {xl.sheet_names}\n")
+    print(f"\n▸ Excel File: {Path(COACH_FILE).name}")
+    print(f"▸ Number of sheets: {len(xl.sheet_names)}")
+    print(f"▸ Sheet names: {xl.sheet_names}\n")
 
     # Analyze each sheet
     for sheet_name in xl.sheet_names:
@@ -30,24 +30,24 @@ try:
 
         df = pd.read_excel(xl, sheet_name)
 
-        print(f"\n📏 Dimensions: {len(df)} rows × {len(df.columns)} columns")
-        print(f"📋 Columns: {list(df.columns)}\n")
+        print(f"\n▸ Dimensions: {len(df)} rows × {len(df.columns)} columns")
+        print(f"▸ Columns: {list(df.columns)}\n")
 
         print("First 5 rows:")
         print(df.head(5).to_string(index=False))
 
         # Analyze data types
-        print("\n🔍 Data Types:")
+        print("\n▸ Data Types:")
         for col in df.columns:
             unique_count = df[col].nunique()
             sample = df[col].dropna().iloc[0] if len(df[col].dropna()) > 0 else "N/A"
             print(
-                f"  - {col}: {df[col].dtype} ({unique_count} unique values, sample: {sample})"
+                f"- {col}: {df[col].dtype} ({unique_count} unique values, sample: {sample})"
             )
 
         # Check for specific columns we care about
         expected_cols = ["swimmer", "grade", "gender", "event", "time", "team"]
-        print("\n✅ Required columns present:")
+        print("\n✓ Required columns present:")
         for col in expected_cols:
             # Check case-insensitive
             found = any(col.lower() in c.lower() for c in df.columns)
@@ -56,7 +56,7 @@ try:
         # Grade distribution
         if any("grade" in col.lower() for col in df.columns):
             grade_col = [c for c in df.columns if "grade" in c.lower()][0]
-            print("\n📊 Grade Distribution:")
+            print("\n▸ Grade Distribution:")
             print(df[grade_col].value_counts().sort_index().to_string())
 
         # Gender distribution
@@ -64,21 +64,21 @@ try:
             gender_col = [
                 c for c in df.columns if "gender" in c.lower() or "sex" in c.lower()
             ][0]
-            print("\n⚥ Gender Distribution:")
+            print("\n▸ Gender Distribution:")
             print(df[gender_col].value_counts().to_string())
 
         # Event types
         if any("event" in col.lower() for col in df.columns):
             event_col = [c for c in df.columns if "event" in c.lower()][0]
-            print(f"\n🏊 Event Types ({df[event_col].nunique()} unique):")
+            print(f"\n▸ Event Types ({df[event_col].nunique()} unique):")
             for event in sorted(df[event_col].unique()[:10]):  # Show first 10
                 count = len(df[df[event_col] == event])
-                print(f"  - {event}: {count} entries")
+                print(f"- {event}: {count} entries")
 
         # Team column
         if any("team" in col.lower() for col in df.columns):
             team_col = [c for c in df.columns if "team" in c.lower()][0]
-            print("\n🏫 Team Distribution:")
+            print("\n▸ Team Distribution:")
             print(df[team_col].value_counts().to_string())
 
         print("\n")
@@ -98,10 +98,10 @@ try:
             df = pd.read_excel(xl, sheet)
             f.write(f"\n{sheet}: {len(df)} rows, {list(df.columns)}\n")
 
-    print(f"\n✅ Summary saved to: {summary_file}")
+    print(f"\n✓ Summary saved to: {summary_file}")
 
 except Exception as e:
-    print(f"\n❌ Error: {e}")
+    print(f"\n✗ Error: {e}")
     import traceback
 
     traceback.print_exc()

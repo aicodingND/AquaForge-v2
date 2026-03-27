@@ -38,7 +38,7 @@ async def test_full_chain():
     imm_res = await data_service.load_roster_from_path(immanuel_file)
 
     if not seton_res["success"] or not imm_res["success"]:
-        print("❌ LOAD FAILED")
+        print("✗ LOAD FAILED")
         return
 
     # 2. Filter
@@ -68,13 +68,13 @@ async def test_full_chain():
     )
 
     if not opt_res["success"]:
-        print("❌ OPTIMIZATION FAILED")
+        print("✗ OPTIMIZATION FAILED")
         return
 
     lineup = opt_res["data"]["details"]
     s_score = opt_res["data"]["seton_score"]
     o_score = opt_res["data"]["opponent_score"]
-    print(f"   Lineup generated: {len(lineup)} entries. Score: {s_score}-{o_score}")
+    print(f"Lineup generated: {len(lineup)} entries. Score: {s_score}-{o_score}")
 
     # 5. Export
     print("\n5. Testing Exports...")
@@ -84,7 +84,7 @@ async def test_full_chain():
         csv_data = export_service.to_csv(lineup, s_score, o_score)
         with open(os.path.join(OUTPUT_DIR, "test_export.csv"), "w", newline="") as f:
             f.write(csv_data)
-        print("   ✅ CSV Export success")
+        print("✓ CSV Export success")
 
         # HTML/PDF
         html_data = export_service.to_html_table(lineup, s_score, o_score)
@@ -92,21 +92,21 @@ async def test_full_chain():
             os.path.join(OUTPUT_DIR, "test_export.html"), "w", encoding="utf-8"
         ) as f:
             f.write(html_data)
-        print("   ✅ HTML Export success")
+        print("✓ HTML Export success")
 
         # XLSX
         xlsx_data = export_service.to_xlsx(lineup, s_score, o_score)
         with open(os.path.join(OUTPUT_DIR, "test_export.xlsx"), "wb") as f:
             f.write(xlsx_data)
-        print("   ✅ XLSX Export success")
+        print("✓ XLSX Export success")
 
     except Exception as e:
-        print(f"❌ EXPORT FAILED: {e}")
+        print(f"✗ EXPORT FAILED: {e}")
         import traceback
 
         traceback.print_exc()
 
-    print("\n✅ FULL CHAIN COMPLETE.")
+    print("\n✓ FULL CHAIN COMPLETE.")
 
 
 if __name__ == "__main__":

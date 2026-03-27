@@ -64,9 +64,9 @@ class ScenarioSimulator:
             "original_points": original_result.total_points,
             "modified_points": modified_result.total_points,
             "delta": modified_result.total_points - original_result.total_points,
-            "recommendation": "✅ MAKE CHANGE"
+            "recommendation": " ✓ MAKE CHANGE"
             if modified_result.total_points > original_result.total_points
-            else "❌ KEEP CURRENT",
+            else " ✗ KEEP CURRENT",
         }
 
     def simulate_scratch(

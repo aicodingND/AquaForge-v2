@@ -9,9 +9,9 @@ Usage:
     python e2e_scanner.py [--fix] [--json] [--verbose]
 
 Options:
-    --fix       Auto-fix what can be fixed (ruff --fix)
-    --json      Output in JSON format for programmatic use
-    --verbose   Show detailed output
+    --fix Auto-fix what can be fixed (ruff --fix)
+    --json Output in JSON format for programmatic use
+    --verbose Show detailed output
 """
 
 import argparse
@@ -108,7 +108,7 @@ def run_command(cmd: list[str], cwd: Path | None = None) -> tuple[int, str, str]
 
 def scan_pyright(report: ScanReport, verbose: bool = False) -> None:
     """Run pyright and collect type errors."""
-    print("🔍 Running Pyright type check...")
+    print("▸ Running Pyright type check...")
 
     code, stdout, stderr = run_command(["pyright", "--outputjson"])
 
@@ -132,7 +132,7 @@ def scan_pyright(report: ScanReport, verbose: bool = False) -> None:
 
         if verbose:
             print(
-                f"   Found {report.pyright_errors} errors, {report.pyright_warnings} warnings"
+                f"Found {report.pyright_errors} errors, {report.pyright_warnings} warnings"
             )
 
     except json.JSONDecodeError:
@@ -145,7 +145,7 @@ def scan_pyright(report: ScanReport, verbose: bool = False) -> None:
 
 def scan_ruff(report: ScanReport, fix: bool = False, verbose: bool = False) -> None:
     """Run ruff and collect lint errors."""
-    print("🔍 Running Ruff linting...")
+    print("▸ Running Ruff linting...")
 
     cmd = ["ruff", "check", ".", "--output-format=json"]
     if fix:
@@ -171,9 +171,7 @@ def scan_ruff(report: ScanReport, fix: bool = False, verbose: bool = False) -> N
             )
 
         if verbose:
-            print(
-                f"   Found {report.ruff_errors} issues ({report.ruff_fixable} fixable)"
-            )
+            print(f"Found {report.ruff_errors} issues ({report.ruff_fixable} fixable)")
 
     except json.JSONDecodeError:
         # Count errors from exit code
@@ -183,7 +181,7 @@ def scan_ruff(report: ScanReport, fix: bool = False, verbose: bool = False) -> N
 
 def scan_tests(report: ScanReport, verbose: bool = False) -> None:
     """Run pytest and collect test results."""
-    print("🔍 Running Pytest...")
+    print("▸ Running Pytest...")
 
     code, stdout, stderr = run_command(
         [
@@ -240,12 +238,12 @@ def scan_tests(report: ScanReport, verbose: bool = False) -> None:
             )
 
     if verbose:
-        print(f"   Passed: {report.tests_passed}, Failed: {report.tests_failed}")
+        print(f"Passed: {report.tests_passed}, Failed: {report.tests_failed}")
 
 
 def scan_todos(report: ScanReport, verbose: bool = False) -> None:
     """Find TODO/FIXME comments."""
-    print("🔍 Scanning for TODOs...")
+    print("▸ Scanning for TODOs...")
 
     code, stdout, stderr = run_command(
         [
@@ -283,12 +281,12 @@ def scan_todos(report: ScanReport, verbose: bool = False) -> None:
             )
 
     if verbose:
-        print(f"   Found {report.todos_found} TODOs/FIXMEs")
+        print(f"Found {report.todos_found} TODOs/FIXMEs")
 
 
 def scan_imports(report: ScanReport, verbose: bool = False) -> None:
     """Verify critical imports work."""
-    print("🔍 Checking imports...")
+    print("▸ Checking imports...")
 
     test_code = """
 import sys
@@ -306,7 +304,7 @@ except Exception as e:
     if "OK" in stdout:
         report.import_ok = True
         if verbose:
-            print("   ✅ All critical imports successful")
+            print("✓ All critical imports successful")
     else:
         report.import_ok = False
         report.issues.append(
@@ -320,44 +318,42 @@ except Exception as e:
             )
         )
         if verbose:
-            print(f"   ❌ Import failed: {stderr or stdout}")
+            print(f"✗ Import failed: {stderr or stdout}")
 
 
 def print_report(report: ScanReport) -> None:
     """Print a formatted report to the console."""
     print("\n" + "=" * 60)
-    print("📊 E2E SCAN REPORT")
+    print("▸ E2E SCAN REPORT")
     print("=" * 60)
     print(f"Timestamp: {report.timestamp}")
     print()
 
     # Summary table
     print("┌─────────────────┬──────────┬────────┐")
-    print("│ Check           │ Status   │ Count  │")
+    print("│ Check │ Status │ Count │")
     print("├─────────────────┼──────────┼────────┤")
 
-    pyright_status = "✅ PASS" if report.pyright_errors == 0 else "❌ FAIL"
-    print(f"│ Pyright         │ {pyright_status} │ {report.pyright_errors:>6} │")
+    pyright_status = " ✓ PASS" if report.pyright_errors == 0 else " FAIL"
+    print(f"│ Pyright │ {pyright_status} │ {report.pyright_errors:>6} │")
 
-    ruff_status = "✅ PASS" if report.ruff_errors == 0 else "❌ FAIL"
-    print(f"│ Ruff            │ {ruff_status} │ {report.ruff_errors:>6} │")
+    ruff_status = " ✓ PASS" if report.ruff_errors == 0 else " FAIL"
+    print(f"│ Ruff │ {ruff_status} │ {report.ruff_errors:>6} │")
 
-    test_status = "✅ PASS" if report.tests_failed == 0 else "❌ FAIL"
-    print(f"│ Tests           │ {test_status} │ {report.tests_failed:>6} │")
+    test_status = " ✓ PASS" if report.tests_failed == 0 else " FAIL"
+    print(f"│ Tests │ {test_status} │ {report.tests_failed:>6} │")
 
-    import_status = "✅ PASS" if report.import_ok else "❌ FAIL"
-    print(
-        f"│ Imports         │ {import_status} │ {'OK' if report.import_ok else 'FAIL':>6} │"
-    )
+    import_status = " ✓ PASS" if report.import_ok else " FAIL"
+    print(f"│ Imports │ {import_status} │ {'OK' if report.import_ok else 'FAIL':>6} │")
 
-    print(f"│ TODOs           │ ⚠️  INFO │ {report.todos_found:>6} │")
+    print(f"│ TODOs │ INFO │ {report.todos_found:>6} │")
     print("└─────────────────┴──────────┴────────┘")
     print()
 
     if report.is_clean():
-        print("🎉 CODEBASE IS CLEAN - All checks passed!")
+        print("CODEBASE IS CLEAN - All checks passed!")
     else:
-        print("❌ ISSUES FOUND - Fixes required")
+        print("✗ ISSUES FOUND - Fixes required")
         print()
 
         # Group issues by severity
@@ -366,21 +362,21 @@ def print_report(report: ScanReport) -> None:
         medium = [i for i in report.issues if i.severity == "medium"]
 
         if critical:
-            print("🔴 CRITICAL ISSUES:")
+            print("● CRITICAL ISSUES:")
             for issue in critical[:5]:
-                print(f"   • [{issue.category}] {issue.file}:{issue.line or '?'}")
-                print(f"     {issue.message[:80]}")
+                print(f"• [{issue.category}] {issue.file}:{issue.line or '?'}")
+                print(f"{issue.message[:80]}")
             print()
 
         if high:
-            print("🟠 HIGH PRIORITY:")
+            print("HIGH PRIORITY:")
             for issue in high[:5]:
-                print(f"   • [{issue.category}] {issue.file}:{issue.line or '?'}")
-                print(f"     {issue.message[:80]}")
+                print(f"• [{issue.category}] {issue.file}:{issue.line or '?'}")
+                print(f"{issue.message[:80]}")
             print()
 
         if medium:
-            print(f"🟡 MEDIUM PRIORITY: {len(medium)} issues")
+            print(f"MEDIUM PRIORITY: {len(medium)} issues")
             print()
 
     print("=" * 60)
@@ -396,7 +392,7 @@ def main():
     report = ScanReport()
 
     if not args.json:
-        print("🚀 Starting E2E Scan...")
+        print("→ Starting E2E Scan...")
         print()
 
     # Run all scans

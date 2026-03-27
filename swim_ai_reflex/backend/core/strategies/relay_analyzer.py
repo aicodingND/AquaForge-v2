@@ -105,7 +105,7 @@ class Relay400TradeoffAnalyzer:
             "estimated_400fr_relay_points": estimated_400fr_points,
             "individual_cost": individual_cost,
             "net_gain": net_gain,
-            "recommendation": "✅ SWIM 400FR" if net_gain > 0 else "❌ SKIP 400FR",
+            "recommendation": " ✓ SWIM 400FR" if net_gain > 0 else " SKIP 400FR",
             "swimmer_analysis": swimmer_analysis,
             "suggested_lineup": [s["swimmer"] for s in swimmer_analysis[:4]],
         }

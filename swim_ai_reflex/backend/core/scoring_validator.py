@@ -154,12 +154,12 @@ def validate_meet_scoring(
     if combined_total > MAX_TOTAL_POINTS:
         results["valid"] = False
         results["warnings"].append(
-            f"⚠️ CRITICAL: Combined total ({combined_total}) exceeds maximum ({MAX_TOTAL_POINTS})"
+            f"! CRITICAL: Combined total ({combined_total}) exceeds maximum ({MAX_TOTAL_POINTS})"
         )
         results["warnings"].append(
-            f"   Expected: {len(STANDARD_INDIVIDUAL_EVENTS)} events × {MAX_POINTS_PER_EVENT} points = {MAX_TOTAL_POINTS} max"
+            f"Expected: {len(STANDARD_INDIVIDUAL_EVENTS)} events × {MAX_POINTS_PER_EVENT} points = {MAX_TOTAL_POINTS} max"
         )
-        results["warnings"].append(f"   Actual: {len(events)} events scored")
+        results["warnings"].append(f"Actual: {len(events)} events scored")
 
     # Add summary
     results["summary"] = {
@@ -180,7 +180,7 @@ def print_validation_report(validation: dict[str, Any]):
     Print a formatted validation report.
     """
     logger.info("\n" + "=" * 80)
-    logger.info("📊 DUAL MEET SCORING VALIDATION REPORT")
+    logger.info("▸ DUAL MEET SCORING VALIDATION REPORT")
     logger.info("=" * 80)
 
     # Summary
@@ -195,34 +195,34 @@ def print_validation_report(validation: dict[str, Any]):
 
     # Team scores
     totals = validation["totals"]
-    logger.info("\n📈 Team Scores:")
+    logger.info("\n▸ Team Scores:")
     for team, score in totals.items():
-        logger.info(f"   {team.capitalize()}: {score:.1f}")
+        logger.info(f"{team.capitalize()}: {score:.1f}")
 
     # Warnings
     if validation["warnings"]:
-        logger.warning(f"\n⚠️  WARNINGS ({len(validation['warnings'])}):")
+        logger.warning(f"\nWARNINGS ({len(validation['warnings'])}):")
         for warning in validation["warnings"]:
-            logger.warning(f"   {warning}")
+            logger.warning(f"{warning}")
 
     # Event validation warnings
     event_val = validation["event_validation"]
     if event_val["warnings"]:
-        logger.warning("\n⚠️  EVENT LIST WARNINGS:")
+        logger.warning("\nEVENT LIST WARNINGS:")
         for warning in event_val["warnings"]:
-            logger.warning(f"   {warning}")
+            logger.warning(f"{warning}")
 
     # Event-specific issues
     problem_events = [e for e in validation["event_results"] if e["warnings"]]
     if problem_events:
-        logger.warning("\n⚠️  EVENT-SPECIFIC ISSUES:")
+        logger.warning("\nEVENT-SPECIFIC ISSUES:")
         for event in problem_events:
-            logger.warning(f"   {event['event']}:")
+            logger.warning(f"{event['event']}:")
             for warning in event["warnings"]:
-                logger.warning(f"      - {warning}")
+                logger.warning(f"- {warning}")
 
     # Status
-    status = "✅ VALID" if validation["valid"] else "❌ INVALID"
+    status = " ✓ VALID" if validation["valid"] else " INVALID"
     logger.info(f"\n{status}")
     logger.info("=" * 80 + "\n")
 

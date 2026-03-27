@@ -224,7 +224,7 @@ def run_gurobi_backtest(
         return result.total_points, elapsed
 
     except Exception as e:
-        print(f"  ⚠️ Gurobi error: {e}")
+        print(f"! Gurobi error: {e}")
         return 0.0, 0.0
 
 
@@ -263,7 +263,7 @@ def run_aqua_backtest(
         return float(score), elapsed
 
     except Exception as e:
-        print(f"  ⚠️ AquaOptimizer error: {e}")
+        print(f"! AquaOptimizer error: {e}")
         return 0.0, 0.0
 
 
@@ -284,12 +284,12 @@ def run_single_backtest(meet_id: int, meet_name: str, profile: str) -> BacktestR
     entries_df, error = load_meet_data(meet_id)
     if error:
         result.error = error
-        print(f"  ❌ Error: {error}")
+        print(f"✗ Error: {error}")
         return result
 
     if len(entries_df) == 0:
         result.error = "No entries found"
-        print("  ❌ No entries found")
+        print("✗ No entries found")
         return result
 
     # Convert to championship format
@@ -297,24 +297,24 @@ def run_single_backtest(meet_id: int, meet_name: str, profile: str) -> BacktestR
     result.entries = len(entries)
     result.teams = len(set(e.team for e in entries))
 
-    print(f"  📊 Entries: {result.entries}, Teams: {result.teams}")
+    print(f"▸ Entries: {result.entries}, Teams: {result.teams}")
 
     # Get actual score if available
     if "ACTUAL_POINTS" in entries_df.columns:
         result.actual_score = (
             entries_df["ACTUAL_POINTS"].iloc[0] if len(entries_df) > 0 else 0
         )
-        print(f"  📈 Actual Seton Score: {result.actual_score}")
+        print(f"▸ Actual Seton Score: {result.actual_score}")
 
     # Run Gurobi
-    print("  🔧 Running Gurobi MILP...")
+    print("→ Running Gurobi MILP...")
     result.gurobi_score, result.gurobi_time_ms = run_gurobi_backtest(entries, profile)
-    print(f"     Score: {result.gurobi_score:.0f}, Time: {result.gurobi_time_ms:.0f}ms")
+    print(f"Score: {result.gurobi_score:.0f}, Time: {result.gurobi_time_ms:.0f}ms")
 
     # Run AquaOptimizer
-    print("  🌊 Running AquaOptimizer (Nash+Beam)...")
+    print("→ Running AquaOptimizer (Nash+Beam)...")
     result.aqua_score, result.aqua_time_ms = run_aqua_backtest(entries, profile)
-    print(f"     Score: {result.aqua_score:.0f}, Time: {result.aqua_time_ms:.0f}ms")
+    print(f"Score: {result.aqua_score:.0f}, Time: {result.aqua_time_ms:.0f}ms")
 
     # Determine winner
     if result.gurobi_score > result.aqua_score:
@@ -325,7 +325,7 @@ def run_single_backtest(meet_id: int, meet_name: str, profile: str) -> BacktestR
         result.winner = "Tie"
 
     print(
-        f"  🏆 Winner: {result.winner} ({abs(result.gurobi_score - result.aqua_score):.0f} pts diff)"
+        f"Winner: {result.winner} ({abs(result.gurobi_score - result.aqua_score):.0f} pts diff)"
     )
 
     return result
@@ -367,7 +367,7 @@ def generate_summary_report(results: list[BacktestResult]) -> str:
     for r in results:
         if r.error:
             lines.append(
-                f"| {r.meet_name} | {r.profile} | ❌ | ❌ | - | Error: {r.error} | - |"
+                f"| {r.meet_name} | {r.profile} | | | - | Error: {r.error} | - |"
             )
         else:
             diff = r.gurobi_score - r.aqua_score
@@ -418,7 +418,7 @@ def main():
             result = run_single_backtest(meet_id, meet_name, profile)
             results.append(result)
         except Exception as e:
-            print(f"\n❌ Fatal error for {meet_name}: {e}")
+            print(f"\n✗ Fatal error for {meet_name}: {e}")
             results.append(
                 BacktestResult(
                     meet_id=meet_id,
@@ -441,7 +441,7 @@ def main():
 
     report_path = output_dir / "championship_comparison_report.md"
     report_path.write_text(report)
-    print(f"📝 Report saved: {report_path}")
+    print(f"Report saved: {report_path}")
 
     # Save CSV
     csv_path = output_dir / "championship_comparison_results.csv"
@@ -463,7 +463,7 @@ def main():
             for r in results
         ]
     ).to_csv(csv_path, index=False)
-    print(f"📊 CSV saved: {csv_path}")
+    print(f"▸ CSV saved: {csv_path}")
 
     # Print summary
     print("\n" + report)

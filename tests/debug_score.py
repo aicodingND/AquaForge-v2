@@ -16,7 +16,7 @@ from swim_ai_reflex.backend.core.opponent_model import greedy_opponent_best_line
 
 async def debug_scoring():
     print("\n" + "=" * 80)
-    print("🔍 DEBUG: Why is Seton scoring 149 instead of 128-135?")
+    print("▸ DEBUG: Why is Seton scoring 149 instead of 128-135?")
     print("=" * 80)
 
     # Parse and filter
@@ -38,27 +38,27 @@ async def debug_scoring():
     trinity_standard = filter_to_standard_events(trinity_girls, gender="F")
 
     print("\n[1] Trinity BEFORE greedy selection:")
-    print(f"  Total entries: {len(trinity_standard)}")
-    print(f"  Unique swimmers: {trinity_standard['swimmer'].nunique()}")
-    print(f"  Events: {trinity_standard['event'].nunique()}")
+    print(f"Total entries: {len(trinity_standard)}")
+    print(f"Unique swimmers: {trinity_standard['swimmer'].nunique()}")
+    print(f"Events: {trinity_standard['event'].nunique()}")
 
     for event in sorted(trinity_standard["event"].unique()):
         count = len(trinity_standard[trinity_standard["event"] == event])
-        print(f"    {event}: {count} swimmers available")
+        print(f"{event}: {count} swimmers available")
 
     # Apply greedy model
     trinity_lineup = greedy_opponent_best_lineup(trinity_standard)
 
     print("\n[2] Trinity AFTER greedy selection:")
-    print(f"  Total entries: {len(trinity_lineup)}")
-    print(f"  Unique swimmers: {trinity_lineup['swimmer'].nunique()}")
+    print(f"Total entries: {len(trinity_lineup)}")
+    print(f"Unique swimmers: {trinity_lineup['swimmer'].nunique()}")
 
     for event in sorted(trinity_lineup["event"].unique()):
         count = len(trinity_lineup[trinity_lineup["event"] == event])
         swimmers = trinity_lineup[trinity_lineup["event"] == event]["swimmer"].tolist()
-        print(f"    {event}: {count} swimmers")
+        print(f"{event}: {count} swimmers")
         if count < 4:
-            print(f"      ⚠️ MISSING {4 - count} swimmers! Only have: {swimmers}")
+            print(f"! MISSING {4 - count} swimmers! Only have: {swimmers}")
 
     # Count how many events have < 4 swimmers
     missing_slots = 0
@@ -67,11 +67,11 @@ async def debug_scoring():
         missing_slots += max(0, 4 - count)
 
     print("\n[3] PROBLEM IDENTIFIED:")
-    print(f"  Missing slots: {missing_slots}")
+    print(f"Missing slots: {missing_slots}")
     print(
-        f"  This means Trinity forfeits ~{missing_slots * 3} to ~{missing_slots * 8} points"
+        f"This means Trinity forfeits ~{missing_slots * 3} to ~{missing_slots * 8} points"
     )
-    print("  Those points go to Seton, inflating their score!")
+    print("Those points go to Seton, inflating their score!")
 
     print("\n" + "=" * 80)
 

@@ -210,11 +210,11 @@ def test_championship_6_teams_returns_standings():
     assert sst_standing is not None, "SST should be in standings"
     assert sst_standing["rank"] >= 1, "SST should have a valid rank"
 
-    print("✅ Championship standings test passed!")
-    print(f"   Optimized score: {response.seton_score}")
-    print(f"   Teams in standings: {len(response.championship_standings)}")
+    print("✓ Championship standings test passed!")
+    print(f"Optimized score: {response.seton_score}")
+    print(f"Teams in standings: {len(response.championship_standings)}")
     for s in response.championship_standings:
-        print(f"     {s['rank']}. {s['team']}: {s['points']} points")
+        print(f"{s['rank']}. {s['team']}: {s['points']} points")
 
 
 if __name__ == "__main__":

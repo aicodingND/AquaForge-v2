@@ -124,11 +124,9 @@ def align_meet_data(
             else []
         )
 
+        logger.info(f"Seton's 'opponent' column values: {seton_opponent_values[:5]}...")
         logger.info(
-            f"  Seton's 'opponent' column values: {seton_opponent_values[:5]}..."
-        )
-        logger.info(
-            f"  Opponent's 'opponent' column values: {opponent_opponent_values[:5]}..."
+            f"Opponent's 'opponent' column values: {opponent_opponent_values[:5]}..."
         )
 
         # Find Seton entries where opponent column contains opponent team name (flexible matching)
@@ -166,7 +164,7 @@ def align_meet_data(
 
             if match_found:
                 logger.info(
-                    f"  One-sided match confirmed: Seton is swimming against '{opponent_team_col}'"
+                    f"One-sided match confirmed: Seton is swimming against '{opponent_team_col}'"
                 )
                 opponent_aligned = (
                     opponent_df.copy()
@@ -207,15 +205,15 @@ def align_meet_data(
                 alignment_info["alignment_method"] = "opponent_column"
 
                 logger.info(
-                    f"✓ Meet alignment (opponent column): {alignment_info['common_meet']}"
+                    f"Meet alignment (opponent column): {alignment_info['common_meet']}"
                 )
                 logger.info(
-                    f"  Seton: {len(seton_df)} → {len(seton_aligned)} entries ({alignment_info['removed_seton']} removed)"
+                    f"Seton: {len(seton_df)} → {len(seton_aligned)} entries ({alignment_info['removed_seton']} removed)"
                 )
                 logger.info(
-                    f"  Opponent: {len(opponent_df)} → {len(opponent_aligned)} entries ({alignment_info['removed_opponent']} removed)"
+                    f"Opponent: {len(opponent_df)} → {len(opponent_aligned)} entries ({alignment_info['removed_opponent']} removed)"
                 )
-                logger.info(f"  Common events: {len(common_events)}")
+                logger.info(f"Common events: {len(common_events)}")
 
                 return seton_aligned, opponent_aligned, alignment_info
 
@@ -249,9 +247,9 @@ def align_meet_data(
             alignment_info["alignment_method"] = "event_overlap"
 
             logger.info(
-                f"✓ Meet alignment (event overlap): {alignment_info['common_meet']}"
+                f"Meet alignment (event overlap): {alignment_info['common_meet']}"
             )
-            logger.info(f"  Overlap Ratio: {overlap_ratio:.1%}")
+            logger.info(f"Overlap Ratio: {overlap_ratio:.1%}")
 
             # We filter to common events to be safe, but keep all times
             seton_aligned = seton_df[seton_df["event"].isin(common_events)]
@@ -260,9 +258,9 @@ def align_meet_data(
             return seton_aligned, opponent_aligned, alignment_info
 
     logger.warning(
-        "❌ Strict Meet Alignment Failed. Could not match 'Opponent' columns and Event Overlap was insufficient."
+        "Strict Meet Alignment Failed. Could not match 'Opponent' columns and Event Overlap was insufficient."
     )
-    logger.info("  Seton file did not explicitly name this opponent, or vice versa.")
+    logger.info("Seton file did not explicitly name this opponent, or vice versa.")
 
     # Return aligned=False. The app should prompt user or refuse to optimize.
     return seton_df, opponent_df, alignment_info

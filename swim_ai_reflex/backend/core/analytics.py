@@ -81,7 +81,7 @@ def analyze_lineup(
         for _, row in first_place_wins.iterrows():
             metric = row.get("time", row.get("dive_score", ""))
             insights["coach_notes"].append(
-                f"💪 {row['swimmer']} is projected to WIN the {row['event']} ({metric}), securing {row['points']} points."
+                f"{row['swimmer']} is projected to WIN the {row['event']} ({metric}), securing {row['points']} points."
             )
 
     # Identify "Close Losses" (Seton 2nd place, behind Opponent 1st)

@@ -104,7 +104,7 @@ def list_projects(
         console.print("[yellow]No projects found.[/yellow]")
         return
 
-    table = Table(title="📁 Projects", show_header=True, header_style="bold cyan")
+    table = Table(title=" Projects", show_header=True, header_style="bold cyan")
     table.add_column("Project Name", style="green")
 
     for p in projects:
@@ -142,18 +142,18 @@ def list_files(
         file_ext = Path(f).suffix or "(no ext)"
         ext_counts[file_ext] = ext_counts.get(file_ext, 0) + 1
 
-    console.print(f"\n[bold cyan]📄 Files in {project}[/bold cyan] ({len(files)} total)\n")
+    console.print(f"\n[bold cyan] ▸ Files in {project}[/bold cyan] ({len(files)} total)\n")
 
     for f in files[:100]:  # Limit output
-        console.print(f"  {f}")
+        console.print(f"{f}")
 
     if len(files) > 100:
-        console.print(f"\n  [dim]... and {len(files) - 100} more files[/dim]")
+        console.print(f"\n[dim]... and {len(files) - 100} more files[/dim]")
 
     # Show extension summary
     console.print("\n[bold]Extension Summary:[/bold]")
     for ext_name, count in sorted(ext_counts.items(), key=lambda x: -x[1])[:10]:
-        console.print(f"  {ext_name}: {count}")
+        console.print(f"{ext_name}: {count}")
 
 
 @app.command("show-file")
@@ -198,7 +198,7 @@ def show_file(
             line_numbers=True,
             start_line=start or 1,
         )
-        console.print(Panel(syntax, title=f"📄 {path}", border_style="cyan"))
+        console.print(Panel(syntax, title=f" ▸ {path}", border_style="cyan"))
 
 
 @app.command("search")
@@ -217,7 +217,7 @@ def search(
     project = get_project_or_auto(project, provider)
 
     console.print(
-        f"\n[bold cyan]🔍 Searching for '[green]{pattern}[/green]' in {project}...[/bold cyan]\n"
+        f"\n[bold cyan] ▸ Searching for '[green]{pattern}[/green]' in {project}...[/bold cyan]\n"
     )
 
     results = provider.search_files(project, pattern, file_pattern=file_pattern)
@@ -234,7 +234,7 @@ def search(
         for line_no, line in matches:
             if shown >= max_results:
                 break
-            console.print(f"  [dim]{line_no:4d}:[/dim] {line[:120]}")
+            console.print(f"[dim]{line_no:4d}:[/dim] {line[:120]}")
             shown += 1
         if shown >= max_results:
             break
@@ -266,7 +266,7 @@ def tree(
             children = node.get("children", {})
             for name, child in sorted(children.items()):
                 if child.get("type") == "directory":
-                    subtree = tree.add(f"📁 [bold blue]{name}[/bold blue]")
+                    subtree = tree.add(f" [bold blue]{name}[/bold blue]")
                     build_rich_tree(child, subtree)
                 else:
                     size = child.get("size", 0)
@@ -275,9 +275,9 @@ def tree(
                         if size < 10000
                         else f"[dim]({size // 1024:,} KB)[/dim]"
                     )
-                    tree.add(f"📄 {name} {size_str}")
+                    tree.add(f" ▸ {name} {size_str}")
 
-    rich_tree = Tree(f"🗂️ [bold cyan]{project}[/bold cyan]")
+    rich_tree = Tree(f" [bold cyan]{project}[/bold cyan]")
     build_rich_tree(tree_data, rich_tree)
     console.print(rich_tree)
 
@@ -301,7 +301,7 @@ def write_file(
         raise typer.ClickException("Must provide --content or --from-file")
 
     provider.write_file(project, path, content)
-    console.print(f"[green]✓ Wrote to {project}/{path}[/green]")
+    console.print(f"[green] ✓ Wrote to {project}/{path}[/green]")
 
 
 @app.command("diff")
@@ -322,7 +322,7 @@ def diff(
         return
 
     syntax = Syntax(diff_output, "diff", theme="monokai", line_numbers=False)
-    console.print(Panel(syntax, title="📊 Git Diff", border_style="yellow"))
+    console.print(Panel(syntax, title=" ▸ Git Diff", border_style="yellow"))
 
 
 @app.command("info")
@@ -331,7 +331,7 @@ def info(cfg_path: str = typer.Option("config.yaml", help="Path to config file")
     cfg = load_config(cfg_path)
     provider = build_provider_from_config(cfg)
 
-    table = Table(title="⚙️ OpenCode Configuration", show_header=False)
+    table = Table(title=" OpenCode Configuration", show_header=False)
     table.add_column("Setting", style="cyan")
     table.add_column("Value", style="green")
 
@@ -414,7 +414,7 @@ def context(
 
     if output:
         Path(output).write_text(result, encoding="utf-8")
-        console.print(f"[green]✓ Context written to {output}[/green]")
+        console.print(f"[green] ✓ Context written to {output}[/green]")
     else:
         console.print(result)
 
@@ -436,10 +436,10 @@ def todo(
     # Define search patterns
     if priority:
         patterns = ["FIXME", "XXX", "HACK", "BUG"]
-        title = "🔥 Priority Action Items"
+        title = " Priority Action Items"
     else:
         patterns = ["TODO", "FIXME", "XXX", "HACK", "BUG", "NOTE", "OPTIMIZE"]
-        title = "📋 Action Items"
+        title = " ▸ Action Items"
 
     all_results: dict[str, list] = {}
 
@@ -452,7 +452,7 @@ def todo(
                 all_results[file_path].append((pattern, line_no, line))
 
     if not all_results:
-        console.print("[green]✓ No action items found![/green]")
+        console.print("[green] ✓ No action items found![/green]")
         return
 
     # Sort and display
@@ -531,7 +531,7 @@ def recent(
     recent_files = recent_files[:limit]
 
     table = Table(
-        title=f"📅 Recently Modified (last {days} days)",
+        title=f" Recently Modified (last {days} days)",
         show_header=True,
         header_style="bold cyan",
     )

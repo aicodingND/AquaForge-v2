@@ -22,13 +22,13 @@ OUTPUT_DIR = r"c:\Users\Michael\Desktop\SwimAi\swim_ai_reflex\uploads"
 
 def parse_pdf_to_df(pdf_path, team_name):
     """Parse HyTek PDF and return DataFrame."""
-    print(f"\n📄 Parsing {team_name} PDF...")
+    print(f"\n▸ Parsing {team_name} PDF...")
     try:
         df = parse_hytek_pdf(pdf_path)
-        print(f"   ✅ Extracted {len(df)} entries")
+        print(f"✓ Extracted {len(df)} entries")
         return df
     except Exception as e:
-        print(f"   ❌ Error: {e}")
+        print(f"✗ Error: {e}")
         return pd.DataFrame()
 
 
@@ -118,7 +118,7 @@ def convert_time_to_seconds(time_val):
 
 def process_excel_sheet(df, team_name, opponent_name):
     """Process Excel sheet to ideal format."""
-    print(f"\n📊 Processing {team_name} Excel data...")
+    print(f"\n▸ Processing {team_name} Excel data...")
 
     ideal_data = []
 
@@ -178,23 +178,23 @@ def process_excel_sheet(df, team_name, opponent_name):
 
         ideal_data.append(ideal_row)
 
-    print(f"   ✅ Processed {len(ideal_data)} entries")
+    print(f"✓ Processed {len(ideal_data)} entries")
     return pd.DataFrame(ideal_data)
 
 
 def extract_lower_grades(pdf_df, team_name, opponent_name):
     """Extract 6th and 7th graders from PDF data."""
-    print(f"\n🔍 Extracting 6th and 7th graders from {team_name} PDF...")
+    print(f"\n▸ Extracting 6th and 7th graders from {team_name} PDF...")
 
     if pdf_df.empty:
-        print("   ⚠️  No PDF data available")
+        print("No PDF data available")
         return pd.DataFrame()
 
     # Filter for grades 6 and 7
     lower_grades = pdf_df[pdf_df["grade"].isin([6, 7])].copy()
 
     if lower_grades.empty:
-        print("   ℹ️  No 6th or 7th graders found")
+        print("No 6th or 7th graders found")
         return pd.DataFrame()
 
     # Convert to ideal format
@@ -216,14 +216,14 @@ def extract_lower_grades(pdf_df, team_name, opponent_name):
             ideal_data.append(ideal_row)
 
     result_df = pd.DataFrame(ideal_data)
-    print(f"   ✅ Found {len(result_df)} entries (6th/7th graders)")
+    print(f"✓ Found {len(result_df)} entries (6th/7th graders)")
     return result_df
 
 
 def main():
     """Main execution."""
     print("\n" + "=" * 70)
-    print("🏊 COMPLETE ROSTER CONVERSION")
+    print("▸ COMPLETE ROSTER CONVERSION")
     print("Combining Excel (8-12 grades) + PDF (6-7 grades)")
     print("=" * 70)
 
@@ -234,10 +234,10 @@ def main():
 
     try:
         all_sheets = pd.read_excel(COACH_EXCEL, sheet_name=None)
-        print("\n✅ Excel file loaded!")
-        print(f"📊 Found {len(all_sheets)} sheet(s): {list(all_sheets.keys())}")
+        print("\n✓ Excel file loaded!")
+        print(f"▸ Found {len(all_sheets)} sheet(s): {list(all_sheets.keys())}")
     except Exception as e:
-        print(f"❌ Error loading Excel: {e}")
+        print(f"✗ Error loading Excel: {e}")
         return
 
     # Step 2: Parse HyTek PDFs
@@ -280,19 +280,19 @@ def main():
             OUTPUT_DIR, "IDEAL_Seton_vs_Trinity_Christian_COMPLETE.csv"
         )
         seton_complete.to_csv(seton_output, index=False)
-        print("\n✅ Seton Complete File Saved:")
-        print(f"   📁 {seton_output}")
-        print(f"   📊 Total entries: {len(seton_complete)}")
-        print(f"      - Grades 8-12: {len(seton_excel_df)}")
-        print(f"      - Grades 6-7: {len(seton_lower_df)}")
+        print("\n✓ Seton Complete File Saved:")
+        print(f"{seton_output}")
+        print(f"▸ Total entries: {len(seton_complete)}")
+        print(f"- Grades 8-12: {len(seton_excel_df)}")
+        print(f"- Grades 6-7: {len(seton_lower_df)}")
 
         # Grade breakdown
         if "grade" in seton_complete.columns:
             grade_counts = seton_complete["grade"].value_counts().sort_index()
-            print("   📈 Grade breakdown:")
+            print("▸ Grade breakdown:")
             for grade, count in grade_counts.items():
-                scoring = "✓ Scoring" if grade >= 8 else "✗ Exhibition"
-                print(f"      - Grade {grade}: {count} entries ({scoring})")
+                scoring = " ✓ Scoring" if grade >= 8 else " Exhibition"
+                print(f"- Grade {grade}: {count} entries ({scoring})")
 
     # Process Trinity
     if trinity_sheet is not None:
@@ -311,34 +311,34 @@ def main():
             OUTPUT_DIR, "IDEAL_Trinity_Christian_vs_Seton_COMPLETE.csv"
         )
         trinity_complete.to_csv(trinity_output, index=False)
-        print("\n✅ Trinity Complete File Saved:")
-        print(f"   📁 {trinity_output}")
-        print(f"   📊 Total entries: {len(trinity_complete)}")
-        print(f"      - Grades 8-12: {len(trinity_excel_df)}")
-        print(f"      - Grades 6-7: {len(trinity_lower_df)}")
+        print("\n✓ Trinity Complete File Saved:")
+        print(f"{trinity_output}")
+        print(f"▸ Total entries: {len(trinity_complete)}")
+        print(f"- Grades 8-12: {len(trinity_excel_df)}")
+        print(f"- Grades 6-7: {len(trinity_lower_df)}")
 
         # Grade breakdown
         if "grade" in trinity_complete.columns:
             grade_counts = trinity_complete["grade"].value_counts().sort_index()
-            print("   📈 Grade breakdown:")
+            print("▸ Grade breakdown:")
             for grade, count in grade_counts.items():
-                scoring = "✓ Scoring" if grade >= 8 else "✗ Exhibition"
-                print(f"      - Grade {grade}: {count} entries ({scoring})")
+                scoring = " ✓ Scoring" if grade >= 8 else " Exhibition"
+                print(f"- Grade {grade}: {count} entries ({scoring})")
 
     # Final summary
     print("\n" + "=" * 70)
-    print("✅ CONVERSION COMPLETE!")
+    print("✓ CONVERSION COMPLETE!")
     print("=" * 70)
-    print(f"\n📁 Output files saved to: {OUTPUT_DIR}")
-    print("\n🎯 Files ready for SwimAI upload:")
-    print("   1. IDEAL_Seton_vs_Trinity_Christian_COMPLETE.csv")
-    print("   2. IDEAL_Trinity_Christian_vs_Seton_COMPLETE.csv")
-    print("\n💡 These files include:")
-    print("   ✅ All grades 6-12 (6-7 exhibition, 8-12 scoring)")
-    print("   ✅ Standardized event names")
-    print("   ✅ Opponent column (prevents multi-meet confusion)")
-    print("   ✅ Meet date (2024-11-23)")
-    print("   ✅ Ideal template format")
+    print(f"\nOutput files saved to: {OUTPUT_DIR}")
+    print("\n→ Files ready for SwimAI upload:")
+    print("1. IDEAL_Seton_vs_Trinity_Christian_COMPLETE.csv")
+    print("2. IDEAL_Trinity_Christian_vs_Seton_COMPLETE.csv")
+    print("\n* These files include:")
+    print("✓ All grades 6-12 (6-7 exhibition, 8-12 scoring)")
+    print("✓ Standardized event names")
+    print("✓ Opponent column (prevents multi-meet confusion)")
+    print("✓ Meet date (2024-11-23)")
+    print("✓ Ideal template format")
 
 
 if __name__ == "__main__":

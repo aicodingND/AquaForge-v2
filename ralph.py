@@ -117,15 +117,15 @@ class RalphLoop:
             True if task completed successfully, False otherwise
         """
         self.start_time = datetime.now()
-        print("🔄 Starting Ralph Loop")
-        print(f"   Task: {self.task}")
-        print(f"   Max iterations: {self.max_iterations}")
-        print(f"   Stop on success: {self.stop_on_success}")
+        print("→ Starting Ralph Loop")
+        print(f"Task: {self.task}")
+        print(f"Max iterations: {self.max_iterations}")
+        print(f"Stop on success: {self.stop_on_success}")
         print("-" * 50)
 
         while self.iteration < self.max_iterations:
             self.iteration += 1
-            print(f"\n📍 Iteration {self.iteration}/{self.max_iterations}")
+            print(f"\nIteration {self.iteration}/{self.max_iterations}")
 
             # Check success criteria
             try:
@@ -133,26 +133,26 @@ class RalphLoop:
 
                 if success and self.stop_on_success:
                     self._log_iteration(True, "Success criteria met!")
-                    print(f"✅ Success! Task completed in {self.iteration} iterations")
+                    print(f"✓ Success! Task completed in {self.iteration} iterations")
                     return True
 
                 self._log_iteration(success)
 
                 if not success:
-                    print("   ⏳ Not complete yet, continuing...")
+                    print("Not complete yet, continuing...")
                     # In a real implementation, this would trigger the AI agent
                     # to analyze the failure and attempt a fix
                     time.sleep(1)  # Prevent tight loop
 
             except KeyboardInterrupt:
-                print("\n🛑 Manual stop signal received")
+                print("\nManual stop signal received")
                 self._log_iteration(False, "Manually stopped")
                 return False
             except Exception as e:
-                print(f"   ❌ Error: {e}")
+                print(f"✗ Error: {e}")
                 self._log_iteration(False, str(e))
 
-        print(f"\n⚠️ Max iterations ({self.max_iterations}) reached")
+        print(f"\n! Max iterations ({self.max_iterations}) reached")
         return False
 
 
@@ -161,11 +161,13 @@ def run_tests_loop() -> bool:
     ralph = RalphLoop(
         task="Make all tests pass",
         max_iterations=10,
-        success_criteria=lambda: subprocess.run(
-            [sys.executable, "-m", "pytest", "tests/test_api.py", "-v"],
-            capture_output=True,
-        ).returncode
-        == 0,
+        success_criteria=lambda: (
+            subprocess.run(
+                [sys.executable, "-m", "pytest", "tests/test_api.py", "-v"],
+                capture_output=True,
+            ).returncode
+            == 0
+        ),
     )
     return ralph.run()
 
@@ -175,11 +177,13 @@ def run_build_loop() -> bool:
     ralph = RalphLoop(
         task="Fix build errors",
         max_iterations=20,
-        success_criteria=lambda: subprocess.run(
-            ["python", "-c", "from swim_ai_reflex.backend.api.main import api_app"],
-            capture_output=True,
-        ).returncode
-        == 0,
+        success_criteria=lambda: (
+            subprocess.run(
+                ["python", "-c", "from swim_ai_reflex.backend.api.main import api_app"],
+                capture_output=True,
+            ).returncode
+            == 0
+        ),
     )
     return ralph.run()
 
@@ -191,12 +195,12 @@ def run_build_loop() -> bool:
 # To use Ralph with Claude Code, add this to your .claude/settings.json:
 #
 # {
-#   "hooks": {
-#     "stop": {
-#       "command": "python ralph.py --check-complete",
-#       "prevents_stop": true
-#     }
-#   }
+# "hooks": {
+# "stop": {
+# "command": "python ralph.py --check-complete",
+# "prevents_stop": true
+# }
+# }
 # }
 #
 # This intercepts Claude's "I'm done" signal and re-feeds the prompt
@@ -213,38 +217,46 @@ class ClaudeCodeRalph:
     """
 
     STOP_CONDITIONS = {
-        "tests_pass": lambda: subprocess.run(
-            [
-                sys.executable,
-                "-m",
-                "pytest",
-                "tests/test_api.py",
-                "tests/test_api_integration.py",
-                "-v",
-                "--timeout=30",
-                "-m",
-                "not slow",
-            ],
-            capture_output=True,
-        ).returncode
-        == 0,
-        "build_succeeds": lambda: subprocess.run(
-            [sys.executable, "-c", "import swim_ai_reflex"], capture_output=True
-        ).returncode
-        == 0,
-        "no_lint_errors": lambda: subprocess.run(
-            [sys.executable, "-m", "ruff", "check", "."], capture_output=True
-        ).returncode
-        == 0,
-        "api_starts": lambda: subprocess.run(
-            [
-                sys.executable,
-                "-c",
-                "from swim_ai_reflex.backend.api.main import api_app",
-            ],
-            capture_output=True,
-        ).returncode
-        == 0,
+        "tests_pass": lambda: (
+            subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "pytest",
+                    "tests/test_api.py",
+                    "tests/test_api_integration.py",
+                    "-v",
+                    "--timeout=30",
+                    "-m",
+                    "not slow",
+                ],
+                capture_output=True,
+            ).returncode
+            == 0
+        ),
+        "build_succeeds": lambda: (
+            subprocess.run(
+                [sys.executable, "-c", "import swim_ai_reflex"], capture_output=True
+            ).returncode
+            == 0
+        ),
+        "no_lint_errors": lambda: (
+            subprocess.run(
+                [sys.executable, "-m", "ruff", "check", "."], capture_output=True
+            ).returncode
+            == 0
+        ),
+        "api_starts": lambda: (
+            subprocess.run(
+                [
+                    sys.executable,
+                    "-c",
+                    "from swim_ai_reflex.backend.api.main import api_app",
+                ],
+                capture_output=True,
+            ).returncode
+            == 0
+        ),
     }
 
     @classmethod
@@ -264,10 +276,10 @@ class ClaudeCodeRalph:
         for condition in conditions:
             if condition in cls.STOP_CONDITIONS:
                 if not cls.STOP_CONDITIONS[condition]():
-                    print(f"❌ Condition '{condition}' not met - continuing...")
+                    print(f"Condition '{condition}' not met - continuing...")
                     return False
 
-        print("✅ All conditions met - stopping")
+        print("All conditions met - stopping")
         return True
 
 

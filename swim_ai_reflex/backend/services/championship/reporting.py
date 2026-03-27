@@ -65,7 +65,7 @@ class PremiumReporter:
         with open(output_path, "w") as f:
             f.write(rendered_html)
 
-        logger.info(f"✨ Dashboard generated at: {output_path}")
+        logger.info(f"Dashboard generated at: {output_path}")
         return output_path
 
     def _render(self, template: str, context: dict[str, Any]) -> str:
@@ -120,7 +120,7 @@ class PremiumReporter:
         with open(output_path, "w") as f:
             f.write(rendered_html)
 
-        logger.info(f"📄 Roster generated at: {output_path}")
+        logger.info(f"▸ Roster generated at: {output_path}")
         return output_path
 
     def generate_pdf(self, context: dict[str, Any]) -> str:
@@ -147,7 +147,7 @@ class PremiumReporter:
             from weasyprint import HTML
 
             HTML(filename=html_path).write_pdf(pdf_path)
-            logger.info(f"📕 PDF generated at: {pdf_path}")
+            logger.info(f"PDF generated at: {pdf_path}")
             return pdf_path
         except ImportError:
             pass
@@ -157,14 +157,14 @@ class PremiumReporter:
             import pdfkit
 
             pdfkit.from_file(html_path, pdf_path)
-            logger.info(f"📕 PDF generated at: {pdf_path}")
+            logger.info(f"PDF generated at: {pdf_path}")
             return pdf_path
         except ImportError:
             pass
 
         # Fallback: save HTML with print-friendly CSS
-        logger.warning("⚠️ No PDF library available. Install weasyprint or pdfkit.")
-        logger.warning(f"   HTML report available at: {html_path}")
+        logger.warning("! No PDF library available. Install weasyprint or pdfkit.")
+        logger.warning(f"HTML report available at: {html_path}")
         return html_path
 
     def export_all_formats(self, context: dict[str, Any]) -> dict[str, str]:

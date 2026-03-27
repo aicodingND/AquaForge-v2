@@ -12,24 +12,24 @@ Key Features:
 - Monte Carlo validation
 """
 
-from dataclasses import dataclass, field
-from typing import Dict, List, Set, Optional, Any
 import time as time_module
+from dataclasses import dataclass, field
+from typing import Any
 
+from swim_ai_reflex.backend.core.rules import get_meet_profile
+from swim_ai_reflex.backend.models.championship import MeetPsychSheet
 from swim_ai_reflex.backend.services.constraint_validator import (
     ConstraintValidator,
-)
-from swim_ai_reflex.backend.services.relay_optimizer_service import (
-    RelayOptimizer,
-    RelayOptimizationResult,
-    get_relay_swimmers_for_constraints,
-    get_blocked_swimmers_for_event,
 )
 from swim_ai_reflex.backend.services.entry_optimizer_service import (
     EntrySelectionOptimizer,
 )
-from swim_ai_reflex.backend.core.rules import get_meet_profile
-from swim_ai_reflex.backend.models.championship import MeetPsychSheet
+from swim_ai_reflex.backend.services.relay_optimizer_service import (
+    RelayOptimizationResult,
+    RelayOptimizer,
+    get_blocked_swimmers_for_event,
+    get_relay_swimmers_for_constraints,
+)
 
 
 @dataclass
@@ -37,11 +37,11 @@ class UnifiedOptimizationResult:
     """Result from unified optimization."""
 
     # Individual assignments
-    individual_assignments: Dict[str, List[str]]  # {swimmer: [events]}
+    individual_assignments: dict[str, list[str]]  # {swimmer: [events]}
     individual_points: float
 
     # Relay configurations
-    relay_result: Optional[RelayOptimizationResult] = None
+    relay_result: RelayOptimizationResult | None = None
     relay_points: float = 0.0
 
     # Combined
@@ -50,17 +50,17 @@ class UnifiedOptimizationResult:
     improvement: float = 0.0
 
     # Validation
-    constraint_violations: List[str] = field(default_factory=list)
+    constraint_violations: list[str] = field(default_factory=list)
     is_valid: bool = True
 
     # Recommendations
-    recommendations: List[str] = field(default_factory=list)
+    recommendations: list[str] = field(default_factory=list)
 
     # Performance
     solve_time_ms: float = 0.0
 
     # Monte Carlo results (if run)
-    monte_carlo_results: Optional[Dict[str, Any]] = None
+    monte_carlo_results: dict[str, Any] | None = None
 
 
 class UnifiedOptimizationService:
@@ -101,7 +101,7 @@ class UnifiedOptimizationService:
         self,
         psych: MeetPsychSheet,
         team: str = "Seton",
-        divers: Optional[Set[str]] = None,
+        divers: set[str] | None = None,
         run_monte_carlo: bool = False,
         monte_carlo_trials: int = 500,
     ) -> UnifiedOptimizationResult:
@@ -138,7 +138,7 @@ class UnifiedOptimizationService:
         # This lets us block those swimmers from back-to-back individual events
 
         # For initial relay optimization, assume no individual constraints yet
-        empty_assignments: Dict[str, List[str]] = {}
+        empty_assignments: dict[str, list[str]] = {}
 
         relay_result = self.relay_optimizer.optimize_relays(
             psych=psych,
@@ -155,7 +155,7 @@ class UnifiedOptimizationService:
         # =========================================================================
         # Get swimmers blocked from each individual event due to relay back-to-back
 
-        blocked_by_relay: Dict[str, Set[str]] = {}
+        blocked_by_relay: dict[str, set[str]] = {}
         for event in self._get_individual_events(psych, team):
             blocked_swimmers = get_blocked_swimmers_for_event(relay_result, event)
             if blocked_swimmers:
@@ -189,7 +189,7 @@ class UnifiedOptimizationService:
                         individual_assignments[swimmer].remove(event)
                         violations_fixed += 1
                         recommendations.append(
-                            f"⚠️ Removed {swimmer} from {event} (blocked by relay)"
+                            f"! Removed {swimmer} from {event} (blocked by relay)"
                         )
 
         if violations_fixed > 0:
@@ -234,7 +234,7 @@ class UnifiedOptimizationService:
 
         if validation_result.warnings:
             for warning in validation_result.warnings:
-                recommendations.append(f"⚠️ {warning.message}")
+                recommendations.append(f"! {warning.message}")
 
         # =========================================================================
         # PHASE 6: Calculate Totals and Improvements
@@ -246,15 +246,15 @@ class UnifiedOptimizationService:
         # Add 400FR recommendation
         if relay_result.relay_400_recommendation == "swim":
             recommendations.append(
-                f"✅ SWIM 400 Free Relay - Net gain: {relay_result.relay_400_net_value:.1f} pts"
+                f"✓ SWIM 400 Free Relay - Net gain: {relay_result.relay_400_net_value:.1f} pts"
             )
         elif relay_result.relay_400_recommendation == "skip":
             recommendations.append(
-                "❌ SKIP 400 Free Relay - Not enough available swimmers"
+                "✗ SKIP 400 Free Relay - Not enough available swimmers"
             )
         elif relay_result.relay_400_recommendation == "optional":
             recommendations.append(
-                f"❓ 400 Free Relay optional - Net gain: {relay_result.relay_400_net_value:.1f} pts"
+                f"400 Free Relay optional - Net gain: {relay_result.relay_400_net_value:.1f} pts"
             )
 
         # =========================================================================
@@ -266,7 +266,7 @@ class UnifiedOptimizationService:
                 psych, team, individual_assignments, divers, monte_carlo_trials
             )
             recommendations.append(
-                f"📊 Monte Carlo: {monte_carlo_results.get('win_prob', 0):.0%} win probability"
+                f"▸ Monte Carlo: {monte_carlo_results.get('win_prob', 0):.0%} win probability"
             )
 
         solve_time_ms = (time_module.time() - start_time) * 1000
@@ -286,7 +286,7 @@ class UnifiedOptimizationService:
             monte_carlo_results=monte_carlo_results,
         )
 
-    def _get_individual_events(self, psych: MeetPsychSheet, team: str) -> List[str]:
+    def _get_individual_events(self, psych: MeetPsychSheet, team: str) -> list[str]:
         """Get list of individual events for the team."""
         team_entries = psych.get_team_entries(team)
         events = set()
@@ -302,10 +302,10 @@ class UnifiedOptimizationService:
         self,
         psych: MeetPsychSheet,
         team: str,
-        assignments: Dict[str, List[str]],
-        divers: Set[str],
+        assignments: dict[str, list[str]],
+        divers: set[str],
         trials: int,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Run Monte Carlo simulation on the final lineup."""
         # This is a placeholder - would need to convert psych sheet to DataFrame
         # and run fast_monte_carlo_simulation
@@ -321,7 +321,7 @@ class UnifiedOptimizationService:
 def quick_optimize(
     psych: MeetPsychSheet,
     team: str = "Seton",
-    divers: Optional[Set[str]] = None,
+    divers: set[str] | None = None,
     meet_profile: str = "vcac_championship",
 ) -> UnifiedOptimizationResult:
     """

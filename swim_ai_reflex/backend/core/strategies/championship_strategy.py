@@ -473,7 +473,7 @@ class ChampionshipGurobiStrategy:
         considered, including assigned teammates).
 
         Enforces per-team scorer caps for ALL teams, not just the
-        target team.  When an opponent team reaches max_scorers,
+        target team. When an opponent team reaches max_scorers,
         subsequent swimmers from that team are skipped and do not
         consume a scoring position.
 
@@ -603,11 +603,11 @@ class ChampionshipGurobiStrategy:
         for swimmer, events in assignments.items():
             if swimmer in divers:
                 recs.append(
-                    f"🏊 {swimmer} (diver): {len(events)} individual events assigned"
+                    f"▸ {swimmer} (diver): {len(events)} individual events assigned"
                 )
             if swimmer in relay_3_swimmers:
                 recs.append(
-                    f"🔄 {swimmer} (400FR): {len(events)} individual events (relay-3 penalty applied)"
+                    f"→ {swimmer} (400FR): {len(events)} individual events (relay-3 penalty applied)"
                 )
 
         # Flag swimmers with only 1 event (might be worth reviewing)
@@ -618,7 +618,7 @@ class ChampionshipGurobiStrategy:
         ]
         if single_event_swimmers:
             recs.append(
-                f"⚠️ {len(single_event_swimmers)} swimmers assigned only 1 event - review for opportunities"
+                f"! {len(single_event_swimmers)} swimmers assigned only 1 event - review for opportunities"
             )
 
         return recs

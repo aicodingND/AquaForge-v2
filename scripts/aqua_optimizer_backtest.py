@@ -130,14 +130,14 @@ def run_aqua_backtest(meet_id: int, meet_name: str, profile: str) -> dict[str, A
         result["meet_meta"] = meet_meta
 
         if not entries:
-            print(f"  ⚠️ No entries found for meet {meet_id}")
+            print(f"! No entries found for meet {meet_id}")
             return result
 
-        print(f"  📊 Loaded {len(entries)} entries from MDB")
+        print(f"▸ Loaded {len(entries)} entries from MDB")
 
         # Get unique teams
         teams = set(e["team"] for e in entries)
-        print(f"  🏊 Teams: {len(teams)}")
+        print(f"▸ Teams: {len(teams)}")
 
         # Find Seton team
         seton_team = None
@@ -147,7 +147,7 @@ def run_aqua_backtest(meet_id: int, meet_name: str, profile: str) -> dict[str, A
                 break
 
         if not seton_team:
-            print("  ⚠️ Seton team not found in meet")
+            print("! Seton team not found in meet")
             return result
 
         # Convert entries to DataFrames
@@ -158,18 +158,18 @@ def run_aqua_backtest(meet_id: int, meet_name: str, profile: str) -> dict[str, A
         opponent_df = entries_to_dataframe(opponent_entries)
 
         if seton_df.empty:
-            print("  ⚠️ No Seton entries in meet")
+            print("! No Seton entries in meet")
             return result
 
-        print(f"  🔵 Seton swimmers: {seton_df['swimmer'].nunique()}")
+        print(f"Seton swimmers: {seton_df['swimmer'].nunique()}")
         print(
-            f"  🔴 Opponent swimmers: {opponent_df['swimmer'].nunique() if not opponent_df.empty else 0}"
+            f"● Opponent swimmers: {opponent_df['swimmer'].nunique() if not opponent_df.empty else 0}"
         )
 
         # Get CORRECT scoring profile based on meet type
         scoring_profile = get_scoring_profile(profile)
         print(
-            f"  📏 Scoring: {scoring_profile.name} - Points: {scoring_profile.individual_points[:5]}..."
+            f"▸ Scoring: {scoring_profile.name} - Points: {scoring_profile.individual_points[:5]}..."
         )
 
         # Create AquaOptimizer with MAXIMUM POWER - thorough mode + extra Nash equilibrium
@@ -186,7 +186,7 @@ def run_aqua_backtest(meet_id: int, meet_name: str, profile: str) -> dict[str, A
             nash_iterations=10,  # Extra Nash equilibrium iterations for game theory optimization
             use_parallel=True,
         )
-        print("  ⚔️ Mode: THOROUGH (Nash x10, 15 seeds, parallel)")
+        print("Mode: THOROUGH (Nash x10, 15 seeds, parallel)")
 
         start_time = time.time()
         lineup_df, scored_df, totals, details = optimizer.optimize(
@@ -210,10 +210,10 @@ def run_aqua_backtest(meet_id: int, meet_name: str, profile: str) -> dict[str, A
                     assignments[swimmer].append(event)
             result["entry_assignments"] = assignments
 
-        print("\n  ✅ AquaOptimizer Result:")
-        print(f"     Seton Score: {totals.get('seton', 0):.1f}")
-        print(f"     Opponent Score: {totals.get('opponent', 0):.1f}")
-        print(f"     Execution Time: {execution_time:.0f}ms")
+        print("\n✓ AquaOptimizer Result:")
+        print(f"Seton Score: {totals.get('seton', 0):.1f}")
+        print(f"Opponent Score: {totals.get('opponent', 0):.1f}")
+        print(f"Execution Time: {execution_time:.0f}ms")
 
         # Validate coach lineup (same as championship_backtest)
         seton_entries = [e for e in entries if e["team"] == seton_team]
@@ -221,20 +221,20 @@ def run_aqua_backtest(meet_id: int, meet_name: str, profile: str) -> dict[str, A
         coach_analysis = validate_historical_lineup(seton_entries, seton_team, profile)
         result["coach_analysis"] = coach_analysis
 
-        print("\n  📋 Coach Analysis:")
-        print(f"     Legal Score: {coach_analysis.get('legal_score', 0):.1f}")
-        print(f"     Violations: {len(coach_analysis.get('violations', []))}")
+        print("\n▸ Coach Analysis:")
+        print(f"Legal Score: {coach_analysis.get('legal_score', 0):.1f}")
+        print(f"Violations: {len(coach_analysis.get('violations', []))}")
 
         # Calculate advantage over coach
         advantage = result["aqua_projected_score"] - coach_analysis.get(
             "legal_score", 0
         )
         print(
-            f"\n  🎯 AquaOptimizer Advantage: {'+' if advantage >= 0 else ''}{advantage:.1f} pts"
+            f"\n→ AquaOptimizer Advantage: {'+' if advantage >= 0 else ''}{advantage:.1f} pts"
         )
 
     except Exception as e:
-        print(f"  ❌ Error: {e}")
+        print(f"✗ Error: {e}")
         import traceback
 
         traceback.print_exc()
@@ -304,15 +304,15 @@ def main():
     print("\n" + "=" * 70)
     print("AQUAOPTIMIZER BACKTEST SUMMARY")
     print("=" * 70)
-    print(f"\n📊 Meets Analyzed: {len(results)}")
-    print(f"🤖 Total AquaOptimizer Score: {total_aqua_score:,.0f}")
-    print(f"👨‍🏫 Total Coach Legal Score: {total_coach_score:,.0f}")
-    print(f"🎯 AquaOptimizer Advantage: +{total_aqua_score - total_coach_score:,.0f}")
+    print(f"\n▸ Meets Analyzed: {len(results)}")
+    print(f"Total AquaOptimizer Score: {total_aqua_score:,.0f}")
+    print(f"▸ Total Coach Legal Score: {total_coach_score:,.0f}")
+    print(f"→ AquaOptimizer Advantage: +{total_aqua_score - total_coach_score:,.0f}")
     print(
-        f"🏆 AquaOptimizer Win Rate: {100 * aqua_wins / max(len(results), 1):.0f}% ({aqua_wins}/{len(results)})"
+        f"AquaOptimizer Win Rate: {100 * aqua_wins / max(len(results), 1):.0f}% ({aqua_wins}/{len(results)})"
     )
-    print(f"⚠️ Total Violations: {total_violations}")
-    print(f"\n💾 Results saved to: {output_csv}")
+    print(f"! Total Violations: {total_violations}")
+    print(f"\nResults saved to: {output_csv}")
 
     return results
 

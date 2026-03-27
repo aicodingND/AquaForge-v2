@@ -72,9 +72,9 @@ def run_basic_test(url: str, take_screenshot: bool = False) -> dict:
             console_errors = []
             page.on(
                 "console",
-                lambda msg: console_errors.append(msg.text)
-                if msg.type == "error"
-                else None,
+                lambda msg: (
+                    console_errors.append(msg.text) if msg.type == "error" else None
+                ),
             )
 
             # Performance metrics

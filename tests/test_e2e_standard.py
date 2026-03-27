@@ -20,9 +20,9 @@ try:
         optimization_service,
     )
 
-    print("[TEST] ✅ Imports successful.")
+    print("[TEST] ✓ Imports successful.")
 except ImportError as e:
-    print(f"[TEST] ❌ Import Error: {e}")
+    print(f"[TEST] ✗ Import Error: {e}")
     sys.exit(1)
 
 
@@ -31,7 +31,7 @@ async def run_e2e_standard_events():
     Run E2E test with STANDARD dual meet events only (8 events, 232 max points).
     """
     print("\n" + "=" * 80)
-    print("🏊‍♀️ E2E TEST: Seton vs Trinity - STANDARD Dual Meet (Girls)")
+    print("E2E TEST: Seton vs Trinity - STANDARD Dual Meet (Girls)")
     print("8 Individual Events × 29 Points = 232 Maximum Points")
     print("=" * 80)
 
@@ -46,24 +46,24 @@ async def run_e2e_standard_events():
     )
 
     if not seton_pdf.exists() or not trinity_pdf.exists():
-        print("[ERROR] ❌ PDFs not found")
+        print("[ERROR] ✗ PDFs not found")
         return
 
-    print("\n[STEP 1] 📄 Parsing PDFs...")
+    print("\n[STEP 1] ▸ Parsing PDFs...")
 
     # Parse PDFs
     try:
         seton_df = await asyncio.to_thread(parse_hytek_pdf, str(seton_pdf))
         trinity_df = await asyncio.to_thread(parse_hytek_pdf, str(trinity_pdf))
         print(
-            f"[PARSE] ✅ Seton: {len(seton_df)} entries, Trinity: {len(trinity_df)} entries"
+            f"[PARSE] ✓ Seton: {len(seton_df)} entries, Trinity: {len(trinity_df)} entries"
         )
     except Exception as e:
-        print(f"[ERROR] ❌ Failed to parse PDFs: {e}")
+        print(f"[ERROR] ✗ Failed to parse PDFs: {e}")
         return
 
     # Filter for girls only (no diving, no relays)
-    print("\n[STEP 2] 🔍 Filtering for Girls Events...")
+    print("\n[STEP 2] ▸ Filtering for Girls Events...")
     seton_girls = seton_df[
         (seton_df["gender"] == "F")
         & (not seton_df["is_relay"])
@@ -76,12 +76,12 @@ async def run_e2e_standard_events():
         & (~trinity_df["event"].str.contains("Diving|Dives", case=False, na=False))
     ].copy()
 
-    print("  After gender/relay/diving filter:")
-    print(f"    Seton: {len(seton_girls)} entries")
-    print(f"    Trinity: {len(trinity_girls)} entries")
+    print("After gender/relay/diving filter:")
+    print(f"Seton: {len(seton_girls)} entries")
+    print(f"Trinity: {len(trinity_girls)} entries")
 
     # Filter to STANDARD dual meet events
-    print("\n[STEP 3] 📋 Mapping to STANDARD Dual Meet Events...")
+    print("\n[STEP 3] ▸ Mapping to STANDARD Dual Meet Events...")
     seton_standard = filter_to_standard_events(seton_girls, gender="F")
     trinity_standard = filter_to_standard_events(trinity_girls, gender="F")
 
@@ -90,10 +90,10 @@ async def run_e2e_standard_events():
 
     # Check if we have data
     if len(seton_standard) == 0:
-        print("\n[ERROR] ❌ No Seton standard events found!")
+        print("\n[ERROR] ✗ No Seton standard events found!")
         return
     if len(trinity_standard) == 0:
-        print("\n[ERROR] ❌ No Trinity standard events found!")
+        print("\n[ERROR] ✗ No Trinity standard events found!")
         return
 
     # Show swimmer counts
@@ -101,16 +101,16 @@ async def run_e2e_standard_events():
     trinity_swimmers = trinity_standard["swimmer"].nunique()
     print("\n[DATA SUMMARY]")
     print(
-        f"  Seton: {seton_swimmers} unique swimmers, {len(seton_standard)} event entries"
+        f"Seton: {seton_swimmers} unique swimmers, {len(seton_standard)} event entries"
     )
     print(
-        f"  Trinity: {trinity_swimmers} unique swimmers, {len(trinity_standard)} event entries"
+        f"Trinity: {trinity_swimmers} unique swimmers, {len(trinity_standard)} event entries"
     )
 
     # Run optimization with GUROBI
-    print("\n[STEP 4] 🚀 Running Optimization (GUROBI)...")
-    print("  Strategy: Best on Best (Trinity lineup will be optimized)")
-    print("  Expected: Seton 128-135, Trinity 70-110, Combined ≤ 232")
+    print("\n[STEP 4] → Running Optimization (GUROBI)...")
+    print("Strategy: Best on Best (Trinity lineup will be optimized)")
+    print("Expected: Seton 128-135, Trinity 70-110, Combined ≤ 232")
 
     try:
         result = await optimization_service.predict_best_lineups(
@@ -122,7 +122,7 @@ async def run_e2e_standard_events():
             use_cache=False,
         )
     except Exception as e:
-        print(f"[ERROR] ❌ Optimization failed: {e}")
+        print(f"[ERROR] ✗ Optimization failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -131,7 +131,7 @@ async def run_e2e_standard_events():
     # Check result
     if not result.get("success", False):
         print(
-            f"\n[FAIL] ❌ Optimization Error: {result.get('message')} - {result.get('error')}"
+            f"\n[FAIL] ✗ Optimization Error: {result.get('message')} - {result.get('error')}"
         )
         return
 
@@ -141,40 +141,40 @@ async def run_e2e_standard_events():
     trinity_score = data["opponent_score"]
     combined_score = seton_score + trinity_score
 
-    print("\n[STEP 5] 📊 RESULTS")
+    print("\n[STEP 5] ▸ RESULTS")
     print("=" * 80)
-    print("\n🏆 FINAL SCORE:")
-    print(f"  Seton:    {seton_score:.1f}")
-    print(f"  Trinity:  {trinity_score:.1f}")
+    print("\nFINAL SCORE:")
+    print(f"Seton: {seton_score:.1f}")
+    print(f"Trinity: {trinity_score:.1f}")
     print(
-        f"  Combined: {combined_score:.1f} / 232 max ({combined_score / 232 * 100:.1f}%)"
+        f"Combined: {combined_score:.1f} / 232 max ({combined_score / 232 * 100:.1f}%)"
     )
-    print(f"  Margin:   {abs(seton_score - trinity_score):.1f} points")
+    print(f"Margin: {abs(seton_score - trinity_score):.1f} points")
     print(
-        f"  Winner:   {'Seton' if seton_score > trinity_score else 'Trinity' if trinity_score > seton_score else 'TIE'}"
+        f"Winner: {'Seton' if seton_score > trinity_score else 'Trinity' if trinity_score > seton_score else 'TIE'}"
     )
 
     # Validation
-    print("\n✅ VALIDATION:")
+    print("\n✓ VALIDATION:")
     in_range_seton = 128 <= seton_score <= 135
     in_range_trinity = 70 <= trinity_score <= 110
     under_max = combined_score <= 232
 
     print(
-        f"  Seton in range (128-135): {'✅' if in_range_seton else '❌'} {seton_score:.1f}"
+        f"Seton in range (128-135): {'✓' if in_range_seton else '✗'} {seton_score:.1f}"
     )
     print(
-        f"  Trinity in range (70-110): {'✅' if in_range_trinity else '❌'} {trinity_score:.1f}"
+        f"Trinity in range (70-110): {'✓' if in_range_trinity else '✗'} {trinity_score:.1f}"
     )
-    print(f"  Combined ≤ 232: {'✅' if under_max else '❌'} {combined_score:.1f}")
+    print(f"Combined ≤ 232: {'✓' if under_max else '✗'} {combined_score:.1f}")
 
     if in_range_seton and in_range_trinity and under_max:
-        print("\n  🎉 ALL VALIDATIONS PASSED!")
+        print("\nALL VALIDATIONS PASSED!")
     else:
-        print("\n  ⚠️  Some validations failed - check scoring logic")
+        print("\nSome validations failed - check scoring logic")
 
     print("\n" + "=" * 80)
-    print("✅ E2E TEST COMPLETE")
+    print("E2E TEST COMPLETE")
     print("=" * 80)
 
 

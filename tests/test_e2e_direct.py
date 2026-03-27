@@ -19,7 +19,7 @@ from swim_ai_reflex.backend.core.scoring import full_meet_scoring
 
 async def run_direct_test():
     print("\n" + "=" * 80)
-    print("🏊‍♀️ DIRECT E2E TEST: Seton vs Trinity - Girls Senior Events")
+    print("DIRECT E2E TEST: Seton vs Trinity - Girls Senior Events")
     print("=" * 80)
 
     # Parse PDFs
@@ -35,8 +35,8 @@ async def run_direct_test():
     print("\n[1] Parsing PDFs...")
     seton_df = await asyncio.to_thread(parse_hytek_pdf, str(seton_pdf))
     trinity_df = await asyncio.to_thread(parse_hytek_pdf, str(trinity_pdf))
-    print(f"  Seton: {len(seton_df)} entries")
-    print(f"  Trinity: {len(trinity_df)} entries")
+    print(f"Seton: {len(seton_df)} entries")
+    print(f"Trinity: {len(trinity_df)} entries")
 
     # Filter for girls senior events
     print("\n[2] Filtering for girls senior events...")
@@ -55,10 +55,10 @@ async def run_direct_test():
     ].copy()
 
     print(
-        f"  Seton: {len(seton_girls)} girls senior entries, {seton_girls['swimmer'].nunique()} swimmers"
+        f"Seton: {len(seton_girls)} girls senior entries, {seton_girls['swimmer'].nunique()} swimmers"
     )
     print(
-        f"  Trinity: {len(trinity_girls)} girls senior entries, {trinity_girls['swimmer'].nunique()} swimmers"
+        f"Trinity: {len(trinity_girls)} girls senior entries, {trinity_girls['swimmer'].nunique()} swimmers"
     )
 
     # Create opponent lineup using greedy model
@@ -66,9 +66,9 @@ async def run_direct_test():
     rules = VISAADualRules()
     trinity_lineup = greedy_opponent_best_lineup(trinity_girls)
     print(
-        f"  Trinity lineup: {len(trinity_lineup)} entries, {trinity_lineup['swimmer'].nunique()} swimmers"
+        f"Trinity lineup: {len(trinity_lineup)} entries, {trinity_lineup['swimmer'].nunique()} swimmers"
     )
-    print(f"  Events: {sorted(trinity_lineup['event'].unique())}")
+    print(f"Events: {sorted(trinity_lineup['event'].unique())}")
 
     # For Seton, let's just use their top 4 per event as well (simple greedy)
     print("\n[4] Creating Seton's lineup (simple greedy - top 4 per event)...")
@@ -97,9 +97,9 @@ async def run_direct_test():
     )
 
     print(
-        f"  Seton lineup: {len(seton_lineup)} entries, {seton_lineup['swimmer'].nunique()} swimmers"
+        f"Seton lineup: {len(seton_lineup)} entries, {seton_lineup['swimmer'].nunique()} swimmers"
     )
-    print(f"  Events: {sorted(seton_lineup['event'].unique())}")
+    print(f"Events: {sorted(seton_lineup['event'].unique())}")
 
     # Combine lineups
     print("\n[5] Scoring the meet...")
@@ -113,18 +113,18 @@ async def run_direct_test():
     seton_score = totals.get("seton", 0)
     trinity_score = totals.get("opponent", 0)
 
-    print("\n[6] 📊 RESULTS")
+    print("\n[6] ▸ RESULTS")
     print("=" * 80)
-    print("\n🏆 FINAL SCORE:")
-    print(f"  Seton:    {seton_score}")
-    print(f"  Trinity:  {trinity_score}")
-    print(f"  Margin:   {abs(seton_score - trinity_score)} points")
+    print("\nFINAL SCORE:")
+    print(f"Seton: {seton_score}")
+    print(f"Trinity: {trinity_score}")
+    print(f"Margin: {abs(seton_score - trinity_score)} points")
     print(
-        f"  Winner:   {'Seton' if seton_score > trinity_score else 'Trinity' if trinity_score > seton_score else 'TIE'}"
+        f"Winner: {'Seton' if seton_score > trinity_score else 'Trinity' if trinity_score > seton_score else 'TIE'}"
     )
 
     # Show event breakdown
-    print("\n📋 EVENT BREAKDOWN:")
+    print("\n▸ EVENT BREAKDOWN:")
     print("-" * 80)
     for event in sorted(scored_df["event"].unique()):
         event_data = scored_df[scored_df["event"] == event]
@@ -137,20 +137,20 @@ async def run_direct_test():
         trinity_pts = trinity_swimmers["points"].sum()
 
         print(f"\n{event}")
-        print(f"  Seton ({seton_pts} pts):")
+        print(f"Seton ({seton_pts} pts):")
         for _, row in seton_swimmers.iterrows():
             print(
-                f"    {int(row['place'])}. {row['swimmer']} - {row['time']:.2f}s ({row['points']} pts)"
+                f"{int(row['place'])}. {row['swimmer']} - {row['time']:.2f}s ({row['points']} pts)"
             )
 
-        print(f"  Trinity ({trinity_pts} pts):")
+        print(f"Trinity ({trinity_pts} pts):")
         for _, row in trinity_swimmers.iterrows():
             print(
-                f"    {int(row['place'])}. {row['swimmer']} - {row['time']:.2f}s ({row['points']} pts)"
+                f"{int(row['place'])}. {row['swimmer']} - {row['time']:.2f}s ({row['points']} pts)"
             )
 
     print("\n" + "=" * 80)
-    print("✅ DIRECT E2E TEST COMPLETE")
+    print("✓ DIRECT E2E TEST COMPLETE")
     print("=" * 80)
 
 

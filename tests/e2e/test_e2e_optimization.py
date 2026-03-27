@@ -68,10 +68,10 @@ async def test_optimization():
     df_imm_filt["team"] = "opponent"
 
     print(
-        f"   Seton: {len(df_seton_filt)} entries, {df_seton_filt['swimmer'].nunique()} swimmers"
+        f"Seton: {len(df_seton_filt)} entries, {df_seton_filt['swimmer'].nunique()} swimmers"
     )
     print(
-        f"   Immanuel: {len(df_imm_filt)} entries, {df_imm_filt['swimmer'].nunique()} swimmers"
+        f"Immanuel: {len(df_imm_filt)} entries, {df_imm_filt['swimmer'].nunique()} swimmers"
     )
 
     # Align meet data - returns tuple!
@@ -80,15 +80,15 @@ async def test_optimization():
         df_seton_filt, df_imm_filt
     )
 
-    print(f"   Alignment aligned: {alignment_info.get('aligned', False)}")
-    print(f"   Alignment method: {alignment_info.get('alignment_method', 'none')}")
-    print(f"   Seton post-alignment: {len(seton_aligned)} entries")
-    print(f"   Opponent post-alignment: {len(opponent_aligned)} entries")
+    print(f"Alignment aligned: {alignment_info.get('aligned', False)}")
+    print(f"Alignment method: {alignment_info.get('alignment_method', 'none')}")
+    print(f"Seton post-alignment: {len(seton_aligned)} entries")
+    print(f"Opponent post-alignment: {len(opponent_aligned)} entries")
 
     # Even without perfect alignment, we proceed (simulating user confirmation)
     print("\n4. Running optimization...")
-    print("   Backend: heuristic")
-    print("   Enforce fatigue: True")
+    print("Backend: heuristic")
+    print("Enforce fatigue: True")
 
     # Convert to dicts for optimization service
     seton_data = seton_aligned.to_dict("records")
@@ -104,19 +104,19 @@ async def test_optimization():
             scoring_type="individual",
         )
 
-        print(f"\n   Optimization Success: {response['success']}")
+        print(f"\nOptimization Success: {response['success']}")
 
         if response["success"]:
             results = response["data"]
-            print("\n   === RESULTS ===")
-            print(f"   Seton Score: {results.get('seton_score', 'N/A')}")
-            print(f"   Opponent Score: {results.get('opponent_score', 'N/A')}")
+            print("\n === RESULTS ===")
+            print(f"Seton Score: {results.get('seton_score', 'N/A')}")
+            print(f"Opponent Score: {results.get('opponent_score', 'N/A')}")
 
             lineup = results.get("details", [])
-            print(f"   Lineup entries: {len(lineup)}")
+            print(f"Lineup entries: {len(lineup)}")
 
             if lineup:
-                print("\n   Sample lineup (first 8 entries):")
+                print("\nSample lineup (first 8 entries):")
                 seton_entries = [
                     e for e in lineup if e.get("team", "").lower() == "seton"
                 ][:4]
@@ -124,32 +124,30 @@ async def test_optimization():
                     e for e in lineup if e.get("team", "").lower() != "seton"
                 ][:4]
 
-                print("   Seton:")
+                print("Seton:")
                 for entry in seton_entries:
                     print(
-                        f"      {entry.get('event', 'N/A')}: {entry.get('swimmer', 'N/A')} - {entry.get('time', 'N/A')}s (pts: {entry.get('points', 0)})"
+                        f"{entry.get('event', 'N/A')}: {entry.get('swimmer', 'N/A')} - {entry.get('time', 'N/A')}s (pts: {entry.get('points', 0)})"
                     )
 
-                print("   Opponent:")
+                print("Opponent:")
                 for entry in opp_entries:
                     print(
-                        f"      {entry.get('event', 'N/A')}: {entry.get('swimmer', 'N/A')} - {entry.get('time', 'N/A')}s (pts: {entry.get('points', 0)})"
+                        f"{entry.get('event', 'N/A')}: {entry.get('swimmer', 'N/A')} - {entry.get('time', 'N/A')}s (pts: {entry.get('points', 0)})"
                     )
 
             # Validation
-            print("\n   === VALIDATION ===")
+            print("\n === VALIDATION ===")
             seton_score = results.get("seton_score", 0)
             opp_score = results.get("opponent_score", 0)
 
             if seton_score > 150 or opp_score > 150:
-                print(
-                    f"   ⚠️ WARNING: Scores seem inflated ({seton_score}, {opp_score})"
-                )
+                print(f"WARNING: Scores seem inflated ({seton_score}, {opp_score})")
             elif seton_score < 10 or opp_score < 10:
-                print(f"   ⚠️ WARNING: Scores seem too low ({seton_score}, {opp_score})")
+                print(f"WARNING: Scores seem too low ({seton_score}, {opp_score})")
             else:
                 print(
-                    f"   ✅ Scores look reasonable: Seton {seton_score} - Opponent {opp_score}"
+                    f"Scores look reasonable: Seton {seton_score} - Opponent {opp_score}"
                 )
 
             # Check unique swimmers per team
@@ -161,13 +159,13 @@ async def test_optimization():
                 opp_swimmers = df_lineup[df_lineup["team"].str.lower() != "seton"][
                     "swimmer"
                 ].nunique()
-                print(f"   Seton swimmers in lineup: {seton_swimmers}")
-                print(f"   Opponent swimmers in lineup: {opp_swimmers}")
+                print(f"Seton swimmers in lineup: {seton_swimmers}")
+                print(f"Opponent swimmers in lineup: {opp_swimmers}")
         else:
-            print(f"   ERROR: {response.get('message', 'Unknown error')}")
+            print(f"ERROR: {response.get('message', 'Unknown error')}")
 
     except Exception as e:
-        print(f"   EXCEPTION: {str(e)}")
+        print(f"EXCEPTION: {str(e)}")
         import traceback
 
         traceback.print_exc()

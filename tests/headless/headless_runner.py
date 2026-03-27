@@ -24,7 +24,7 @@ import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import pandas as pd
 
@@ -49,13 +49,13 @@ class TestConfiguration:
     seton_team: str = "SST"
     opponent_team: str = "TCS"
     strategy: str = "gurobi"  # gurobi, heuristic, greedy
-    gender: Optional[str] = None  # M, F, or None for both
-    events: Optional[List[str]] = None  # Specific events or None for all
+    gender: str | None = None  # M, F, or None for both
+    events: list[str] | None = None  # Specific events or None for all
     enforce_fatigue: bool = False
     max_entries_per_event: int = 4
     max_events_per_swimmer: int = 2
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "name": self.name,
             "seton_team": self.seton_team,
@@ -77,11 +77,11 @@ class TestResult:
     winner: str
     execution_time_ms: float
     success: bool
-    error: Optional[str] = None
-    details: Optional[Dict[str, Any]] = None
+    error: str | None = None
+    details: dict[str, Any] | None = None
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             **self.config.to_dict(),
             "seton_score": self.seton_score,
@@ -99,7 +99,7 @@ class TestResult:
 class BatchResult:
     """Results from a batch of tests."""
 
-    results: List[TestResult]
+    results: list[TestResult]
     total_time_ms: float
     success_count: int
     failure_count: int
@@ -141,7 +141,7 @@ class BatchResult:
                 print("\nBy Strategy:")
                 for strat, grp in df.groupby("strategy"):
                     avg = grp["seton_score"].mean()
-                    print(f"  {strat}: {avg:.1f} avg Seton score")
+                    print(f"{strat}: {avg:.1f} avg Seton score")
 
         print("=" * 70 + "\n")
 
@@ -155,33 +155,33 @@ class ConfigurationMatrix:
     """Build test configurations from parameter combinations."""
 
     def __init__(self):
-        self.seton_teams: List[str] = ["SST"]
-        self.opponent_teams: List[str] = []
-        self.strategies: List[str] = ["gurobi"]
-        self.genders: List[Optional[str]] = [None]
-        self.enforce_fatigue_options: List[bool] = [False]
+        self.seton_teams: list[str] = ["SST"]
+        self.opponent_teams: list[str] = []
+        self.strategies: list[str] = ["gurobi"]
+        self.genders: list[str | None] = [None]
+        self.enforce_fatigue_options: list[bool] = [False]
 
-    def with_seton_teams(self, teams: List[str]) -> "ConfigurationMatrix":
+    def with_seton_teams(self, teams: list[str]) -> "ConfigurationMatrix":
         self.seton_teams = teams
         return self
 
-    def with_opponents(self, teams: List[str]) -> "ConfigurationMatrix":
+    def with_opponents(self, teams: list[str]) -> "ConfigurationMatrix":
         self.opponent_teams = teams
         return self
 
-    def with_strategies(self, strategies: List[str]) -> "ConfigurationMatrix":
+    def with_strategies(self, strategies: list[str]) -> "ConfigurationMatrix":
         self.strategies = strategies
         return self
 
-    def with_genders(self, genders: List[Optional[str]]) -> "ConfigurationMatrix":
+    def with_genders(self, genders: list[str | None]) -> "ConfigurationMatrix":
         self.genders = genders
         return self
 
-    def with_fatigue_options(self, options: List[bool]) -> "ConfigurationMatrix":
+    def with_fatigue_options(self, options: list[bool]) -> "ConfigurationMatrix":
         self.enforce_fatigue_options = options
         return self
 
-    def build(self) -> List[TestConfiguration]:
+    def build(self) -> list[TestConfiguration]:
         """Generate all configuration combinations."""
         configs = []
 
@@ -232,7 +232,7 @@ class HeadlessTestRunner:
     Supports parallel execution and batch processing.
     """
 
-    def __init__(self, output_dir: Optional[Path] = None):
+    def __init__(self, output_dir: Path | None = None):
         self.output_dir = output_dir or Path("tests/headless/results")
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.data_service = get_data_service()
@@ -363,13 +363,13 @@ class HeadlessTestRunner:
 
     async def run_batch(
         self,
-        configs: List[TestConfiguration],
+        configs: list[TestConfiguration],
         parallel: bool = True,
         max_concurrent: int = 4,
     ) -> BatchResult:
         """Run a batch of test configurations."""
         start = time.perf_counter()
-        results: List[TestResult] = []
+        results: list[TestResult] = []
 
         if parallel:
             # Run in parallel with concurrency limit
@@ -386,7 +386,7 @@ class HeadlessTestRunner:
                 result = await self.run_single(cfg)
                 results.append(result)
                 print(
-                    f"  ✓ {cfg.name}: {result.seton_score:.0f}-{result.opponent_score:.0f}"
+                    f"✓ {cfg.name}: {result.seton_score:.0f}-{result.opponent_score:.0f}"
                 )
 
         elapsed = (time.perf_counter() - start) * 1000
@@ -402,7 +402,7 @@ class HeadlessTestRunner:
     async def run_matrix(self, matrix: ConfigurationMatrix) -> BatchResult:
         """Run all configurations in a matrix."""
         configs = matrix.build()
-        print(f"\n🧪 Running {len(configs)} test configurations...")
+        print(f"\nRunning {len(configs)} test configurations...")
         result = await self.run_batch(configs)
 
         # Save results
@@ -470,10 +470,10 @@ if __name__ == "__main__":
                 opponent_team=args.opponent,
             )
             result = await runner.run_single(cfg)
-            print(f"\n{'✅' if result.success else '❌'} {result.config.name}")
-            print(f"   Seton: {result.seton_score:.0f}")
-            print(f"   Opponent: {result.opponent_score:.0f}")
-            print(f"   Winner: {result.winner}")
+            print(f"\n{'✓' if result.success else '✗'} {result.config.name}")
+            print(f"Seton: {result.seton_score:.0f}")
+            print(f"Opponent: {result.opponent_score:.0f}")
+            print(f"Winner: {result.winner}")
 
         asyncio.run(single())
     else:

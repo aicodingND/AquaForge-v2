@@ -5,9 +5,9 @@ Creates a unified psych sheet for VCAC Championship projections
 """
 
 import json
-from pathlib import Path
-from datetime import datetime
 from collections import defaultdict
+from datetime import datetime
+from pathlib import Path
 
 
 def load_scraped_data(scraped_dir: Path) -> list[dict]:
@@ -20,9 +20,9 @@ def load_scraped_data(scraped_dir: Path) -> list[dict]:
                 data = json.load(f)
                 times = data.get("times", [])
                 all_times.extend(times)
-                print(f"  📄 {json_file.name}: {len(times)} times")
+                print(f"▸ {json_file.name}: {len(times)} times")
         except Exception as e:
-            print(f"  ⚠️ Error loading {json_file.name}: {e}")
+            print(f"! Error loading {json_file.name}: {e}")
 
     return all_times
 
@@ -84,7 +84,7 @@ def merge_data(hy3_data: dict, scraped_times: list[dict]) -> dict:
                     "source": "hy3",
                 }
 
-    print(f"\n  📊 HY3 entries: {len(best_times)}")
+    print(f"\n▸ HY3 entries: {len(best_times)}")
 
     # Now add scraped data, keeping faster times
     scraped_added = 0
@@ -118,9 +118,9 @@ def merge_data(hy3_data: dict, scraped_times: list[dict]) -> dict:
             best_times[key]["source"] = "swimcloud"
             scraped_improved += 1
 
-    print(f"  📊 New from SwimCloud: {scraped_added}")
-    print(f"  📊 Improved times: {scraped_improved}")
-    print(f"  📊 Total entries: {len(best_times)}")
+    print(f"▸ New from SwimCloud: {scraped_added}")
+    print(f"▸ Improved times: {scraped_improved}")
+    print(f"▸ Total entries: {len(best_times)}")
 
     # Build merged output
     merged_entries = sorted(
@@ -169,7 +169,7 @@ def generate_summary_stats(merged_data: dict) -> dict:
 
 
 def main():
-    print("🔄 Starting Data Merge")
+    print("→ Starting Data Merge")
     print("=" * 60)
 
     base_dir = Path(".")
@@ -177,20 +177,20 @@ def main():
     championship_dir = base_dir / "data" / "championship_data"
 
     # Load data sources
-    print("\n📥 Loading data sources...")
+    print("\nLoading data sources...")
 
     # Load HY3 psych sheet
     hy3_path = championship_dir / "vcac_2026_psych_sheet_projection.json"
     hy3_data = load_hy3_psych_sheet(hy3_path)
-    print(f"  📄 HY3 Psych Sheet: {len(hy3_data.get('entries', []))} entries")
+    print(f"▸ HY3 Psych Sheet: {len(hy3_data.get('entries', []))} entries")
 
     # Load scraped data
-    print("\n📥 Loading scraped SwimCloud data...")
+    print("\nLoading scraped SwimCloud data...")
     scraped_times = load_scraped_data(scraped_dir)
-    print(f"  📊 Total scraped: {len(scraped_times)} times")
+    print(f"▸ Total scraped: {len(scraped_times)} times")
 
     # Merge
-    print("\n🔀 Merging data sources...")
+    print("\nMerging data sources...")
     merged = merge_data(hy3_data, scraped_times)
 
     # Generate stats
@@ -201,29 +201,27 @@ def main():
     with open(output_path, "w") as f:
         json.dump(merged, f, indent=2)
 
-    print(f"\n✅ Saved merged data to: {output_path}")
+    print(f"\n✓ Saved merged data to: {output_path}")
 
     # Print summary
     print("\n" + "=" * 60)
-    print("📊 MERGE SUMMARY")
+    print("▸ MERGE SUMMARY")
     print("=" * 60)
 
-    print("\n🏊 Entries by Team:")
+    print("\n▸ Entries by Team:")
     for team, count in stats["by_team"].items():
-        print(f"  {team}: {count}")
+        print(f"{team}: {count}")
 
-    print("\n📋 Entries by Source:")
+    print("\n▸ Entries by Source:")
     for source, count in stats["by_source"].items():
-        print(f"  {source}: {count}")
+        print(f"{source}: {count}")
 
-    print("\n🏆 Top Events:")
+    print("\nTop Events:")
     for event, count in list(stats["by_event"].items())[:10]:
-        print(f"  {event}: {count}")
+        print(f"{event}: {count}")
 
     print("\n" + "=" * 60)
-    print(
-        f"✅ Total: {merged['total_entries']} entries from {len(merged['teams'])} teams"
-    )
+    print(f"Total: {merged['total_entries']} entries from {len(merged['teams'])} teams")
     print("=" * 60)
 
 

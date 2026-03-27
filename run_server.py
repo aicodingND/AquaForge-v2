@@ -43,8 +43,8 @@ def run_fastapi(host: str = "0.0.0.0", port: int = 8001, reload: bool = False):
     """
     import uvicorn
 
-    logger.info(f"🚀 Starting FastAPI server on http://{host}:{port}")
-    logger.info(f"📚 API docs available at http://{host}:{port}/api/docs")
+    logger.info(f"→ Starting FastAPI server on http://{host}:{port}")
+    logger.info(f"▸ API docs available at http://{host}:{port}/api/docs")
 
     uvicorn.run(
         "swim_ai_reflex.backend.api.main:api_app",
@@ -64,7 +64,7 @@ def run_reflex(port: int = 3000, backend_port: int = 8000):
         port: Frontend port
         backend_port: Backend port
     """
-    logger.info(f"🌊 Starting Reflex frontend on port {port}")
+    logger.info(f"→ Starting Reflex frontend on port {port}")
 
     env = os.environ.copy()
     env["REFLEX_FRONTEND_PORT"] = str(port)
@@ -101,11 +101,11 @@ async def run_hybrid(
     """
     import uvicorn
 
-    logger.info("🔄 Starting HYBRID mode...")
-    logger.info(f"   🌊 Reflex frontend: http://localhost:{reflex_port}")
-    logger.info(f"   🔧 Reflex backend: http://localhost:{reflex_backend_port}")
-    logger.info(f"   🚀 FastAPI: http://localhost:{fastapi_port}")
-    logger.info(f"   📚 API docs: http://localhost:{fastapi_port}/api/docs")
+    logger.info("→ Starting HYBRID mode...")
+    logger.info(f"→ Reflex frontend: http://localhost:{reflex_port}")
+    logger.info(f"→ Reflex backend: http://localhost:{reflex_backend_port}")
+    logger.info(f"→ FastAPI: http://localhost:{fastapi_port}")
+    logger.info(f"▸ API docs: http://localhost:{fastapi_port}/api/docs")
 
     # Create uvicorn config for FastAPI
     config = uvicorn.Config(
@@ -158,10 +158,10 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python run_server.py --mode reflex          # Run Reflex only (default)
-  python run_server.py --mode api             # Run FastAPI only
-  python run_server.py --mode hybrid          # Run both
-  python run_server.py --mode api --port 8001 --reload  # Dev mode for API
+  python run_server.py --mode reflex # Run Reflex only (default)
+  python run_server.py --mode api # Run FastAPI only
+  python run_server.py --mode hybrid # Run both
+  python run_server.py --mode api --port 8001 --reload # Dev mode for API
         """,
     )
 
@@ -200,7 +200,7 @@ Examples:
         else:  # hybrid
             args.port = 3000
 
-    logger.info(f"🎯 Mode: {args.mode.upper()}")
+    logger.info(f"→ Mode: {args.mode.upper()}")
 
     if args.mode == "api":
         run_fastapi(host=args.host, port=args.port, reload=args.reload)

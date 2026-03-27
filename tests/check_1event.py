@@ -16,7 +16,7 @@ from swim_ai_reflex.backend.core.opponent_model import greedy_opponent_best_line
 
 async def check_event_distribution():
     print("\n" + "=" * 60)
-    print("🏊 Checking 1-Event vs 2-Event Swimmer Distribution")
+    print("▸ Checking 1-Event vs 2-Event Swimmer Distribution")
     print("=" * 60)
 
     base_path = Path(__file__).parent.parent / "uploads"
@@ -36,27 +36,27 @@ async def check_event_distribution():
     trinity_standard = filter_to_standard_events(trinity_girls, gender="F")
     trinity_lineup = greedy_opponent_best_lineup(trinity_standard)
 
-    print("\n📊 TRINITY Lineup Distribution:")
+    print("\n▸ TRINITY Lineup Distribution:")
     swimmer_counts = trinity_lineup.groupby("swimmer").size()
 
     one_event = (swimmer_counts == 1).sum()
     two_event = (swimmer_counts == 2).sum()
 
-    print(f"  1-event swimmers: {one_event}")
-    print(f"  2-event swimmers: {two_event}")
-    print(f"  Total swimmers: {len(swimmer_counts)}")
-    print(f"  Total entries: {len(trinity_lineup)}")
+    print(f"1-event swimmers: {one_event}")
+    print(f"2-event swimmers: {two_event}")
+    print(f"Total swimmers: {len(swimmer_counts)}")
+    print(f"Total entries: {len(trinity_lineup)}")
 
-    print("\n  Swimmer breakdown:")
+    print("\nSwimmer breakdown:")
     for swimmer, count in swimmer_counts.items():
-        marker = "⭐" if count == 2 else "  "
-        print(f"    {marker} {swimmer}: {count} event(s)")
+        marker = "" if count == 2 else " "
+        print(f"{marker} {swimmer}: {count} event(s)")
 
     # Verify: 1*one_event + 2*two_event should equal total entries
     expected = one_event + 2 * two_event
     actual = len(trinity_lineup)
     print(
-        f"\n  ✓ Math check: {one_event} + 2*{two_event} = {expected} (actual: {actual}) {'✅' if expected == actual else '❌'}"
+        f"\n✓ Math check: {one_event} + 2*{two_event} = {expected} (actual: {actual}) {'✓' if expected == actual else '✗'}"
     )
 
     print("\n" + "=" * 60)

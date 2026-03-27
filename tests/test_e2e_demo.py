@@ -54,7 +54,7 @@ class TestSwimAiDemo:
         ready_indicator = page.locator("text=/Ready to Optimize/i")
         expect(ready_indicator).to_be_visible(timeout=10000)
 
-        print("✅ Test data loaded successfully!")
+        print("✓ Test data loaded successfully!")
 
     def test_run_optimization(self, page: Page):
         """
@@ -90,7 +90,7 @@ class TestSwimAiDemo:
             score_display = page.locator("text=/Score|Points/i")
             expect(score_display).to_be_visible(timeout=5000)
 
-            print("✅ Optimization completed successfully!")
+            print("✓ Optimization completed successfully!")
 
     def test_navigation_flow(self, page: Page):
         """
@@ -113,7 +113,7 @@ class TestSwimAiDemo:
             heading = page.locator(f"text=/{expected_heading}/i").first
             expect(heading).to_be_visible(timeout=5000)
 
-            print(f"✅ {nav_text} page accessible")
+            print(f"✓ {nav_text} page accessible")
 
     def test_responsive_ui(self, page: Page):
         """
@@ -135,7 +135,7 @@ class TestSwimAiDemo:
             header = page.locator("header").first
             expect(header).to_be_visible(timeout=3000)
 
-            print(f"✅ UI renders correctly on {device_name} ({width}x{height})")
+            print(f"✓ UI renders correctly on {device_name} ({width}x{height})")
 
 
 # Pytest configuration for Playwright

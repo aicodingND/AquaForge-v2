@@ -1,7 +1,7 @@
 # AGENT HANDOFF CONTEXT
 
 > **Last Updated:** 2026-02-02T21:00:00-05:00
-> **Session Agent:** Claude Code (Opus 4.5)
+> **Session Agent:** Claude Code (Opus 4.6)
 > **Handoff Ready:** Yes
 
 ---

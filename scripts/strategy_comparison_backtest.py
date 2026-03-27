@@ -158,7 +158,7 @@ def run_comparison(
         entries, team_map, meet_meta = load_mdb_championship_data(connector, meet_id)
 
         if not entries:
-            print("  ⚠️ No entries found")
+            print("! No entries found")
             return None
 
         # Get actual standings
@@ -169,7 +169,7 @@ def run_comparison(
         seton_team = next((t for t in teams if "seton" in t.lower()), None)
 
         if not seton_team:
-            print("  ⚠️ Seton not in meet")
+            print("! Seton not in meet")
             return None
 
         # Calculate actual Seton rank
@@ -235,23 +235,19 @@ def run_comparison(
                 )
                 coach_fatigue_score = c_score
             except Exception as e:
-                print(f"  ⚠️ Failed to calculate fatigue score: {e}")
+                print(f"! Failed to calculate fatigue score: {e}")
                 coach_fatigue_score = coach_legal_score  # Fallback
 
-        print(f"  📊 Entries: {len(entries)}, Teams: {len(teams)}")
-        print(f"  ❌ Coach Score (w/ Errors): {coach_illegal_score:.1f}")
+        print(f"▸ Entries: {len(entries)}, Teams: {len(teams)}")
+        print(f"✗ Coach Score (w/ Errors): {coach_illegal_score:.1f}")
         print(
-            f"  👨‍🏫 Coach Score (Legal):     {coach_legal_score:.1f} ({coach_violations} violations)"
+            f"▸ Coach Score (Legal): {coach_legal_score:.1f} ({coach_violations} violations)"
         )
-        print(
-            f"  😓 Coach Score (Fatigue):   {coach_fatigue_score:.1f} (Apples-to-Apples)"
-        )
-        print(
-            f"  📈 Actual Score:           {actual_seton_score:.1f} (Rank #{actual_seton_rank})"
-        )
+        print(f"Coach Score (Fatigue): {coach_fatigue_score:.1f} (Apples-to-Apples)")
+        print(f"Actual Score: {actual_seton_score:.1f} (Rank #{actual_seton_rank})")
 
         # --------------- GUROBI OPTIMIZATION ---------------
-        print("\n  🔧 Running Gurobi MILP...")
+        print("\n→ Running Gurobi MILP...")
         gurobi_score = 0.0
         gurobi_time_ms = 0.0
 
@@ -268,12 +264,12 @@ def run_comparison(
             gurobi_time_ms = (time.time() - start) * 1000
 
             gurobi_score = gurobi_result.total_points if gurobi_result else 0.0
-            print(f"     Gurobi Score: {gurobi_score:.1f} ({gurobi_time_ms:.0f}ms)")
+            print(f"Gurobi Score: {gurobi_score:.1f} ({gurobi_time_ms:.0f}ms)")
         except Exception as e:
-            print(f"     ❌ Gurobi failed: {e}")
+            print(f"✗ Gurobi failed: {e}")
 
         # --------------- AQUAOPTIMIZER ---------------
-        print("\n  🧠 Running AquaOptimizer (Nash+Beam)...")
+        print("\n▸ Running AquaOptimizer (Nash+Beam)...")
         aqua_score = 0.0
         aqua_time_ms = 0.0
 
@@ -300,9 +296,9 @@ def run_comparison(
             aqua_time_ms = (time.time() - start) * 1000
 
             aqua_score = totals.get("seton", 0) if totals else 0.0
-            print(f"     AquaOptimizer Score: {aqua_score:.1f} ({aqua_time_ms:.0f}ms)")
+            print(f"AquaOptimizer Score: {aqua_score:.1f} ({aqua_time_ms:.0f}ms)")
         except Exception as e:
-            print(f"     ❌ AquaOptimizer failed: {e}")
+            print(f"✗ AquaOptimizer failed: {e}")
             import traceback
 
             traceback.print_exc()
@@ -319,14 +315,12 @@ def run_comparison(
         else:
             winner = "aqua"
 
-        print(f"\n  🏆 WINNER: {winner.upper()}")
+        print(f"\nWINNER: {winner.upper()}")
         print(
-            f"     Gurobi vs Coach: {'+' if gurobi_vs_coach >= 0 else ''}{gurobi_vs_coach:.1f}"
+            f"Gurobi vs Coach: {'+' if gurobi_vs_coach >= 0 else ''}{gurobi_vs_coach:.1f}"
         )
-        print(
-            f"     Aqua vs Coach:   {'+' if aqua_vs_coach >= 0 else ''}{aqua_vs_coach:.1f}"
-        )
-        print(f"     Difference:      {score_diff:.1f}")
+        print(f"Aqua vs Coach: {'+' if aqua_vs_coach >= 0 else ''}{aqua_vs_coach:.1f}")
+        print(f"Difference: {score_diff:.1f}")
 
         return ComparisonResult(
             meet_id=meet_id,
@@ -350,7 +344,7 @@ def run_comparison(
         )
 
     except Exception as e:
-        print(f"  ❌ Error: {e}")
+        print(f"✗ Error: {e}")
         import traceback
 
         traceback.print_exc()
@@ -381,7 +375,7 @@ def main():
             results.append(result)
 
     if not results:
-        print("\n⚠️ No results to compare")
+        print("\n! No results to compare")
         return
 
     # --------------- SUMMARY ---------------
@@ -402,34 +396,34 @@ def main():
     avg_gurobi_time = sum(r.gurobi_time_ms for r in results) / len(results)
     avg_aqua_time = sum(r.aqua_time_ms for r in results) / len(results)
 
-    print(f"\n📊 Meets Compared: {len(results)}")
-    print("\n🏆 Head-to-Head Record:")
-    print(f"   Gurobi Wins:   {gurobi_wins}")
-    print(f"   Aqua Wins:     {aqua_wins}")
-    print(f"   Ties:          {ties}")
+    print(f"\n▸ Meets Compared: {len(results)}")
+    print("\nHead-to-Head Record:")
+    print(f"Gurobi Wins: {gurobi_wins}")
+    print(f"Aqua Wins: {aqua_wins}")
+    print(f"Ties: {ties}")
 
-    print("\n📈 Total Scores Across All Meets:")
-    print(f"   Coach (Errors):  {total_coach_illegal:,.0f}")
-    print(f"   Coach (Legal):   {total_coach_legal:,.0f}")
-    print(f"   Coach (Fatigue): {total_coach_fatigue:,.0f} (Rule Enforced)")
-    print(f"   Gurobi:          {total_gurobi:,.0f}")
-    print(f"   AquaOptimizer:   {total_aqua:,.0f}")
+    print("\n▸ Total Scores Across All Meets:")
+    print(f"Coach (Errors): {total_coach_illegal:,.0f}")
+    print(f"Coach (Legal): {total_coach_legal:,.0f}")
+    print(f"Coach (Fatigue): {total_coach_fatigue:,.0f} (Rule Enforced)")
+    print(f"Gurobi: {total_gurobi:,.0f}")
+    print(f"AquaOptimizer: {total_aqua:,.0f}")
 
-    print("\n⏱️ Average Execution Time:")
-    print(f"   Gurobi:        {avg_gurobi_time:,.0f}ms")
-    print(f"   AquaOptimizer: {avg_aqua_time:,.0f}ms")
+    print("\nAverage Execution Time:")
+    print(f"Gurobi: {avg_gurobi_time:,.0f}ms")
+    print(f"AquaOptimizer: {avg_aqua_time:,.0f}ms")
 
-    print("\n🎯 Advantage Over Coach (Legal):")
+    print("\n→ Advantage Over Coach (Legal):")
     g_adv = total_gurobi - total_coach_legal
     a_adv = total_aqua - total_coach_legal
-    print(f"   Gurobi:        {'+' if g_adv >= 0 else ''}{g_adv:,.0f}")
-    print(f"   AquaOptimizer: {'+' if a_adv >= 0 else ''}{a_adv:,.0f}")
+    print(f"Gurobi: {'+' if g_adv >= 0 else ''}{g_adv:,.0f}")
+    print(f"AquaOptimizer: {'+' if a_adv >= 0 else ''}{a_adv:,.0f}")
 
     # Save CSV
     df = pd.DataFrame(results)
     csv_path = OUTPUT_DIR / "strategy_comparison_results.csv"
     df.to_csv(csv_path, index=False)
-    print(f"\n💾 Results saved to: {csv_path}")
+    print(f"\nResults saved to: {csv_path}")
 
     # Detailed table
     print("\n" + "=" * 90)

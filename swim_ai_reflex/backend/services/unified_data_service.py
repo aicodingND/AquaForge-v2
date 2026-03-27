@@ -16,7 +16,7 @@ import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import pandas as pd
 
@@ -37,10 +37,10 @@ class SwimmerTime:
     time: float  # Always in seconds
     time_str: str  # Original format (MM:SS.ss or SS.ss)
     team: str
-    grade: Optional[int] = None
-    gender: Optional[str] = None
+    grade: int | None = None
+    gender: str | None = None
     source: str = "unknown"
-    scraped_at: Optional[str] = None
+    scraped_at: str | None = None
 
 
 @dataclass
@@ -49,10 +49,10 @@ class TeamData:
 
     team_code: str
     team_name: str
-    swimmers: List[Dict[str, Any]] = field(default_factory=list)
-    times: List[SwimmerTime] = field(default_factory=list)
+    swimmers: list[dict[str, Any]] = field(default_factory=list)
+    times: list[SwimmerTime] = field(default_factory=list)
     source: str = "unknown"
-    last_updated: Optional[str] = None
+    last_updated: str | None = None
 
 
 @dataclass
@@ -64,7 +64,7 @@ class DataSourceStatus:
     available: bool
     last_checked: str
     record_count: int = 0
-    error: Optional[str] = None
+    error: str | None = None
 
 
 # ============================================================================
@@ -72,7 +72,7 @@ class DataSourceStatus:
 # ============================================================================
 
 
-def time_to_seconds(time_input: Union[str, float, int]) -> float:
+def time_to_seconds(time_input: str | float | int) -> float:
     """
     Convert any time format to seconds.
 
@@ -159,7 +159,7 @@ class DataSourceRegistry:
     }
 
     @classmethod
-    def check_sources(cls) -> List[DataSourceStatus]:
+    def check_sources(cls) -> list[DataSourceStatus]:
         """Check availability of all data sources."""
         statuses = []
         for name, path in cls.SOURCES.items():
@@ -205,13 +205,13 @@ class UnifiedDataService:
     """
 
     def __init__(self):
-        self._cache: Dict[str, Any] = {}
+        self._cache: dict[str, Any] = {}
         self._cache_ttl = 300  # 5 minutes
-        self._last_cache_time: Dict[str, datetime] = {}
+        self._last_cache_time: dict[str, datetime] = {}
 
     def get_team_data(
-        self, team_code: str, prefer_source: Optional[str] = None
-    ) -> Optional[TeamData]:
+        self, team_code: str, prefer_source: str | None = None
+    ) -> TeamData | None:
         """
         Get unified team data from best available source.
 
@@ -259,7 +259,7 @@ class UnifiedDataService:
 
         return team_data
 
-    def get_all_teams(self) -> List[str]:
+    def get_all_teams(self) -> list[str]:
         """Get list of all available team codes."""
         teams = set()
 
@@ -276,7 +276,7 @@ class UnifiedDataService:
         return sorted(list(teams))
 
     def get_unified_psych_sheet(
-        self, team_codes: Optional[List[str]] = None
+        self, team_codes: list[str] | None = None
     ) -> pd.DataFrame:
         """
         Build unified psych sheet from all available sources.
@@ -319,7 +319,7 @@ class UnifiedDataService:
 
         return df
 
-    def validate_data_integrity(self) -> Dict[str, Any]:
+    def validate_data_integrity(self) -> dict[str, Any]:
         """Run data integrity checks across all sources."""
         issues = []
         stats = {"total_teams": 0, "total_entries": 0, "missing_grades": 0}
@@ -352,13 +352,13 @@ class UnifiedDataService:
         age = (datetime.now() - self._last_cache_time[key]).total_seconds()
         return age < self._cache_ttl
 
-    def _matches_team(self, data: Dict, team_code: str) -> bool:
+    def _matches_team(self, data: dict, team_code: str) -> bool:
         """Check if data matches team code."""
         if isinstance(data, dict):
             return data.get("team_code") == team_code or data.get("team") == team_code
         return False
 
-    def _parse_scraped_data(self, data: Dict, team_code: str) -> TeamData:
+    def _parse_scraped_data(self, data: dict, team_code: str) -> TeamData:
         """Parse scraped SwimCloud format."""
         times = []
         for entry in data.get("times", []):
@@ -385,7 +385,7 @@ class UnifiedDataService:
             last_updated=data.get("scraped_at"),
         )
 
-    def _parse_championship_data(self, data: Dict, team_code: str) -> TeamData:
+    def _parse_championship_data(self, data: dict, team_code: str) -> TeamData:
         """Parse championship data format."""
         times = []
         entries = data.get("entries", []) or data.get("times", [])
@@ -413,7 +413,7 @@ class UnifiedDataService:
             source="championship",
         )
 
-    def _infer_grade(self, class_year: Optional[str]) -> Optional[int]:
+    def _infer_grade(self, class_year: str | None) -> int | None:
         """Infer numeric grade from class year string."""
         if class_year is None:
             return None
@@ -465,7 +465,7 @@ class UnifiedDataService:
 # SINGLETON INSTANCE
 # ============================================================================
 
-_data_service: Optional[UnifiedDataService] = None
+_data_service: UnifiedDataService | None = None
 
 
 def get_data_service() -> UnifiedDataService:
@@ -488,19 +488,19 @@ if __name__ == "__main__":
     # Check sources
     print("Data Sources:")
     for status in DataSourceRegistry.check_sources():
-        icon = "✅" if status.available else "❌"
-        print(f"  {icon} {status.name}: {status.record_count} files")
+        icon = "✓ " if status.available else ""
+        print(f"{icon} {status.name}: {status.record_count} files")
 
     print("\nAvailable Teams:", service.get_all_teams())
 
     # Validate
     print("\nValidation:")
     result = service.validate_data_integrity()
-    print(f"  Teams: {result['stats']['total_teams']}")
-    print(f"  Entries: {result['stats']['total_entries']}")
-    print(f"  Missing grades: {result['stats']['missing_grades']}")
+    print(f"Teams: {result['stats']['total_teams']}")
+    print(f"Entries: {result['stats']['total_entries']}")
+    print(f"Missing grades: {result['stats']['missing_grades']}")
 
     if result["issues"]:
-        print("\n  Issues:")
+        print("\nIssues:")
         for issue in result["issues"]:
-            print(f"    ⚠️ {issue}")
+            print(f"! {issue}")

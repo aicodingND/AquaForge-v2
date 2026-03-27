@@ -18,9 +18,9 @@ try:
         optimization_service,
     )
 
-    print("[TEST] ✅ Imports successful.")
+    print("[TEST] ✓ Imports successful.")
 except ImportError as e:
-    print(f"[TEST] ❌ Import Error: {e}")
+    print(f"[TEST] ✗ Import Error: {e}")
     sys.exit(1)
 
 
@@ -49,7 +49,7 @@ def filter_girls_events_only(df: pd.DataFrame) -> pd.DataFrame:
     print(f"[FILTER] Unique girls events found: {len(unique_events)}")
     for event in sorted(unique_events):
         count = len(df_no_diving[df_no_diving["event"] == event])
-        print(f"  - {event}: {count} entries")
+        print(f"- {event}: {count} entries")
 
     return df_no_diving
 
@@ -59,7 +59,7 @@ async def run_e2e_girls_only():
     Run end-to-end test with Seton and Trinity PDFs, girls events only.
     """
     print("\n" + "=" * 80)
-    print("🏊‍♀️ E2E TEST: Seton vs Trinity - Girls Events Only (No Diving, No Relays)")
+    print("E2E TEST: Seton vs Trinity - Girls Events Only (No Diving, No Relays)")
     print("=" * 80)
 
     # Define PDF paths
@@ -74,33 +74,33 @@ async def run_e2e_girls_only():
 
     # Verify files exist
     if not seton_pdf.exists():
-        print(f"[ERROR] ❌ Seton PDF not found: {seton_pdf}")
+        print(f"[ERROR] ✗ Seton PDF not found: {seton_pdf}")
         return
     if not trinity_pdf.exists():
-        print(f"[ERROR] ❌ Trinity PDF not found: {trinity_pdf}")
+        print(f"[ERROR] ✗ Trinity PDF not found: {trinity_pdf}")
         return
 
-    print("\n[STEP 1] 📄 Parsing PDFs...")
-    print(f"  Seton: {seton_pdf.name}")
-    print(f"  Trinity: {trinity_pdf.name}")
+    print("\n[STEP 1] ▸ Parsing PDFs...")
+    print(f"Seton: {seton_pdf.name}")
+    print(f"Trinity: {trinity_pdf.name}")
 
     # Parse PDFs
     try:
         seton_df = await asyncio.to_thread(parse_hytek_pdf, str(seton_pdf))
-        print(f"[PARSE] ✅ Seton parsed: {len(seton_df)} total entries")
+        print(f"[PARSE] ✓ Seton parsed: {len(seton_df)} total entries")
     except Exception as e:
-        print(f"[ERROR] ❌ Failed to parse Seton PDF: {e}")
+        print(f"[ERROR] ✗ Failed to parse Seton PDF: {e}")
         return
 
     try:
         trinity_df = await asyncio.to_thread(parse_hytek_pdf, str(trinity_pdf))
-        print(f"[PARSE] ✅ Trinity parsed: {len(trinity_df)} total entries")
+        print(f"[PARSE] ✓ Trinity parsed: {len(trinity_df)} total entries")
     except Exception as e:
-        print(f"[ERROR] ❌ Failed to parse Trinity PDF: {e}")
+        print(f"[ERROR] ✗ Failed to parse Trinity PDF: {e}")
         return
 
     # Filter for girls events only (no diving, no relays)
-    print("\n[STEP 2] 🔍 Filtering for Girls Events Only...")
+    print("\n[STEP 2] ▸ Filtering for Girls Events Only...")
     print("\n--- SETON FILTERING ---")
     seton_girls = filter_girls_events_only(seton_df)
 
@@ -109,27 +109,25 @@ async def run_e2e_girls_only():
 
     # Check if we have data
     if len(seton_girls) == 0:
-        print("\n[ERROR] ❌ No Seton girls events found after filtering!")
+        print("\n[ERROR] ✗ No Seton girls events found after filtering!")
         return
     if len(trinity_girls) == 0:
-        print("\n[ERROR] ❌ No Trinity girls events found after filtering!")
+        print("\n[ERROR] ✗ No Trinity girls events found after filtering!")
         return
 
     # Show swimmer counts
     seton_swimmers = seton_girls["swimmer"].nunique()
     trinity_swimmers = trinity_girls["swimmer"].nunique()
     print("\n[DATA SUMMARY]")
+    print(f"Seton: {seton_swimmers} unique swimmers, {len(seton_girls)} event entries")
     print(
-        f"  Seton: {seton_swimmers} unique swimmers, {len(seton_girls)} event entries"
-    )
-    print(
-        f"  Trinity: {trinity_swimmers} unique swimmers, {len(trinity_girls)} event entries"
+        f"Trinity: {trinity_swimmers} unique swimmers, {len(trinity_girls)} event entries"
     )
 
     # Run optimization
-    print("\n[STEP 3] 🚀 Running Optimization (Heuristic, 100 iterations)...")
-    print("  Strategy: Best on Best (Trinity lineup will be optimized)")
-    print("  Note: This may take 30-60 seconds...")
+    print("\n[STEP 3] Running Optimization (Heuristic, 100 iterations)...")
+    print("Strategy: Best on Best (Trinity lineup will be optimized)")
+    print("Note: This may take 30-60 seconds...")
 
     try:
         result = await optimization_service.predict_best_lineups(
@@ -141,7 +139,7 @@ async def run_e2e_girls_only():
             use_cache=False,  # Don't use cache for this test
         )
     except Exception as e:
-        print(f"[ERROR] ❌ Optimization failed: {e}")
+        print(f"[ERROR] Optimization failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -150,7 +148,7 @@ async def run_e2e_girls_only():
     # Check result
     if not result.get("success", False):
         print(
-            f"\n[FAIL] ❌ Optimization Error: {result.get('message')} - {result.get('error')}"
+            f"\n[FAIL] Optimization Error: {result.get('message')} - {result.get('error')}"
         )
         return
 
@@ -160,17 +158,17 @@ async def run_e2e_girls_only():
     trinity_score = data["opponent_score"]
     details = data["details"]
 
-    print("\n[STEP 4] 📊 RESULTS")
+    print("\n[STEP 4] RESULTS")
     print("=" * 80)
-    print("\n🏆 FINAL SCORE:")
-    print(f"  Seton:    {seton_score}")
-    print(f"  Trinity:  {trinity_score}")
-    print(f"  Margin:   {abs(seton_score - trinity_score)} points")
+    print("\nFINAL SCORE:")
+    print(f"Seton: {seton_score}")
+    print(f"Trinity: {trinity_score}")
+    print(f"Margin: {abs(seton_score - trinity_score)} points")
     print(
-        f"  Winner:   {'Seton' if seton_score > trinity_score else 'Trinity' if trinity_score > seton_score else 'TIE'}"
+        f"Winner: {'Seton' if seton_score > trinity_score else 'Trinity' if trinity_score > seton_score else 'TIE'}"
     )
 
-    print(f"\n📋 LINEUP DETAILS ({len(details)} events):")
+    print(f"\nLINEUP DETAILS ({len(details)} events):")
     print("-" * 80)
 
     # Group by event
@@ -182,20 +180,20 @@ async def run_e2e_girls_only():
         trinity_pts = detail.get("opponent_points", 0)
 
         print(f"\n{event}")
-        print(f"  Seton ({seton_pts} pts):")
+        print(f"Seton ({seton_pts} pts):")
         for i, swimmer in enumerate(seton_swimmers[:4], 1):
             name = swimmer.get("swimmer", "Unknown")
             time = swimmer.get("time", 0)
-            print(f"    {i}. {name} - {time:.2f}s")
+            print(f"{i}. {name} - {time:.2f}s")
 
-        print(f"  Trinity ({trinity_pts} pts):")
+        print(f"Trinity ({trinity_pts} pts):")
         for i, swimmer in enumerate(trinity_swimmers[:4], 1):
             name = swimmer.get("swimmer", "Unknown")
             time = swimmer.get("time", 0)
-            print(f"    {i}. {name} - {time:.2f}s")
+            print(f"{i}. {name} - {time:.2f}s")
 
     print("\n" + "=" * 80)
-    print("✅ E2E TEST COMPLETE")
+    print("E2E TEST COMPLETE")
     print("=" * 80)
 
 

@@ -238,17 +238,15 @@ def score_dual_meet(
     expected_total = len(event_totals) * POINTS_PER_EVENT
 
     if abs(combined_total - expected_total) > 0.1:  # Allow tiny floating point errors
-        logger.warning("\n⚠️  WARNING: Point total mismatch!")
+        logger.warning("\nWARNING: Point total mismatch!")
         logger.warning(
-            f"   Expected: {expected_total} points ({len(event_totals)} events × {POINTS_PER_EVENT})"
+            f"Expected: {expected_total} points ({len(event_totals)} events × {POINTS_PER_EVENT})"
         )
-        logger.warning(f"   Actual: {combined_total} points")
-        logger.warning(f"   Seton: {seton_total}, Opponent: {opponent_total}")
-        logger.warning("\n   Event breakdown:")
+        logger.warning(f"Actual: {combined_total} points")
+        logger.warning(f"Seton: {seton_total}, Opponent: {opponent_total}")
+        logger.warning("\nEvent breakdown:")
         for event, points in event_totals.items():
-            logger.warning(
-                f"     {event}: {points} points (expected {POINTS_PER_EVENT})"
-            )
+            logger.warning(f"{event}: {points} points (expected {POINTS_PER_EVENT})")
 
     return full_scored, totals
 
@@ -284,10 +282,10 @@ def print_dual_meet_summary(totals: dict[str, float], num_events: int = 8):
     logger.info(f"Points per event: {POINTS_PER_EVENT}")
     logger.info(f"Expected total: {expected}")
     logger.info("\nTeam Scores:")
-    logger.info(f"  Seton:    {totals.get('seton', 0):.1f}")
-    logger.info(f"  Opponent: {totals.get('opponent', 0):.1f}")
-    logger.info(f"  Total:    {actual:.1f}")
-    logger.info(f"\nValidation: {'✅ VALID' if is_valid else '❌ INVALID'}")
+    logger.info(f"Seton: {totals.get('seton', 0):.1f}")
+    logger.info(f"Opponent: {totals.get('opponent', 0):.1f}")
+    logger.info(f"Total: {actual:.1f}")
+    logger.info(f"\nValidation: {' ✓ VALID' if is_valid else ' INVALID'}")
     if not is_valid:
-        logger.warning(f"  Difference: {actual - expected:.1f} points")
+        logger.warning(f"Difference: {actual - expected:.1f} points")
     logger.info(f"{'=' * 60}\n")

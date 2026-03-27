@@ -73,17 +73,17 @@ async def reproduce_glitch():
             o_score = opp_score if opp_score is not None else 0
 
             if o_score == 0 and s_score > 0:
-                print("❌ BUG REPRODUCED: Opponent score is 0 despite faster swimmers!")
+                print("✗ BUG REPRODUCED: Opponent score is 0 despite faster swimmers!")
             elif o_score > 0:
-                print("✅ Bug not reproduced (Opponent scored points)")
+                print("✓ Bug not reproduced (Opponent scored points)")
             else:
-                print(f"⚠️ Unexpected scores: Seton={s_score}, Opp={o_score}")
+                print(f"! Unexpected scores: Seton={s_score}, Opp={o_score}")
         else:
             error = result.get("error")
-            print(f"❌ Optimization Failed with error: {error}")
+            print(f"✗ Optimization Failed with error: {error}")
 
     except Exception as e:
-        print(f"❌ Exception during optimization: {e}")
+        print(f"✗ Exception during optimization: {e}")
         import traceback
 
         traceback.print_exc()

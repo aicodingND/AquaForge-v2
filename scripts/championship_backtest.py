@@ -497,15 +497,15 @@ def main():
                 sorted(result["predicted_standings"].items(), key=lambda x: -x[1])[:5],
                 1,
             ):
-                seton_marker = " ⭐" if "seton" in team.lower() else ""
-                print(f"  {i}. {team}: {pts:.0f} pts{seton_marker}")
+                seton_marker = " " if "seton" in team.lower() else ""
+                print(f"{i}. {team}: {pts:.0f} pts{seton_marker}")
 
             print("\nActual Standings:")
             for i, (team, pts) in enumerate(
                 sorted(result["actual_standings"].items(), key=lambda x: -x[1])[:5], 1
             ):
-                seton_marker = " ⭐" if "seton" in team.lower() else ""
-                print(f"  {i}. {team}: {pts:.0f} pts{seton_marker}")
+                seton_marker = " " if "seton" in team.lower() else ""
+                print(f"{i}. {team}: {pts:.0f} pts{seton_marker}")
 
             print(
                 f"\nSeton Rank: Predicted #{result['seton_predicted_rank']} vs Actual #{result['seton_actual_rank']}"
@@ -520,45 +520,45 @@ def main():
             legal = coach_analysis.get("legal_score", 0)
             diff = illegal - legal
 
-            print(f"  Raw Score (Actual Entries): {illegal:.0f} pts")
-            print(f"  Legal Score (Valid Entries): {legal:.0f} pts")
+            print(f"Raw Score (Actual Entries): {illegal:.0f} pts")
+            print(f"Legal Score (Valid Entries): {legal:.0f} pts")
 
             if diff > 0:
-                print(f"  ⚠️  Coach score inflated by {diff:.0f} pts due to violations")
+                print(f"Coach score inflated by {diff:.0f} pts due to violations")
 
             violations = coach_analysis.get("violations", [])
             if violations:
-                print(f"  Constraint Violations ({len(violations)}):")
+                print(f"Constraint Violations ({len(violations)}):")
                 for i, v in enumerate(violations[:5], 1):  # Show top 5
-                    print(f"    {i}. {v}")
+                    print(f"{i}. {v}")
                 if len(violations) > 5:
-                    print(f"    ... and {len(violations) - 5} more")
+                    print(f"... and {len(violations) - 5} more")
         else:
             print("\nCoach Analysis: Not available")
 
         if result.get("optimization_enabled"):
             print("\nAI Optimization Results:")
-            print(f"  AI Improvement:    +{result['ai_improvement']:.0f} pts")
+            print(f"AI Improvement: +{result['ai_improvement']:.0f} pts")
             # Compare AI against LEGAL coach score if available, else raw
             baseline = coach_analysis.get("legal_score", 0) if coach_analysis else 0
 
             ai_score = result["ai_projected_score"]
-            print(f"  AI Projected Score: {ai_score:.0f} pts")
+            print(f"AI Projected Score: {ai_score:.0f} pts")
 
             if abs(baseline) > 0:
                 delta = ai_score - baseline
                 print(
-                    f"  AI Advantage vs LEGAL Baseline: {'+' if delta >= 0 else ''}{delta:.0f} pts"
+                    f"AI Advantage vs LEGAL Baseline: {'+' if delta >= 0 else ''}{delta:.0f} pts"
                 )
 
             actual_scaled = result["actual_standings"].get("Seton Swimming", 0)
             if ai_score > actual_scaled:
                 print(
-                    f"  ✅ AI beats Historical Actuals by {ai_score - actual_scaled:.0f} pts"
+                    f"✓ AI beats Historical Actuals by {ai_score - actual_scaled:.0f} pts"
                 )
             else:
                 print(
-                    f"  ❌ AI loses to Historical Actuals by {actual_scaled - ai_score:.0f} pts"
+                    f"✗ AI loses to Historical Actuals by {actual_scaled - ai_score:.0f} pts"
                 )
 
             # Generate Premium Report
@@ -651,7 +651,7 @@ def main():
                         # Skip "nan nan" entries - these are relay placeholders
                         if swimmer.lower() == "nan nan" or not swimmer.strip():
                             context["anomalies"].append(
-                                "⚠️ Relay placeholder 'nan nan' detected - relay swimmer names missing from database"
+                                "! Relay placeholder 'nan nan' detected - relay swimmer names missing from database"
                             )
                             continue
                         context["ai_lineup"].append(
@@ -731,12 +731,12 @@ def main():
                 # Detect anomalies
                 if result["actual_standings"].get("Seton Swimming", 0) == 0:
                     context["anomalies"].append(
-                        "📊 Actual meet results may be incomplete (Seton shows 0 points)"
+                        "▸ Actual meet results may be incomplete (Seton shows 0 points)"
                     )
 
                 if any("nan" in s.lower() for s in coach_swimmers.keys()):
                     context["anomalies"].append(
-                        "⚠️ Some swimmer names are missing ('nan nan') - likely relay-only swimmers without individual entries"
+                        "! Some swimmer names are missing ('nan nan') - likely relay-only swimmers without individual entries"
                     )
 
                 reporter = PremiumReporter()
@@ -745,7 +745,7 @@ def main():
                     reporter.generate_roster(context)
 
             except Exception as e:
-                print(f"⚠️ Failed to generate report: {e}")
+                print(f"! Failed to generate report: {e}")
                 import traceback
 
                 traceback.print_exc()

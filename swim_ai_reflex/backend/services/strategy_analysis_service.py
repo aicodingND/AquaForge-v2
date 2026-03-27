@@ -203,20 +203,20 @@ class StrategyAnalysisService(BaseService):
                 reason = ""
 
                 if points >= 5:  # 1st or 2nd (6 or 4 pts)
-                    role = "🚀 Point Maximizer"
+                    role = " → Point Maximizer"
                     if not opp_in_event.empty and place < opp_best_place:
                         reason = f"Beats top opponent (Place {opp_best_place})"
                     else:
                         reason = "Dominant swim"
                 elif points > 0:  # 3rd, 4th, 5th
-                    role = "🧱 Depth Scoring"
+                    role = " Depth Scoring"
                     reason = "Captures clear points"
                 elif points == 0 and place < opp_best_place:
                     # Non-scoring but beat an opponent? (e.g. 3rd Seton swimmer finishing ahead of opp)
-                    role = "🛡️ Blocker"
+                    role = " Blocker"
                     reason = f"Displaces opponent from Place {place}"
                 elif points == 0:
-                    role = "⚪ Support"
+                    role = " Support"
                     reason = "Fills lane"
 
                 part = f"{role} in {event}: {place} place ({points:.0f} pts)"
@@ -228,7 +228,7 @@ class StrategyAnalysisService(BaseService):
 
             if dropped:
                 explanation += (
-                    f"\n\n⤵️ Dropped: {', '.join(dropped[:2])} (Lower strategic value)"
+                    f"\n\n Dropped: {', '.join(dropped[:2])} (Lower strategic value)"
                 )
 
             decisions.append(
@@ -255,7 +255,7 @@ class StrategyAnalysisService(BaseService):
         """Generate a formatted text report for export."""
         report = []
         report.append("=" * 50)
-        report.append("  AQUAFORGE STRATEGIC ANALYSIS REPORT")
+        report.append("AQUAFORGE STRATEGIC ANALYSIS REPORT")
         report.append("=" * 50)
         report.append("\n[MEET SUMMARY]")
         report.append(summary)
@@ -265,32 +265,28 @@ class StrategyAnalysisService(BaseService):
             report.append("[STRATEGIC SUGGESTIONS & OPPORTUNITIES]")
             report.append("=" * 50)
             for sug in suggestions:
-                report.append(f"\n💡 {sug['swimmer']}: {sug['suggested_change']}")
-                report.append(f"   Potential Gain: +{sug['potential_gain']} pts")
-                report.append(f"   Reason: {sug['reason']}")
+                report.append(f"\n * {sug['swimmer']}: {sug['suggested_change']}")
+                report.append(f"Potential Gain: +{sug['potential_gain']} pts")
+                report.append(f"Reason: {sug['reason']}")
 
         report.append("\n" + "=" * 50)
         report.append("[SWIMMER ASSIGNMENTS & RATIONALE]")
         report.append("=" * 50)
 
         for dec in decisions:
-            report.append(
-                f"\n👤 {dec['swimmer']} (Total Pts: {dec['total_points']:.0f})"
-            )
-            report.append(f"   Events: {', '.join(dec['events'])}")
-            report.append(
-                "   Strategy:\n   " + dec["explanation"].replace("\n", "\n   ")
-            )
+            report.append(f"\n {dec['swimmer']} (Total Pts: {dec['total_points']:.0f})")
+            report.append(f"Events: {', '.join(dec['events'])}")
+            report.append("Strategy:\n " + dec["explanation"].replace("\n", "\n "))
 
         report.append("\n" + "=" * 50)
         report.append("[ALTERNATIVE STRATEGIES]")
         report.append("=" * 50)
 
         for alt in alternatives:
-            report.append(f"\n🔄 {alt['name']} ({alt['projected_score']})")
-            report.append(f"   {alt['description']}")
-            report.append(f"   RISK: {alt.get('risk', 'Unknown')}")
-            report.append(f"   IMPLICATION: {alt.get('implication', '')}")
+            report.append(f"\n {alt['name']} ({alt['projected_score']})")
+            report.append(f"{alt['description']}")
+            report.append(f"RISK: {alt.get('risk', 'Unknown')}")
+            report.append(f"IMPLICATION: {alt.get('implication', '')}")
 
         return "\n".join(report)
 

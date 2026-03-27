@@ -435,7 +435,7 @@ class OptimizationService(BaseService):
                 try:
                     for iteration in range(MAX_NASH_ITERATIONS):
                         log_and_capture(
-                            f"   ... Iteration {iteration + 1}/{MAX_NASH_ITERATIONS}"
+                            f"... Iteration {iteration + 1}/{MAX_NASH_ITERATIONS}"
                         )
 
                         # Step A: Seton optimizes against current opponent lineup
@@ -492,12 +492,12 @@ class OptimizationService(BaseService):
                         if not seton_changed and not opp_changed:
                             stable_count += 1
                             log_and_capture(
-                                f"       → Stable iteration (count: {stable_count})"
+                                f"→ Stable iteration (count: {stable_count})"
                             )
 
                             if stable_count >= CONVERGENCE_THRESHOLD:
                                 log_and_capture(
-                                    f"   ✅ Nash Equilibrium reached at iteration {iteration + 1}!"
+                                    f"✓ Nash Equilibrium reached at iteration {iteration + 1}!"
                                 )
                                 break
                         else:
@@ -507,12 +507,12 @@ class OptimizationService(BaseService):
                                 changes.append("Seton adjusted")
                             if opp_changed:
                                 changes.append("Opponent adjusted")
-                            log_and_capture(f"       → {', '.join(changes)}")
+                            log_and_capture(f"→ {', '.join(changes)}")
 
                     else:
                         # Loop completed without convergence
                         log_and_capture(
-                            "   ⚠ Max iterations reached. Using best opponent from final iteration."
+                            "! Max iterations reached. Using best opponent from final iteration."
                         )
 
                     # Use the converged opponent lineup for final optimization
@@ -522,7 +522,7 @@ class OptimizationService(BaseService):
                             current_opp_lineup.copy()
                         )  # Save for return
                         log_and_capture(
-                            "   → Using Nash-derived opponent for final optimization"
+                            "→ Using Nash-derived opponent for final optimization"
                         )
 
                 except Exception as nash_err:
@@ -563,7 +563,7 @@ class OptimizationService(BaseService):
                     or "gurobi" in err_str
                 ):
                     self.log_warning(
-                        f"❌ Gurobi Failed ({str(main_opt_err)}). Falling back to HEURISTIC engine."
+                        f"✗ Gurobi Failed ({str(main_opt_err)}). Falling back to HEURISTIC engine."
                     )
                     # Switch to heuristic
                     strategy = OptimizerFactory.get_strategy("heuristic")
@@ -654,12 +654,10 @@ class OptimizationService(BaseService):
                             }
                         )
                         log_and_capture(
-                            f"   {scenario_name}: {seton_score:.0f} - {opp_score:.0f} (margin: {margin:+.0f})"
+                            f"{scenario_name}: {seton_score:.0f} - {opp_score:.0f} (margin: {margin:+.0f})"
                         )
                     except Exception as scenario_err:
-                        log_and_capture(
-                            f"   {scenario_name}: Error - {str(scenario_err)}"
-                        )
+                        log_and_capture(f"{scenario_name}: Error - {str(scenario_err)}")
 
                 if scenario_scores:
                     # Find worst-case
@@ -669,14 +667,14 @@ class OptimizationService(BaseService):
                         scenario_scores
                     )
 
-                    log_and_capture("   📊 Robust Summary:")
+                    log_and_capture("Robust Summary:")
                     log_and_capture(
-                        f"      Worst case: {worst_case['scenario']} (margin: {worst_case['margin']:+.0f})"
+                        f"Worst case: {worst_case['scenario']} (margin: {worst_case['margin']:+.0f})"
                     )
                     log_and_capture(
-                        f"      Best case:  {best_case['scenario']} (margin: {best_case['margin']:+.0f})"
+                        f"Best case: {best_case['scenario']} (margin: {best_case['margin']:+.0f})"
                     )
-                    log_and_capture(f"      Average:    margin {avg_margin:+.1f}")
+                    log_and_capture(f"Average: margin {avg_margin:+.1f}")
 
                     robust_results = {
                         "scenarios": scenario_scores,
@@ -757,11 +755,11 @@ class OptimizationService(BaseService):
             and not nash_opponent_lineup.empty
         ):
             self.log_warning(
-                "⚠️ Opponent score is 0 despite having entries! "
+                "Opponent score is 0 despite having entries! "
                 "Check team name normalization or scoring rules."
             )
             # Add to logs for UI visibility
-            run_logs.append("⚠️ WARNING: Opponent score is 0. Possible data issue.")
+            run_logs.append("WARNING: Opponent score is 0. Possible data issue.")
 
         # Add robust results if computed
         if robust_results:

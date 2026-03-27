@@ -208,11 +208,11 @@ class ScoreValidationService(BaseService):
         opponent = totals.get("opponent", 0)
 
         if status == "VALID":
-            return f"✅ Scores are valid (Seton: {seton:.0f}, Opponent: {opponent:.0f})"
+            return f" ✓ Scores are valid (Seton: {seton:.0f}, Opponent: {opponent:.0f})"
         elif status == "WARNING":
-            return f"⚠️ Scores validated with {len(warnings)} warning(s) (Seton: {seton:.0f}, Opponent: {opponent:.0f})"
+            return f" ! Scores validated with {len(warnings)} warning(s) (Seton: {seton:.0f}, Opponent: {opponent:.0f})"
         else:
-            return f"❌ Scores are invalid with {len(issues)} error(s) (Seton: {seton:.0f}, Opponent: {opponent:.0f})"
+            return f" ✗ Scores are invalid with {len(issues)} error(s) (Seton: {seton:.0f}, Opponent: {opponent:.0f})"
 
     def detect_data_issues(self, df: pd.DataFrame) -> dict[str, any]:
         """

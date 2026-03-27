@@ -80,7 +80,7 @@ def parse_time_to_seconds(time_val) -> float:
 def load_scraped_team(json_path: Path) -> list[PsychEntry]:
     """Load a scraped team JSON file into psych entries."""
     if not json_path.exists():
-        print(f"  ⚠️ File not found: {json_path}")
+        print(f"! File not found: {json_path}")
         return []
 
     with open(json_path) as f:
@@ -129,7 +129,7 @@ def load_seton_excel_data(upload_dir: Path) -> list[PsychEntry]:
     entries = []
 
     for excel_path in seton_files:
-        print(f"  Loading Seton file: {excel_path.name}")
+        print(f"Loading Seton file: {excel_path.name}")
         try:
             import pandas as pd
 
@@ -149,7 +149,7 @@ def load_seton_excel_data(upload_dir: Path) -> list[PsychEntry]:
             )
 
             if not all([swimmer_col, event_col, time_col]):
-                print(f"    ⚠️ Missing required columns in {excel_path.name}")
+                print(f"! Missing required columns in {excel_path.name}")
                 continue
 
             for _, row in df.iterrows():
@@ -183,7 +183,7 @@ def load_seton_excel_data(upload_dir: Path) -> list[PsychEntry]:
                 )
                 entries.append(entry)
         except Exception as e:
-            print(f"    ⚠️ Error loading {excel_path.name}: {e}")
+            print(f"! Error loading {excel_path.name}: {e}")
 
     return entries
 
@@ -191,7 +191,7 @@ def load_seton_excel_data(upload_dir: Path) -> list[PsychEntry]:
 def build_vcac_psych_sheet():
     """Build the unified VCAC psych sheet."""
     print("=" * 60)
-    print("🏊 VCAC Championship Psych Sheet Builder")
+    print("▸ VCAC Championship Psych Sheet Builder")
     print("=" * 60)
 
     project_root = Path(__file__).parent
@@ -219,13 +219,13 @@ def build_vcac_psych_sheet():
     for code, filename in team_files.items():
         json_path = scraped_dir / filename
         entries = load_scraped_team(json_path)
-        print(f"  {code}: {len(entries)} entries loaded")
+        print(f"{code}: {len(entries)} entries loaded")
         all_entries.extend(entries)
 
     # Load Seton data from coach Excel files
     print("\n[2] Loading Seton coach data...")
     seton_entries = load_seton_excel_data(upload_dir)
-    print(f"  SST: {len(seton_entries)} entries loaded")
+    print(f"SST: {len(seton_entries)} entries loaded")
     all_entries.extend(seton_entries)
 
     # Deduplicate (keep best time per swimmer-event)
@@ -237,7 +237,7 @@ def build_vcac_psych_sheet():
             deduped[key] = entry
 
     final_entries = list(deduped.values())
-    print(f"  Before: {len(all_entries)}, After: {len(final_entries)}")
+    print(f"Before: {len(all_entries)}, After: {len(final_entries)}")
 
     # Summary by team
     print("\n[4] Summary by team:")
@@ -246,7 +246,7 @@ def build_vcac_psych_sheet():
         team_counts[entry.team_code] = team_counts.get(entry.team_code, 0) + 1
 
     for code, count in sorted(team_counts.items(), key=lambda x: -x[1]):
-        print(f"  {code}: {count} entries")
+        print(f"{code}: {count} entries")
 
     # Save unified psych sheet
     print("\n[5] Saving unified psych sheet...")
@@ -264,12 +264,12 @@ def build_vcac_psych_sheet():
     with open(output_path, "w") as f:
         json.dump(output_data, f, indent=2)
 
-    print(f"  ✅ Saved to: {output_path}")
-    print(f"  Total entries: {len(final_entries)}")
-    print(f"  Teams: {', '.join(team_counts.keys())}")
+    print(f"✓ Saved to: {output_path}")
+    print(f"Total entries: {len(final_entries)}")
+    print(f"Teams: {', '.join(team_counts.keys())}")
 
     print("\n" + "=" * 60)
-    print("✅ VCAC Psych Sheet Build Complete!")
+    print("✓ VCAC Psych Sheet Build Complete!")
     print("=" * 60)
 
     return output_path

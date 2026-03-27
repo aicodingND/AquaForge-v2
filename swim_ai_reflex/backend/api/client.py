@@ -378,17 +378,17 @@ async def _test_client():
     async with AquaForgeClient() as client:
         print("Testing health check...")
         health = await client.health_check()
-        print(f"  Status: {health['status']}")
+        print(f"Status: {health['status']}")
 
         print("Testing events list...")
         events = await client.get_events()
-        print(f"  Found {len(events)} events")
+        print(f"Found {len(events)} events")
 
         print("Testing scoring rules...")
         rules = await client.get_scoring_rules()
-        print(f"  1st place individual: {rules['individual_events']['1st']} points")
+        print(f"1st place individual: {rules['individual_events']['1st']} points")
 
-        print("✅ All client tests passed!")
+        print("✓ All client tests passed!")
 
 
 if __name__ == "__main__":

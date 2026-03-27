@@ -337,11 +337,11 @@ def generate_dashboard():
     output_path = Path("reports/consolidated_season_dashboard.html")
     output_path.write_text(html)
 
-    print(f"\n✨ Dashboard generated: {output_path}")
-    print(f"   - {total_meets} meets analyzed")
-    print(f"   - +{total_ai_advantage:,} total AI advantage points")
-    print(f"   - {total_violations} total violations detected")
-    print(f"   - {win_rate}% AI win rate ({ai_wins}/{total_meets})")
+    print(f"\nDashboard generated: {output_path}")
+    print(f"- {total_meets} meets analyzed")
+    print(f"- +{total_ai_advantage:,} total AI advantage points")
+    print(f"- {total_violations} total violations detected")
+    print(f"- {win_rate}% AI win rate ({ai_wins}/{total_meets})")
 
 
 if __name__ == "__main__":

@@ -59,13 +59,13 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
     )
 
     # Header
-    report = f"""# 🏊 VCAC Championship 2026 - Strategy Report
+    report = f"""# ▸ VCAC Championship 2026 - Strategy Report
 ## Prepared for Coach Koehr
 **Generated:** {datetime.now().strftime("%B %d, %Y at %I:%M %p")}
 
 ---
 
-## 📊 Projected Team Standings
+## ▸ Projected Team Standings
 
 | Place | Team | Projected Points |
 |-------|------|-----------------|
@@ -73,7 +73,7 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
 
     # Add standings
     for i, team in enumerate(standings, 1):
-        medal = "🥇" if i == 1 else "🥈" if i == 2 else "🥉" if i == 3 else ""
+        medal = "" if i == 1 else "" if i == 2 else "" if i == 3 else ""
         seton_mark = " ← SETON" if team["team_code"] == "SST" else ""
         report += f"| {i}. {medal} | **{team['team_name']}** | {team['total_points']:.0f} pts{seton_mark} |\n"
 
@@ -83,7 +83,7 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
 
 ---
 
-## 🔵 Seton Swimming Analysis
+## Seton Swimming Analysis
 
 **Projected Finish:** {seton_pos}{"st" if seton_pos == 1 else "nd" if seton_pos == 2 else "rd" if seton_pos == 3 else "th"} Place
 **Projected Points:** {seton["total_points"]:.0f}
@@ -95,14 +95,14 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
 
         # Strengths
         if seton.get("strengths"):
-            report += "\n### 💪 Strength Events\n"
+            report += "\n### Strength Events\n"
             for event in seton["strengths"]:
                 pts = seton.get("event_breakdown", {}).get(event, 0)
                 report += f"- {event}: {pts:.0f} pts\n"
 
         # Weaknesses
         if seton.get("weaknesses"):
-            report += "\n### ⚠️ Events Needing Focus\n"
+            report += "\n### ! Events Needing Focus\n"
             for event in seton["weaknesses"]:
                 pts = seton.get("event_breakdown", {}).get(event, 0)
                 report += f"- {event}: {pts:.0f} pts\n"
@@ -113,7 +113,7 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
 
 ---
 
-## 🎯 Swing Event Opportunities
+## → Swing Event Opportunities
 
 *Events where small time drops could significantly improve scoring*
 
@@ -133,7 +133,7 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
     report += """
 ---
 
-## 🏃 400 Free Relay Trade-off Analysis
+## 400 Free Relay Trade-off Analysis
 
 **VCAC Rule Reminder:**
 - First 2 relays (200 Medley, 200 Free) = FREE
@@ -143,9 +143,9 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
 
 | Scenario | Trade-off | Recommendation |
 |----------|-----------|----------------|
-| Swimmer with 2 individual events | 400 FR blocks them from relay-3 | ✅ Use if relay placement > lost individual |
-| Swimmer with 1 individual event | 400 FR blocks 1 individual slot | ⚠️ Only if relay placement is critical |
-| Swimmer with diving | Diving + 1 individual + 400 FR = maxed | ❌ Avoid unless no alternatives |
+| Swimmer with 2 individual events | 400 FR blocks them from relay-3 | ✓ Use if relay placement > lost individual |
+| Swimmer with 1 individual event | 400 FR blocks 1 individual slot | ! Only if relay placement is critical |
+| Swimmer with diving | Diving + 1 individual + 400 FR = maxed | ✗ Avoid unless no alternatives |
 
 ### Key Questions for Each Swimmer:
 1. How many individual events are they swimming?
@@ -154,7 +154,7 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
 
 ---
 
-## 📋 Pre-Meet Checklist
+## ▸ Pre-Meet Checklist
 
 - [ ] Confirm all swimmer grades (7th graders = non-scoring)
 - [ ] Verify diver individual event counts
@@ -170,7 +170,7 @@ def generate_markdown_report(data: dict[str, Any]) -> str:
     report += f"""
 ---
 
-## 📞 Notes
+## Notes
 
 *This report is based on seed times from SwimCloud and coach-provided data.*
 *Actual results may vary based on race-day performance.*
@@ -284,7 +284,7 @@ def generate_html_report(markdown_content: str) -> str:
         }}
 
         li:before {{
-            content: "▸ ";
+            content: " ";
             color: #2b6cb0;
         }}
 
@@ -315,7 +315,7 @@ def generate_html_report(markdown_content: str) -> str:
 def main():
     """Generate the coach report."""
     print("=" * 60)
-    print("🏊 VCAC Coach Report Generator")
+    print("▸ VCAC Coach Report Generator")
     print("=" * 60)
 
     # Load projection data
@@ -326,8 +326,8 @@ def main():
         print("No projection data available. Run run_vcac_projection.py first.")
         return
 
-    print(f"  Loaded standings for {len(data.get('standings', []))} teams")
-    print(f"  Found {len(data.get('swing_events', []))} swing events")
+    print(f"Loaded standings for {len(data.get('standings', []))} teams")
+    print(f"Found {len(data.get('swing_events', []))} swing events")
 
     # Generate reports
     print("\n[2] Generating markdown report...")
@@ -341,7 +341,7 @@ def main():
     md_path = reports_dir / "VCAC_2026_Coach_Report.md"
     with open(md_path, "w") as f:
         f.write(markdown_content)
-    print(f"  ✅ Saved: {md_path}")
+    print(f"✓ Saved: {md_path}")
 
     # Generate HTML
     print("\n[3] Generating HTML report...")
@@ -350,13 +350,13 @@ def main():
     html_path = reports_dir / "VCAC_2026_Coach_Report.html"
     with open(html_path, "w") as f:
         f.write(html_content)
-    print(f"  ✅ Saved: {html_path}")
+    print(f"✓ Saved: {html_path}")
 
     print("\n" + "=" * 60)
-    print("✅ Coach Report Generated!")
+    print("✓ Coach Report Generated!")
     print("=" * 60)
-    print(f"\n📄 Markdown: {md_path}")
-    print(f"🌐 HTML:     {html_path}")
+    print(f"\n▸ Markdown: {md_path}")
+    print(f"HTML: {html_path}")
     print("\nOpen the HTML file in a browser to view or print.")
 
 

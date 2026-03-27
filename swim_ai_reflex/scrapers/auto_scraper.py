@@ -6,9 +6,9 @@ Efficiently scrapes multiple teams using concurrent browser tabs
 
 import json
 import time
-from pathlib import Path
-from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
+from pathlib import Path
 
 
 def parse_time_to_seconds(time_str: str) -> float:
@@ -64,7 +64,7 @@ def scrape_single_team(team_code: str, team_id: int, team_name: str) -> dict:
     except ImportError:
         return {"error": "Playwright not installed"}
 
-    print(f"  🏊 Starting {team_code}...")
+    print(f"▸ Starting {team_code}...")
 
     all_times = []
     roster = []
@@ -105,7 +105,7 @@ def scrape_single_team(team_code: str, team_id: int, team_name: str) -> dict:
                 }
             """)
         except Exception as e:
-            print(f"    ⚠ {team_code} roster error: {str(e)[:50]}")
+            print(f"! {team_code} roster error: {str(e)[:50]}")
 
         # Scrape times for each gender and event
         for gender in GENDERS:
@@ -162,7 +162,7 @@ def scrape_single_team(team_code: str, team_id: int, team_name: str) -> dict:
         context.close()
         browser.close()
 
-    print(f"  ✅ {team_code}: {len(roster)} roster, {len(all_times)} times")
+    print(f"✓ {team_code}: {len(roster)} roster, {len(all_times)} times")
 
     return {
         "team_code": team_code,
@@ -178,7 +178,7 @@ def scrape_single_team(team_code: str, team_id: int, team_name: str) -> dict:
 
 def scrape_all_teams_parallel(max_workers: int = 3):
     """Scrape all teams in parallel using ThreadPoolExecutor."""
-    print("🚀 Starting Parallel SwimCloud Scraper")
+    print("→ Starting Parallel SwimCloud Scraper")
     print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Teams: {len(TEAMS_TO_SCRAPE)} | Workers: {max_workers}")
     print("=" * 60)
@@ -210,12 +210,12 @@ def scrape_all_teams_parallel(max_workers: int = 3):
                     json.dump(data, f, indent=2)
 
             except Exception as e:
-                print(f"  ❌ {team_code} failed: {str(e)[:80]}")
+                print(f"✗ {team_code} failed: {str(e)[:80]}")
                 results[team_code] = {"error": str(e)}
 
     # Summary
     print("\n" + "=" * 60)
-    print("📊 SCRAPING SUMMARY")
+    print("▸ SCRAPING SUMMARY")
     print("=" * 60)
 
     total_times = 0
@@ -227,14 +227,14 @@ def scrape_all_teams_parallel(max_workers: int = 3):
             roster_count = len(data.get("roster", []))
             total_times += times_count
             total_roster += roster_count
-            print(f"  {team_code}: {roster_count} swimmers, {times_count} times ✓")
+            print(f"{team_code}: {roster_count} swimmers, {times_count} times ✓ ")
         else:
-            print(f"  {team_code}: FAILED - {data['error'][:50]}")
+            print(f"{team_code}: FAILED - {data['error'][:50]}")
 
     print("-" * 60)
-    print(f"  TOTAL: {total_roster} swimmers, {total_times} times")
+    print(f"TOTAL: {total_roster} swimmers, {total_times} times")
     print("=" * 60)
-    print("✅ All data saved to data/scraped/")
+    print("✓ All data saved to data/scraped/")
 
     return results
 

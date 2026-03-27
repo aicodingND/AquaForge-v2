@@ -261,19 +261,19 @@ async def _run_championship_optimization(request, seton_raw, start_time):
         standings_projection = projection_result.to_dict()
 
         num_standings = len(standings_projection.get("standings", []))
-        logger.info(f"✅ Successfully projected standings for {num_standings} teams")
+        logger.info(f"✓ Successfully projected standings for {num_standings} teams")
 
         if num_standings == 0:
-            logger.warning("⚠️  Standings projection returned 0 teams!")
+            logger.warning("Standings projection returned 0 teams!")
         else:
             # Log first few standings for verification
             for standing in standings_projection.get("standings", [])[:3]:
                 logger.info(
-                    f"   {standing.get('rank')}. {standing.get('team')}: {standing.get('points')} pts"
+                    f"{standing.get('rank')}. {standing.get('team')}: {standing.get('points')} pts"
                 )
 
     except Exception as e:
-        logger.error(f"❌ Failed to project full standings: {e}", exc_info=True)
+        logger.error(f"✗ Failed to project full standings: {e}", exc_info=True)
         # Continue without standings - optimization still works
         standings_projection = None
 

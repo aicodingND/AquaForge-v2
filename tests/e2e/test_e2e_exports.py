@@ -62,11 +62,11 @@ def test_exports():
             opponent_score,
             metadata={"Seton Team": "Seton", "Opponent Team": "Immanuel"},
         )
-        print(f"   CSV generated: {len(csv_content)} bytes")
-        print(f"   First 200 chars: {csv_content[:200]}...")
-        print("   ✅ CSV export working")
+        print(f"CSV generated: {len(csv_content)} bytes")
+        print(f"First 200 chars: {csv_content[:200]}...")
+        print("✓ CSV export working")
     except Exception as e:
-        print(f"   ❌ CSV export failed: {e}")
+        print(f"✗ CSV export failed: {e}")
 
     print("\n2. Testing XLSX Export...")
     try:
@@ -78,22 +78,22 @@ def test_exports():
             opponent_team_name="Immanuel",
         )
         if xlsx_data:
-            print(f"   XLSX generated: {len(xlsx_data)} bytes")
-            print("   ✅ XLSX export working")
+            print(f"XLSX generated: {len(xlsx_data)} bytes")
+            print("✓ XLSX export working")
         else:
-            print("   ⚠️ XLSX export returned empty")
+            print("! XLSX export returned empty")
     except Exception as e:
-        print(f"   ❌ XLSX export failed: {e}")
+        print(f"✗ XLSX export failed: {e}")
 
     print("\n3. Testing HTML Export...")
     try:
         html_content = export_service.to_html_table(
             results, seton_score, opponent_score
         )
-        print(f"   HTML generated: {len(html_content)} bytes")
-        print("   ✅ HTML export working")
+        print(f"HTML generated: {len(html_content)} bytes")
+        print("✓ HTML export working")
     except Exception as e:
-        print(f"   ❌ HTML export failed: {e}")
+        print(f"✗ HTML export failed: {e}")
 
     print("\n" + "=" * 60)
     print("EXPORT TEST COMPLETE")

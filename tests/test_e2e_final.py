@@ -28,7 +28,7 @@ from swim_ai_reflex.backend.services.optimization_service import optimization_se
 )
 async def test_e2e_final():
     print("\n" + "=" * 80)
-    print("🏊‍♀️ E2E FINAL TEST: Seton vs Trinity")
+    print("E2E FINAL TEST: Seton vs Trinity")
     print("Standard Dual Meet - 8 Events × 29 Points = 232 Total")
     print("=" * 80)
 
@@ -70,7 +70,7 @@ async def test_e2e_final():
 
     # Run Gurobi optimization
     print("\n[4] Running Gurobi optimization...")
-    print("  This will optimize Seton's lineup against Trinity's best lineup")
+    print("This will optimize Seton's lineup against Trinity's best lineup")
 
     result = await optimization_service.predict_best_lineups(
         seton_roster=seton_standard,
@@ -82,7 +82,7 @@ async def test_e2e_final():
     )
 
     if not result.get("success"):
-        print(f"\n❌ Optimization failed: {result.get('message')}")
+        print(f"\n✗ Optimization failed: {result.get('message')}")
         return
 
     # Get optimized lineups from the result
@@ -96,16 +96,16 @@ async def test_e2e_final():
     trinity_score_opt = data.get("opponent_score", 0)
 
     print("\n[5] Optimization complete!")
-    print(f"  Seton score (from optimizer): {seton_score_opt:.1f}")
-    print(f"  Trinity score (from optimizer): {trinity_score_opt:.1f}")
-    print(f"  Combined: {seton_score_opt + trinity_score_opt:.1f}")
+    print(f"Seton score (from optimizer): {seton_score_opt:.1f}")
+    print(f"Trinity score (from optimizer): {trinity_score_opt:.1f}")
+    print(f"Combined: {seton_score_opt + trinity_score_opt:.1f}")
 
     # Check if we need to re-score with dual_meet_scoring
     combined_opt = seton_score_opt + trinity_score_opt
     if abs(combined_opt - 232) > 0.1:
-        print(f"\n⚠️  Optimizer total ({combined_opt:.1f}) != 232")
-        print("  The optimizer is not using dual meet scoring rules")
-        print("  This is expected - we need to integrate dual_meet_scoring into Gurobi")
+        print(f"\nOptimizer total ({combined_opt:.1f}) != 232")
+        print("The optimizer is not using dual meet scoring rules")
+        print("This is expected - we need to integrate dual_meet_scoring into Gurobi")
 
     # Use the optimizer scores for now
     totals = {"seton": seton_score_opt, "opponent": trinity_score_opt}
@@ -119,29 +119,29 @@ async def test_e2e_final():
     combined = seton_score + trinity_score
 
     print("\n" + "=" * 80)
-    print("📊 FINAL RESULTS")
+    print("▸ FINAL RESULTS")
     print("=" * 80)
-    print("\n🏆 Scores:")
-    print(f"  Seton:    {seton_score:.1f} points")
-    print(f"  Trinity:  {trinity_score:.1f} points")
-    print(f"  Combined: {combined:.1f} / 232")
-    print(f"  Winner:   {'Seton' if seton_score > trinity_score else 'Trinity'}")
+    print("\nScores:")
+    print(f"Seton: {seton_score:.1f} points")
+    print(f"Trinity: {trinity_score:.1f} points")
+    print(f"Combined: {combined:.1f} / 232")
+    print(f"Winner: {'Seton' if seton_score > trinity_score else 'Trinity'}")
 
-    print("\n✅ Validation:")
+    print("\n✓ Validation:")
     in_range = 123 <= seton_score <= 135
     total_correct = abs(combined - 232) < 0.1
 
-    print(f"  Seton in range (123-135): {'✅' if in_range else '❌'} {seton_score:.1f}")
-    print(f"  Total = 232: {'✅' if total_correct else '❌'} {combined:.1f}")
+    print(f"Seton in range (123-135): {'✓' if in_range else '✗'} {seton_score:.1f}")
+    print(f"Total = 232: {'✓' if total_correct else '✗'} {combined:.1f}")
 
     if in_range and total_correct:
-        print("\n  🎉 ALL TESTS PASSED!")
+        print("\nALL TESTS PASSED!")
     else:
-        print("\n  ⚠️  Some validations failed")
+        print("\nSome validations failed")
         if not in_range:
-            print(f"     Seton score {seton_score:.1f} outside expected range 123-135")
+            print(f"Seton score {seton_score:.1f} outside expected range 123-135")
         if not total_correct:
-            print(f"     Total {combined:.1f} should be exactly 232")
+            print(f"Total {combined:.1f} should be exactly 232")
 
     print("\n" + "=" * 80)
 

@@ -6,22 +6,23 @@ Separates championship logic from dual meet logic.
 """
 
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 from swim_ai_reflex.backend.api.models import OptimizationResponse, OptimizationResult
 from swim_ai_reflex.backend.core.strategies.championship_strategy import (
     ChampionshipEntry,
     ChampionshipOptimizationResult,
 )
+from swim_ai_reflex.backend.services.shared.normalization import normalize_team_name
 
 logger = logging.getLogger(__name__)
 
 
 def _generate_championship_analytics(
-    entries: List[ChampionshipEntry],
+    entries: list[ChampionshipEntry],
     champ_result: ChampionshipOptimizationResult,
-    standings_projection: Dict[str, Any] = None,
-) -> Dict[str, Any]:
+    standings_projection: dict[str, Any] = None,
+) -> dict[str, Any]:
     """
     Generate advanced analytics for championship results.
 
@@ -141,18 +142,46 @@ def _generate_championship_analytics(
         logger.warning(f"Nash equilibrium analysis failed: {e}")
         analytics["nash_insights"] = None
 
-    # 4. Relay Trade-offs (placeholder for now)
-    # TODO: Wire up relay analysis when 400FR trade-off is needed
-    analytics["relay_tradeoffs"] = None
+    # 4. Relay Trade-offs
+    try:
+        from swim_ai_reflex.backend.services.relay_optimizer_service import (
+            analyze_relay_tradeoffs,
+        )
+
+        target_entries = [
+            e
+            for e in entries_dicts
+            if normalize_team_name(e.get("team", ""))
+            == normalize_team_name(target_team)
+        ]
+        if target_entries:
+            relay_result = analyze_relay_tradeoffs(target_entries)
+            analytics["relay_tradeoffs"] = {
+                "relay_400_recommendation": relay_result.relay_400_recommendation,
+                "relay_400_net_value": relay_result.relay_400_net_value,
+                "relay_configs": [
+                    {"relay": cfg.get("relay", ""), "swimmers": cfg.get("swimmers", [])}
+                    for cfg in (relay_result.relay_configs or [])[:3]
+                ],
+            }
+            logger.info(
+                f"Relay trade-offs: 400FR={relay_result.relay_400_recommendation}, "
+                f"net={relay_result.relay_400_net_value:.1f}"
+            )
+        else:
+            analytics["relay_tradeoffs"] = None
+    except Exception as e:
+        logger.warning(f"Relay trade-off analysis failed: {e}")
+        analytics["relay_tradeoffs"] = None
 
     return analytics if any(v is not None for v in analytics.values()) else None
 
 
 def format_championship_response(
     champ_result: ChampionshipOptimizationResult,
-    entries: List[ChampionshipEntry],
+    entries: list[ChampionshipEntry],
     optimization_time_ms: float,
-    standings_projection: Dict[str, Any] = None,
+    standings_projection: dict[str, Any] = None,
 ) -> OptimizationResponse:
     """
     Format championship optimization result into API response.
@@ -173,7 +202,7 @@ def format_championship_response(
         entry_lookup[key] = entry
 
     # Build results list (event-by-event breakdown for target team)
-    results: List[OptimizationResult] = []
+    results: list[OptimizationResult] = []
 
     # Group assignments by event
     event_num = 1
@@ -214,13 +243,13 @@ def format_championship_response(
         event_num += 1
 
     # Build warnings list
-    warnings: List[str] = []
+    warnings: list[str] = []
     if champ_result.status != "optimal":
         warnings.append(f"Optimization status: {champ_result.status}")
 
     # Add recommendations as warnings (so they show in UI)
     for rec in champ_result.recommendations:
-        warnings.append(f"💡 {rec}")
+        warnings.append(rec)
 
     # Extract championship-specific data from standings projection
     championship_standings = None
@@ -271,9 +300,9 @@ def format_championship_response(
 
 
 def build_championship_entries(
-    seton_data: List[Dict[str, Any]],
+    seton_data: list[dict[str, Any]],
     convert_time_fn,
-) -> List[ChampionshipEntry]:
+) -> list[ChampionshipEntry]:
     """
     Convert request data to ChampionshipEntry format.
 

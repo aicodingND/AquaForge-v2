@@ -125,6 +125,15 @@ class DataFilterService(BaseService):
             filtered["original_event"] = filtered["event"]
             filtered["event"] = filtered["event"].apply(normalize_event)
 
+            # Log unmapped events so users know what was dropped
+            unmapped = filtered[filtered["event"].isna()]
+            if not unmapped.empty and "original_event" in unmapped.columns:
+                dropped_events = unmapped["original_event"].unique().tolist()
+                logger.info(
+                    f" [Event Normalization] Dropped {len(dropped_events)} unrecognized event(s): "
+                    f"{', '.join(str(e) for e in dropped_events[:10])}"
+                )
+
             # Remove unmapped events (JV events, etc.)
             pre_map_count = len(filtered)
             filtered = filtered[filtered["event"].notna()]
@@ -207,8 +216,8 @@ class DataFilterService(BaseService):
         logger.info(
             f"Unique swimmers: {filtered['swimmer'].nunique() if 'swimmer' in filtered.columns else 'N/A'}"
         )
-        logger.info(f"  - Scoring eligible (8-12): {scoring_swimmers}")
-        logger.info(f"  - Non-scoring (7th grade and below): {non_scoring_swimmers}")
+        logger.info(f" - Scoring eligible (8-12): {scoring_swimmers}")
+        logger.info(f" - Non-scoring (7th grade and below): {non_scoring_swimmers}")
         logger.info(
             f"Events: {filtered['event'].nunique() if 'event' in filtered.columns else 'N/A'}"
         )
@@ -219,9 +228,7 @@ class DataFilterService(BaseService):
     def _log_filter(self, filter_name: str, filter_value: str, before: int, after: int):
         """Log a filter application."""
         removed = before - after
-        logger.info(
-            f"  [{filter_name}] {filter_value}: {before} → {after} (-{removed})"
-        )
+        logger.info(f" [{filter_name}] {filter_value}: {before} → {after} (-{removed})")
 
     def get_individual_events(self, df: pd.DataFrame) -> list[str]:
         """Get list of individual events in the data."""

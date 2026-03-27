@@ -38,12 +38,18 @@ class ChampionshipInput:
 
     # Entry optimization parameters
     divers: set[str] = field(default_factory=set)
-    relay_3_swimmers: set[str] = field(default_factory=set)
+    relay_1_swimmers: set[str] = field(default_factory=set)  # 200 Medley Relay
+    relay_2_swimmers: set[str] = field(default_factory=set)  # 200 Free Relay
+    relay_3_swimmers: set[str] = field(default_factory=set)  # 400 Free Relay
 
     def __post_init__(self):
         """Convert sets if needed."""
         if isinstance(self.divers, list):
             self.divers = set(self.divers)
+        if isinstance(self.relay_1_swimmers, list):
+            self.relay_1_swimmers = set(self.relay_1_swimmers)
+        if isinstance(self.relay_2_swimmers, list):
+            self.relay_2_swimmers = set(self.relay_2_swimmers)
         if isinstance(self.relay_3_swimmers, list):
             self.relay_3_swimmers = set(self.relay_3_swimmers)
 
@@ -156,6 +162,8 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
                     entries=data.entries,
                     target_team=data.target_team,
                     divers=data.divers,
+                    relay_1_swimmers=data.relay_1_swimmers,
+                    relay_2_swimmers=data.relay_2_swimmers,
                     relay_3_swimmers=data.relay_3_swimmers,
                 )
                 optimization_improvement = improvement
@@ -246,7 +254,9 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
         entries: list[dict[str, Any]],
         target_team: str,
         divers: set[str],
-        relay_3_swimmers: set[str],
+        relay_1_swimmers: set[str] | None = None,
+        relay_2_swimmers: set[str] | None = None,
+        relay_3_swimmers: set[str] | None = None,
     ) -> tuple[dict[str, list[str]], float]:
         """
         Optimize entry selections.
@@ -277,9 +287,9 @@ class ChampionshipPipeline(MeetPipeline[ChampionshipInput, ChampionshipResult]):
                 all_entries=championship_entries,
                 target_team=target_team,
                 divers=divers,
-                relay_1_swimmers=set(),  # TODO: Wire up from input if available
-                relay_2_swimmers=set(),  # TODO: Wire up from input if available
-                relay_3_swimmers=relay_3_swimmers,
+                relay_1_swimmers=relay_1_swimmers or set(),
+                relay_2_swimmers=relay_2_swimmers or set(),
+                relay_3_swimmers=relay_3_swimmers or set(),
             )
 
             return result.assignments, result.improvement

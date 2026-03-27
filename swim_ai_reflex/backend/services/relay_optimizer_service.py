@@ -13,9 +13,9 @@ NOTE: Uses scipy.optimize.linear_sum_assignment for accurate optimization.
 No approximation algorithms - we want correct results.
 """
 
-from dataclasses import dataclass
-from typing import List, Dict, Set, Optional, Tuple
 from collections import defaultdict
+from dataclasses import dataclass
+
 import numpy as np
 
 from swim_ai_reflex.backend.core.rules import get_meet_profile
@@ -37,13 +37,13 @@ class RelayConfiguration:
 
     relay_name: str  # '200 Medley Relay', '200 Free Relay', '400 Free Relay'
     team_designation: str  # 'A' or 'B'
-    legs: List[RelayLeg]
+    legs: list[RelayLeg]
     predicted_time: float  # Total relay time
     predicted_place: int  # Expected finish position
     predicted_points: int  # Points based on placement
 
     @property
-    def swimmer_names(self) -> List[str]:
+    def swimmer_names(self) -> list[str]:
         """Get list of swimmer names on this relay."""
         return [leg.swimmer for leg in self.legs]
 
@@ -57,7 +57,7 @@ class RelayConfiguration:
 class RelayOptimizationResult:
     """Result of relay optimization for all relays."""
 
-    configurations: Dict[str, List[RelayConfiguration]]  # {relay_name: [A, B]}
+    configurations: dict[str, list[RelayConfiguration]]  # {relay_name: [A, B]}
     total_points: float
     relay_400_recommendation: str  # 'swim', 'skip', or 'optional'
     relay_400_net_value: float  # Points gained/lost by swimming 400
@@ -84,9 +84,9 @@ class RelayOptimizer:
     def optimize_relays(
         self,
         psych: MeetPsychSheet,
-        individual_assignments: Dict[str, List[str]],
+        individual_assignments: dict[str, list[str]],
         team: str = "Seton",
-        divers: Set[str] = None,
+        divers: set[str] = None,
     ) -> RelayOptimizationResult:
         """
         Optimize all relay configurations.
@@ -118,7 +118,7 @@ class RelayOptimizer:
         )
 
         # Track swimmers used in each relay
-        swimmers_used_per_relay: Dict[str, Set[str]] = {}
+        swimmers_used_per_relay: dict[str, set[str]] = {}
 
         # Optimize 200 Medley Relay
         medley_configs = self._optimize_medley_relay(
@@ -168,14 +168,14 @@ class RelayOptimizer:
 
     def _get_swimmer_times(
         self, psych: MeetPsychSheet, team: str
-    ) -> Dict[str, Dict[str, float]]:
+    ) -> dict[str, dict[str, float]]:
         """
         Extract swimmer times by stroke from psych sheet.
 
         Returns: {swimmer_name: {'50 Free': 23.4, '100 Back': 58.2, ...}}
         """
         team_entries = psych.get_team_entries(team)
-        swimmer_times: Dict[str, Dict[str, float]] = defaultdict(dict)
+        swimmer_times: dict[str, dict[str, float]] = defaultdict(dict)
 
         for entry in team_entries:
             if "relay" not in entry.event.lower():
@@ -186,7 +186,7 @@ class RelayOptimizer:
 
         return dict(swimmer_times)
 
-    def _normalize_event(self, event: str) -> Optional[str]:
+    def _normalize_event(self, event: str) -> str | None:
         """Normalize event name to standard form (e.g., '50 Free', '100 Back')."""
         event_lower = event.lower()
 
@@ -223,10 +223,10 @@ class RelayOptimizer:
 
     def _get_relay_3_availability(
         self,
-        all_swimmers: Set[str],
-        individual_assignments: Dict[str, List[str]],
-        divers: Set[str],
-    ) -> Set[str]:
+        all_swimmers: set[str],
+        individual_assignments: dict[str, list[str]],
+        divers: set[str],
+    ) -> set[str]:
         """
         Determine who can swim relay 3 (400 Free).
 
@@ -250,11 +250,11 @@ class RelayOptimizer:
 
     def _optimize_medley_relay(
         self,
-        swimmer_times: Dict[str, Dict[str, float]],
-        available: Set[str],
+        swimmer_times: dict[str, dict[str, float]],
+        available: set[str],
         psych: MeetPsychSheet,
         relay_name: str,
-    ) -> List[RelayConfiguration]:
+    ) -> list[RelayConfiguration]:
         """
         Optimize medley relay using Hungarian algorithm.
 
@@ -348,12 +348,12 @@ class RelayOptimizer:
 
     def _fill_missing_legs(
         self,
-        current_legs: List[RelayLeg],
-        swimmers: List[str],
-        swimmer_times: Dict[str, Dict[str, float]],
-        strokes: List[str],
-        stroke_names: List[str],
-    ) -> List[RelayLeg]:
+        current_legs: list[RelayLeg],
+        swimmers: list[str],
+        swimmer_times: dict[str, dict[str, float]],
+        strokes: list[str],
+        stroke_names: list[str],
+    ) -> list[RelayLeg]:
         """Try to fill missing relay legs with remaining swimmers."""
         used_swimmers = {leg.swimmer for leg in current_legs}
         used_strokes = {leg.stroke for leg in current_legs}
@@ -391,10 +391,10 @@ class RelayOptimizer:
 
     def _build_b_medley_relay(
         self,
-        remaining_swimmers: List[str],
-        swimmer_times: Dict[str, Dict[str, float]],
-        strokes: List[str],
-        stroke_names: List[str],
+        remaining_swimmers: list[str],
+        swimmer_times: dict[str, dict[str, float]],
+        strokes: list[str],
+        stroke_names: list[str],
         relay_name: str,
         psych: MeetPsychSheet,
     ) -> RelayConfiguration:
@@ -541,13 +541,13 @@ class RelayOptimizer:
 
     def _build_incomplete_relays(
         self,
-        swimmers: List[str],
-        swimmer_times: Dict[str, Dict[str, float]],
-        strokes: List[str],
-        stroke_names: List[str],
+        swimmers: list[str],
+        swimmer_times: dict[str, dict[str, float]],
+        strokes: list[str],
+        stroke_names: list[str],
         relay_name: str,
         psych: MeetPsychSheet,
-    ) -> List[RelayConfiguration]:
+    ) -> list[RelayConfiguration]:
         """Handle case where we don't have enough swimmers for full relays."""
         a_legs = []
         used = set()
@@ -596,12 +596,12 @@ class RelayOptimizer:
 
     def _optimize_free_relay(
         self,
-        swimmer_times: Dict[str, Dict[str, float]],
-        available: Set[str],
+        swimmer_times: dict[str, dict[str, float]],
+        available: set[str],
         psych: MeetPsychSheet,
         relay_name: str,
         split_distance: int,  # 50 for 200 Free Relay, 100 for 400 Free Relay
-    ) -> List[RelayConfiguration]:
+    ) -> list[RelayConfiguration]:
         """
         Optimize free relay by selecting fastest swimmers.
 
@@ -660,12 +660,12 @@ class RelayOptimizer:
 
     def _optimize_400_free_with_analysis(
         self,
-        swimmer_times: Dict[str, Dict[str, float]],
-        available: Set[str],
-        individual_assignments: Dict[str, List[str]],
+        swimmer_times: dict[str, dict[str, float]],
+        available: set[str],
+        individual_assignments: dict[str, list[str]],
         psych: MeetPsychSheet,
-        divers: Set[str],
-    ) -> Tuple[str, float, Optional[List[RelayConfiguration]]]:
+        divers: set[str],
+    ) -> tuple[str, float, list[RelayConfiguration] | None]:
         """
         Analyze whether swimming 400 Free Relay is worth it.
 
@@ -705,7 +705,7 @@ class RelayOptimizer:
 
     def _predict_relay_placement(
         self, psych: MeetPsychSheet, relay_name: str, relay_time: float
-    ) -> Tuple[int, int]:
+    ) -> tuple[int, int]:
         """
         Predict relay placement based on psych sheet data.
 
@@ -737,6 +737,121 @@ class RelayOptimizer:
         return (place, 0)
 
 
+@dataclass
+class RelayTradeoffResult:
+    """Lightweight relay trade-off analysis result from entry dicts."""
+
+    relay_400_recommendation: str  # 'swim', 'skip', or 'optional'
+    relay_400_net_value: float  # Estimated points gained/lost
+    relay_configs: list[dict] | None  # Summary configs for display
+
+
+def analyze_relay_tradeoffs(
+    entries: list[dict],
+    max_individual_events: int = 2,
+) -> RelayTradeoffResult:
+    """
+    Analyze relay trade-offs from flat entry dicts.
+
+    This is a lightweight alternative to RelayOptimizer.optimize_relays()
+    for contexts where a MeetPsychSheet is not available (e.g., the
+    championship formatter's analytics pipeline).
+
+    Args:
+        entries: List of dicts with keys: swimmer, team, event, time
+        max_individual_events: Max individual events per swimmer (VISAA = 2)
+
+    Returns:
+        RelayTradeoffResult with recommendation, net value, and configs
+    """
+    from collections import Counter
+
+    # Count individual events per swimmer
+    swimmer_event_count: Counter = Counter()
+    swimmer_free_times: dict[str, float] = {}
+
+    for entry in entries:
+        swimmer = entry.get("swimmer", "")
+        event = entry.get("event", "")
+        time_val = entry.get("time", 9999)
+
+        if "relay" in event.lower():
+            continue
+
+        swimmer_event_count[swimmer] += 1
+
+        # Track free times for relay composition estimate
+        event_lower = event.lower()
+        if "100" in event_lower and "free" in event_lower:
+            try:
+                t = float(time_val)
+                if swimmer not in swimmer_free_times or t < swimmer_free_times[swimmer]:
+                    swimmer_free_times[swimmer] = t
+            except (ValueError, TypeError):
+                pass
+
+    # Swimmers available for relay 3 (400 FR counts as 1 individual slot)
+    available = [
+        s
+        for s, count in swimmer_event_count.items()
+        if count < max_individual_events and s in swimmer_free_times
+    ]
+
+    if len(available) < 4:
+        return RelayTradeoffResult(
+            relay_400_recommendation="skip",
+            relay_400_net_value=0.0,
+            relay_configs=None,
+        )
+
+    # Sort by 100 Free time and pick best 4 for A relay
+    available.sort(key=lambda s: swimmer_free_times[s])
+    a_relay = available[:4]
+    a_total = sum(swimmer_free_times[s] for s in a_relay)
+
+    # Rough point estimate: 400 FR A relay placing well = ~8-16 pts
+    # Use time-based heuristic: sub-3:40 = strong, sub-4:00 = decent
+    if a_total < 220:  # sub-3:40
+        estimated_points = 14.0
+    elif a_total < 240:  # sub-4:00
+        estimated_points = 8.0
+    elif a_total < 260:  # sub-4:20
+        estimated_points = 4.0
+    else:
+        estimated_points = 1.0
+
+    # B relay if enough swimmers
+    b_relay = available[4:8] if len(available) >= 8 else []
+    if len(b_relay) == 4:
+        b_total = sum(swimmer_free_times[s] for s in b_relay)
+        if b_total < 260:
+            estimated_points += 4.0
+        elif b_total < 280:
+            estimated_points += 2.0
+
+    # Build summary configs for display
+    relay_configs = [
+        {"relay": "400 Free Relay (A)", "swimmers": a_relay},
+    ]
+    if len(b_relay) == 4:
+        relay_configs.append({"relay": "400 Free Relay (B)", "swimmers": b_relay})
+
+    net_value = estimated_points
+
+    if net_value > 5:
+        recommendation = "swim"
+    elif net_value > 0:
+        recommendation = "optional"
+    else:
+        recommendation = "skip"
+
+    return RelayTradeoffResult(
+        relay_400_recommendation=recommendation,
+        relay_400_net_value=net_value,
+        relay_configs=relay_configs,
+    )
+
+
 def format_relay_configuration(config: RelayConfiguration) -> str:
     """Format relay configuration for display."""
     lines = [f"{config.relay_name} ({config.team_designation} Relay)"]
@@ -754,7 +869,7 @@ def format_relay_configuration(config: RelayConfiguration) -> str:
 
 def get_relay_swimmers_for_constraints(
     result: RelayOptimizationResult,
-) -> Dict[str, Set[str]]:
+) -> dict[str, set[str]]:
     """
     Extract relay swimmers for back-to-back constraint validation.
 
@@ -763,7 +878,7 @@ def get_relay_swimmers_for_constraints(
     Use this with the constraint validator to check that relay swimmers
     are not assigned to the immediately following individual event.
     """
-    relay_swimmers: Dict[str, Set[str]] = {}
+    relay_swimmers: dict[str, set[str]] = {}
 
     for relay_name, configs in result.configurations.items():
         swimmers = set()
@@ -777,7 +892,7 @@ def get_relay_swimmers_for_constraints(
 def get_blocked_swimmers_for_event(
     relay_result: RelayOptimizationResult,
     event: str,
-) -> Set[str]:
+) -> set[str]:
     """
     Get swimmers who cannot swim a specific event due to relay back-to-back.
 
@@ -789,8 +904,8 @@ def get_blocked_swimmers_for_event(
         Set of swimmer names who cannot swim this event
     """
     from swim_ai_reflex.backend.services.constraint_validator import (
-        normalize_event_name,
         BACK_TO_BACK_BLOCKS,
+        normalize_event_name,
     )
 
     blocked_swimmers = set()
